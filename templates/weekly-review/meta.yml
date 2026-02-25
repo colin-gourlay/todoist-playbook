@@ -1,9 +1,13 @@
 name: Weekly Review
 slug: weekly-review
-description: Structured weekly reset and planning ritual
+description: Structured weekly reset to close loops and plan the week ahead
+category: personal-systems
 tags:
-  - planning
   - review
+  - planning
   - productivity
+  - weekly
 estimated_duration: 45m
+recurrence_suggestion: weekly
 version: 1.0.0
+author: Colin Gourlay
