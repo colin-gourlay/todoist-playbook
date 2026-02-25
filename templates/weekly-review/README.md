@@ -32,6 +32,7 @@ Estimated duration: 30–45 minutes.
 3. Review Commitments
 4. Plan the Future
 5. Performance Review & Alignment
+6. Stop / Start / Continue
 
 ---
 
