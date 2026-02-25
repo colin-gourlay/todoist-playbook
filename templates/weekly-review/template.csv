@@ -1,6 +1,21 @@
 TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG
-section,Review Completed,,,,,,
-task,Review completed tasks from last week,1,1,,,,,
-task,Capture loose tasks into Inbox,1,1,,,,,
-section,Plan Next Week,,,,,,
-task,Identify top 3 priorities,1,1,,,,,
+section,1️⃣ Close the Past,,,,,,
+task,Review completed tasks from last week,2,1,,,,,
+task,Celebrate wins (write 3),2,1,,,,,
+task,Identify unfinished commitments,2,1,,,,,
+
+section,2️⃣ Clear the Present,,,,,,
+task,Empty inbox to zero,1,1,,,,,
+task,Process loose notes & capture tools,1,1,,,,,
+task,Clear email backlog,3,1,,,,,
+
+section,3️⃣ Review Commitments,,,,,,
+task,Review all active projects,1,1,,,,,
+task,Check waiting-for items,2,1,,,,,
+task,Review recurring commitments,2,1,,,,,
+
+section,4️⃣ Plan the Future,,,,,,
+task,Define top 3 priorities for next week,1,1,,,,,
+task,Schedule key commitments,1,1,,,,,
+task,Remove or renegotiate non-essential tasks,2,1,,,,,
+task,Choose one stretch goal,3,1,,,,,
