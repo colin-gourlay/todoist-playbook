@@ -1,0 +1,6 @@
+TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG
+section,Review Completed,,,,,,
+task,Review completed tasks from last week,1,1,,,,,
+task,Capture loose tasks into Inbox,1,1,,,,,
+section,Plan Next Week,,,,,,
+task,Identify top 3 priorities,1,1,,,,,
