@@ -27,10 +27,11 @@ Estimated duration: 30–45 minutes.
 
 ## Structure Overview
 
-1. Close the Past (Review Completed)
-2. Clear the Present (Clear Inbox)
-3. Review Commitments (Review Projects)
-4. Plan the Future (Plan Next Week)
+1. Close the Past
+2. Clear the Present
+3. Review Commitments
+4. Plan the Future
+5. Performance Review & Alignment
 
 ---
 
