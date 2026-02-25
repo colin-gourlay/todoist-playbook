@@ -1,0 +1,16 @@
+# Contributing
+
+Templates must:
+
+- Include:
+  - template.csv
+  - meta.yml
+  - README.md
+- Avoid hardcoded due dates
+- Use consistent section formatting
+- Follow naming conventions
+
+Before adding a new template:
+- Open an issue describing the workflow
+- Define acceptance criteria
+- Clarify reuse potential
