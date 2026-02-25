@@ -1,0 +1,60 @@
+TYPE,CONTENT,PRIORITY,INDENT,DATE_LANG,TIMEZONE
+section,1️⃣ Pre-Production,,,,Europe/London
+
+task,Identify theme / feature artist,2,1,,
+task,Confirm any interviews or guest slots,2,1,,
+task,Create master playlist,1,1,,
+task,Add tracks to Spotify playlist,3,2,,
+task,Add tracks to Hugo content folder,3,2,,
+task,Curate tracks @duration-25m @tools-arrs @when-anytime,2,1,,
+task,Prepare Hugo draft page,1,1,,
+task,Update description (frontmatter),3,2,,
+task,Update summary (frontmatter),3,2,,
+task,Set featured_image (frontmatter),3,2,,
+task,Prepare rough script / running order,2,1,,
+task,Check track durations vs slot timing,1,1,,
+task,Prepare fallback tracks (in case of timing issues),2,1,,
+
+section,2️⃣ Pre-Live Logistics,,,,Europe/London
+
+task,Charge car,3,1,,
+task,Pack studio pass,1,1,,
+task,Pack USB with media + backup copy,1,1,,
+task,Confirm studio access time,2,1,,
+task,Check weather / travel conditions,4,1,,
+
+section,3️⃣ Studio Setup,,,,Europe/London
+
+task,Arrive 15 minutes early,2,1,,
+task,Load playlist into Meridian,1,1,,
+task,Stack first advert set,1,1,,
+task,Test microphone levels,1,1,,
+task,Confirm headphones + monitor levels,2,1,,
+task,Open script + running order,2,1,,
+
+section,4️⃣ Live Broadcast,,,,Europe/London
+
+task,Deliver show intro confidently,2,1,,
+task,Track timing vs running order,1,1,,
+task,Adjust filler tracks if required,2,1,,
+task,Note any on-air corrections needed for blog,3,1,,
+
+section,5️⃣ Post-Production,,,,Europe/London
+
+task,Finalise Hugo content,1,1,,
+task,Update broadcast date in title (frontmatter),2,2,,
+task,Set draft=false (frontmatter),2,2,,
+task,Publish site,1,1,,
+task,Upload recording to Mixcloud,1,1,,
+task,Add Mixcloud embed to post,2,2,,
+task,Create social media posts (FB / IG / LinkedIn),2,1,,
+task,Share Spotify playlist link,3,2,,
+task,Archive show assets to correct folder,2,1,,
+task,Back up recording to external storage,2,1,,
+
+section,6️⃣ Reflection & Improvement,,,,Europe/London
+
+task,What worked well?,3,1,,
+task,What would I improve next week?,3,1,,
+task,Capture new segment ideas,3,1,,
+task,Log potential future guests/artists,3,1,,
