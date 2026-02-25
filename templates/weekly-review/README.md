@@ -1,20 +1,52 @@
 # Weekly Review
 
-A structured reset process to close out the previous week and plan the next.
+A structured reset process designed to reduce cognitive load and increase clarity.
+
+This template is designed to be used once per week.
+
+---
+
+## Objective
+
+- Close open loops
+- Reset commitments
+- Identify priorities
+- Enter the new week with clarity
+
+Estimated duration: 30–45 minutes.
+
+---
 
 ## When to Use
-- Every Friday afternoon
-- Sunday evening reset
-- When feeling overwhelmed
 
-## Sections
-- Review Completed
-- Clear Inbox
-- Review Projects
-- Plan Next Week
+- Friday afternoon
+- Sunday evening
+- Whenever feeling overwhelmed
+
+---
+
+## Structure Overview
+
+1. Close the Past (Review Completed)
+2. Clear the Present (Clear Inbox)
+3. Review Commitments (Review Projects)
+4. Plan the Future (Plan Next Week)
+
+---
+
+## Suggested Ritual
+
+- Block 45 minutes in calendar
+- Silence notifications
+- Complete sections in order
+- Do not skip steps
+
+---
 
 ## Import Instructions
+
 1. Download `template.csv`
-2. Create new project in Todoist
+2. Create a new project in Todoist
 3. Import from CSV
-4. Apply labels & dates as desired
+4. Rename project to: `Weekly Review – [Week of DD/MM]`
+5. Schedule completion within 2 days
