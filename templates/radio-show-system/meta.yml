@@ -1,6 +1,13 @@
-# Template Metadata
-# This file contains metadata related to the templates used in the radio show system.
-
-# Example fields
-field1: value1
-field2: value2
+name: Radio Show System
+slug: radio-show-system
+description: Pre and post tasks associated with a given show
+category: radio-show-systems
+tags:
+  - review
+  - planning
+  - productivity
+  - weekly
+estimated_duration: 45m
+recurrence_suggestion: weekly
+version: 1.0.0
+author: Colin Gourlay
