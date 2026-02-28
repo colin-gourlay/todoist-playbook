@@ -1,0 +1,101 @@
+name: Validate templates
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate template structure
+        run: |
+          set -euo pipefail
+
+          if [ ! -d "templates" ]; then
+            echo "❌ templates/ folder not found"
+            exit 1
+          fi
+
+          failed=0
+
+          for dir in templates/*/ ; do
+            [ -d "$dir" ] || continue
+            slug=$(basename "$dir")
+
+            echo "🔎 Checking $slug"
+
+            # -----------------------
+            # 1. Kebab-case check
+            # -----------------------
+            if [[ ! "$slug" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+              echo "❌ Folder name must be kebab-case: $slug"
+              failed=1
+            fi
+
+            # -----------------------
+            # 2. Required files
+            # -----------------------
+            for file in template.csv meta.yml README.md; do
+              if [ ! -f "${dir}${file}" ]; then
+                echo "❌ Missing ${file} in ${dir}"
+                failed=1
+              fi
+            done
+
+            # -----------------------
+            # 3. meta.yml validation
+            # -----------------------
+            if [ -f "${dir}meta.yml" ]; then
+              required_keys=("name:" "slug:" "description:" "category:" "tags:" "version:")
+
+              for key in "${required_keys[@]}"; do
+                if ! grep -q "^${key}" "${dir}meta.yml"; then
+                  echo "❌ meta.yml missing key: ${key} in ${dir}"
+                  failed=1
+                fi
+              done
+
+              # slug match check
+              meta_slug=$(grep "^slug:" "${dir}meta.yml" | head -n1 | sed 's/slug:[[:space:]]*//')
+              meta_slug=$(echo "$meta_slug" | tr -d '"'\''')
+
+              if [ "$meta_slug" != "$slug" ]; then
+                echo "❌ meta.yml slug ($meta_slug) does not match folder ($slug)"
+                failed=1
+              fi
+            fi
+
+            # -----------------------
+            # 4. CSV validation
+            # -----------------------
+            if [ -f "${dir}template.csv" ]; then
+
+              header=$(head -n1 "${dir}template.csv")
+
+              if [[ "$header" != TYPE,* ]]; then
+                echo "❌ template.csv must start with TYPE header in ${dir}"
+                failed=1
+              fi
+
+              # Validate TYPE column values
+              awk -F',' 'NR>1 {print $1}' "${dir}template.csv" | while read -r type; do
+                if [ "$type" != "section" ] && [ "$type" != "task" ] && [ -n "$type" ]; then
+                  echo "❌ Invalid TYPE '$type' in ${dir}template.csv"
+                  failed=1
+                fi
+              done
+            fi
+
+          done
+
+          if [ "$failed" -ne 0 ]; then
+            echo "💥 Validation failed"
+            exit 1
+          fi
+
+          echo "✅ All templates validated successfully"
