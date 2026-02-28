@@ -3,6 +3,7 @@
 A curated collection of structured [Todoist](https://www.todoist.com/) templates, workflows, and tooling.
 
 This repository is not just a storage location - it is a system for:
+
 - Reusable project templates
 - Workflow patterns
 - Bundled starter kits
@@ -22,6 +23,7 @@ This repository is not just a storage location - it is a system for:
    - Use "Import from CSV"
 
 Each template folder includes:
+
 - `template.csv` → importable file
 - `meta.yml` → machine-readable metadata
 - `README.md` → explanation & usage guidance
@@ -43,6 +45,7 @@ Templates are not just task lists.
 They encode decisions, structure, and thinking patterns.
 
 The goal of this repository is to:
+
 - Reduce friction when starting projects
 - Standardise recurring workflows
 - Externalise mental overhead
@@ -52,4 +55,4 @@ The goal of this repository is to:
 
 ## 📜 License
 
-MIT
+[Read the License](LICENSE)
