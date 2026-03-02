@@ -22,3 +22,12 @@
 | Template | Description | Tags |
 |----------|------------|------|
 | [New Project Kickoff](templates/new-project-kickoff/) | Structured project setup & planning | work, project, structured |
+
+---
+
+## ☁️ SaaS Management
+
+| Template | Description | Tags |
+|----------|------------|------|
+| [SaaS Spin-Up](templates/saas-spin-up/) | End-to-end checklist for onboarding a new SaaS subscription — evaluation, security, billing, integrations, and ongoing maintenance | saas, setup, onboarding, security |
+| [SaaS Wind-Down](templates/saas-wind-down/) | End-to-end checklist for safely winding down a SaaS subscription — data export, billing cancellation, and account closure | saas, offboarding, wind-down, security |

@@ -1,0 +1,14 @@
+name: SaaS Wind-Down
+slug: saas-wind-down
+description: End-to-end checklist for safely and cleanly winding down a Software as a Service subscription — from data export through to account closure
+category: saas-management
+tags:
+  - saas
+  - offboarding
+  - wind-down
+  - security
+  - productivity
+estimated_duration: 90m
+recurrence_suggestion: as-needed
+version: 1.0.0
+author: Colin Gourlay
