@@ -55,4 +55,4 @@ The goal of this repository is to:
 
 ## 📜 License
 
-[Read the License](LICENSE)
+[Creative Commons Attribution-ShareAlike 4.0 International](LICENSE)
