@@ -1,0 +1,14 @@
+name: Daily Review
+slug: daily-review
+description: GTD-aligned daily review to clear inboxes, confirm priorities, and close out the day with intention
+category: personal-systems
+tags:
+  - review
+  - planning
+  - productivity
+  - daily
+  - gtd
+estimated_duration: 15m
+recurrence_suggestion: daily
+version: 1.0.0
+author: Colin Gourlay
