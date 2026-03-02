@@ -1,0 +1,23 @@
+TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG
+section,1️⃣ Capture & Clarify,,,,,,
+task,Empty all inboxes to zero (email, notes, physical) @people-self @place-anywhere @tools-todoist @when-morning,1,1,,,,,
+task,Process each item: Do / Delegate / Defer / Delete @people-self @place-anywhere @tools-todoist @when-morning,1,1,,,,,
+task,Add any new tasks or ideas captured since yesterday @people-self @place-anywhere @tools-todoist @when-morning,2,1,,,,,
+
+section,2️⃣ Review Today's Commitments,,,,,,
+task,Review today's calendar for meetings and deadlines @people-self @place-anywhere @tools-todoist @when-morning,1,1,,,,,
+task,Review today's task list – is it realistic? @people-self @place-anywhere @tools-todoist @when-morning,1,1,,,,,
+task,Identify your 3 Most Important Tasks (MITs) for today @people-self @place-anywhere @tools-todoist @when-morning,1,1,,,,,
+task,Check waiting-for items – any follow-ups needed? @people-self @place-anywhere @tools-todoist @when-morning,2,1,,,,,
+
+section,3️⃣ Context & Energy Check,,,,,,
+task,Assess your energy level for the day (high / medium / low) @people-self @place-anywhere @tools-todoist @when-morning,2,1,,,,,
+task,Match first task block to current energy level @people-self @place-anywhere @tools-todoist @when-morning,2,1,,,,,
+task,Remove or reschedule tasks that don't fit today's capacity @people-self @place-anywhere @tools-todoist @when-morning,2,1,,,,,
+
+section,4️⃣ End-of-Day Close,,,,,,
+task,Mark completed tasks as done @people-self @place-anywhere @tools-todoist @when-evening,1,1,,,,,
+task,Reschedule any unfinished tasks @people-self @place-anywhere @tools-todoist @when-evening,1,1,,,,,
+task,Note any new open loops or commitments to capture @people-self @place-anywhere @tools-todoist @when-evening,2,1,,,,,
+task,Identify tomorrow's top priority @people-self @place-anywhere @tools-todoist @when-evening,1,1,,,,,
+task,Shutdown ritual: close browser tabs, clear desk, log off @people-self @place-anywhere @tools-todoist @when-evening,2,1,,,,,

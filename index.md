@@ -1,9 +1,10 @@
 # Template Catalog
 
-## 🔁 Weekly Systems
+## 🔁 Daily & Weekly Systems
 
 | Template | Description | Tags |
 |----------|------------|------|
+| [Daily Review](templates/daily-review/) | GTD-aligned daily review to capture, clarify, and close out each day | review, planning, productivity, daily, gtd |
 | [Weekly Review](templates/weekly-review/) | Structured weekly reset & planning workflow | review, planning, productivity |
 
 ---
