@@ -31,3 +31,11 @@
 |----------|------------|------|
 | [SaaS Spin-Up](templates/saas-spin-up/) | End-to-end checklist for onboarding a new SaaS subscription — evaluation, security, billing, integrations, and ongoing maintenance | saas, setup, onboarding, security |
 | [SaaS Wind-Down](templates/saas-wind-down/) | End-to-end checklist for safely winding down a SaaS subscription — data export, billing cancellation, and account closure | saas, offboarding, wind-down, security |
+
+---
+
+## 🌐 Brand & Social
+
+| Template | Description | Tags |
+|----------|------------|------|
+| [Socials Health & Optimisation Checklist](templates/socials-health-and-optimization-checklist/) | Periodic audit to maintain brand hygiene, consistency, and security across all public-facing platforms — social networks, directories, review sites, and professional registries | social-media, brand, audit, hygiene, security, seo |
