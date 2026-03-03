@@ -1,0 +1,36 @@
+name: Create Todoist Project from Template
+
+on:
+  workflow_dispatch:
+    inputs:
+      template:
+        description: Template to use
+        required: true
+        type: choice
+        options:
+          - daily-review
+          - radio-show-system
+          - saas-spin-up
+          - saas-wind-down
+          - socials-health-and-optimization-checklist
+          - weekly-review
+      project_name:
+        description: Project name (leave blank to use the template's default name)
+        required: false
+        type: string
+
+jobs:
+  create-project:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create Todoist project from template
+        env:
+          TODOIST_API_TOKEN: ${{ secrets.TODOIST_API_TOKEN }}
+          TEMPLATE: ${{ inputs.template }}
+          PROJECT_NAME: ${{ inputs.project_name }}
+        run: python3 .github/scripts/create_todoist_project.py

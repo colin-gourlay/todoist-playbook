@@ -14,6 +14,21 @@ This repository is not just a storage location - it is a system for:
 
 ## 🚀 How to Use
 
+### ⚡ Automated (recommended)
+
+Use the **Create Todoist Project from Template** GitHub Actions workflow to create a project directly from the latest hosted template — no local downloads required.
+
+1. Go to **Actions → Create Todoist Project from Template**
+2. Click **Run workflow**
+3. Select a template from the dropdown
+4. Optionally provide a custom project name
+5. Click **Run workflow** — the project is created in Todoist automatically
+
+> **Prerequisite:** Add your Todoist API token as a repository secret named `TODOIST_API_TOKEN`.
+> Retrieve your token from [Todoist Integrations Settings](https://app.todoist.com/app/settings/integrations/developer).
+
+### 📥 Manual
+
 1. Browse the template catalog in `INDEX.md`
 2. Navigate to a template folder
 3. Download `template.csv`
