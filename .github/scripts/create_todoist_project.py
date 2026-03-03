@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create a Todoist project from a hosted template CSV via the Todoist REST API v1."""
+"""Create a Todoist project from a hosted template CSV via the Todoist API v1."""
 
 import csv
 import json
@@ -8,7 +8,7 @@ import sys
 import urllib.error
 import urllib.request
 
-TODOIST_API_BASE = "https://api.todoist.com/rest/v1"
+TODOIST_API_BASE = "https://api.todoist.com/api/v1"
 
 # CSV priority 1 = urgent (p1) → API priority 4; CSV 4 = normal → API 1
 _PRIORITY_MAP = {"1": 4, "2": 3, "3": 2, "4": 1}
@@ -16,7 +16,7 @@ _PRIORITY_MAP = {"1": 4, "2": 3, "3": 2, "4": 1}
 
 def api_post(endpoint, token, data):
     """POST to the Todoist REST API and return the parsed JSON response."""
-    url = f"{TODOIST_API_BASE}/{endpoint}"
+    url = f"{TODOIST_API_BASE.rstrip('/')}/{endpoint.lstrip('/')}"
     headers = {
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json",
