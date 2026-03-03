@@ -1,0 +1,76 @@
+name: Template Request
+description: Request a new Todoist playbook template
+title: "[Template Request] "
+labels: ["template-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to request a new template for the Todoist Playbook.
+        Please be as specific as possible so the template can be built to meet your needs.
+
+  - type: input
+    id: template-name
+    attributes:
+      label: Template Name
+      description: What would you call this template? (e.g. "Weekly Review", "Podcast Production")
+      placeholder: e.g. Client Onboarding
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use Case
+      description: Describe the workflow or process this template should support.
+      placeholder: e.g. I run a weekly review every Monday to process my inbox, review projects, and plan the week ahead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: required-sections
+    attributes:
+      label: Required Sections
+      description: List the sections (groups of tasks) that must exist in the template. One per line.
+      placeholder: |
+        Inbox Processing
+        Project Review
+        Weekly Planning
+    validations:
+      required: true
+
+  - type: textarea
+    id: required-tasks
+    attributes:
+      label: Required Tasks (Acceptance Criteria)
+      description: List the specific tasks that must be present for this template to be considered complete. One per line.
+      placeholder: |
+        Process email inbox to zero
+        Review all active projects
+        Set priorities for the week
+        Schedule time blocks for deep work
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: Which category best fits this template?
+      options:
+        - personal-systems
+        - business-operations
+        - content-creation
+        - project-management
+        - other
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other details, inspiration, or references that would help build this template.
+      placeholder: e.g. Based on the GTD weekly review methodology by David Allen.
+    validations:
+      required: false
