@@ -119,6 +119,39 @@ Estimated duration: up to 120 minutes.
 
 ---
 
+## Scalar Integration
+
+To integrate Scalar as the OpenAPI documentation UI for your .NET Web API, add the following registrations to `Program.cs`:
+
+```csharp
+// Service registration
+builder.Services.AddOpenApi();
+
+// Middleware
+app.MapOpenApi();
+app.MapScalarApiReference();
+```
+
+This exposes the OpenAPI specification at `/openapi/v1.json` and the interactive Scalar UI at `/scalar`.
+
+To restrict Scalar to development and test environments only:
+
+```csharp
+if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Test"))
+{
+    app.MapOpenApi();
+    app.MapScalarApiReference();
+}
+```
+
+Install the required NuGet package first:
+
+```
+dotnet add package Scalar.AspNetCore
+```
+
+---
+
 ## Task Notes
 
 ### Create and add `.github/copilot-instructions.md`
