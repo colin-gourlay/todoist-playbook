@@ -1,6 +1,6 @@
 # Iteration 0
 
-A Sprint 0 checklist for setting up a new project repository with version control, a defined branching strategy, and Azure DevOps configuration — capturing localisation requirements — configuring Slack build notifications — defining the initial set of API endpoint PBIs — implementing Scalar OpenAPI documentation — enforcing coding standards — and establishing a Mediator Pattern reference implementation — ensuring consistent practices are in place before development begins.
+A Sprint 0 checklist for setting up a new project repository with version control, a defined branching strategy, and Azure DevOps configuration — capturing localisation requirements — configuring Slack build notifications — defining the initial set of API endpoint PBIs — implementing Scalar OpenAPI documentation — enforcing coding standards — establishing a Mediator Pattern reference implementation — and defining the Minimum Viable Product (MVP) — ensuring consistent practices and a shared delivery scope are in place before development begins.
 
 ---
 
@@ -17,6 +17,7 @@ A Sprint 0 checklist for setting up a new project repository with version contro
 - Implement Scalar as the OpenAPI documentation tool for the .NET Web API
 - Establish and enforce coding standards across local development, version control, and CI
 - Establish a production-quality Mediator Pattern reference implementation for decoupled component communication
+- Define and agree the Minimum Viable Product (MVP) scope with all stakeholders
 
 Estimated duration: up to 120 minutes.
 
@@ -85,6 +86,14 @@ Estimated duration: up to 120 minutes.
 - Unit tests cover mediator dispatch and handler resolution
 - Usage conventions and the pattern rationale are documented in `/docs`
 
+### MVP Definition
+- MVP scope is agreed by all stakeholders and documented in Azure DevOps
+- An initial Product Backlog of prioritised PBIs exists, covering MVP features and integrations
+- Assumptions, constraints, and dependencies are captured and visible to the team
+- Technical feasibility of the MVP scope has been assessed against available resources and timeline
+- MVP Definition document is published to the Azure DevOps Wiki and signed off by stakeholders
+- Follow-up backlog items for post-MVP features are created and triaged
+
 ---
 
 ## Structure Overview
@@ -96,6 +105,7 @@ Estimated duration: up to 120 minutes.
 5. Scalar OpenAPI Documentation
 6. Coding Standards
 7. Mediator Pattern
+8. MVP Definition
 
 ---
 
