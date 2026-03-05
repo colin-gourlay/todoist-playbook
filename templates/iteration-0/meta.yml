@@ -1,0 +1,15 @@
+name: Iteration 0
+slug: iteration-0
+description: Sprint 0 checklist for setting up a new project repository with version control, branching strategy, and Azure DevOps configuration
+category: engineering
+tags:
+  - sprint
+  - iteration-0
+  - azure-devops
+  - version-control
+  - git
+  - project-setup
+estimated_duration: 120m
+recurrence_suggestion: as-needed
+version: 1.0.0
+author: Colin Gourlay
