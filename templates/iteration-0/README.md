@@ -15,6 +15,7 @@ A Sprint 0 checklist for setting up a new project repository with version contro
 - Replace email build notifications with real-time Slack notifications
 - Define an initial set of Product Backlog Items (PBIs) for key API endpoints
 - Implement Scalar as the OpenAPI documentation tool for the .NET Web API
+- Establish and enforce coding standards across local development, version control, and CI
 
 Estimated duration: up to 120 minutes.
 
@@ -65,6 +66,14 @@ Estimated duration: up to 120 minutes.
 - Documentation includes instructions for accessing `/scalar`
 - The solution builds and runs successfully without errors or warnings
 
+### Coding Standards
+- `.editorconfig` and `Directory.Build.props` files exist at repo root and define agreed coding rules
+- Local formatting and analyzer enforcement work automatically in JetBrains Rider
+- A Git pre-commit hook or Lefthook integration prevents non-compliant commits
+- Azure DevOps PR validation pipeline fails on style violations, warnings, or test errors
+- Coding standards documentation is available in `/docs` and published to the Azure DevOps Wiki
+- All developers can restore tools and run `dotnet format --verify-no-changes` locally without manual setup
+
 ---
 
 ## Structure Overview
@@ -74,6 +83,7 @@ Estimated duration: up to 120 minutes.
 3. Slack Build Notifications
 4. API Endpoint PBIs
 5. Scalar OpenAPI Documentation
+6. Coding Standards
 
 ---
 
