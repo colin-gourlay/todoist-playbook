@@ -1,6 +1,6 @@
 # Iteration 0
 
-A Sprint 0 checklist for setting up a new project repository with version control, a defined branching strategy, and Azure DevOps configuration — capturing localisation requirements — and configuring Slack build notifications — ensuring consistent practices are in place before development begins.
+A Sprint 0 checklist for setting up a new project repository with version control, a defined branching strategy, and Azure DevOps configuration — capturing localisation requirements — configuring Slack build notifications — and defining the initial set of API endpoint PBIs — ensuring consistent practices are in place before development begins.
 
 ---
 
@@ -13,6 +13,7 @@ A Sprint 0 checklist for setting up a new project repository with version contro
 - Ensure all standard repository files are in place and available to the team
 - Define and document localisation requirements for the project
 - Replace email build notifications with real-time Slack notifications
+- Define an initial set of Product Backlog Items (PBIs) for key API endpoints
 
 Estimated duration: up to 120 minutes.
 
@@ -48,6 +49,12 @@ Estimated duration: up to 120 minutes.
 - A test build confirms notifications arrive in the chosen Slack channel
 - Email build notifications are disabled to prevent duplication
 
+### API Endpoint PBIs
+- A set of PBIs is created in Azure DevOps representing the major API endpoints required by the system
+- Each PBI includes a title, description (expressing the user/system need), and acceptance criteria (clear, testable outcomes)
+- PBIs are grouped under appropriate Epics (Automation, Integration, Scalability, Reliability)
+- PBIs are ready for refinement and estimation by the development team
+
 ---
 
 ## Structure Overview
@@ -55,6 +62,7 @@ Estimated duration: up to 120 minutes.
 1. Repository Setup & Version Control
 2. Localisation Requirements
 3. Slack Build Notifications
+4. API Endpoint PBIs
 
 ---
 
