@@ -59,3 +59,13 @@ task,Set up Git pre-commit hook or Lefthook to prevent non-compliant commits,1,1
 task,Configure Azure DevOps PR validation pipeline to fail on style violations and warnings,1,1,,,,,
 task,Verify dotnet tool restore and dotnet format --verify-no-changes succeed on clean clone,1,1,,,,,
 task,Document coding standards in /docs and publish to Azure DevOps Wiki,2,1,,,,,
+
+section,7️⃣ Mediator Pattern,,,,,,
+task,Create Fingerprintarr.Core.Mediator project or namespace,1,1,,,,,
+task,Define IMediator interface with Send method for request/response contracts,1,1,,,,,
+task,Define IRequest<TResponse> and IRequestHandler<TRequest TResponse> abstractions,1,1,,,,,
+task,Implement concrete Mediator class that resolves handlers via DI,1,1,,,,,
+task,Register mediator and handlers in the DI container,1,1,,,,,
+task,Create an example request and handler to demonstrate the pattern,2,1,,,,,
+task,Write unit tests covering mediator dispatch and handler resolution,1,1,,,,,
+task,Document Mediator Pattern usage and conventions in /docs,2,1,,,,,

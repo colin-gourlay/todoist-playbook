@@ -1,6 +1,6 @@
 # Iteration 0
 
-A Sprint 0 checklist for setting up a new project repository with version control, a defined branching strategy, and Azure DevOps configuration — capturing localisation requirements — configuring Slack build notifications — defining the initial set of API endpoint PBIs — and implementing Scalar OpenAPI documentation — ensuring consistent practices are in place before development begins.
+A Sprint 0 checklist for setting up a new project repository with version control, a defined branching strategy, and Azure DevOps configuration — capturing localisation requirements — configuring Slack build notifications — defining the initial set of API endpoint PBIs — implementing Scalar OpenAPI documentation — enforcing coding standards — and establishing a Mediator Pattern reference implementation — ensuring consistent practices are in place before development begins.
 
 ---
 
@@ -16,6 +16,7 @@ A Sprint 0 checklist for setting up a new project repository with version contro
 - Define an initial set of Product Backlog Items (PBIs) for key API endpoints
 - Implement Scalar as the OpenAPI documentation tool for the .NET Web API
 - Establish and enforce coding standards across local development, version control, and CI
+- Establish a production-quality Mediator Pattern reference implementation for decoupled component communication
 
 Estimated duration: up to 120 minutes.
 
@@ -75,6 +76,15 @@ Estimated duration: up to 120 minutes.
 - Coding standards documentation is available in `/docs` and published to the Azure DevOps Wiki
 - All developers can restore tools and run `dotnet format --verify-no-changes` locally without manual setup
 
+### Mediator Pattern
+- A working Mediator Pattern implementation exists under a shared or core project (e.g., `Fingerprintarr.Core.Mediator`)
+- `IMediator`, `IRequest<TResponse>`, and `IRequestHandler<TRequest, TResponse>` abstractions are defined
+- A concrete `Mediator` implementation resolves handlers via the DI container
+- Mediator and handlers are registered in the application's DI configuration
+- An example request and handler demonstrate the pattern in practice
+- Unit tests cover mediator dispatch and handler resolution
+- Usage conventions and the pattern rationale are documented in `/docs`
+
 ---
 
 ## Structure Overview
@@ -85,6 +95,7 @@ Estimated duration: up to 120 minutes.
 4. API Endpoint PBIs
 5. Scalar OpenAPI Documentation
 6. Coding Standards
+7. Mediator Pattern
 
 ---
 
