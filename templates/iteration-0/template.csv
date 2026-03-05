@@ -13,6 +13,7 @@ task,"Configure branch policies in Azure DevOps (e.g. minimum reviewers, build v
 task,"Configure repository settings (default branch, policies, PR requirements)",1,1,,,,,
 task,Configure permissions & access controls in Azure DevOps,1,1,,,,,
 task,Create and add .github/copilot-instructions.md,2,1,,,,,
+task,Add relevant agent skills from the github/awesome-copilot curated list,2,1,,,,,
 
 section,2️⃣ Localisation Requirements,,,,,,
 task,Research localisation frameworks and libraries for .NET and front-end stack,2,1,,,,,

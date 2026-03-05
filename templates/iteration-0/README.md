@@ -36,6 +36,7 @@ Estimated duration: up to 120 minutes.
 - Branching strategy is defined and documented
 - Branch protection rules and policies are configured
 - Documentation is available to the team (in repo and/or project wiki)
+- Relevant GitHub Copilot agent skills from the `github/awesome-copilot` curated list have been reviewed and added
 
 ### Localisation Requirements
 - A list of target languages/locales has been agreed and documented
@@ -180,6 +181,12 @@ contents of the README, the contents of any key source files, the list of files 
 ```
 
 Source: [GitHub Docs — Add repository instructions](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions)
+
+---
+
+### Add relevant agent skills from the github/awesome-copilot curated list
+
+Browse the curated skill list at [github.com/github/awesome-copilot](https://github.com/github/awesome-copilot) and identify any agent skills (instructions, prompts, or tool configurations) that are relevant to this project's stack and workflows. Add the applicable skills to `.github/copilot-instructions.md` or the appropriate configuration location documented in each skill's README.
 
 ---
 
