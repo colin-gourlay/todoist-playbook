@@ -22,6 +22,7 @@
 | Template | Description | Tags |
 |----------|------------|------|
 | [New Project Kickoff](templates/new-project-kickoff/) | Structured project setup & planning | work, project, structured |
+| [Iteration 0](templates/iteration-0/) | Sprint 0 checklist for setting up a new project repository with version control, branching strategy, and Azure DevOps configuration | sprint, iteration-0, azure-devops, version-control, git |
 
 ---
 

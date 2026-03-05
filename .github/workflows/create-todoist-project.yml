@@ -9,6 +9,7 @@ on:
         type: choice
         options:
           - daily-review
+          - iteration-0
           - radio-show-system
           - saas-spin-up
           - saas-wind-down
