@@ -1,6 +1,6 @@
 # Iteration 0
 
-A Sprint 0 checklist for setting up a new project repository with version control, a defined branching strategy, and Azure DevOps configuration — capturing localisation requirements — configuring Slack build notifications — and defining the initial set of API endpoint PBIs — ensuring consistent practices are in place before development begins.
+A Sprint 0 checklist for setting up a new project repository with version control, a defined branching strategy, and Azure DevOps configuration — capturing localisation requirements — configuring Slack build notifications — defining the initial set of API endpoint PBIs — and implementing Scalar OpenAPI documentation — ensuring consistent practices are in place before development begins.
 
 ---
 
@@ -14,6 +14,7 @@ A Sprint 0 checklist for setting up a new project repository with version contro
 - Define and document localisation requirements for the project
 - Replace email build notifications with real-time Slack notifications
 - Define an initial set of Product Backlog Items (PBIs) for key API endpoints
+- Implement Scalar as the OpenAPI documentation tool for the .NET Web API
 
 Estimated duration: up to 120 minutes.
 
@@ -55,6 +56,15 @@ Estimated duration: up to 120 minutes.
 - PBIs are grouped under appropriate Epics (Automation, Integration, Scalability, Reliability)
 - PBIs are ready for refinement and estimation by the development team
 
+### Scalar OpenAPI Documentation
+- The solution includes the `Scalar.AspNetCore` NuGet package
+- An OpenAPI 3.1 document is available at `/openapi/v1.json`
+- Scalar UI is accessible at `/scalar` and lists all endpoints
+- Scalar UI displays the correct project name and title
+- The OpenAPI spec automatically updates as endpoints change
+- Documentation includes instructions for accessing `/scalar`
+- The solution builds and runs successfully without errors or warnings
+
 ---
 
 ## Structure Overview
@@ -63,6 +73,7 @@ Estimated duration: up to 120 minutes.
 2. Localisation Requirements
 3. Slack Build Notifications
 4. API Endpoint PBIs
+5. Scalar OpenAPI Documentation
 
 ---
 
@@ -159,3 +170,28 @@ contents of the README, the contents of any key source files, the list of files 
 ```
 
 Source: [GitHub Docs — Add repository instructions](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions/add-repository-instructions)
+
+---
+
+### Register OpenAPI and Scalar services in Program.cs
+
+Add the following registrations to `Program.cs`:
+
+```csharp
+// Service registration
+builder.Services.AddOpenApi();
+
+// Middleware
+app.MapOpenApi();
+app.MapScalarApiReference();
+```
+
+This exposes the OpenAPI specification at `/openapi/v1.json` and the interactive Scalar UI at `/scalar`. Scope both calls inside a development/test environment check if you do not want them active in production:
+
+```csharp
+if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Test"))
+{
+    app.MapOpenApi();
+    app.MapScalarApiReference();
+}
+```
