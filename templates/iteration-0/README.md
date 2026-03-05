@@ -1,6 +1,6 @@
 # Iteration 0
 
-A Sprint 0 checklist for setting up a new project repository with version control, a defined branching strategy, and Azure DevOps configuration — and capturing localisation requirements — ensuring consistent practices are in place before development begins.
+A Sprint 0 checklist for setting up a new project repository with version control, a defined branching strategy, and Azure DevOps configuration — capturing localisation requirements — and configuring Slack build notifications — ensuring consistent practices are in place before development begins.
 
 ---
 
@@ -12,6 +12,7 @@ A Sprint 0 checklist for setting up a new project repository with version contro
 - Set up permissions and access controls
 - Ensure all standard repository files are in place and available to the team
 - Define and document localisation requirements for the project
+- Replace email build notifications with real-time Slack notifications
 
 Estimated duration: up to 120 minutes.
 
@@ -40,12 +41,20 @@ Estimated duration: up to 120 minutes.
 - Any external dependencies (translation services, libraries, APIs) are captured
 - Risks and constraints (e.g., right-to-left support, font/character encoding) are documented
 
+### Slack Build Notifications
+- A dedicated Slack channel exists for build updates
+- Slack Incoming Webhook URL is created and securely stored
+- Azure DevOps Service Hook is configured to trigger on build events (success/failure)
+- A test build confirms notifications arrive in the chosen Slack channel
+- Email build notifications are disabled to prevent duplication
+
 ---
 
 ## Structure Overview
 
 1. Repository Setup & Version Control
 2. Localisation Requirements
+3. Slack Build Notifications
 
 ---
 
