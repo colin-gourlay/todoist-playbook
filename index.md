@@ -17,6 +17,14 @@
 
 ---
 
+## 🎓 Professional Development
+
+| Template | Description | Tags |
+|----------|------------|------|
+| [Microsoft Certification Exam](templates/microsoft-certification-exam/) | End-to-end checklist for preparing, registering, sitting, and following up on a Microsoft certification exam | microsoft, certification, exam, learning, career |
+
+---
+
 ## 🧑‍💼 Work Projects
 
 | Template | Description | Tags |
