@@ -9,6 +9,7 @@ on:
         type: choice
         options:
           - daily-review
+          - ef-code-review
           - iteration-0
           - radio-show-system
           - saas-spin-up
