@@ -9,6 +9,7 @@ on:
         type: choice
         options:
           - daily-review
+          - ef-code-review
           - iteration-0
           - microsoft-certification-exam
           - radio-show-system

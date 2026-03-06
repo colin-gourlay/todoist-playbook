@@ -1,0 +1,13 @@
+name: Entity Framework Code Review
+slug: ef-code-review
+description: Checklist for reviewing Entity Framework POCOs and configuration for correctness, conventions, and Roslyn compliance
+category: engineering
+tags:
+  - code-review
+  - entity-framework
+  - dotnet
+  - csharp
+  - database
+estimated_duration: 30m
+recurrence_suggestion: as-needed
+version: 1.0.0
