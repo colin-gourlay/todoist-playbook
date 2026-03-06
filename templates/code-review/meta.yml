@@ -1,0 +1,14 @@
+name: Code Review
+slug: code-review
+description: Structured checklist for conducting thorough .NET code reviews covering hygiene, unit testing, code structure, Entity Framework, and general best practices
+category: engineering
+tags:
+  - code-review
+  - dotnet
+  - testing
+  - clean-code
+  - best-practices
+estimated_duration: 60m
+recurrence_suggestion: as-needed
+version: 1.0.0
+author: Colin Gourlay
