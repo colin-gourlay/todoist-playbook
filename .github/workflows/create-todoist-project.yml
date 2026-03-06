@@ -10,6 +10,7 @@ on:
         options:
           - daily-review
           - iteration-0
+          - microsoft-certification-exam
           - radio-show-system
           - saas-spin-up
           - saas-wind-down
