@@ -8,6 +8,7 @@ on:
         required: true
         type: choice
         options:
+          - code-review
           - daily-review
           - iteration-0
           - radio-show-system
