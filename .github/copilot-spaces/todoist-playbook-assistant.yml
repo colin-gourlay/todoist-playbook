@@ -1,0 +1,139 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# GitHub Copilot Space — Todoist Playbook
+#
+# Maintainer : colin-gourlay
+# Review cadence : At each repository release, or at minimum monthly.
+#   At each review:
+#     - Validate that all source paths still exist
+#     - Test 2–3 representative prompts (see examples below)
+#     - Update instructions to reflect any new templates or tooling
+#     - Prune any sources that are stale or no longer relevant
+#     - Confirm visibility is still appropriate
+# ──────────────────────────────────────────────────────────────────────────────
+
+name: "Todoist Playbook—Template Assistant"
+
+description: >
+  AI assistant for the Todoist Playbook repository. Helps contributors and users
+  discover templates, understand template conventions, create new templates that
+  pass CI validation, and use the GitHub Actions automation tooling. Intended for
+  developers and productivity enthusiasts working with or contributing to this
+  repository.
+
+instructions: |
+  ## How to use this Space
+
+  This Space gives you an AI assistant that understands the Todoist Playbook
+  repository in full. You can ask it to:
+
+  - **Discover templates** — "What templates are available for SaaS workflows?"
+  - **Understand a template** — "Walk me through the weekly-review template."
+  - **Create a new template** — "Help me scaffold a new template for client onboarding."
+  - **Debug CI failures** — "My meta.yml fails validation; what's wrong?"
+  - **Use the automation** — "How do I run the Create Todoist Project workflow?"
+
+  Provide as much context as you can. For new templates, describe the workflow
+  you want to capture and the sections/tasks you have in mind.
+
+  ---
+
+  ## Repository Context
+
+  **todoist-playbook** is a curated collection of structured Todoist templates
+  and automation tooling. Every template lives at `templates/{slug}/` and
+  contains exactly three files:
+
+  - `template.csv` — importable task list in Todoist CSV format
+  - `meta.yml` — machine-readable metadata
+  - `README.md` — human-readable explanation and usage guidance
+
+  ### Template conventions
+
+  **Folder naming**: kebab-case only (e.g. `saas-spin-up`, `daily-review`).
+
+  **`meta.yml` required keys** (all at column 0):
+  ```yaml
+  name: Human Readable Name
+  slug: folder-slug
+  description: One-line description
+  category: kebab-case-category
+  tags:
+    - tag-one
+  version: 1.0.0
+  ```
+
+  **`template.csv` rules**:
+  - First line: `TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG`
+  - `TYPE` must be `section` or `task` (nothing else)
+  - `PRIORITY`: 1 (urgent) → 4 (normal)
+  - `DUE_DATE` must always be empty — no hardcoded dates
+
+  ### CI validation
+
+  The `validate-templates.yml` workflow checks kebab-case folder name, required
+  files, required `meta.yml` keys, slug-folder match, CSV header, and TYPE values
+  on every push to `main`.
+
+  ### Workflows
+
+  - **`validate-templates.yml`**: Runs on push to `main`; pure bash.
+  - **`create-todoist-project.yml`**: Manual or scheduled; requires
+    `TODOIST_API_TOKEN` secret; calls `.github/scripts/create_todoist_project.py`.
+
+  When a new template is added, its slug must be added to the `options` list in
+  `create-todoist-project.yml` and to the table in `index.md`.
+
+  ---
+
+  ## Canonical Examples of Good Output
+
+  ### Example 1 — Template scaffolding
+
+  **Prompt**: "Create a new template for client onboarding."
+
+  **Expected output**: A complete folder scaffold with:
+  - `meta.yml` containing all required keys and a slug matching the folder name
+  - `template.csv` with a valid `TYPE` header, sections, and tasks with no
+    hardcoded due dates
+  - `README.md` covering purpose, sections, and import instructions
+  - A reminder to add the slug to `create-todoist-project.yml` and `index.md`
+
+  ### Example 2 — Validation debugging
+
+  **Prompt**: "CI says 'meta.yml slug does not match folder'. My folder is
+  `client-onboarding` and my slug is `client-onboarding`. What's wrong?"
+
+  **Expected output**: Advice to check for invisible characters, leading/trailing
+  spaces, or surrounding quotes in the YAML value, and instructions for verifying
+  with `cat -A meta.yml`.
+
+  ### Example 3 — Template discovery
+
+  **Prompt**: "I need a checklist for winding down a SaaS subscription."
+
+  **Expected output**: A pointer to `templates/saas-wind-down/` with a summary
+  of its sections and a note on how to import it via the GitHub Actions workflow
+  or manually via Todoist's CSV import.
+
+  ---
+
+  ## Naming Conventions
+
+  Spaces in this project follow the pattern `Todoist Playbook—{Purpose}`.
+  If this Space grows beyond a single job, split it into smaller, focused Spaces
+  (e.g. `Todoist Playbook—Contributor Guide`, `Todoist Playbook—Template Finder`).
+
+  Tags: todoist, productivity, templates, gtd, automation, github-actions
+
+sources:
+  - README.md
+  - index.md
+  - CONTRIBUTING
+  - .github/copilot-instructions.md
+  - .github/workflows/validate-templates.yml
+  - .github/workflows/create-todoist-project.yml
+  - .github/scripts/create_todoist_project.py
+  - templates/daily-review/README.md
+  - templates/weekly-review/README.md
+  - templates/saas-spin-up/README.md
+  - templates/saas-wind-down/README.md
