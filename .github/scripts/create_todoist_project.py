@@ -13,6 +13,30 @@ TODOIST_API_BASE = "https://api.todoist.com/api/v1"
 # CSV priority 1 = urgent (p1) → API priority 4; CSV 4 = normal → API 1
 _PRIORITY_MAP = {"1": 4, "2": 3, "3": 2, "4": 1}
 
+# Todoist color names from the official Colors guide.
+_SUPPORTED_PROJECT_COLORS = {
+    "berry_red",
+    "red",
+    "orange",
+    "yellow",
+    "olive_green",
+    "lime_green",
+    "green",
+    "mint_green",
+    "teal",
+    "sky_blue",
+    "light_blue",
+    "blue",
+    "grape",
+    "violet",
+    "lavender",
+    "magenta",
+    "salmon",
+    "charcoal",
+    "grey",
+    "taupe",
+}
+
 
 def api_post(endpoint, token, data):
     """POST to the Todoist REST API and return the parsed JSON response."""
@@ -31,18 +55,14 @@ def api_post(endpoint, token, data):
         sys.exit(1)
 
 
-def read_project_name_from_meta(template_dir):
-    """Return the 'name' field from meta.yml, or None if unavailable.
-
-    meta.yml must use a simple 'name: value' format on a single line
-    (as enforced by the validate-templates workflow).
-    """
+def read_meta_value(template_dir, key):
+    """Return a top-level scalar meta.yml value for the provided key, or None."""
     meta_path = os.path.join(template_dir, "meta.yml")
     if not os.path.exists(meta_path):
         return None
     with open(meta_path, encoding="utf-8") as f:
         for line in f:
-            if line.startswith("name:"):
+            if line.startswith(f"{key}:"):
                 return line.split(":", 1)[1].strip().strip("\"'")
     return None
 
@@ -68,16 +88,34 @@ def main():
     # Resolve the project name: explicit input takes priority over meta.yml
     project_name = os.environ.get("PROJECT_NAME", "").strip()
     if not project_name:
-        project_name = read_project_name_from_meta(template_dir)
+        project_name = read_meta_value(template_dir, "name")
     if not project_name:
         project_name = template_slug.replace("-", " ").title()
 
+    project_color = read_meta_value(template_dir, "project_color")
+    if project_color and project_color not in _SUPPORTED_PROJECT_COLORS:
+        allowed = ", ".join(sorted(_SUPPORTED_PROJECT_COLORS))
+        print(
+            (
+                f"❌ Invalid project_color '{project_color}' in {template_dir}/meta.yml. "
+                f"Allowed values: {allowed}"
+            ),
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
     print(f"📋 Template : {template_slug}")
     print(f"📁 Project  : {project_name}")
+    if project_color:
+        print(f"🎨 Color    : {project_color}")
     print()
 
     # Create the Todoist project
-    project = api_post("projects", token, {"name": project_name})
+    project_data = {"name": project_name}
+    if project_color:
+        project_data["color"] = project_color
+
+    project = api_post("projects", token, project_data)
     project_id = project["id"]
     print(f"✅ Project created (id={project_id})")
 

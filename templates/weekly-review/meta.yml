@@ -9,5 +9,6 @@ tags:
   - weekly
 estimated_duration: 45m
 recurrence_suggestion: weekly
+project_color: blue
 version: 1.0.0
 author: Colin Gourlay
