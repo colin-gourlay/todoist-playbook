@@ -13,29 +13,15 @@ TODOIST_API_BASE = "https://api.todoist.com/api/v1"
 # CSV priority 1 = urgent (p1) → API priority 4; CSV 4 = normal → API 1
 _PRIORITY_MAP = {"1": 4, "2": 3, "3": 2, "4": 1}
 
-# Todoist color names from the official Colors guide.
-_SUPPORTED_PROJECT_COLORS = {
-    "berry_red",
-    "red",
-    "orange",
-    "yellow",
-    "olive_green",
-    "lime_green",
-    "green",
-    "mint_green",
-    "teal",
-    "sky_blue",
-    "light_blue",
-    "blue",
-    "grape",
-    "violet",
-    "lavender",
-    "magenta",
-    "salmon",
-    "charcoal",
-    "grey",
-    "taupe",
-}
+def _load_supported_project_colors():
+    """Load supported Todoist color names from the shared project_colors.txt file."""
+    colors_file = os.path.join(os.path.dirname(__file__), "project_colors.txt")
+    with open(colors_file, encoding="utf-8") as f:
+        return {line.strip() for line in f if line.strip()}
+
+
+# Todoist color names loaded from the shared project_colors.txt file.
+_SUPPORTED_PROJECT_COLORS = _load_supported_project_colors()
 
 
 def api_post(endpoint, token, data):

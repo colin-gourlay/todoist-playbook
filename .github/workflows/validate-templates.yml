@@ -16,10 +16,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          valid_project_colors=(
-            berry_red red orange yellow olive_green lime_green green mint_green teal sky_blue
-            light_blue blue grape violet lavender magenta salmon charcoal grey taupe
-          )
+          mapfile -t valid_project_colors < .github/scripts/project_colors.txt
 
           if [ ! -d "templates" ]; then
             echo "❌ templates/ folder not found"

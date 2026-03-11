@@ -10,5 +10,6 @@ tags:
   - gtd
 estimated_duration: 15m
 recurrence_suggestion: daily
+project_color: red
 version: 1.0.0
 author: Colin Gourlay
