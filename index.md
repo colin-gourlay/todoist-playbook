@@ -13,7 +13,7 @@
 
 | Template | Description | Tags |
 |----------|------------|------|
-| [Radio Show Prep](templates/radio-show-prep/) | End-to-end show planning, recording, upload & promotion | creative, media, repeatable |
+| [Radio Show System](templates/radio-show-system/) | Pre and post tasks associated with a given show | review, planning, productivity, weekly |
 
 ---
 
@@ -30,7 +30,6 @@
 | Template | Description | Tags |
 |----------|------------|------|
 | [Code Review](templates/code-review/) | Structured checklist for conducting thorough .NET code reviews covering hygiene, unit testing, code structure, Entity Framework, and general best practices | code-review, dotnet, testing, clean-code, best-practices |
-| [New Project Kickoff](templates/new-project-kickoff/) | Structured project setup & planning | work, project, structured |
 | [Iteration 0](templates/iteration-0/) | Sprint 0 checklist for setting up a new project repository with version control, branching strategy, and Azure DevOps configuration | sprint, iteration-0, azure-devops, version-control, git |
 | [Entity Framework Code Review](templates/ef-code-review/) | Checklist for reviewing Entity Framework POCOs and configuration for correctness, conventions, and Roslyn compliance | code-review, entity-framework, dotnet, csharp, database |
 
@@ -57,4 +56,4 @@
 
 | Prompt Template | Description | Inputs |
 |-----------------|-------------|--------|
-| [Task Enrichment](prompt-templates/task-enrichment/) | Generate a structured Todoist task title, description, and sub-tasks from a brief input and context | task_title, context, priority |
+| [Task Enrichment](prompt-templates/task-enrichment/) | Generate a structured Todoist task title and description from a brief input and context | task_title, context, priority |
