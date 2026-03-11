@@ -4,10 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       template:
-        description: Template to use
-        required: true
+        description: CSV template to use (leave blank when using a prompt template)
+        required: false
         type: choice
         options:
+          - ''
           - code-review
           - daily-review
           - ef-code-review
@@ -18,6 +19,30 @@ on:
           - saas-wind-down
           - socials-health-and-optimization-checklist
           - weekly-review
+      prompt_template:
+        description: AI prompt template to use (leave blank when using a CSV template)
+        required: false
+        type: choice
+        options:
+          - ''
+          - task-enrichment
+      task_title:
+        description: 'Task title — required when using a prompt template'
+        required: false
+        type: string
+      context:
+        description: 'Background information or constraints (optional, prompt template only)'
+        required: false
+        type: string
+      priority:
+        description: 'Task priority (prompt template only)'
+        required: false
+        type: choice
+        options:
+          - normal
+          - medium
+          - high
+          - urgent
       project_name:
         description: Project name (leave blank to use the template's default name)
         required: false
@@ -28,13 +53,29 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      models: read
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Create Todoist project from template
+      - name: Create Todoist project from CSV template
+        # Runs when no prompt_template is selected. Leaving both inputs blank
+        # defaults to the 'weekly-review' CSV template for backward compatibility.
+        if: ${{ inputs.prompt_template == '' }}
         env:
           TODOIST_API_TOKEN: ${{ secrets.TODOIST_API_TOKEN }}
           TEMPLATE: ${{ inputs.template || 'weekly-review' }}
           PROJECT_NAME: ${{ inputs.project_name }}
         run: python3 .github/scripts/create_todoist_project.py
+
+      - name: Generate content via GitHub Copilot and create Todoist project
+        if: ${{ inputs.prompt_template != '' }}
+        env:
+          TODOIST_API_TOKEN: ${{ secrets.TODOIST_API_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROMPT_TEMPLATE: ${{ inputs.prompt_template }}
+          TASK_TITLE: ${{ inputs.task_title }}
+          CONTEXT: ${{ inputs.context }}
+          PRIORITY: ${{ inputs.priority || 'normal' }}
+          PROJECT_NAME: ${{ inputs.project_name }}
+        run: python3 .github/scripts/run_prompt_template.py
