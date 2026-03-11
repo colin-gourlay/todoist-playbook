@@ -3,6 +3,8 @@ name: Validate templates
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -92,7 +94,17 @@ jobs:
             fi
 
             # -----------------------
-            # 4. CSV validation
+            # 4. README import steps check
+            # -----------------------
+            if [ -f "${dir}README.md" ]; then
+              if ! grep -qiE "^## import instructions|import.*csv" "${dir}README.md"; then
+                echo "❌ README.md does not contain import instructions in ${dir}"
+                failed=1
+              fi
+            fi
+
+            # -----------------------
+            # 5. CSV validation
             # -----------------------
             if [ -f "${dir}template.csv" ]; then
 
