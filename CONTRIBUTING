@@ -19,3 +19,35 @@ Before adding a new template:
 - Open an issue describing the workflow
 - Define acceptance criteria
 - Clarify reuse potential
+
+---
+
+## Prompt Templates
+
+Prompt templates must:
+
+- Live under `prompt-templates/{slug}/` (kebab-case folder name)
+- Include:
+  - `prompt.md`
+  - `meta.yml`
+  - `README.md`
+- Use `{{placeholder}}` syntax for all input variables
+- Be provider-agnostic (must work with any instruction-following LLM)
+- Define a clear output schema with required and optional sections
+- Include at least one worked example (input + expected output)
+
+`meta.yml` required keys:
+
+- `name:`
+- `slug:` (must match the folder name exactly)
+- `description:`
+- `category:`
+- `tags:`
+- `version:`
+- `inputs:` (list of placeholder variable names, without braces)
+
+Before adding a new prompt template:
+
+- Open an issue describing the use case and target workflow
+- Define the input variables and expected output schema
+- Confirm the prompt works end-to-end with at least one LLM before submitting

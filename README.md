@@ -43,11 +43,28 @@ Each template folder includes:
 - `meta.yml` → machine-readable metadata
 - `README.md` → explanation & usage guidance
 
+### 🤖 AI Prompt Templates
+
+Use AI prompt templates to generate rich, structured task content before adding items to Todoist.
+
+1. Browse the prompt template catalog in `index.md`
+2. Navigate to a `prompt-templates/` folder
+3. Open `prompt.md` and fill in the `{{placeholders}}`
+4. Paste the prompt into your AI assistant (ChatGPT, GitHub Copilot, Claude, Gemini, etc.)
+5. Copy the output into the Todoist task name and description fields
+
+Each prompt template folder includes:
+
+- `prompt.md` → the prompt with input placeholders and expected output schema
+- `meta.yml` → machine-readable metadata
+- `README.md` → usage guidance and examples
+
 ---
 
 ## 📂 Structure
 
 - `/templates` → Individual reusable templates
+- `/prompt-templates` → AI prompt templates for generating enriched Todoist task content
 - `/bundles` → Multi-template starter kits
 - `/cli` → Automation tooling
 - `/docs` → GitHub Pages site

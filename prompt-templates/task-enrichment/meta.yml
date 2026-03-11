@@ -1,0 +1,15 @@
+name: Task Enrichment
+slug: task-enrichment
+description: Generate a structured Todoist task title and description from a brief input and context
+category: content-generation
+tags:
+  - ai
+  - task-enrichment
+  - todoist
+  - productivity
+version: 1.0.0
+author: Colin Gourlay
+inputs:
+  - task_title
+  - context
+  - priority
