@@ -1,0 +1,14 @@
+name: Radio Show Week
+slug: radio-show-week
+description: Everything needed to run a full radio show week — from pre-production and playlists through to upload, comms, and social media
+category: radio-show-systems
+tags:
+  - radio
+  - creative
+  - planning
+  - weekly
+  - social-media
+version: 1.0.0
+author: Colin Gourlay
+templates:
+  - radio-show-system

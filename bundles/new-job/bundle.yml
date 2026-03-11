@@ -1,0 +1,16 @@
+name: New Job Starter Kit
+slug: new-job
+description: A curated set of templates to hit the ground running at a new job — covering onboarding, weekly planning, and one-on-one meetings
+category: career
+tags:
+  - onboarding
+  - career
+  - meetings
+  - planning
+  - new-job
+version: 1.0.0
+author: Colin Gourlay
+templates:
+  - onboarding-checklist
+  - weekly-review
+  - one-on-one

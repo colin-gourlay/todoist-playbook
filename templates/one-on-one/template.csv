@@ -1,0 +1,21 @@
+TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG
+section,1️⃣ Before the Meeting,,,,,,
+task,Review notes from last 1:1,2,1,,,,,
+task,Check on actions agreed last session,1,1,,,,,
+task,Prepare talking points and questions,2,1,,,,,
+task,Flag any blockers or issues to raise,1,1,,,,,
+task,Note any wins or progress to share,3,1,,,,,
+
+section,2️⃣ During the Meeting,,,,,,
+task,Share updates on current priorities,2,1,,,,,
+task,Raise any blockers or concerns,1,1,,,,,
+task,Discuss career development or growth topics,3,1,,,,,
+task,Ask for feedback on recent work,2,1,,,,,
+task,Align on priorities for the next period,1,1,,,,,
+task,Capture any decisions or commitments made,1,1,,,,,
+
+section,3️⃣ After the Meeting,,,,,,
+task,Update notes with key discussion points,2,1,,,,,
+task,Log agreed actions with owners and due dates,1,1,,,,,
+task,Follow up on any open items or requests,2,1,,,,,
+task,Add topics for next 1:1 to running list,3,1,,,,,

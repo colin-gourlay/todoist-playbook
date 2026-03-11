@@ -1,0 +1,14 @@
+name: House Admin Starter Kit
+slug: house-admin
+description: A curated set of templates for keeping on top of household administration — bills, renewals, vehicle maintenance, and property upkeep
+category: personal-systems
+tags:
+  - home
+  - admin
+  - bills
+  - renewals
+  - planning
+version: 1.0.0
+author: Colin Gourlay
+templates:
+  - house-admin
