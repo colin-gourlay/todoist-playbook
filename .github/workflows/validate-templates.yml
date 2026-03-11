@@ -120,3 +120,80 @@ jobs:
           fi
 
           echo "✅ All templates validated successfully"
+
+      - name: Validate prompt template structure
+        run: |
+          set -euo pipefail
+
+          if [ ! -d "prompt-templates" ]; then
+            echo "ℹ️  No prompt-templates/ folder found — skipping"
+            exit 0
+          fi
+
+          failed=0
+
+          for dir in prompt-templates/*/ ; do
+            [ -d "$dir" ] || continue
+            slug=$(basename "$dir")
+
+            echo "🔎 Checking prompt template: $slug"
+
+            # -----------------------
+            # 1. Kebab-case check
+            # -----------------------
+            if [[ ! "$slug" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+              echo "❌ Folder name must be kebab-case: $slug"
+              failed=1
+            fi
+
+            # -----------------------
+            # 2. Required files
+            # -----------------------
+            for file in prompt.md meta.yml README.md; do
+              if [ ! -f "${dir}${file}" ]; then
+                echo "❌ Missing ${file} in ${dir}"
+                failed=1
+              fi
+            done
+
+            # -----------------------
+            # 3. meta.yml validation
+            # -----------------------
+            if [ -f "${dir}meta.yml" ]; then
+              required_keys=("name:" "slug:" "description:" "category:" "tags:" "version:" "inputs:")
+
+              for key in "${required_keys[@]}"; do
+                if ! grep -q "^${key}" "${dir}meta.yml"; then
+                  echo "❌ meta.yml missing key: ${key} in ${dir}"
+                  failed=1
+                fi
+              done
+
+              # slug match check
+              meta_slug=$(grep "^slug:" "${dir}meta.yml" | head -n1 | sed 's/slug:[[:space:]]*//')
+              meta_slug=$(echo "$meta_slug" | tr -d '"'\''')
+
+              if [ "$meta_slug" != "$slug" ]; then
+                echo "❌ meta.yml slug ($meta_slug) does not match folder ($slug)"
+                failed=1
+              fi
+            fi
+
+            # -----------------------
+            # 4. prompt.md validation
+            # -----------------------
+            if [ -f "${dir}prompt.md" ]; then
+              if ! grep -q "{{" "${dir}prompt.md"; then
+                echo "❌ prompt.md contains no {{placeholder}} variables in ${dir}"
+                failed=1
+              fi
+            fi
+
+          done
+
+          if [ "$failed" -ne 0 ]; then
+            echo "💥 Prompt template validation failed"
+            exit 1
+          fi
+
+          echo "✅ All prompt templates validated successfully"

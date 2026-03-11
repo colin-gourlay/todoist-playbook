@@ -50,3 +50,11 @@
 | Template | Description | Tags |
 |----------|------------|------|
 | [Socials Health & Optimisation Checklist](templates/socials-health-and-optimization-checklist/) | Periodic audit to maintain brand hygiene, consistency, and security across all public-facing platforms — social networks, directories, review sites, and professional registries | social-media, brand, audit, hygiene, security, seo |
+
+---
+
+## 🤖 AI Prompt Templates
+
+| Prompt Template | Description | Inputs |
+|-----------------|-------------|--------|
+| [Task Enrichment](prompt-templates/task-enrichment/) | Generate a structured Todoist task title, description, and sub-tasks from a brief input and context | task_title, context, priority |
