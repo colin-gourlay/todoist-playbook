@@ -51,3 +51,15 @@ Before adding a new prompt template:
 - Open an issue describing the use case and target workflow
 - Define the input variables and expected output schema
 - Confirm the prompt works end-to-end with at least one LLM before submitting
+
+---
+
+## Documentation Sync
+
+When adding a new template or prompt template, update the following:
+
+- `index.md` — add a row to the appropriate section of the catalog table
+- `.github/workflows/create-todoist-project.yml`:
+  - For CSV templates: add the slug to the `options` list under `inputs.template`
+  - For prompt templates: add the slug to the `options` list under `inputs.prompt_template`
+- `README.md` — update any references if the new template changes usage instructions

@@ -29,7 +29,7 @@ Use the **Create Todoist Project from Template** GitHub Actions workflow to crea
 
 ### 📥 Manual
 
-1. Browse the template catalog in `INDEX.md`
+1. Browse the template catalog in `index.md`
 2. Navigate to a template folder
 3. Download `template.csv`
 4. Import into Todoist:
