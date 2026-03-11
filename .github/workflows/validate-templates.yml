@@ -16,6 +16,8 @@ jobs:
         run: |
           set -euo pipefail
 
+          mapfile -t valid_project_colors < .github/scripts/project_colors.txt
+
           if [ ! -d "templates" ]; then
             echo "❌ templates/ folder not found"
             exit 1
@@ -67,6 +69,25 @@ jobs:
               if [ "$meta_slug" != "$slug" ]; then
                 echo "❌ meta.yml slug ($meta_slug) does not match folder ($slug)"
                 failed=1
+              fi
+
+              # Optional project_color check
+              if grep -q "^project_color:" "${dir}meta.yml"; then
+                meta_color=$(grep "^project_color:" "${dir}meta.yml" | head -n1 | sed 's/project_color:[[:space:]]*//')
+                meta_color=$(echo "$meta_color" | tr -d '"'\''')
+
+                color_valid=0
+                for valid_color in "${valid_project_colors[@]}"; do
+                  if [ "$meta_color" = "$valid_color" ]; then
+                    color_valid=1
+                    break
+                  fi
+                done
+
+                if [ "$color_valid" -ne 1 ]; then
+                  echo "❌ Invalid project_color '$meta_color' in ${dir}meta.yml"
+                  failed=1
+                fi
               fi
             fi
 
