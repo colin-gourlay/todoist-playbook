@@ -1,0 +1,15 @@
+name: House Admin
+slug: house-admin
+description: Annual household administration checklist covering bills, renewals, vehicle maintenance, and home upkeep
+category: personal-systems
+tags:
+  - home
+  - admin
+  - bills
+  - renewals
+  - planning
+estimated_duration: 120m
+recurrence_suggestion: as-needed
+project_color: yellow
+version: 1.0.0
+author: Colin Gourlay

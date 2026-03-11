@@ -1,0 +1,14 @@
+name: One-on-One
+slug: one-on-one
+description: Recurring preparation and follow-up checklist for 1:1 meetings with a manager or direct report
+category: career
+tags:
+  - meetings
+  - one-on-one
+  - career
+  - management
+estimated_duration: 30m
+recurrence_suggestion: weekly
+project_color: green
+version: 1.0.0
+author: Colin Gourlay

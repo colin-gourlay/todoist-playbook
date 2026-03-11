@@ -12,8 +12,11 @@ on:
           - code-review
           - daily-review
           - ef-code-review
+          - house-admin
           - iteration-0
           - microsoft-certification-exam
+          - onboarding-checklist
+          - one-on-one
           - radio-show-system
           - saas-spin-up
           - saas-wind-down

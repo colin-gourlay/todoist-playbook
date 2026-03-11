@@ -1,5 +1,15 @@
 # Template Catalog
 
+## 📦 Starter Kit Bundles
+
+| Bundle | Description | Templates |
+|--------|-------------|-----------|
+| [New Job](bundles/new-job/) | Hit the ground running at a new job — onboarding, weekly planning, and 1:1 meetings | onboarding-checklist, weekly-review, one-on-one |
+| [Radio Show Week](bundles/radio-show-week/) | Full radio show week — prep, playlists, comms, upload, and socials | radio-show-system |
+| [House Admin](bundles/house-admin/) | Annual household administration — bills, renewals, MOT, and property upkeep | house-admin |
+
+---
+
 ## 🔁 Daily & Weekly Systems
 
 | Template | Description | Tags |
@@ -25,7 +35,16 @@
 
 ---
 
-## 🧑‍💼 Work Projects
+## 🧑‍💼 Career & Meetings
+
+| Template | Description | Tags |
+|----------|------------|------|
+| [Onboarding Checklist](templates/onboarding-checklist/) | Structured first-90-days checklist for starting a new job — admin, relationships, learning, and early wins | onboarding, career, new-job, planning |
+| [One-on-One](templates/one-on-one/) | Recurring preparation and follow-up checklist for 1:1 meetings with a manager or direct report | meetings, one-on-one, career, management |
+
+---
+
+## 💻 Work Projects
 
 | Template | Description | Tags |
 |----------|------------|------|
@@ -41,6 +60,14 @@
 |----------|------------|------|
 | [SaaS Spin-Up](templates/saas-spin-up/) | End-to-end checklist for onboarding a new SaaS subscription — evaluation, security, billing, integrations, and ongoing maintenance | saas, setup, onboarding, security |
 | [SaaS Wind-Down](templates/saas-wind-down/) | End-to-end checklist for safely winding down a SaaS subscription — data export, billing cancellation, and account closure | saas, offboarding, wind-down, security |
+
+---
+
+## 🏠 Home & Personal
+
+| Template | Description | Tags |
+|----------|------------|------|
+| [House Admin](templates/house-admin/) | Annual household administration checklist covering bills, renewals, vehicle maintenance, and home upkeep | home, admin, bills, renewals, planning |
 
 ---
 
