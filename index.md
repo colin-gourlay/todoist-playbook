@@ -31,7 +31,7 @@
 
 | Template | Description | Tags |
 |----------|------------|------|
-| [Microsoft Certification Exam](templates/microsoft-certification-exam/) | End-to-end checklist for preparing, registering, sitting, and following up on a Microsoft certification exam | microsoft, certification, exam, learning, career |
+| [Certification Exam](templates/certification-exam/) | End-to-end checklist for preparing, registering, sitting, and following up on a certification exam | certification, exam, learning, career |
 
 ---
 

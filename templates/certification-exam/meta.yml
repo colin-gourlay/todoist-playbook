@@ -1,9 +1,8 @@
-name: Microsoft Certification Exam
-slug: microsoft-certification-exam
-description: End-to-end checklist for preparing, registering, sitting, and following up on a Microsoft certification exam
+name: Certification Exam
+slug: certification-exam
+description: End-to-end checklist for preparing, registering, sitting, and following up on a certification exam
 category: professional-development
 tags:
-  - microsoft
   - certification
   - exam
   - learning
