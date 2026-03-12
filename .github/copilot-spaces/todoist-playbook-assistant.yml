@@ -89,8 +89,9 @@ instructions: |
   available tools at runtime via `tools/list` so it stays compatible with future
   server updates.
 
-  When a new template is added, its slug must be added to the `options` list in
-  `create-todoist-project.yml` and to the table in `index.md`.
+  When a new template is added, its slug must be added to the `options` lists in
+  both `create-todoist-project.yml` and `create-todoist-project-via-mcp.yml`, and
+  to the table in `index.md`.
 
   ---
 
