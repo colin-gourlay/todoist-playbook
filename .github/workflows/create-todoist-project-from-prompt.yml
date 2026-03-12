@@ -30,6 +30,14 @@ on:
         description: Project name (leave blank to use the generated task title)
         required: false
         type: string
+      is_favorite:
+        description: Mark the project as a favourite
+        required: false
+        default: 'no'
+        type: choice
+        options:
+          - 'no'
+          - 'yes'
 
 jobs:
   create-project:
@@ -50,4 +58,5 @@ jobs:
           CONTEXT: ${{ inputs.context }}
           PRIORITY: ${{ inputs.priority || 'normal' }}
           PROJECT_NAME: ${{ inputs.project_name }}
+          IS_FAVORITE: ${{ inputs.is_favorite }}
         run: python3 .github/scripts/run_prompt_template.py

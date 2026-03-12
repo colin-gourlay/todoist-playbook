@@ -88,16 +88,22 @@ def main():
         )
         sys.exit(1)
 
+    is_favorite = os.environ.get("IS_FAVORITE", "").strip().lower() == "yes"
+
     print(f"📋 Template : {template_slug}")
     print(f"📁 Project  : {project_name}")
     if project_color:
         print(f"🎨 Color    : {project_color}")
+    if is_favorite:
+        print(f"⭐ Favourite: yes")
     print()
 
     # Create the Todoist project
     project_data = {"name": project_name}
     if project_color:
         project_data["color"] = project_color
+    if is_favorite:
+        project_data["is_favorite"] = True
 
     project = api_post("projects", token, project_data)
     project_id = project["id"]

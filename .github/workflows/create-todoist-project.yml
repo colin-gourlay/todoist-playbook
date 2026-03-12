@@ -52,6 +52,14 @@ on:
           - charcoal
           - grey
           - taupe
+      is_favorite:
+        description: Mark the project as a favourite
+        required: false
+        default: 'no'
+        type: choice
+        options:
+          - 'no'
+          - 'yes'
 
 jobs:
   create-project:
@@ -69,4 +77,5 @@ jobs:
           TEMPLATE: ${{ inputs.template || 'weekly-review' }}
           PROJECT_NAME: ${{ inputs.project_name }}
           PROJECT_COLOR: ${{ inputs.color }}
+          IS_FAVORITE: ${{ inputs.is_favorite }}
         run: python3 .github/scripts/create_todoist_project.py
