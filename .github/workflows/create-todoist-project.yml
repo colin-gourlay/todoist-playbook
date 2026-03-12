@@ -50,6 +50,32 @@ on:
         description: Project name (leave blank to use the template's default name)
         required: false
         type: string
+      color:
+        description: Project colour (leave blank to use the template or system default)
+        required: false
+        type: choice
+        options:
+          - ''
+          - berry_red
+          - red
+          - orange
+          - yellow
+          - olive_green
+          - lime_green
+          - green
+          - mint_green
+          - teal
+          - sky_blue
+          - light_blue
+          - blue
+          - grape
+          - violet
+          - lavender
+          - magenta
+          - salmon
+          - charcoal
+          - grey
+          - taupe
 
 jobs:
   create-project:
@@ -69,6 +95,7 @@ jobs:
           TODOIST_API_TOKEN: ${{ secrets.TODOIST_API_TOKEN }}
           TEMPLATE: ${{ inputs.template || 'weekly-review' }}
           PROJECT_NAME: ${{ inputs.project_name }}
+          PROJECT_COLOR: ${{ inputs.color }}
         run: python3 .github/scripts/create_todoist_project.py
 
       - name: Generate content via GitHub Copilot and create Todoist project
