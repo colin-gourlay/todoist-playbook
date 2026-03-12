@@ -59,7 +59,7 @@ jobs:
       models: read
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Create Todoist project from CSV template
         # Runs when no prompt_template is selected. Leaving both inputs blank
