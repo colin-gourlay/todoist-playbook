@@ -31,7 +31,7 @@
 
 | Template | Description | Tags |
 |----------|------------|------|
-| [Certification Exam](templates/certification-exam/) | End-to-end checklist for preparing, registering, sitting, and following up on a certification exam | certification, exam, learning, career |
+| [Exam Certification Workflow](templates/exam-certification-workflow/) | End-to-end checklist for preparing, registering, sitting, and following up on a certification exam | certification, exam, learning, career |
 
 ---
 
