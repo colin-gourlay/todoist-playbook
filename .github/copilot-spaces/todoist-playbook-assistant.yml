@@ -31,6 +31,7 @@ instructions: |
   - **Create a new template** — "Help me scaffold a new template for client onboarding."
   - **Debug CI failures** — "My meta.yml fails validation; what's wrong?"
   - **Use the automation** — "How do I run the Create Todoist Project workflow?"
+  - **Use MCP integration** — "How do I create a project using the Todoist MCP server?"
 
   Provide as much context as you can. For new templates, describe the workflow
   you want to capture and the sections/tasks you have in mind.
@@ -79,6 +80,14 @@ instructions: |
   - **`validate-templates.yml`**: Runs on push to `main`; pure bash.
   - **`create-todoist-project.yml`**: Manual or scheduled; requires
     `TODOIST_API_TOKEN` secret; calls `.github/scripts/create_todoist_project.py`.
+  - **`create-todoist-project-via-mcp.yml`**: Manual; requires `TODOIST_API_TOKEN`
+    secret; connects to `https://ai.todoist.net/mcp` using the MCP Streamable HTTP
+    transport and calls `.github/scripts/create_via_mcp.py`.
+
+  The MCP workflow uses the same template slugs and inputs as the standard
+  workflow but routes all Todoist API calls through the MCP server. It discovers
+  available tools at runtime via `tools/list` so it stays compatible with future
+  server updates.
 
   When a new template is added, its slug must be added to the `options` list in
   `create-todoist-project.yml` and to the table in `index.md`.
@@ -115,6 +124,19 @@ instructions: |
   of its sections and a note on how to import it via the GitHub Actions workflow
   or manually via Todoist's CSV import.
 
+  ### Example 4 — MCP workflow
+
+  **Prompt**: "How do I create an exam-certification-workflow project using the
+  MCP server?"
+
+  **Expected output**: Step-by-step instructions to trigger the
+  `create-todoist-project-via-mcp.yml` workflow dispatch, select the
+  `exam-certification-workflow` template, and optionally set a project name.
+  A note that the workflow uses `.github/scripts/create_via_mcp.py` which
+  initialises an MCP session with `https://ai.todoist.net/mcp`, discovers
+  available tools via `tools/list`, then calls `create_project`,
+  `create_section`, and `create_task` in sequence.
+
   ---
 
   ## Naming Conventions
@@ -132,7 +154,9 @@ sources:
   - .github/copilot-instructions.md
   - .github/workflows/validate-templates.yml
   - .github/workflows/create-todoist-project.yml
+  - .github/workflows/create-todoist-project-via-mcp.yml
   - .github/scripts/create_todoist_project.py
+  - .github/scripts/create_via_mcp.py
   - templates/daily-review/README.md
   - templates/weekly-review/README.md
   - templates/saas-spin-up/README.md

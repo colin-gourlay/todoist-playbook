@@ -1,0 +1,83 @@
+name: Create Todoist Project via MCP
+
+on:
+  workflow_dispatch:
+    inputs:
+      template:
+        description: CSV template to use
+        required: false
+        type: choice
+        options:
+          - ''
+          - code-review
+          - daily-review
+          - ef-code-review
+          - exam-certification-workflow
+          - house-admin
+          - iteration-0
+          - onboarding-checklist
+          - one-on-one
+          - radio-show-system
+          - saas-spin-up
+          - saas-wind-down
+          - socials-health-and-optimization-checklist
+          - weekly-review
+      project_name:
+        description: Project name (leave blank to use the template's default name)
+        required: false
+        type: string
+      color:
+        description: Project colour (leave blank to use the template or system default)
+        required: false
+        type: choice
+        options:
+          - ''
+          - berry_red
+          - red
+          - orange
+          - yellow
+          - olive_green
+          - lime_green
+          - green
+          - mint_green
+          - teal
+          - sky_blue
+          - light_blue
+          - blue
+          - grape
+          - violet
+          - lavender
+          - magenta
+          - salmon
+          - charcoal
+          - grey
+          - taupe
+      is_favorite:
+        description: Mark the project as a favourite
+        required: false
+        default: 'no'
+        type: choice
+        options:
+          - 'no'
+          - 'yes'
+
+jobs:
+  create-project:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Create Todoist project via MCP server
+        # Leaving template blank defaults to the 'weekly-review' CSV template.
+        # Connects to https://ai.todoist.net/mcp using the MCP Streamable HTTP
+        # transport; no additional dependencies are required beyond Python 3.
+        env:
+          TODOIST_API_TOKEN: ${{ secrets.TODOIST_API_TOKEN }}
+          TEMPLATE: ${{ inputs.template || 'weekly-review' }}
+          PROJECT_NAME: ${{ inputs.project_name }}
+          PROJECT_COLOR: ${{ inputs.color }}
+          IS_FAVORITE: ${{ inputs.is_favorite }}
+        run: python3 .github/scripts/create_via_mcp.py

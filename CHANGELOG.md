@@ -17,4 +17,7 @@
 - Template: `one-on-one` — recurring 1:1 meeting preparation and follow-up
 - Template: `house-admin` — household admin covering bills, renewals, MOT, and property maintenance
 - Updated `index.md` with Bundles section, Career & Meetings section, and Home & Personal section
+- Workflow: `create-todoist-project-via-mcp.yml` — creates a Todoist project from any CSV template by connecting to the Todoist MCP server (`https://ai.todoist.net/mcp`) using the MCP Streamable HTTP transport
+- Script: `.github/scripts/create_via_mcp.py` — minimal MCP client (stdlib only) that initialises a session, discovers tools via `tools/list`, and calls `create_project`, `create_section`, and `create_task` in sequence
+- Updated `index.md` with MCP Workflows section
 

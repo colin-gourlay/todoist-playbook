@@ -84,3 +84,11 @@
 | Prompt Template | Description | Inputs |
 |-----------------|-------------|--------|
 | [Task Enrichment](prompt-templates/task-enrichment/) | Generate a structured Todoist task title and description from a brief input and context | task_title, context, priority |
+
+---
+
+## 🔗 MCP Workflows
+
+| Workflow | Description | Trigger |
+|----------|-------------|---------|
+| [Create Todoist Project via MCP](.github/workflows/create-todoist-project-via-mcp.yml) | Create a Todoist project from any CSV template by routing all API calls through the [Todoist MCP server](https://ai.todoist.net/mcp) | workflow_dispatch |
