@@ -316,7 +316,7 @@ def main() -> None:
 
     with open(csv_path, newline="", encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
-        for row in reader:
+        for row_num, row in enumerate(reader, start=2):  # row 1 is the CSV header
             row_type = row.get("TYPE", "").strip()
             content = row.get("CONTENT", "").strip()
 
@@ -360,6 +360,13 @@ def main() -> None:
                 indent_stack.append((indent, task_id))
                 prefix = "  " * indent
                 print(f"  {prefix}✓ {content[:80]}")
+
+            else:
+                print(
+                    f"❌ Row {row_num}: unrecognised TYPE '{row_type}' (expected 'section' or 'task').",
+                    file=sys.stderr,
+                )
+                sys.exit(1)
 
     print()
     print(f"🎉 Done! Project '{project_name}' is ready in Todoist.")
