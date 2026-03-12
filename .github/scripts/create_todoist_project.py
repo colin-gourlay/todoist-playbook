@@ -24,6 +24,19 @@ def _load_supported_project_colors():
 _SUPPORTED_PROJECT_COLORS = _load_supported_project_colors()
 
 
+def api_get(endpoint, token):
+    """GET from the Todoist REST API and return the parsed JSON response."""
+    url = f"{TODOIST_API_BASE.rstrip('/')}/{endpoint.lstrip('/')}"
+    headers = {"Authorization": f"Bearer {token}"}
+    req = urllib.request.Request(url, headers=headers, method="GET")
+    try:
+        with urllib.request.urlopen(req) as response:
+            return json.loads(response.read().decode())
+    except urllib.error.HTTPError as exc:
+        print(f"❌ Todoist API error {exc.code}: {exc.read().decode()}", file=sys.stderr)
+        sys.exit(1)
+
+
 def api_post(endpoint, token, data):
     """POST to the Todoist REST API and return the parsed JSON response."""
     url = f"{TODOIST_API_BASE.rstrip('/')}/{endpoint.lstrip('/')}"
@@ -39,6 +52,32 @@ def api_post(endpoint, token, data):
     except urllib.error.HTTPError as exc:
         print(f"❌ Todoist API error {exc.code}: {exc.read().decode()}", file=sys.stderr)
         sys.exit(1)
+
+
+def resolve_parent_project_id(parent_name, token):
+    """Look up a Todoist project by name (case-insensitive) and return its ID.
+
+    Exits with an error if the name is not found or matches more than one project.
+    """
+    projects = api_get("projects", token)
+    name_lower = parent_name.lower()
+    matches = [p for p in projects if p.get("name", "").lower() == name_lower]
+    if not matches:
+        print(
+            f"❌ No Todoist project found with name '{parent_name}'. "
+            "Check the name and try again.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+    if len(matches) > 1:
+        ids = ", ".join(p["id"] for p in matches)
+        print(
+            f"❌ Multiple Todoist projects match the name '{parent_name}' (ids: {ids}). "
+            "Rename one of them so the name is unique, then try again.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+    return matches[0]["id"]
 
 
 def read_meta_value(template_dir, key):
@@ -90,8 +129,15 @@ def main():
 
     is_favorite = os.environ.get("IS_FAVORITE", "").strip().lower() == "yes"
 
+    parent_project_name = os.environ.get("PARENT_PROJECT", "").strip()
+    parent_project_id = None
+    if parent_project_name:
+        parent_project_id = resolve_parent_project_id(parent_project_name, token)
+
     print(f"📋 Template : {template_slug}")
     print(f"📁 Project  : {project_name}")
+    if parent_project_name:
+        print(f"🗂️  Parent   : {parent_project_name} (id={parent_project_id})")
     if project_color:
         print(f"🎨 Color    : {project_color}")
     if is_favorite:
@@ -100,6 +146,8 @@ def main():
 
     # Create the Todoist project
     project_data = {"name": project_name}
+    if parent_project_id:
+        project_data["parent_id"] = parent_project_id
     if project_color:
         project_data["color"] = project_color
     if is_favorite:

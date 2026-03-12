@@ -60,6 +60,12 @@ on:
         options:
           - 'no'
           - 'yes'
+      parent_project:
+        description: >
+          Name of an existing Todoist project to nest this project under
+          (leave blank to create a top-level project)
+        required: false
+        type: string
 
 jobs:
   create-project:
@@ -78,4 +84,5 @@ jobs:
           PROJECT_NAME: ${{ inputs.project_name }}
           PROJECT_COLOR: ${{ inputs.color }}
           IS_FAVORITE: ${{ inputs.is_favorite }}
+          PARENT_PROJECT: ${{ inputs.parent_project }}
         run: python3 .github/scripts/create_todoist_project.py
