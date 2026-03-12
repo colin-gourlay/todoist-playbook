@@ -50,6 +50,11 @@ on:
         description: Project name (leave blank to use the template's default name)
         required: false
         type: string
+      favorite_project:
+        description: Mark the created project as a favorite
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   create-project:
@@ -69,6 +74,7 @@ jobs:
           TODOIST_API_TOKEN: ${{ secrets.TODOIST_API_TOKEN }}
           TEMPLATE: ${{ inputs.template || 'weekly-review' }}
           PROJECT_NAME: ${{ inputs.project_name }}
+          FAVORITE_PROJECT: ${{ inputs.favorite_project }}
         run: python3 .github/scripts/create_todoist_project.py
 
       - name: Generate content via GitHub Copilot and create Todoist project

@@ -53,6 +53,24 @@ def read_meta_value(template_dir, key):
     return None
 
 
+def parse_bool_env(var_name):
+    """Parse a boolean environment variable value or exit with an error."""
+    raw = os.environ.get(var_name, "").strip().lower()
+    if raw in {"", "false", "0", "no", "off"}:
+        return False
+    if raw in {"true", "1", "yes", "on"}:
+        return True
+
+    print(
+        (
+            f"❌ Invalid {var_name} value '{raw}'. "
+            "Use one of: true, false, 1, 0, yes, no, on, off."
+        ),
+        file=sys.stderr,
+    )
+    sys.exit(1)
+
+
 def main():
     token = os.environ.get("TODOIST_API_TOKEN", "").strip()
     if not token:
@@ -79,6 +97,7 @@ def main():
         project_name = template_slug.replace("-", " ").title()
 
     project_color = read_meta_value(template_dir, "project_color")
+    favorite_project = parse_bool_env("FAVORITE_PROJECT")
     if project_color and project_color not in _SUPPORTED_PROJECT_COLORS:
         allowed = ", ".join(sorted(_SUPPORTED_PROJECT_COLORS))
         print(
@@ -94,12 +113,15 @@ def main():
     print(f"📁 Project  : {project_name}")
     if project_color:
         print(f"🎨 Color    : {project_color}")
+    print(f"⭐ Favorite : {'yes' if favorite_project else 'no'}")
     print()
 
     # Create the Todoist project
     project_data = {"name": project_name}
     if project_color:
         project_data["color"] = project_color
+    if favorite_project:
+        project_data["is_favorite"] = True
 
     project = api_post("projects", token, project_data)
     project_id = project["id"]
