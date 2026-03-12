@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       template:
-        description: CSV template to use
+        description: Template to use
         required: false
         type: choice
         options:
