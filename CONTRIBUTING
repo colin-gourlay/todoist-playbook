@@ -62,4 +62,5 @@ When adding a new template or prompt template, update the following:
 - `.github/workflows/create-todoist-project.yml`:
   - For CSV templates: add the slug to the `options` list under `inputs.template`
   - For prompt templates: add the slug to the `options` list under `inputs.prompt_template`
+  - For CSV templates: add the project name (from `meta.yml`) to the `options` list under `inputs.parent_project`
 - `README.md` — update any references if the new template changes usage instructions

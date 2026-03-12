@@ -62,10 +62,26 @@ on:
           - 'yes'
       parent_project:
         description: >
-          Name of an existing Todoist project to nest this project under
+          Existing Todoist project to nest this project under
           (leave blank to create a top-level project)
         required: false
-        type: string
+        type: choice
+        options:
+          # Keep this list in sync with template project names (see CONTRIBUTING).
+          - ''
+          - Code Review
+          - Daily Review
+          - Entity Framework Code Review
+          - Exam Certification Workflow
+          - House Admin
+          - Iteration 0
+          - Onboarding Checklist
+          - One-on-One
+          - Radio Show System
+          - SaaS Spin-Up
+          - SaaS Wind-Down
+          - Socials Health & Optimisation Checklist
+          - Weekly Review
 
 jobs:
   create-project:
