@@ -23,6 +23,7 @@ import os
 import sys
 import urllib.error
 import urllib.request
+from typing import Any, Dict, List, Optional, Tuple
 
 MCP_ENDPOINT = "https://ai.todoist.net/mcp"
 MCP_PROTOCOL_VERSION = "2024-11-05"
@@ -47,14 +48,14 @@ class MCPClient:
     def __init__(self, endpoint: str, token: str) -> None:
         self.endpoint = endpoint
         self.token = token
-        self.session_id: str | None = None
+        self.session_id: Optional[str] = None
         self._request_id = 0
 
     def _next_id(self) -> int:
         self._request_id += 1
         return self._request_id
 
-    def _post(self, body: dict) -> dict | None:
+    def _post(self, body: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """POST a JSON-RPC message to the MCP endpoint and return the response."""
         data = json.dumps(body).encode("utf-8")
         headers = {
@@ -91,7 +92,7 @@ class MCPClient:
             sys.exit(1)
 
     @staticmethod
-    def _parse_sse(text: str) -> dict | None:
+    def _parse_sse(text: str) -> Optional[Dict[str, Any]]:
         """Return the last non-terminal data event from an SSE stream."""
         result = None
         for line in text.splitlines():
@@ -101,7 +102,7 @@ class MCPClient:
                     result = json.loads(payload)
         return result
 
-    def initialize(self) -> dict | None:
+    def initialize(self) -> Optional[Dict[str, Any]]:
         """Perform the MCP initialization handshake."""
         response = self._post(
             {
@@ -129,7 +130,7 @@ class MCPClient:
         self._post({"jsonrpc": "2.0", "method": "notifications/initialized"})
         return response
 
-    def list_tools(self) -> list[dict]:
+    def list_tools(self) -> List[Dict[str, Any]]:
         """Return the list of tools advertised by the server."""
         response = self._post(
             {
@@ -170,7 +171,7 @@ class MCPClient:
         return {}
 
 
-def _find_tool(tools: list[dict], *candidates: str) -> str:
+def _find_tool(tools: List[Dict[str, Any]], *candidates: str) -> str:
     """Return the first candidate tool name that the server actually exposes."""
     available = {t["name"] for t in tools}
     for name in candidates:
@@ -207,7 +208,7 @@ def _extract_id(result: dict, *keys: str) -> str:
     sys.exit(1)
 
 
-def read_meta_value(template_dir: str, key: str) -> str | None:
+def read_meta_value(template_dir: str, key: str) -> Optional[str]:
     """Return a top-level scalar meta.yml value for the provided key, or None."""
     meta_path = os.path.join(template_dir, "meta.yml")
     if not os.path.exists(meta_path):
@@ -310,9 +311,9 @@ def main() -> None:
     print(f"✅ Project created (id={project_id})")
 
     # ── Create sections and tasks from the CSV ────────────────────────────────
-    current_section_id: str | None = None
+    current_section_id: Optional[str] = None
     # Stack of (indent_level, task_id) for resolving parent tasks
-    indent_stack: list[tuple[int, str]] = []
+    indent_stack: List[Tuple[int, str]] = []
 
     with open(csv_path, newline="", encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
