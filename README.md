@@ -14,6 +14,9 @@ This repository is not just a storage location - it is a system for:
 
 ## 🚀 How to Use
 
+> **Prerequisite for automated workflows:** Add your Todoist API token as a repository secret named `TODOIST_API_TOKEN`.
+> Retrieve your token from [Todoist Integrations Settings](https://app.todoist.com/app/settings/integrations/developer).
+
 ### ⚡ Automated (recommended)
 
 Use the **Create Todoist Project from Template** GitHub Actions workflow to create a project directly from the latest hosted template — no local downloads required.
@@ -24,8 +27,16 @@ Use the **Create Todoist Project from Template** GitHub Actions workflow to crea
 4. Optionally provide a custom project name
 5. Click **Run workflow** — the project is created in Todoist automatically
 
-> **Prerequisite:** Add your Todoist API token as a repository secret named `TODOIST_API_TOKEN`.
-> Retrieve your token from [Todoist Integrations Settings](https://app.todoist.com/app/settings/integrations/developer).
+### 🤖 Automated via AI Prompt Template
+
+Use the **Create Todoist Project from Prompt Template** GitHub Actions workflow to generate enriched task content via GitHub Copilot and create a project automatically.
+
+1. Go to **Actions → Create Todoist Project from Prompt Template**
+2. Click **Run workflow**
+3. Select a prompt template from the dropdown
+4. Enter a task title and optional context
+5. Optionally select a priority and provide a custom project name
+6. Click **Run workflow** — Copilot generates the task content and the project is created in Todoist automatically
 
 ### 📥 Manual
 

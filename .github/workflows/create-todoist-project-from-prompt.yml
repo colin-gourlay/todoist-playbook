@@ -1,0 +1,53 @@
+name: Create Todoist Project from Prompt Template
+
+on:
+  workflow_dispatch:
+    inputs:
+      prompt_template:
+        description: AI prompt template to use
+        required: true
+        type: choice
+        options:
+          - task-enrichment
+      task_title:
+        description: 'Task title (required)'
+        required: true
+        type: string
+      context:
+        description: 'Background information or constraints (optional)'
+        required: false
+        type: string
+      priority:
+        description: 'Task priority'
+        required: false
+        type: choice
+        options:
+          - normal
+          - medium
+          - high
+          - urgent
+      project_name:
+        description: Project name (leave blank to use the generated task title)
+        required: false
+        type: string
+
+jobs:
+  create-project:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      models: read
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Generate content via GitHub Copilot and create Todoist project
+        env:
+          TODOIST_API_TOKEN: ${{ secrets.TODOIST_API_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROMPT_TEMPLATE: ${{ inputs.prompt_template }}
+          TASK_TITLE: ${{ inputs.task_title }}
+          CONTEXT: ${{ inputs.context }}
+          PRIORITY: ${{ inputs.priority || 'normal' }}
+          PROJECT_NAME: ${{ inputs.project_name }}
+        run: python3 .github/scripts/run_prompt_template.py
