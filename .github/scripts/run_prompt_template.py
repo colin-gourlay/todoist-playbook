@@ -224,6 +224,7 @@ def main() -> None:
         sys.exit(1)
 
     project_name_override = os.environ.get("PROJECT_NAME", "").strip()
+    is_favorite = os.environ.get("IS_FAVORITE", "").strip().lower() == "yes"
 
     print(f"🤖 Prompt template : {prompt_slug}")
     print(f"📝 Task title      : {task_title}")
@@ -255,10 +256,15 @@ def main() -> None:
     print(f"📌 Title    : {title}")
     if subtasks:
         print(f"📎 Subtasks : {len(subtasks)}")
+    if is_favorite:
+        print(f"⭐ Favourite: yes")
     print()
 
     # Create the Todoist project
-    project = todoist_post("projects", todoist_token, {"name": project_name})
+    project_data: dict = {"name": project_name}
+    if is_favorite:
+        project_data["is_favorite"] = True
+    project = todoist_post("projects", todoist_token, project_data)
     project_id = project["id"]
     print(f"✅ Project created (id={project_id})")
 
