@@ -78,14 +78,12 @@ def main():
     if not project_name:
         project_name = template_slug.replace("-", " ").title()
 
-    project_color = read_meta_value(template_dir, "project_color")
+    # Explicit workflow input takes priority over meta.yml
+    project_color = os.environ.get("PROJECT_COLOR", "").strip() or read_meta_value(template_dir, "project_color")
     if project_color and project_color not in _SUPPORTED_PROJECT_COLORS:
         allowed = ", ".join(sorted(_SUPPORTED_PROJECT_COLORS))
         print(
-            (
-                f"❌ Invalid project_color '{project_color}' in {template_dir}/meta.yml. "
-                f"Allowed values: {allowed}"
-            ),
+            f"❌ Invalid project_color '{project_color}'. Allowed values: {allowed}",
             file=sys.stderr,
         )
         sys.exit(1)
