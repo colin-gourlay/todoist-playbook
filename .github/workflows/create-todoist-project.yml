@@ -12,9 +12,9 @@ on:
           - code-review
           - daily-review
           - ef-code-review
+          - exam-certification-workflow
           - house-admin
           - iteration-0
-          - certification-exam
           - onboarding-checklist
           - one-on-one
           - radio-show-system

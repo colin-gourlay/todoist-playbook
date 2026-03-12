@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Renamed template `certification-exam` to `exam-certification-workflow`
+- Sorted workflow dispatch template options alphabetically in `create-todoist-project.yml`
+
 ### Added
 
 - `bundles/` folder introducing multi-template starter kits

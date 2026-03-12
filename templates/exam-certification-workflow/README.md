@@ -1,4 +1,4 @@
-# Certification Exam
+# Exam Certification Workflow
 
 An end-to-end checklist for preparing, registering, sitting, and following up on a certification exam.
 
