@@ -48,6 +48,7 @@
 
 | Template | Description | Tags |
 |----------|------------|------|
+| [Azure Migration Assessment](templates/azure-migration-assessment/) | Assess, design, and plan the migration of an on-premises .NET, Angular, and SQL Server application to Microsoft Azure | azure, migration, cloud, dotnet, architecture, devops, assessment |
 | [Code Review](templates/code-review/) | Structured checklist for conducting thorough .NET code reviews covering hygiene, unit testing, code structure, Entity Framework, and general best practices | code-review, dotnet, testing, clean-code, best-practices |
 | [Iteration 0](templates/iteration-0/) | Sprint 0 checklist for setting up a new project repository with version control, branching strategy, and Azure DevOps configuration | sprint, iteration-0, azure-devops, version-control, git |
 | [Entity Framework Code Review](templates/ef-code-review/) | Checklist for reviewing Entity Framework POCOs and configuration for correctness, conventions, and Roslyn compliance | code-review, entity-framework, dotnet, csharp, database |

@@ -1,0 +1,17 @@
+name: Azure Migration Assessment
+slug: azure-migration-assessment
+description: Assess, design, and plan the migration of an on-premises application stack to Microsoft Azure — covering discovery, architecture decisions, security, DevOps, and cutover planning
+category: engineering
+tags:
+  - azure
+  - migration
+  - cloud
+  - dotnet
+  - architecture
+  - devops
+  - assessment
+estimated_duration: 480m
+recurrence_suggestion: as-needed
+project_color: sky_blue
+version: 1.0.0
+author: Colin Gourlay
