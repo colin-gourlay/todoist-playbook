@@ -1,0 +1,11 @@
+name: Radio Show Core Workflow
+slug: radio-show-core
+description: Core weekly workflow for preparing and delivering a radio show
+category: creative
+tags:
+  - radio
+  - broadcast
+  - media
+  - creative
+version: 1.0.0
+author: Colin Gourlay

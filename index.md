@@ -6,6 +6,7 @@
 |--------|-------------|-----------|
 | [New Job](bundles/new-job/) | Hit the ground running at a new job — onboarding, weekly planning, and 1:1 meetings | onboarding-checklist, weekly-review, one-on-one |
 | [Radio Show Week](bundles/radio-show-week/) | Full radio show week — prep, playlists, comms, upload, and socials | radio-show-system |
+| [Radio Show Week Kit](bundles/radio-show-week-kit/) | Complete system for producing a weekly radio show — core workflow, promotion, post production, and optional guest features | radio-show-core, radio-show-promotion, radio-show-post-production, radio-show-guest-feature |
 | [House Admin](bundles/house-admin/) | Annual household administration — bills, renewals, MOT, and property upkeep | house-admin |
 
 ---
@@ -24,6 +25,10 @@
 | Template | Description | Tags |
 |----------|------------|------|
 | [Radio Show System](templates/radio-show-system/) | Pre and post tasks associated with a given show | review, planning, productivity, weekly |
+| [Radio Show Core](templates/radio-show-core/) | Core weekly workflow for preparing and delivering a radio show — creative prep, logistics, studio setup, and live broadcast | radio, broadcast, media, creative |
+| [Radio Show Guest Feature](templates/radio-show-guest-feature/) | Workflow for preparing and running a guest or feature segment — interviews, artist spotlights, and festival coverage | radio, interview, broadcast |
+| [Radio Show Promotion](templates/radio-show-promotion/) | Workflow for promoting a radio show across social channels — pre-show announcements and post-show engagement | radio, marketing, promotion |
+| [Radio Show Post Production](templates/radio-show-post-production/) | Publishing and archiving workflow after a radio broadcast — site publishing, media distribution, and reflection | radio, publishing, media |
 
 ---
 

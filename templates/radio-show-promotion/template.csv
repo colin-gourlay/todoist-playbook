@@ -1,0 +1,12 @@
+TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG
+section,Pre-Show Promotion,,,,,,
+task,Write Facebook announcement post,2,1,,,,,
+task,Write Instagram caption,2,1,,,,,
+task,Prepare LinkedIn version,3,1,,,,,
+task,Mention special features or exclusives,2,1,,,,,
+task,Share Spotify playlist preview,3,1,,,,,
+section,Post-Show Promotion,,,,,,
+task,Publish show recap post,2,1,,,,,
+task,Share Mixcloud listen-again link,1,1,,,,,
+task,Share Spotify playlist,2,1,,,,,
+task,Engage with audience comments,3,1,,,,,
