@@ -1,0 +1,10 @@
+name: Radio Show Guest Feature
+slug: radio-show-guest-feature
+description: Workflow for preparing and running a guest or feature segment
+category: creative
+tags:
+  - radio
+  - interview
+  - broadcast
+version: 1.0.0
+author: Colin Gourlay

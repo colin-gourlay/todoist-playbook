@@ -1,0 +1,18 @@
+name: Radio Show Week Kit
+slug: radio-show-week-kit
+description: Complete system for producing a weekly radio show
+category: radio-show-systems
+tags:
+  - radio
+  - broadcast
+  - creative
+  - weekly
+  - media
+version: 1.0.0
+author: Colin Gourlay
+templates:
+  - radio-show-core
+  - radio-show-promotion
+  - radio-show-post-production
+optional_templates:
+  - radio-show-guest-feature

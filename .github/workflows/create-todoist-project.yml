@@ -18,6 +18,10 @@ on:
           - iteration-0
           - onboarding-checklist
           - one-on-one
+          - radio-show-core
+          - radio-show-guest-feature
+          - radio-show-post-production
+          - radio-show-promotion
           - radio-show-system
           - saas-spin-up
           - saas-wind-down

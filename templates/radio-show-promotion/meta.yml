@@ -1,0 +1,10 @@
+name: Radio Show Promotion
+slug: radio-show-promotion
+description: Workflow for promoting a radio show across social channels
+category: creative
+tags:
+  - radio
+  - marketing
+  - promotion
+version: 1.0.0
+author: Colin Gourlay
