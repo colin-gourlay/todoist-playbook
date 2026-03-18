@@ -1,0 +1,14 @@
+name: Sprint Review
+slug: sprint-review
+description: Structured checklist for running a collaborative sprint review — demonstrate delivered value, capture stakeholder feedback, and adapt the product backlog
+category: agile
+tags:
+  - agile
+  - sprint
+  - review
+  - meetings
+  - stakeholders
+estimated_duration: 90m
+recurrence_suggestion: bi-weekly
+version: 1.0.0
+author: Colin Gourlay

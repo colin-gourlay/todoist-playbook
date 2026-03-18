@@ -1,0 +1,46 @@
+TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG
+section,1️⃣ Before the Review,,,,,,
+task,Confirm Sprint Goal is clearly defined and documented,1,1,,,,,
+task,Verify all demo items meet the Definition of Done,1,1,,,,,
+task,Prepare demo scenarios focused on user journeys and business outcomes,2,1,,,,,
+task,Invite stakeholders and share the agenda,2,1,,,,,
+task,Set up the demo environment and confirm access,3,1,,,,,
+
+section,2️⃣ Welcome & Context (5 mins),,,,,,
+task,Restate the Sprint Goal,1,1,,,,,
+task,Summarise what was planned vs what was completed,2,1,,,,,
+task,Set expectations — this is an interactive session, not a one-way demo,1,1,,,,,
+
+section,3️⃣ Increment Demo (20–40 mins),,,,,,
+task,Demonstrate only completed work that meets the Definition of Done,1,1,,,,,
+task,Walk through user journeys rather than ticket-by-ticket,1,1,,,,,
+task,Highlight business outcomes and value delivered,2,1,,,,,
+task,Invite questions and observations throughout,2,1,,,,,
+
+section,4️⃣ Stakeholder Feedback (15–30 mins),,,,,,
+task,Open the floor for general discussion,2,1,,,,,
+task,Capture what is working well,1,1,,,,,
+task,Capture gaps and missing functionality,1,1,,,,,
+task,Capture suggested improvements and new ideas,1,1,,,,,
+task,Confirm feedback has been noted and will be actioned,2,1,,,,,
+
+section,5️⃣ Product Backlog Review (10–20 mins),,,,,,
+task,Review the current state of the product backlog,2,1,,,,,
+task,Adjust priorities based on stakeholder feedback,1,1,,,,,
+task,Add or refine backlog items live where possible,2,1,,,,,
+task,Confirm Product Owner owns all backlog updates,1,1,,,,,
+
+section,6️⃣ Metrics & Progress (Optional),,,,,,
+task,Review velocity or throughput for the sprint,3,1,,,,,
+task,Summarise progress toward the release goal,3,1,,,,,
+
+section,7️⃣ Wrap-Up (5 mins),,,,,,
+task,Confirm next steps and owners,1,1,,,,,
+task,Summarise key decisions made during the review,1,1,,,,,
+task,Remind the team of the next Sprint Review date,3,1,,,,,
+
+section,8️⃣ After the Review,,,,,,
+task,Convert all captured feedback into backlog items,1,1,,,,,
+task,Update backlog priorities to reflect latest insights,1,1,,,,,
+task,Document key decisions and share with stakeholders,2,1,,,,,
+task,Share recording or session notes if applicable,3,1,,,,,
