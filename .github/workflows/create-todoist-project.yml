@@ -26,6 +26,7 @@ on:
           - saas-spin-up
           - saas-wind-down
           - socials-health-and-optimization-checklist
+          - sprint-retrospective
           - weekly-review
       project_name:
         description: Project name (leave blank to use the template's default name)

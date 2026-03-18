@@ -1,0 +1,14 @@
+name: Sprint Retrospective
+slug: sprint-retrospective
+description: Structured checklist for running a safe, blameless sprint retrospective — gather data, generate insights, and commit to actionable improvements
+category: agile
+tags:
+  - agile
+  - sprint
+  - retrospective
+  - meetings
+  - continuous-improvement
+estimated_duration: 60m
+recurrence_suggestion: bi-weekly
+version: 1.0.0
+author: Colin Gourlay
