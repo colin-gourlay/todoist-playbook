@@ -1,5 +1,7 @@
 # Todoist Playbook
 
+![Social Preview](.github/assets/social-preview.png)
+
 A curated collection of structured [Todoist](https://www.todoist.com/) templates, workflows, and tooling.
 
 This repository is not just a storage location - it is a system for:
