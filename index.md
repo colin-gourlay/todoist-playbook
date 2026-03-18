@@ -54,6 +54,7 @@
 | Template | Description | Tags |
 |----------|------------|------|
 | [Sprint Retrospective](templates/sprint-retrospective/) | Structured checklist for running a safe, blameless sprint retrospective — gather data, generate insights, and commit to actionable improvements | agile, sprint, retrospective, meetings, continuous-improvement |
+| [Sprint Review](templates/sprint-review/) | Structured checklist for running a collaborative sprint review — demonstrate delivered value, capture stakeholder feedback, and adapt the product backlog | agile, sprint, review, meetings, stakeholders |
 
 ---
 
