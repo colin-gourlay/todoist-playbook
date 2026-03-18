@@ -1,0 +1,40 @@
+TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG
+section,1️⃣ Before the Retro,,,,,,
+task,Schedule the retrospective meeting,2,1,,,,,
+task,Invite all team members,2,1,,,,,
+task,Review actions agreed in the previous retrospective,1,1,,,,,
+task,Select a retrospective format (e.g. Start / Stop / Continue),3,1,,,,,
+
+section,2️⃣ Set the Stage (5 mins),,,,,,
+task,Reinforce the purpose: improve the system, not blame people,1,1,,,,,
+task,Remind the team this is a safe and blameless environment,1,1,,,,,
+task,Run a quick check-in to get everyone engaged,3,1,,,,,
+
+section,3️⃣ Gather Data (10–15 mins),,,,,,
+task,Collect items: What went well this sprint?,2,1,,,,,
+task,Collect items: What didn't go well this sprint?,2,1,,,,,
+task,Collect items: What surprised us?,3,1,,,,,
+task,Ensure everyone has had a chance to contribute,1,1,,,,,
+
+section,4️⃣ Generate Insights (10–20 mins),,,,,,
+task,Group similar items together,2,1,,,,,
+task,Identify patterns or recurring themes,1,1,,,,,
+task,Discuss root causes — ask "why" at least once per theme,1,1,,,,,
+task,Prioritise the most impactful items to focus on,2,1,,,,,
+
+section,5️⃣ Decide Actions (10–20 mins),,,,,,
+task,Select 1–3 concrete improvement actions,1,1,,,,,
+task,Ensure each action is specific and achievable within the next sprint,1,1,,,,,
+task,Assign an owner to each action,1,1,,,,,
+task,Agree on how progress will be tracked,2,1,,,,,
+
+section,6️⃣ Close (5 mins),,,,,,
+task,Summarise the agreed actions aloud,2,1,,,,,
+task,Collect quick feedback on the retrospective itself,3,1,,,,,
+task,Reinforce accountability — confirm owners are clear,1,1,,,,,
+
+section,7️⃣ After the Retro,,,,,,
+task,Capture all actions as tasks in Todoist or GitHub Issues,1,1,,,,,
+task,Prioritise actions into the next sprint,1,1,,,,,
+task,Share retro notes with the team,2,1,,,,,
+task,Set a reminder to review actions at the start of the next retrospective,2,1,,,,,
