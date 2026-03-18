@@ -10,7 +10,7 @@ task,Check data residency options if required @people-self @place-anywhere @tool
 
 section,2️⃣ Account Setup & Security,,,,,,
 task,Sign up using an anonymised email address @people-self @place-anywhere @tools-todoist,1,1,,,,,
-task,Set a strong, unique password via password manager @people-self @place-anywhere @tools-todoist,1,1,,,,,
+task,Set a strong unique password via password manager @people-self @place-anywhere @tools-todoist,1,1,,,,,
 task,Enable two-factor authentication (2FA) @people-self @place-anywhere @tools-todoist,1,1,,,,,
 task,Store credentials securely in password manager @people-self @place-anywhere @tools-todoist,1,1,,,,,
 task,Generate and store recovery codes securely @people-self @place-anywhere @tools-todoist,1,1,,,,,
