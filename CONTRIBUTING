@@ -1,6 +1,76 @@
 # Contributing
 
-Templates must:
+---
+
+## Branching Convention
+
+All work should happen on a short-lived feature branch, merged into `main` via a pull request.
+
+**Branch naming format:** `<type>/<short-description>`
+
+| Prefix | Use for |
+|---|---|
+| `feat/` | New template, prompt template, bundle, or feature |
+| `fix/` | Bug fix or correction to existing content |
+| `docs/` | Documentation-only change |
+| `ci/` | GitHub Actions workflow or script change |
+| `chore/` | Maintenance, renaming, or housekeeping |
+| `copilot/` | AI-generated branches created by GitHub Copilot |
+
+Examples: `feat/sprint-review-template`, `fix/csv-type-validation`, `docs/update-readme`
+
+**Rules:**
+- Branch off `main` and keep branches short-lived (merge or close within days, not weeks)
+- One logical change per branch — avoid bundling unrelated changes
+- Delete branches after the PR is merged
+
+---
+
+## Commit Message Convention
+
+This repository follows [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+<type>(<optional scope>): <short summary in imperative mood>
+```
+
+**Types:**
+
+| Type | Use for |
+|---|---|
+| `feat` | New template, prompt template, bundle, or feature |
+| `fix` | Bug fix or correction |
+| `docs` | Documentation changes only |
+| `ci` | CI/CD workflow or script changes |
+| `chore` | Maintenance, renaming, or housekeeping |
+| `refactor` | Code restructuring without behavior change |
+
+**Examples:**
+```
+feat: add sprint-review template
+fix: correct TYPE validation in validate-templates workflow
+docs: update CONTRIBUTING with branching guide
+ci: add release workflow for automated tagging
+chore: rename certification-exam to exam-certification-workflow
+```
+
+**Rules:**
+- Use the imperative mood in the summary ("add", not "added" or "adds")
+- Keep the summary line under 72 characters
+- No period at the end of the summary line
+- Avoid generic messages like "Update file" or "Fix stuff"
+
+### Pull Request Titles
+
+PR titles are used as the squash-merge commit message on `main`. They must follow the same Conventional Commits format as individual commit messages.
+
+### Merge Strategy
+
+Use **Squash and merge** when merging PRs into `main`. This keeps the `main` history clean and meaningful — one commit per logical change, with the PR title as the commit message.
+
+---
+
+## Templates must:
 
 - Include:
   - template.csv
