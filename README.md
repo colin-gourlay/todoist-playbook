@@ -98,6 +98,34 @@ The goal of this repository is to:
 
 ---
 
+## 🤖 Automated Documentation Sync
+
+The **Documentation Sync** workflow runs daily to keep this repository's documentation
+accurate and up to date.
+
+### What it does
+
+On each run, the workflow:
+
+1. Scans for changes made in the last 24 hours to templates, prompt templates, bundles,
+   and scripts.
+2. Compares those changes against the relevant documentation files (`index.md`,
+   `CHANGELOG.md`, `README.md`, and individual template `README.md` files).
+3. Generates any necessary documentation updates using GitHub Copilot.
+4. Opens a pull request (branch: `doc-sync/automated-updates`) with the changes —
+   or exits silently if everything is already up to date.
+
+The workflow is idempotent: if an open documentation-sync PR already exists on that branch,
+subsequent runs will update it rather than open a duplicate.
+
+### How to trigger manually
+
+1. Go to **Actions → Documentation Sync**
+2. Click **Run workflow**
+3. Click **Run workflow** again to confirm
+
+---
+
 ## 📜 License
 
 [Creative Commons Attribution-ShareAlike 4.0 International](LICENSE)
