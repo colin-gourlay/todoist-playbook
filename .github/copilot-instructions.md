@@ -30,7 +30,7 @@ templates/          # Individual reusable templates, one folder per template
   ISSUE_TEMPLATE/
     template-request.yml        # GitHub issue form for requesting new templates
 
-index.md            # Template catalog (Markdown table)
+index.md            # Template catalogue (Markdown table)
 CONTRIBUTING        # Contribution guidelines
 CHANGELOG.md        # Version history
 ```
@@ -155,7 +155,7 @@ options:
 3. Add `template.csv` with `TYPE` header; use only `section`/`task` types; no hardcoded due dates
 4. Add `README.md` describing the workflow and usage
 5. Add the slug to the `options` list in `.github/workflows/create-todoist-project.yml`
-6. Update `index.md` to include the new template in the catalog table
+6. Update `index.md` to include the new template in the catalogue table
 7. Push to `main` — CI will validate the template automatically
 
 ---

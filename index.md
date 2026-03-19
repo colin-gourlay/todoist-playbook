@@ -1,4 +1,4 @@
-# Template Catalog
+# Template Catalogue
 
 ## 📦 Starter Kit Bundles
 

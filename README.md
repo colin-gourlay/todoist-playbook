@@ -42,7 +42,7 @@ Use the **Create Todoist Project from Prompt Template** GitHub Actions workflow 
 
 ### 📥 Manual
 
-1. Browse the template catalog in `index.md`
+1. Browse the template catalogue in `index.md`
 2. Navigate to a template folder
 3. Download `template.csv`
 4. Import into Todoist:
@@ -60,7 +60,7 @@ Each template folder includes:
 
 Use AI prompt templates to generate rich, structured task content before adding items to Todoist.
 
-1. Browse the prompt template catalog in `index.md`
+1. Browse the prompt template catalogue in `index.md`
 2. Navigate to a `prompt-templates/` folder
 3. Open `prompt.md` and fill in the `{{placeholders}}`
 4. Paste the prompt into your AI assistant (ChatGPT, GitHub Copilot, Claude, Gemini, etc.)
