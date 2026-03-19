@@ -9,6 +9,7 @@ on:
         type: choice
         options:
           - ''
+          - awesome-list-submission
           - azure-migration-assessment
           - code-review
           - daily-review
