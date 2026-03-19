@@ -12,6 +12,7 @@ on:
           - awesome-list-submission
           - azure-migration-assessment
           - code-review
+          - code-review-checklist
           - daily-review
           - ef-code-review
           - exam-certification-workflow
