@@ -50,7 +50,7 @@ def main():
     # Exclude the Inbox project (`is_inbox_project` is the field name in the
     # Todoist REST API v1 project resource) and sort the rest alphabetically.
     project_names = sorted(
-        p["name"] for p in projects if not p.get("is_inbox_project", False)
+        p["name"] for p in projects if isinstance(p, dict) and not p.get("is_inbox_project", False)
     )
 
     print(f"📋 Found {len(project_names)} Todoist project(s)")
