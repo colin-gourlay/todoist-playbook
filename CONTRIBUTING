@@ -43,7 +43,7 @@ This repository follows [Conventional Commits](https://www.conventionalcommits.o
 | `docs` | Documentation changes only |
 | `ci` | CI/CD workflow or script changes |
 | `chore` | Maintenance, renaming, or housekeeping |
-| `refactor` | Code restructuring without behavior change |
+| `refactor` | Code restructuring without behaviour change |
 
 **Examples:**
 ```
@@ -128,7 +128,7 @@ Before adding a new prompt template:
 
 When adding a new template or prompt template, update the following:
 
-- `index.md` — add a row to the appropriate section of the catalog table
+- `index.md` — add a row to the appropriate section of the catalogue table
 - `.github/workflows/create-todoist-project.yml`:
   - For CSV templates: add the slug to the `options` list under `inputs.template`
   - For prompt templates: add the slug to the `options` list under `inputs.prompt_template`

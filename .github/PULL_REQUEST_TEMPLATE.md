@@ -22,7 +22,7 @@
 - [ ] `template.csv` header starts with `TYPE`; only `section` and `task` values used in TYPE column
 - [ ] No hardcoded due dates in `template.csv`
 - [ ] Slug added to `options` list in `.github/workflows/create-todoist-project.yml`
-- [ ] Row added to the catalog table in `index.md`
+- [ ] Row added to the catalogue table in `index.md`
 
 <!-- For all PRs: -->
 
