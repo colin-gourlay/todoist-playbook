@@ -1,0 +1,34 @@
+name: Sync Todoist Project List
+
+on:
+  schedule:
+    # Refreshes the project dropdown daily at 06:00 UTC.
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Fetch Todoist projects and update workflow options
+        env:
+          TODOIST_API_TOKEN: ${{ secrets.TODOIST_API_TOKEN }}
+        run: python3 .github/scripts/sync_project_options.py
+
+      - name: Commit updated workflow if changed
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          if ! git diff --quiet .github/workflows/create-todoist-project.yml; then
+            git add .github/workflows/create-todoist-project.yml
+            git commit -m "chore: sync Todoist project list [skip ci]"
+            git push
+            echo "✅ Committed updated project list."
+          else
+            echo "ℹ️ No changes — project list is already up to date."
+          fi
