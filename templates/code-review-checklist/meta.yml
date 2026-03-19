@@ -1,0 +1,12 @@
+name: Code Review Checklist
+slug: code-review-checklist
+description: Structured checklist for performing thorough code reviews
+category: engineering
+tags:
+  - code-review
+  - quality
+  - engineering
+  - software
+estimated_duration: 45m
+recurrence_suggestion: as-needed
+version: 1.0.0
