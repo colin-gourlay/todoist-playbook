@@ -71,10 +71,15 @@ on:
           - 'yes'
       parent_project:
         description: >
-          Name of an existing Todoist project to nest this project under
-          (leave blank to create a top-level project)
+          Existing Todoist project to nest this project under
+          (select the empty option to create a top-level project).
+          Run the "Sync Todoist Project List" workflow to refresh this list.
         required: false
-        type: string
+        type: choice
+        options:
+          # BEGIN_TODOIST_PROJECTS (auto-updated by the sync-todoist-projects workflow)
+          - ''
+          # END_TODOIST_PROJECTS
 
 jobs:
   create-project:

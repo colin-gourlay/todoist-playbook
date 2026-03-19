@@ -6,8 +6,12 @@
 
 - Renamed template `certification-exam` to `exam-certification-workflow`
 - Sorted workflow dispatch template options alphabetically in `create-todoist-project.yml`
+- `parent_project` input in `create-todoist-project.yml` is now a dropdown (`type: choice`) populated with existing Todoist project names instead of a free-text field
 
 ### Added
+
+- Script: `.github/scripts/sync_project_options.py` — fetches all Todoist projects via the API and rewrites the `parent_project` options in `create-todoist-project.yml`
+- Workflow: `sync-todoist-projects.yml` — runs daily (and on demand) to keep the `parent_project` dropdown in sync with the Todoist account
 
 - `bundles/` folder introducing multi-template starter kits
 - Bundle: `new-job` — onboarding, weekly review, and 1:1 meeting templates for starting a new job
