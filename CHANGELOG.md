@@ -24,4 +24,5 @@
 - Workflow: `create-todoist-project-via-mcp.yml` — creates a Todoist project from any CSV template by connecting to the Todoist MCP server (`https://ai.todoist.net/mcp`) using the MCP Streamable HTTP transport
 - Script: `.github/scripts/create_via_mcp.py` — minimal MCP client (stdlib only) that initialises a session, discovers tools via `tools/list`, and calls `create_project`, `create_section`, and `create_task` in sequence
 - Updated `index.md` with MCP Workflows section
+- Workflow: `doc-sync.lock.yml` — runs daily to automatically detect documentation files that are out of sync with recent code or content changes, and opens a pull request with the necessary updates
 
