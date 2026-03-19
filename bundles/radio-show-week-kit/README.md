@@ -41,13 +41,16 @@ Skip this template in standard weeks with no guest segment.
 
 ## Suggested Setup
 
-1. At the start of each show week, import the three core templates
+1. At the start of each show week, import the three required templates
 2. If the week includes a guest or feature segment, also import **Radio Show Guest Feature**
-3. Rename each project to reflect the show date:
+3. Rename each project using your show name and a descriptor — for example, for a show called *Sundown Sessions*:
 
-```
-Sundown Sessions – Week of [date]
-```
+   | Project | Suggested Name |
+   |---------|----------------|
+   | Radio Show Core | `Sundown Sessions Core – Week of [date]` |
+   | Radio Show Promotion | `Sundown Sessions Promotion – Week of [date]` |
+   | Radio Show Post Production | `Sundown Sessions Post Production – [date]` |
+   | Radio Show Guest Feature | `Sundown Sessions – [Guest Name] Feature` |
 
 4. Work through the templates in this order:
    - **Radio Show Core** — runs throughout the week, culminating in the live broadcast
