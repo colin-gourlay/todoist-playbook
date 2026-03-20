@@ -16,6 +16,8 @@
 - Script: `.github/scripts/sync_project_options.py` — fetches all Todoist projects via the API and rewrites the `parent_project` options in `create-todoist-project.yml`
 - Workflow: `sync-todoist-projects.yml` — runs daily (and on demand) to keep the `parent_project` dropdown in sync with the Todoist account
 
+- Template: **Awesome List Submission** — end-to-end workflow for getting a GitHub repository listed on curated Awesome Lists — repo readiness, list targeting, submission, and follow-up
+- Template: **Code Review Checklist** — structured checklist for performing thorough code reviews across any language or repository
 - `bundles/` folder introducing multi-template starter kits
 - Bundle: `new-job` — onboarding, weekly review, and 1:1 meeting templates for starting a new job
 - Bundle: `radio-show-week` — full radio show production workflow
