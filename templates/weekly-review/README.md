@@ -50,12 +50,13 @@ Estimated duration: 30–45 minutes.
 All tasks in this template are pre-tagged with the following labels:
 
 | Label | Meaning |
-|-------|---------|
+| ----- | ------- |
 | `@people-self` | Task is self-directed — no delegation required |
 | `@place-anywhere` | Can be completed from any location (home, café, commute, etc.) |
 | `@tools-todoist` | Todoist itself is the primary tool for completing this task |
 | `@when-evening` | Best suited to late afternoon or evening time blocks |
-| `@duration-25m` | Each task is estimated at ~25 minutes |
+| `@duration-15m` | Quick review step — used for the opening retrospective pass |
+| `@duration-25m` | Standard review step — used for the majority of the checklist |
 
 > **Note on `@place-anywhere`**: This label was recently added to signal that the weekly review is location-independent. Unlike deep work tasks that may require a specific environment, every step of this review can be completed wherever you have access to Todoist.
 
@@ -65,36 +66,49 @@ All tasks in this template are pre-tagged with the following labels:
 
 Use this Todoist filter to surface all weekly review tasks that are active today:
 
-```
-#Weekly Review & today
+```text
+search: "Weekly Review" & today
 ```
 
 Or, to see all outstanding tasks across any weekly review project regardless of due date:
 
-```
-search: Weekly Review
+```text
+search: "Weekly Review"
 ```
 
-Pin the first filter as a favourite for quick access at the start of each review session.
+These filters continue to work even if you rename each imported project to include the week.
 
 ---
 
 ## CLI Auto-Naming
 
-To create a project automatically named for the current week, run the following from your terminal (requires the [Todoist CLI](https://github.com/sachaos/todoist) or the bundled `create_todoist_project.py` script):
+To create a project automatically named for the current week, run one of the following examples with the bundled `create_todoist_project.py` script.
+
+### Bash (Linux)
 
 ```bash
-# Using the bundled Python script
 TODOIST_API_TOKEN=your_token \
 TEMPLATE=weekly-review \
 PROJECT_NAME="Weekly Review – Week of $(date -d 'next friday' '+%d/%m')" \
 python3 .github/scripts/create_todoist_project.py
 ```
 
-On macOS, replace `date -d 'next friday'` with `date -v+fri`:
+### Bash (macOS)
 
 ```bash
+TODOIST_API_TOKEN=your_token \
+TEMPLATE=weekly-review \
 PROJECT_NAME="Weekly Review – Week of $(date -v+fri '+%d/%m')"
+python3 .github/scripts/create_todoist_project.py
+```
+
+### PowerShell
+
+```powershell
+$env:TODOIST_API_TOKEN = "your_token"
+$env:TEMPLATE = "weekly-review"
+$env:PROJECT_NAME = "Weekly Review – Week of $((Get-Date).Date.AddDays(((5 - [int](Get-Date).DayOfWeek + 7) % 7)).ToString('dd/MM'))"
+python .github/scripts/create_todoist_project.py
 ```
 
 This produces a project name such as `Weekly Review – Week of 14/03`.
@@ -117,17 +131,17 @@ When the task triggers, open your pinned Weekly Review project and work through 
 
 ### Option B — Scheduled GitHub Actions (automated project creation)
 
-The `create-todoist-project.yml` workflow in this repository supports manual triggering via `workflow_dispatch`. To also run it automatically each week, add a `schedule` trigger to `.github/workflows/create-todoist-project.yml`:
+The `create-todoist-project.yml` workflow in this repository supports both manual triggering and scheduled runs.
 
 ```yaml
 on:
   workflow_dispatch:
-    # ... existing inputs ...
   schedule:
-    - cron: '0 16 * * 5'   # Every Friday at 16:00 UTC
+    - cron: '0 15 * * 5'   # Every Friday at 15:00 UTC
+    - cron: '0 5 * * 0'    # Every Sunday at 05:00 UTC
 ```
 
-Each run creates a fresh, pre-named project in your Todoist account using the `weekly-review` template as the default.
+Each scheduled run creates a fresh Todoist project using the `weekly-review` template as the default. You can still run the same workflow manually whenever you want an extra review project outside those times.
 
 ---
 
