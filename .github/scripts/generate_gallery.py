@@ -5,8 +5,9 @@ Usage:
     python3 generate_gallery.py
 
 Environment variables:
-    TEMPLATES_DIR   Path to the templates folder (default: templates)
-    OUTPUT_DIR      Path to the output folder (default: docs)
+    TEMPLATES_DIR         Path to the templates folder (default: templates)
+    PROMPT_TEMPLATES_DIR  Path to the prompt-templates folder (default: prompt-templates)
+    OUTPUT_DIR            Path to the output folder (default: docs)
 """
 
 import csv
@@ -17,7 +18,22 @@ import shutil
 import sys
 
 TEMPLATES_DIR = os.environ.get("TEMPLATES_DIR", "templates")
+PROMPT_TEMPLATES_DIR = os.environ.get("PROMPT_TEMPLATES_DIR", "prompt-templates")
 OUTPUT_DIR = os.environ.get("OUTPUT_DIR", "docs")
+
+# Category display metadata: slug -> (emoji, human-readable label)
+CATEGORY_META = {
+    "personal-systems":         ("🔁", "Personal Systems"),
+    "engineering":              ("💻", "Engineering"),
+    "agile":                    ("🔄", "Agile"),
+    "career":                   ("🧑\u200d💼", "Career"),
+    "creative":                 ("🎙", "Creative"),
+    "saas-management":          ("☁️", "SaaS Management"),
+    "professional-development": ("🎓", "Professional Development"),
+    "brand-and-social":         ("🌐", "Brand & Social"),
+    "radio-show-systems":       ("📻", "Radio Show Systems"),
+    "content-generation":       ("🤖", "Content Generation"),
+}
 
 
 # ---------------------------------------------------------------------------
@@ -26,29 +42,30 @@ OUTPUT_DIR = os.environ.get("OUTPUT_DIR", "docs")
 
 def parse_meta(path):
     """Parse a simple meta.yml file without a YAML library."""
-    meta = {"tags": []}
-    in_tags = False
+    meta = {"tags": [], "inputs": []}
+    in_list = None  # name of the current list key being parsed
     with open(path, encoding="utf-8") as f:
         for line in f:
             line = line.rstrip("\n")
-            # Detect the start of a tags block
-            if re.match(r"^tags:\s*$", line):
-                in_tags = True
+            # Detect start of a list block (e.g. "tags:" or "inputs:" with no value)
+            m_list = re.match(r"^(tags|inputs):\s*$", line)
+            if m_list:
+                in_list = m_list.group(1)
                 continue
-            if in_tags:
+            if in_list:
                 m = re.match(r"^\s+-\s+(.+)$", line)
                 if m:
-                    meta["tags"].append(m.group(1).strip())
+                    meta[in_list].append(m.group(1).strip())
                     continue
-                # Any non-indented line ends the tags block
+                # Any non-indented line ends the list block
                 if line and not line[0].isspace():
-                    in_tags = False
+                    in_list = None
             m = re.match(r"^([a-zA-Z_][a-zA-Z0-9_]*):\s*(.*)$", line)
             if m:
                 key = m.group(1)
                 value = m.group(2).strip().strip("\"'")
-                if key != "tags":
-                    in_tags = False
+                if key not in ("tags", "inputs"):
+                    in_list = None
                     meta[key] = value
     return meta
 
@@ -80,33 +97,69 @@ def parse_csv_rows(path):
 
 def load_templates():
     templates = []
-    for slug in sorted(os.listdir(TEMPLATES_DIR)):
-        template_dir = os.path.join(TEMPLATES_DIR, slug)
-        if not os.path.isdir(template_dir):
-            continue
-        meta_path = os.path.join(template_dir, "meta.yml")
-        csv_path = os.path.join(template_dir, "template.csv")
-        if not os.path.exists(meta_path):
-            continue
-        meta = parse_meta(meta_path)
-        rows = parse_csv_rows(csv_path) if os.path.exists(csv_path) else []
-        task_count = sum(1 for r in rows if r["type"] == "task")
-        section_count = sum(1 for r in rows if r["type"] == "section")
-        templates.append({
-            "slug": slug,
-            "name": meta.get("name", slug),
-            "description": meta.get("description", ""),
-            "category": meta.get("category", ""),
-            "tags": meta.get("tags", []),
-            "estimated_duration": meta.get("estimated_duration", ""),
-            "recurrence_suggestion": meta.get("recurrence_suggestion", ""),
-            "author": meta.get("author", ""),
-            "version": meta.get("version", ""),
-            "task_count": task_count,
-            "section_count": section_count,
-            "rows": rows,
-            "csv_url": f"templates/{slug}/template.csv",
-        })
+
+    # Load CSV templates
+    if os.path.isdir(TEMPLATES_DIR):
+        for slug in sorted(os.listdir(TEMPLATES_DIR)):
+            template_dir = os.path.join(TEMPLATES_DIR, slug)
+            if not os.path.isdir(template_dir):
+                continue
+            meta_path = os.path.join(template_dir, "meta.yml")
+            csv_path = os.path.join(template_dir, "template.csv")
+            if not os.path.exists(meta_path):
+                continue
+            meta = parse_meta(meta_path)
+            rows = parse_csv_rows(csv_path) if os.path.exists(csv_path) else []
+            task_count = sum(1 for r in rows if r["type"] == "task")
+            section_count = sum(1 for r in rows if r["type"] == "section")
+            templates.append({
+                "slug": slug,
+                "name": meta.get("name", slug),
+                "description": meta.get("description", ""),
+                "category": meta.get("category", ""),
+                "tags": meta.get("tags", []),
+                "estimated_duration": meta.get("estimated_duration", ""),
+                "recurrence_suggestion": meta.get("recurrence_suggestion", ""),
+                "author": meta.get("author", ""),
+                "version": meta.get("version", ""),
+                "task_count": task_count,
+                "section_count": section_count,
+                "rows": rows,
+                "csv_url": f"templates/{slug}/template.csv",
+                "prompt_url": "",
+                "inputs": [],
+                "type": "template",
+            })
+
+    # Load prompt templates
+    if os.path.isdir(PROMPT_TEMPLATES_DIR):
+        for slug in sorted(os.listdir(PROMPT_TEMPLATES_DIR)):
+            template_dir = os.path.join(PROMPT_TEMPLATES_DIR, slug)
+            if not os.path.isdir(template_dir):
+                continue
+            meta_path = os.path.join(template_dir, "meta.yml")
+            if not os.path.exists(meta_path):
+                continue
+            meta = parse_meta(meta_path)
+            templates.append({
+                "slug": slug,
+                "name": meta.get("name", slug),
+                "description": meta.get("description", ""),
+                "category": meta.get("category", ""),
+                "tags": meta.get("tags", []),
+                "estimated_duration": "",
+                "recurrence_suggestion": "",
+                "author": meta.get("author", ""),
+                "version": meta.get("version", ""),
+                "task_count": 0,
+                "section_count": 0,
+                "rows": [],
+                "csv_url": "",
+                "prompt_url": f"prompt-templates/{slug}/prompt.md",
+                "inputs": meta.get("inputs", []),
+                "type": "prompt",
+            })
+
     return templates
 
 
@@ -115,9 +168,8 @@ def load_templates():
 # ---------------------------------------------------------------------------
 
 def generate_html(templates):
-    all_tags = sorted({tag for t in templates for tag in t["tags"]})
     templates_json = json.dumps(templates, ensure_ascii=False)
-    all_tags_json = json.dumps(all_tags, ensure_ascii=False)
+    category_meta_json = json.dumps(CATEGORY_META, ensure_ascii=False)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -131,97 +183,157 @@ def generate_html(templates):
     :root {{
       --red: #db4035;
       --red-dark: #b83227;
-      --bg: #f5f5f5;
+      --red-light: #fdecea;
+      --bg: #fafafa;
       --card-bg: #ffffff;
       --text: #202020;
       --muted: #666666;
-      --border: #e0e0e0;
+      --border: #e5e5e5;
       --tag-bg: #f0f0f0;
-      --tag-active-bg: #db4035;
-      --tag-active-text: #ffffff;
       --section-color: #7b68ee;
-      --radius: 8px;
-      --shadow: 0 1px 4px rgba(0,0,0,0.08);
+      --radius: 10px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-hover: 0 8px 24px rgba(0,0,0,0.12);
     }}
 
     body {{
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                   Helvetica, Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.5;
       min-height: 100vh;
     }}
 
-    header {{
+    /* ── Header ── */
+    .site-header {{
       background: var(--red);
       color: #fff;
-      padding: 1.5rem 1rem;
+      padding: 2rem 1rem 1.75rem;
       text-align: center;
     }}
-    header h1 {{ font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; }}
-    header p {{ margin-top: 0.35rem; opacity: 0.88; font-size: 0.95rem; }}
-
-    .container {{ max-width: 1100px; margin: 0 auto; padding: 1.5rem 1rem; }}
-
-    /* Search */
-    .search-bar {{
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
+    .site-header h1 {{
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
     }}
-    .search-bar input {{
-      flex: 1;
-      padding: 0.6rem 0.9rem;
+    .site-header p {{
+      margin-top: 0.4rem;
+      opacity: 0.88;
+      font-size: 1rem;
+    }}
+
+    /* ── Breadcrumb bar ── */
+    .breadcrumb {{
+      display: none;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+    }}
+    .breadcrumb button {{
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--red);
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0;
+    }}
+    .breadcrumb button:hover {{ text-decoration: underline; }}
+    .breadcrumb .crumb-sep {{ color: var(--muted); margin: 0 0.4rem; }}
+    .breadcrumb .crumb-current {{
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }}
+
+    /* ── Container ── */
+    .container {{ max-width: 1100px; margin: 0 auto; padding: 2rem 1.25rem; }}
+
+    /* ── Intro text ── */
+    .intro {{ font-size: 0.95rem; color: var(--muted); margin-bottom: 1.75rem; }}
+
+    /* ── Category grid ── */
+    .category-grid {{
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }}
+
+    /* ── Category card ── */
+    .cat-card {{
+      background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      font-size: 1rem;
-      outline: none;
-      background: var(--card-bg);
-      color: var(--text);
-    }}
-    .search-bar input:focus {{ border-color: var(--red); box-shadow: 0 0 0 2px rgba(219,64,53,0.15); }}
-
-    /* Tag filters */
-    .tag-filters {{
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: box-shadow 0.18s, transform 0.18s;
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
+      flex-direction: column;
+      gap: 0.65rem;
+      color: inherit;
+      text-decoration: none;
+    }}
+    .cat-card:hover {{
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }}
+    .cat-card:focus-visible {{
+      outline: 3px solid var(--red);
+      outline-offset: 2px;
+    }}
+    .cat-icon {{ font-size: 2.2rem; line-height: 1; }}
+    .cat-title {{ font-size: 1.1rem; font-weight: 700; }}
+    .cat-count {{
+      font-size: 0.82rem;
+      color: var(--red);
+      font-weight: 600;
+    }}
+    .cat-previews {{
+      list-style: none;
+      font-size: 0.82rem;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }}
+    .cat-previews li::before {{ content: "▸ "; opacity: 0.4; }}
+    .cat-more {{
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-style: italic;
+    }}
+    .cat-arrow {{
+      margin-top: auto;
+      font-size: 0.82rem;
+      color: var(--red);
+      font-weight: 600;
+    }}
+
+    /* ── Category detail heading ── */
+    .cat-detail-header {{
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
       margin-bottom: 1.5rem;
     }}
-    .tag-btn {{
-      padding: 0.3rem 0.7rem;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: var(--tag-bg);
-      color: var(--text);
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: background 0.15s, color 0.15s, border-color 0.15s;
-      white-space: nowrap;
-    }}
-    .tag-btn:hover {{ background: #e0e0e0; }}
-    .tag-btn.active {{
-      background: var(--tag-active-bg);
-      color: var(--tag-active-text);
-      border-color: var(--tag-active-bg);
-    }}
+    .cat-detail-icon {{ font-size: 2rem; line-height: 1; }}
+    .cat-detail-title {{ font-size: 1.4rem; font-weight: 700; }}
+    .cat-detail-count {{ font-size: 0.9rem; color: var(--muted); margin-top: 0.15rem; }}
 
-    /* Results count */
-    .results-count {{
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 1rem;
-    }}
-
-    /* Grid */
-    .gallery {{
+    /* ── Template grid ── */
+    .template-grid {{
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 1.25rem;
     }}
 
-    /* Card */
-    .card {{
+    /* ── Template card ── */
+    .tpl-card {{
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -229,26 +341,28 @@ def generate_html(templates):
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      transition: box-shadow 0.15s;
+      transition: box-shadow 0.18s;
     }}
-    .card:hover {{ box-shadow: 0 4px 16px rgba(0,0,0,0.13); }}
+    .tpl-card:hover {{ box-shadow: var(--shadow-hover); }}
 
-    .card-header {{
-      padding: 1rem 1rem 0.5rem;
-    }}
-    .card-category {{
-      font-size: 0.72rem;
-      font-weight: 600;
+    .tpl-card-header {{ padding: 1.1rem 1.1rem 0.5rem; }}
+    .tpl-type-badge {{
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.07em;
       color: var(--red);
-      margin-bottom: 0.3rem;
+      background: var(--red-light);
+      border-radius: 999px;
+      padding: 0.18rem 0.55rem;
+      margin-bottom: 0.4rem;
     }}
-    .card-title {{ font-size: 1.1rem; font-weight: 700; }}
-    .card-description {{ font-size: 0.88rem; color: var(--muted); margin-top: 0.35rem; }}
+    .tpl-title {{ font-size: 1.05rem; font-weight: 700; }}
+    .tpl-desc {{ font-size: 0.87rem; color: var(--muted); margin-top: 0.3rem; }}
 
-    .card-tags {{
-      padding: 0.5rem 1rem;
+    .tpl-tags {{
+      padding: 0.4rem 1.1rem;
       display: flex;
       flex-wrap: wrap;
       gap: 0.3rem;
@@ -257,36 +371,29 @@ def generate_html(templates):
       padding: 0.18rem 0.55rem;
       background: var(--tag-bg);
       border-radius: 999px;
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--muted);
-      cursor: pointer;
-      transition: background 0.12s, color 0.12s;
-    }}
-    .tag:hover {{ background: #e0e0e0; color: var(--text); }}
-    .tag.active {{
-      background: var(--tag-active-bg);
-      color: var(--tag-active-text);
     }}
 
-    .card-stats {{
-      padding: 0 1rem 0.5rem;
+    .tpl-stats {{
+      padding: 0.25rem 1.1rem 0.5rem;
       display: flex;
-      gap: 1rem;
-      font-size: 0.8rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.78rem;
       color: var(--muted);
     }}
-    .card-stats span {{ display: flex; align-items: center; gap: 0.25rem; }}
 
-    /* Preview */
-    .card-preview {{
-      margin: 0 1rem 0.75rem;
+    /* Preview rows */
+    .tpl-preview {{
+      margin: 0 1.1rem 0.75rem;
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: 6px;
       overflow: hidden;
-      font-size: 0.8rem;
+      font-size: 0.79rem;
     }}
     .preview-row {{
-      padding: 0.28rem 0.6rem;
+      padding: 0.25rem 0.6rem;
       border-bottom: 1px solid var(--border);
       white-space: nowrap;
       overflow: hidden;
@@ -297,21 +404,34 @@ def generate_html(templates):
       font-weight: 600;
       background: #fafafa;
       color: var(--section-color);
-      font-size: 0.75rem;
+      font-size: 0.73rem;
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }}
-    .preview-row.task {{ color: var(--text); padding-left: 1.2rem; }}
+    .preview-row.task {{ color: var(--text); padding-left: 1.1rem; }}
     .preview-more {{
-      padding: 0.28rem 0.6rem;
+      padding: 0.25rem 0.6rem;
       color: var(--muted);
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       background: #fafafa;
     }}
 
-    /* Footer / download */
-    .card-footer {{
-      padding: 0.75rem 1rem;
+    /* Prompt inputs */
+    .tpl-inputs {{ margin: 0 1.1rem 0.75rem; font-size: 0.82rem; }}
+    .tpl-inputs-label {{ font-weight: 600; color: var(--muted); margin-bottom: 0.25rem; }}
+    .input-chip {{
+      display: inline-block;
+      background: var(--tag-bg);
+      border-radius: 999px;
+      padding: 0.15rem 0.5rem;
+      margin: 0.1rem 0.15rem 0.1rem 0;
+      font-size: 0.74rem;
+      font-family: monospace;
+      color: var(--text);
+    }}
+
+    .tpl-card-footer {{
+      padding: 0.75rem 1.1rem;
       margin-top: auto;
       border-top: 1px solid var(--border);
       display: flex;
@@ -319,8 +439,8 @@ def generate_html(templates):
       justify-content: space-between;
       gap: 0.5rem;
     }}
-    .card-meta {{ font-size: 0.75rem; color: var(--muted); }}
-    .btn-download {{
+    .tpl-meta {{ font-size: 0.74rem; color: var(--muted); }}
+    .btn-primary {{
       display: inline-flex;
       align-items: center;
       gap: 0.3rem;
@@ -334,167 +454,230 @@ def generate_html(templates):
       transition: background 0.15s;
       white-space: nowrap;
     }}
-    .btn-download:hover {{ background: var(--red-dark); }}
+    .btn-primary:hover {{ background: var(--red-dark); }}
 
-    /* Empty state */
-    .empty-state {{
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 3rem 1rem;
-      color: var(--muted);
-    }}
-    .empty-state p {{ font-size: 1rem; }}
-
-    @media (max-width: 480px) {{
-      header h1 {{ font-size: 1.3rem; }}
-      .gallery {{ grid-template-columns: 1fr; }}
+    /* ── Responsive ── */
+    @media (max-width: 540px) {{
+      .site-header h1 {{ font-size: 1.4rem; }}
+      .category-grid, .template-grid {{ grid-template-columns: 1fr; }}
     }}
   </style>
 </head>
 <body>
 
-<header>
+<header class="site-header">
   <h1>📋 Todoist Playbook</h1>
-  <p>Browse, filter, and download reusable Todoist templates</p>
+  <p>Curated templates for getting things done</p>
 </header>
 
-<div class="container">
-  <div class="search-bar">
-    <input type="search" id="search" placeholder="Search templates…" aria-label="Search templates">
-  </div>
-  <div class="tag-filters" id="tag-filters" aria-label="Filter by tag"></div>
-  <p class="results-count" id="results-count"></p>
-  <div class="gallery" id="gallery"></div>
+<nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb">
+  <button id="btn-back" aria-label="Back to all categories">← All Categories</button>
+  <span class="crumb-sep" aria-hidden="true">/</span>
+  <span class="crumb-current" id="crumb-label"></span>
+</nav>
+
+<div class="container" id="container">
+  <!-- Populated by JavaScript -->
 </div>
 
 <script>
 const TEMPLATES = {templates_json};
-const ALL_TAGS  = {all_tags_json};
+const CATEGORY_META = {category_meta_json};
 
-let activeTag = null;
+// ── Helpers ──────────────────────────────────────────────────────────────────
 
-function escHtml(str) {{
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function esc(str) {{
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }}
 
-function formatCategory(cat) {{
-  return cat.replace(/-/g, ' ').replace(/\\b\\w/g, c => c.toUpperCase());
+function catIcon(slug) {{
+  return CATEGORY_META[slug] ? CATEGORY_META[slug][0] : '📁';
+}}
+
+function catLabel(slug) {{
+  if (CATEGORY_META[slug]) return CATEGORY_META[slug][1];
+  return slug.replace(/-/g, ' ').replace(/\\b\\w/g, c => c.toUpperCase());
+}}
+
+function groupByCategory(templates) {{
+  const map = {{}};
+  templates.forEach(t => {{
+    const c = t.category || 'uncategorised';
+    if (!map[c]) map[c] = [];
+    map[c].push(t);
+  }});
+  return map;
 }}
 
 function formatDuration(d) {{
   if (!d) return '';
-  return d.replace('m', ' min').replace('h', ' hr');
+  return d.replace(/m$/, '\u202fmin').replace(/h$/, '\u202fhr');
 }}
 
-function buildTagFilters() {{
-  const container = document.getElementById('tag-filters');
-  ALL_TAGS.forEach(tag => {{
-    const btn = document.createElement('button');
-    btn.className = 'tag-btn';
-    btn.textContent = tag;
-    btn.dataset.tag = tag;
-    btn.addEventListener('click', () => toggleTag(tag));
-    container.appendChild(btn);
+// ── Category home view ────────────────────────────────────────────────────────
+
+function renderHome() {{
+  const groups = groupByCategory(TEMPLATES);
+  const cats = Object.keys(groups).sort();
+  const container = document.getElementById('container');
+
+  let html = `<p class="intro">Browse <strong>${{TEMPLATES.length}}</strong> templates across <strong>${{cats.length}}</strong> categories.</p>
+<div class="category-grid">`;
+
+  cats.forEach(cat => {{
+    const items = groups[cat];
+    const icon = catIcon(cat);
+    const label = catLabel(cat);
+    const count = items.length;
+    const MAX_PREVIEW = 4;
+    const previews = items.slice(0, MAX_PREVIEW);
+    const more = count - previews.length;
+
+    const previewItems = previews.map(t => `<li>${{esc(t.name)}}</li>`).join('');
+    const moreHtml = more > 0 ? `<li class="cat-more">+\u202f${{more}} more</li>` : '';
+
+    html += `
+<div class="cat-card" role="button" tabindex="0"
+     aria-label="Browse ${{esc(label)}} templates"
+     data-category="${{esc(cat)}}">
+  <div class="cat-icon">${{icon}}</div>
+  <div class="cat-title">${{esc(label)}}</div>
+  <div class="cat-count">${{count}}\u202ftemplate${{count !== 1 ? 's' : ''}}</div>
+  <ul class="cat-previews">${{previewItems}}${{moreHtml}}</ul>
+  <div class="cat-arrow">View all \u2192</div>
+</div>`;
+  }});
+
+  html += '</div>';
+  container.innerHTML = html;
+
+  container.querySelectorAll('.cat-card').forEach(card => {{
+    card.addEventListener('click', () => navigate(card.dataset.category));
+    card.addEventListener('keydown', e => {{
+      if (e.key === 'Enter' || e.key === ' ') navigate(card.dataset.category);
+    }});
   }});
 }}
 
-function toggleTag(tag) {{
-  activeTag = activeTag === tag ? null : tag;
-  document.querySelectorAll('.tag-btn').forEach(b => {{
-    b.classList.toggle('active', b.dataset.tag === activeTag);
-  }});
-  render();
-}}
+// ── Template card ─────────────────────────────────────────────────────────────
 
 function buildPreview(rows) {{
-  const MAX_PREVIEW = 8;
-  const shown = rows.slice(0, MAX_PREVIEW);
+  const MAX = 7;
+  const shown = rows.slice(0, MAX);
   const rest = rows.length - shown.length;
   let html = '';
   shown.forEach(r => {{
     const cls = r.type === 'section' ? 'section' : 'task';
-    // Strip @label tokens from task content for cleaner preview
     const content = r.content.replace(/@[\\w-]+/g, '').trim();
-    html += `<div class="preview-row ${{cls}}">${{escHtml(content)}}</div>`;
+    html += `<div class="preview-row ${{cls}}">${{esc(content)}}</div>`;
   }});
-  if (rest > 0) {{
-    html += `<div class="preview-more">+ ${{rest}} more item${{rest > 1 ? 's' : ''}}</div>`;
-  }}
+  if (rest > 0) html += `<div class="preview-more">+\u202f${{rest}} more</div>`;
   return html;
 }}
 
-function buildCard(t) {{
-  const tagHtml = t.tags.map(tag => {{
-    const isActive = tag === activeTag;
-    return `<span class="tag${{isActive ? ' active' : ''}}" data-tag="${{escHtml(tag)}}">${{escHtml(tag)}}</span>`;
-  }}).join('');
+function buildTemplateCard(t) {{
+  const tags = t.tags.map(tag => `<span class="tag">${{esc(tag)}}</span>`).join('');
 
   const stats = [];
-  if (t.task_count)   stats.push(`<span>✔ ${{t.task_count}} task${{t.task_count !== 1 ? 's' : ''}}</span>`);
-  if (t.section_count) stats.push(`<span>▸ ${{t.section_count}} section${{t.section_count !== 1 ? 's' : ''}}</span>`);
-  if (t.estimated_duration) stats.push(`<span>⏱ ${{escHtml(formatDuration(t.estimated_duration))}}</span>`);
-  if (t.recurrence_suggestion) stats.push(`<span>🔁 ${{escHtml(t.recurrence_suggestion)}}</span>`);
+  if (t.task_count)    stats.push(`\u2714\ufe0f ${{t.task_count}}\u202ftask${{t.task_count !== 1 ? 's' : ''}}`);
+  if (t.section_count) stats.push(`\u25b8 ${{t.section_count}}\u202fsection${{t.section_count !== 1 ? 's' : ''}}`);
+  if (t.estimated_duration) stats.push(`\u23f1\ufe0f ${{esc(formatDuration(t.estimated_duration))}}`);
+  if (t.recurrence_suggestion) stats.push(`🔁 ${{esc(t.recurrence_suggestion)}}`);
 
-  const previewHtml = t.rows.length ? buildPreview(t.rows) : '';
-  const metaLine = [t.author ? `by ${{escHtml(t.author)}}` : '', t.version ? `v${{escHtml(t.version)}}` : ''].filter(Boolean).join(' · ');
+  const metaLine = [
+    t.author  ? `by ${{esc(t.author)}}`  : '',
+    t.version ? `v${{esc(t.version)}}` : '',
+  ].filter(Boolean).join(' \u00b7 ');
 
-  return `
-<div class="card" data-slug="${{escHtml(t.slug)}}" data-tags="${{escHtml(t.tags.join(','))}}">
-  <div class="card-header">
-    ${{t.category ? `<div class="card-category">${{escHtml(formatCategory(t.category))}}</div>` : ''}}
-    <div class="card-title">${{escHtml(t.name)}}</div>
-    ${{t.description ? `<div class="card-description">${{escHtml(t.description)}}</div>` : ''}}
+  let previewHtml = '';
+  if (t.type === 'template' && t.rows.length) {{
+    previewHtml = `<div class="tpl-preview">${{buildPreview(t.rows)}}</div>`;
+  }} else if (t.type === 'prompt' && t.inputs && t.inputs.length) {{
+    const chips = t.inputs.map(i => `<span class="input-chip">${{esc(i)}}</span>`).join('');
+    previewHtml = `<div class="tpl-inputs">
+  <div class="tpl-inputs-label">Inputs</div>${{chips}}</div>`;
+  }}
+
+  let actionBtn = '';
+  if (t.type === 'template' && t.csv_url) {{
+    actionBtn = `<a class="btn-primary" href="${{esc(t.csv_url)}}" download>\u2b07\ufe0f Download CSV</a>`;
+  }} else if (t.type === 'prompt' && t.prompt_url) {{
+    actionBtn = `<a class="btn-primary" href="${{esc(t.prompt_url)}}">View Prompt</a>`;
+  }}
+
+  const badgeLabel = t.type === 'prompt' ? 'AI Prompt' : 'Template';
+
+  return `<div class="tpl-card">
+  <div class="tpl-card-header">
+    <span class="tpl-type-badge">${{badgeLabel}}</span>
+    <div class="tpl-title">${{esc(t.name)}}</div>
+    ${{t.description ? `<div class="tpl-desc">${{esc(t.description)}}</div>` : ''}}
   </div>
-  ${{tagHtml ? `<div class="card-tags">${{tagHtml}}</div>` : ''}}
-  ${{stats.length ? `<div class="card-stats">${{stats.join('')}}</div>` : ''}}
-  ${{previewHtml ? `<div class="card-preview">${{previewHtml}}</div>` : ''}}
-  <div class="card-footer">
-    <span class="card-meta">${{metaLine}}</span>
-    <a class="btn-download" href="${{escHtml(t.csv_url)}}" download>⬇ Download CSV</a>
+  ${{tags ? `<div class="tpl-tags">${{tags}}</div>` : ''}}
+  ${{stats.length ? `<div class="tpl-stats">${{stats.join('<span style="margin:0 .2rem;opacity:.4">\u00b7</span>')}}</div>` : ''}}
+  ${{previewHtml}}
+  <div class="tpl-card-footer">
+    <span class="tpl-meta">${{metaLine}}</span>
+    ${{actionBtn}}
   </div>
 </div>`;
 }}
 
-function matchesSearch(t, query) {{
-  if (!query) return true;
-  const q = query.toLowerCase();
-  return (
-    t.name.toLowerCase().includes(q) ||
-    t.description.toLowerCase().includes(q) ||
-    t.tags.some(tag => tag.toLowerCase().includes(q)) ||
-    t.category.toLowerCase().includes(q)
-  );
+// ── Category detail view ──────────────────────────────────────────────────────
+
+function renderCategory(cat) {{
+  const groups = groupByCategory(TEMPLATES);
+  const items = groups[cat] || [];
+  const label = catLabel(cat);
+  const icon = catIcon(cat);
+  const container = document.getElementById('container');
+
+  const html = `
+<div class="cat-detail-header">
+  <span class="cat-detail-icon">${{icon}}</span>
+  <div>
+    <div class="cat-detail-title">${{esc(label)}}</div>
+    <div class="cat-detail-count">${{items.length}}\u202ftemplate${{items.length !== 1 ? 's' : ''}}</div>
+  </div>
+</div>
+<div class="template-grid">
+  ${{items.map(buildTemplateCard).join('')}}
+</div>`;
+
+  container.innerHTML = html;
+  document.getElementById('crumb-label').textContent = `${{icon}} ${{label}}`;
+  document.getElementById('breadcrumb').style.display = 'block';
 }}
 
-function render() {{
-  const query = document.getElementById('search').value.trim();
-  const gallery = document.getElementById('gallery');
-  const counter = document.getElementById('results-count');
+// ── Hash-based routing ────────────────────────────────────────────────────────
 
-  const visible = TEMPLATES.filter(t =>
-    matchesSearch(t, query) &&
-    (!activeTag || t.tags.includes(activeTag))
-  );
+function navigate(cat) {{
+  window.location.hash = '#/category/' + encodeURIComponent(cat);
+}}
 
-  if (visible.length === 0) {{
-    gallery.innerHTML = '<div class="empty-state"><p>No templates match your search.</p></div>';
+function handleRoute() {{
+  const hash = window.location.hash;
+  const match = hash.match(/^#\\/category\\/(.+)$/);
+  if (match) {{
+    renderCategory(decodeURIComponent(match[1]));
+    document.getElementById('breadcrumb').style.display = 'block';
   }} else {{
-    gallery.innerHTML = visible.map(buildCard).join('');
-    // Attach tag click handlers on cards
-    gallery.querySelectorAll('.tag[data-tag]').forEach(el => {{
-      el.addEventListener('click', () => toggleTag(el.dataset.tag));
-    }});
+    renderHome();
+    document.getElementById('breadcrumb').style.display = 'none';
   }}
-
-  counter.textContent = `Showing ${{visible.length}} of ${{TEMPLATES.length}} template${{TEMPLATES.length !== 1 ? 's' : ''}}`;
 }}
 
-document.getElementById('search').addEventListener('input', render);
+document.getElementById('btn-back').addEventListener('click', () => {{
+  window.location.hash = '';
+}});
 
-buildTagFilters();
-render();
+window.addEventListener('hashchange', handleRoute);
+handleRoute();
 </script>
-
 </body>
 </html>
 """
@@ -523,6 +706,16 @@ def main():
             dest_dir = os.path.join(OUTPUT_DIR, "templates", slug)
             os.makedirs(dest_dir, exist_ok=True)
             shutil.copy2(csv_src, os.path.join(dest_dir, "template.csv"))
+
+    # Copy each prompt template's prompt.md into the output directory
+    if os.path.isdir(PROMPT_TEMPLATES_DIR):
+        for slug in os.listdir(PROMPT_TEMPLATES_DIR):
+            template_dir = os.path.join(PROMPT_TEMPLATES_DIR, slug)
+            prompt_src = os.path.join(template_dir, "prompt.md")
+            if os.path.isdir(template_dir) and os.path.exists(prompt_src):
+                dest_dir = os.path.join(OUTPUT_DIR, "prompt-templates", slug)
+                os.makedirs(dest_dir, exist_ok=True)
+                shutil.copy2(prompt_src, os.path.join(dest_dir, "prompt.md"))
 
     templates = load_templates()
     html = generate_html(templates)
