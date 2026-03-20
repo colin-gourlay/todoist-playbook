@@ -4,6 +4,9 @@
 
 ### Changed
 
+- Template: `weekly-review` — refined task wording for clarity, added a calendar review step to the Plan the Future section, and reordered Stop / Start / Continue tasks so Convert START item follows immediately after START
+- Workflow: `create-todoist-project.yml` — added scheduled triggers to auto-create a weekly review project every Friday at 15:00 UTC and every Sunday at 05:00 UTC
+
 - Renamed template `certification-exam` to `exam-certification-workflow`
 - Sorted workflow dispatch template options alphabetically in `create-todoist-project.yml`
 - `parent_project` input in `create-todoist-project.yml` is now a dropdown (`type: choice`) populated with existing Todoist project names instead of a free-text field
