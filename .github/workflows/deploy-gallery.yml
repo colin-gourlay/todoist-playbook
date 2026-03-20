@@ -5,6 +5,7 @@ on:
     branches: [ main ]
     paths:
       - "templates/**"
+      - "prompt-templates/**"
       - ".github/scripts/generate_gallery.py"
       - ".github/workflows/deploy-gallery.yml"
   workflow_dispatch:
