@@ -55,7 +55,8 @@ All tasks in this template are pre-tagged with the following labels:
 | `@place-anywhere` | Can be completed from any location (home, café, commute, etc.) |
 | `@tools-todoist` | Todoist itself is the primary tool for completing this task |
 | `@when-evening` | Best suited to late afternoon or evening time blocks |
-| `@duration-15m` | Quick review step — used for the opening retrospective pass |
+| `@duration-10m` | Brief review step — used for the completed tasks review |
+| `@duration-15m` | Quick review step — used for celebrating wins |
 | `@duration-25m` | Standard review step — used for the majority of the checklist |
 
 > **Note on `@place-anywhere`**: This label was recently added to signal that the weekly review is location-independent. Unlike deep work tasks that may require a specific environment, every step of this review can be completed wherever you have access to Todoist.
