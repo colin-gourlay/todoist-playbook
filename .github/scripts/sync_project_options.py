@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fetch Todoist projects and sync the parent_project options in create-todoist-project.yml.
 
-Reads all projects from the Todoist REST API and rewrites the options list
+Reads all projects from the Todoist REST API v2 and rewrites the options list
 between the BEGIN_TODOIST_PROJECTS / END_TODOIST_PROJECTS sentinel comments in
 the workflow file.  Run the "Sync Todoist Project List" GitHub Actions workflow
 to keep the dropdown current.
@@ -13,7 +13,7 @@ import sys
 import urllib.error
 import urllib.request
 
-TODOIST_API_BASE = "https://api.todoist.com/api/v1"
+TODOIST_API_BASE = "https://api.todoist.com/rest/v2"
 WORKFLOW_PATH = ".github/workflows/create-todoist-project.yml"
 
 # These markers delimit the auto-generated options block inside the YAML file.
@@ -47,8 +47,16 @@ def main():
 
     projects = fetch_projects(token)
 
+    if not isinstance(projects, list):
+        preview = str(projects)[:200]
+        print(
+            f"❌ Unexpected API response (expected a list, got {type(projects).__name__}): {preview}",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
     # Exclude the Inbox project (`is_inbox_project` is the field name in the
-    # Todoist REST API v1 project resource) and sort the rest alphabetically.
+    # Todoist REST API v2 project resource) and sort the rest alphabetically.
     project_names = sorted(
         p["name"] for p in projects if isinstance(p, dict) and not p.get("is_inbox_project", False)
     )
