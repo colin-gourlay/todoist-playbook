@@ -1,0 +1,38 @@
+name: Bump template versions
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Bump template versions
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python3 .github/scripts/bump_template_versions.py
+
+      - name: Commit and push version bumps
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet; then
+            git add templates/*/meta.yml prompt-templates/*/meta.yml 2>/dev/null || true
+            git commit -m "chore: bump template version(s)"
+            git push origin HEAD:${{ github.head_ref }}
+          else
+            echo "ℹ️  No version changes to commit."
+          fi

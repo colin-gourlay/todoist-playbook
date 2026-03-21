@@ -126,6 +126,34 @@ subsequent runs will update it rather than open a duplicate.
 
 ---
 
+## 🔢 Template Versioning
+
+Each template carries a `version` field in its `meta.yml` that follows [Semantic Versioning](https://semver.org/).
+
+| Version | Meaning |
+|---------|---------|
+| `0.0.0` | **Unreviewed** — generated but not yet manually checked. Do not rely on it for production use. |
+| `0.1.0` | **Reviewed** — manually verified and considered stable. |
+| `0.1.x` | **Iterating** — reviewed template receiving incremental improvements. |
+
+### Workflow
+
+1. **All new templates start at `0.0.0`** to signal they have not been reviewed.
+2. **After a manual review**, bump the template to `0.1.0` by editing its `meta.yml` directly.
+3. **Any subsequent change** to a reviewed template (i.e. version ≥ `0.1.0`) automatically receives a **patch bump** (`x.y.z → x.y.(z+1)`) when the PR is merged.
+
+### Auto-bump behaviour
+
+The **Bump template versions** workflow runs on every pull request targeting `main`:
+
+- It detects which template directories have changed (based on non-`meta.yml` file changes).
+- For each changed template it reads the current `version` in `meta.yml`.
+- If the version is `0.0.0` it is left untouched (preserving the "unreviewed" signal).
+- Otherwise it increments the **patch** component and commits the change back to the PR branch.
+- The workflow is idempotent: re-running it on a PR that has already been bumped will not produce an additional bump.
+
+---
+
 ## 📜 License
 
 [Creative Commons Attribution-ShareAlike 4.0 International](LICENSE)
