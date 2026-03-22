@@ -21,14 +21,7 @@ jobs:
         run: python3 .github/scripts/sync_project_options.py
 
       - name: Commit updated workflow if changed
-        run: |
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
-          if ! git diff --quiet .github/workflows/create-todoist-project.yml; then
-            git add .github/workflows/create-todoist-project.yml
-            git commit -m "chore: sync Todoist project list [skip ci]"
-            git push
-            echo "✅ Committed updated project list."
-          else
-            echo "ℹ️ No changes — project list is already up to date."
-          fi
+        uses: colin-gourlay/todoist-playbook/.github/actions/commit-and-push@main
+        with:
+          commit_message: "chore: sync Todoist project list [skip ci]"
+          add: ".github/workflows/create-todoist-project.yml"
