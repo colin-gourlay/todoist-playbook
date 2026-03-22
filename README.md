@@ -81,6 +81,7 @@ Each prompt template folder includes:
 - `/bundles` → Multi-template starter kits
 - `/cli` → Automation tooling
 - `/docs` → GitHub Pages site
+- `/wiki` → Project wiki (problem statement, architecture, setup, roadmap, screenshots)
 
 ---
 
