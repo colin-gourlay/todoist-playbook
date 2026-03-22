@@ -578,6 +578,29 @@ def generate_html(templates, spotlight=None):
       .site-header h1 {{ font-size: 1.4rem; }}
       .category-grid, .template-grid {{ grid-template-columns: 1fr; }}
     }}
+
+    /* ── Footer ── */
+    .site-footer {{
+      margin-top: 4rem;
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 1rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }}
+    .site-footer .footer-links {{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem 1.5rem;
+      margin-bottom: 0.75rem;
+    }}
+    .site-footer a {{
+      color: var(--red);
+      text-decoration: none;
+      font-weight: 600;
+    }}
+    .site-footer a:hover {{ text-decoration: underline; }}
   </style>
 </head>
 <body>
@@ -596,6 +619,21 @@ def generate_html(templates, spotlight=None):
 <div class="container" id="container">
   <!-- Populated by JavaScript -->
 </div>
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="https://github.com/colin-gourlay/todoist-playbook/issues/new?template=template-request.yml">
+      💡 Request a Template
+    </a>
+    <a href="https://github.com/colin-gourlay/todoist-playbook/issues/new?template=bug-report.yml">
+      🐛 Report a Bug
+    </a>
+    <a href="https://github.com/colin-gourlay/todoist-playbook">
+      ⭐ View on GitHub
+    </a>
+  </div>
+  <div>Built with ❤️ · <a href="https://github.com/colin-gourlay/todoist-playbook/blob/main/CONTRIBUTING">Contributing Guide</a></div>
+</footer>
 
 <script>
 const TEMPLATES = {templates_json};
