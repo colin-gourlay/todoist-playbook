@@ -1,0 +1,54 @@
+name: Reusable — Release Assets
+
+on:
+  workflow_call:
+    inputs:
+      assets_zip_path:
+        description: Path to the ZIP asset to attach to the release.
+        type: string
+        default: dist/templates.zip
+      assets_index_path:
+        description: Path to the JSON index asset to attach to the release.
+        type: string
+        default: dist/index.json
+      tag_prefix:
+        description: Prefix prepended to the computed date-based tag (e.g. `v`).
+        type: string
+        default: v
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Generate release assets
+        run: python3 .github/scripts/generate_release_assets.py
+
+      - name: Compute release tag
+        id: tag
+        run: |
+          DATE=$(python3 -c "from datetime import datetime, timezone; d=datetime.now(timezone.utc); print(f'{d.year}.{d.month}.{d.day}')")
+          BASE_TAG="${{ inputs.tag_prefix }}${DATE}"
+          # Find the next available tag to avoid conflicts on same-day releases
+          TAG="${BASE_TAG}"
+          COUNTER=1
+          while git ls-remote --exit-code --tags origin "refs/tags/${TAG}" > /dev/null 2>&1; do
+            COUNTER=$((COUNTER + 1))
+            TAG="${BASE_TAG}-${COUNTER}"
+          done
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.tag.outputs.tag }}" \
+            "${{ inputs.assets_zip_path }}" \
+            "${{ inputs.assets_index_path }}" \
+            --title "Release ${{ steps.tag.outputs.tag }}" \
+            --generate-notes
