@@ -114,6 +114,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 
 | Template | Description | Tags |
 |----------|------------|------|
+| [Awesome List Outreach Shortlist](templates/awesome-list-outreach-shortlist/) | Pre-qualified shortlist of target Awesome Lists for this repository — verify quality signals, draft a reusable submission message, submit, and track status | open-source, github, awesome-lists, outreach, discoverability, promotion |
 | [Awesome List Submission](templates/awesome-list-submission/) | End-to-end workflow for getting a GitHub repository listed on curated Awesome Lists — repo readiness, list targeting, submission, and follow-up | open-source, github, awesome-lists, promotion, discoverability |
 | [Socials Health & Optimisation Checklist](templates/socials-health-and-optimization-checklist/) | Periodic audit to maintain brand hygiene, consistency, and security across all public-facing platforms — social networks, directories, review sites, and professional registries | social-media, brand, audit, hygiene, security, seo |
 

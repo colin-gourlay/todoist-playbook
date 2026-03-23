@@ -12,6 +12,7 @@ on:
         type: choice
         options:
           - ''
+          - awesome-list-outreach-shortlist
           - awesome-list-submission
           - azure-migration-assessment
           - code-review
