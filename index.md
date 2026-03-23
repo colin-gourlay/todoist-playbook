@@ -109,11 +109,19 @@ New here? Try one of these two paths to get a Todoist project running in under a
 
 ---
 
+## 🐙 GitHub & Open Source
+
+| Template | Description | Tags |
+|----------|------------|------|
+| [GitHub Repo Spin-Up](templates/github-repo-spin-up/) | End-to-end checklist for spinning up a new GitHub repository — identity, documentation, CI/CD, security, Copilot integration, and developer hygiene | github, setup, devops, open-source, ci-cd, copilot, security |
+| [Awesome List Submission](templates/awesome-list-submission/) | End-to-end workflow for getting a GitHub repository listed on curated Awesome Lists — repo readiness, list targeting, submission, and follow-up | open-source, github, awesome-lists, promotion, discoverability |
+
+---
+
 ## 🌐 Brand & Social
 
 | Template | Description | Tags |
 |----------|------------|------|
-| [Awesome List Submission](templates/awesome-list-submission/) | End-to-end workflow for getting a GitHub repository listed on curated Awesome Lists — repo readiness, list targeting, submission, and follow-up | open-source, github, awesome-lists, promotion, discoverability |
 | [Socials Health & Optimisation Checklist](templates/socials-health-and-optimization-checklist/) | Periodic audit to maintain brand hygiene, consistency, and security across all public-facing platforms — social networks, directories, review sites, and professional registries | social-media, brand, audit, hygiene, security, seo |
 
 ---

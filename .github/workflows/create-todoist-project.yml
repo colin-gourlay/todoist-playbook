@@ -19,6 +19,7 @@ on:
           - daily-review
           - ef-code-review
           - exam-certification-workflow
+          - github-repo-spin-up
           - house-admin
           - iteration-0
           - onboarding-checklist
