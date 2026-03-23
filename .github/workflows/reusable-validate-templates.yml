@@ -1,0 +1,223 @@
+name: Reusable — Validate Templates
+
+on:
+  workflow_call:
+    inputs:
+      templates_path:
+        description: Path to the templates directory.
+        type: string
+        default: templates
+      prompt_templates_path:
+        description: Path to the prompt-templates directory.
+        type: string
+        default: prompt-templates
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Validate template structure
+        run: |
+          set -euo pipefail
+
+          TEMPLATES_PATH="${{ inputs.templates_path }}"
+
+          mapfile -t valid_project_colors < .github/scripts/project_colors.txt
+
+          if [ ! -d "$TEMPLATES_PATH" ]; then
+            echo "❌ ${TEMPLATES_PATH}/ folder not found"
+            exit 1
+          fi
+
+          failed=0
+
+          for dir in "$TEMPLATES_PATH"/*/; do
+            [ -d "$dir" ] || continue
+            slug=$(basename "$dir")
+
+            echo "🔎 Checking $slug"
+
+            # -----------------------
+            # 1. Kebab-case check
+            # -----------------------
+            if [[ ! "$slug" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+              echo "❌ Folder name must be kebab-case: $slug"
+              failed=1
+            fi
+
+            # -----------------------
+            # 2. Required files
+            # -----------------------
+            for file in template.csv meta.yml README.md; do
+              if [ ! -f "${dir}${file}" ]; then
+                echo "❌ Missing ${file} in ${dir}"
+                failed=1
+              fi
+            done
+
+            # -----------------------
+            # 3. meta.yml validation
+            # -----------------------
+            if [ -f "${dir}meta.yml" ]; then
+              required_keys=("name:" "slug:" "description:" "category:" "tags:" "version:")
+
+              for key in "${required_keys[@]}"; do
+                if ! grep -q "^${key}" "${dir}meta.yml"; then
+                  echo "❌ meta.yml missing key: ${key} in ${dir}"
+                  failed=1
+                fi
+              done
+
+              # slug match check
+              meta_slug=$(grep "^slug:" "${dir}meta.yml" | head -n1 | sed 's/slug:[[:space:]]*//')
+              meta_slug=$(echo "$meta_slug" | tr -d '"'\''')
+
+              if [ "$meta_slug" != "$slug" ]; then
+                echo "❌ meta.yml slug ($meta_slug) does not match folder ($slug)"
+                failed=1
+              fi
+
+              # Optional project_color check
+              if grep -q "^project_color:" "${dir}meta.yml"; then
+                meta_color=$(grep "^project_color:" "${dir}meta.yml" | head -n1 | sed 's/project_color:[[:space:]]*//')
+                meta_color=$(echo "$meta_color" | tr -d '"'\''')
+
+                color_valid=0
+                for valid_color in "${valid_project_colors[@]}"; do
+                  if [ "$meta_color" = "$valid_color" ]; then
+                    color_valid=1
+                    break
+                  fi
+                done
+
+                if [ "$color_valid" -ne 1 ]; then
+                  echo "❌ Invalid project_color '$meta_color' in ${dir}meta.yml"
+                  failed=1
+                fi
+              fi
+            fi
+
+            # -----------------------
+            # 4. README import steps check
+            # -----------------------
+            if [ -f "${dir}README.md" ]; then
+              if ! grep -qiE "^## import instructions|import.*csv" "${dir}README.md"; then
+                echo "❌ README.md does not contain import instructions in ${dir}"
+                failed=1
+              fi
+            fi
+
+            # -----------------------
+            # 5. CSV validation
+            # -----------------------
+            if [ -f "${dir}template.csv" ]; then
+
+              header=$(head -n1 "${dir}template.csv")
+
+              if [[ "$header" != TYPE,* ]]; then
+                echo "❌ template.csv must start with TYPE header in ${dir}"
+                failed=1
+              fi
+
+              # Validate TYPE column values
+              awk -F',' 'NR>1 {print $1}' "${dir}template.csv" | while read -r type; do
+                if [ "$type" != "section" ] && [ "$type" != "task" ] && [ -n "$type" ]; then
+                  echo "❌ Invalid TYPE '$type' in ${dir}template.csv"
+                  failed=1
+                fi
+              done
+            fi
+
+          done
+
+          if [ "$failed" -ne 0 ]; then
+            echo "💥 Validation failed"
+            exit 1
+          fi
+
+          echo "✅ All templates validated successfully"
+
+      - name: Validate prompt template structure
+        run: |
+          set -euo pipefail
+
+          PROMPT_TEMPLATES_PATH="${{ inputs.prompt_templates_path }}"
+
+          if [ ! -d "$PROMPT_TEMPLATES_PATH" ]; then
+            echo "ℹ️  No ${PROMPT_TEMPLATES_PATH}/ folder found — skipping"
+            exit 0
+          fi
+
+          failed=0
+
+          for dir in "$PROMPT_TEMPLATES_PATH"/*/; do
+            [ -d "$dir" ] || continue
+            slug=$(basename "$dir")
+
+            echo "🔎 Checking prompt template: $slug"
+
+            # -----------------------
+            # 1. Kebab-case check
+            # -----------------------
+            if [[ ! "$slug" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+              echo "❌ Folder name must be kebab-case: $slug"
+              failed=1
+            fi
+
+            # -----------------------
+            # 2. Required files
+            # -----------------------
+            for file in prompt.md meta.yml README.md; do
+              if [ ! -f "${dir}${file}" ]; then
+                echo "❌ Missing ${file} in ${dir}"
+                failed=1
+              fi
+            done
+
+            # -----------------------
+            # 3. meta.yml validation
+            # -----------------------
+            if [ -f "${dir}meta.yml" ]; then
+              required_keys=("name:" "slug:" "description:" "category:" "tags:" "version:" "inputs:")
+
+              for key in "${required_keys[@]}"; do
+                if ! grep -q "^${key}" "${dir}meta.yml"; then
+                  echo "❌ meta.yml missing key: ${key} in ${dir}"
+                  failed=1
+                fi
+              done
+
+              # slug match check
+              meta_slug=$(grep "^slug:" "${dir}meta.yml" | head -n1 | sed 's/slug:[[:space:]]*//')
+              meta_slug=$(echo "$meta_slug" | tr -d '"'\''')
+
+              if [ "$meta_slug" != "$slug" ]; then
+                echo "❌ meta.yml slug ($meta_slug) does not match folder ($slug)"
+                failed=1
+              fi
+            fi
+
+            # -----------------------
+            # 4. prompt.md validation
+            # -----------------------
+            if [ -f "${dir}prompt.md" ]; then
+              if ! grep -q "{{" "${dir}prompt.md"; then
+                echo "❌ prompt.md contains no {{placeholder}} variables in ${dir}"
+                failed=1
+              fi
+            fi
+
+          done
+
+          if [ "$failed" -ne 0 ]; then
+            echo "💥 Prompt template validation failed"
+            exit 1
+          fi
+
+          echo "✅ All prompt templates validated successfully"

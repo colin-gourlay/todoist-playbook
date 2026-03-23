@@ -2,8 +2,19 @@
 
 ## [Unreleased]
 
+### Added
+
+- Template: **Repo Profile Audit** — baseline audit to align public references to a repository — canonical naming, link consistency, social and profile updates, directory listings, link validation, and follow-up tracking for unresolved external references. Derived from the Socials Health & Optimisation Checklist and scoped to a single repository.
+
+- Template: **Weekly Commitment Reset** — weekly audit and reset of all active commitments; triage @waiting items, review @someday tasks, process the @review queue, and recommit only to what matters
+- Wiki: added project wiki pages (`Home`, `Problem Statement`, `Architecture`, `Setup`, `Screenshots`, `Roadmap`) to the `wiki/` folder
+- Script: `.github/scripts/generate_gallery.py` — added template spotlight feature to the GitHub Pages gallery
+- Template: **Awesome List Outreach Shortlist** — pre-qualified shortlist of target Awesome Lists for this repository, with quality signal checklist, reusable submission message template, and submission tracking table
+
 ### Changed
 
+- Template: `weekly-review` — refined task duration labels for the "Close the Past" section: "Review completed tasks from last week" changed to `@duration-5m`, "Celebrate wins (write 3)" changed to `@duration-10m`, and "Identify unfinished commitments" changed to `@duration-15m`
+- Template: `weekly-review` — bumped version to `0.1.0` (manually reviewed and considered stable)
 - Template: `weekly-review` — refined task wording for clarity, added a calendar review step to the Plan the Future section, and reordered Stop / Start / Continue tasks so Convert START item follows immediately after START
 - Workflow: `create-todoist-project.yml` — added scheduled triggers to auto-create a weekly review project every Friday at 15:00 UTC and every Sunday at 05:00 UTC
 

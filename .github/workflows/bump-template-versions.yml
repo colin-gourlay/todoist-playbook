@@ -1,0 +1,33 @@
+name: Bump template versions
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Bump template versions
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python3 .github/scripts/bump_template_versions.py
+
+      - name: Commit and push version bumps
+        uses: colin-gourlay/todoist-playbook/.github/actions/commit-and-push@main
+        with:
+          commit_message: "chore: bump template version(s)"
+          add: "templates/*/meta.yml prompt-templates/*/meta.yml"
+          push_to: ${{ github.head_ref }}

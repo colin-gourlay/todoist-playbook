@@ -1,0 +1,71 @@
+<svg width="800" height="480" viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif">
+  <!-- Background -->
+  <rect width="800" height="480" fill="#0d1117"/>
+
+  <!-- Top bar -->
+  <rect width="800" height="48" fill="#161b22"/>
+  <rect x="0" y="47" width="800" height="1" fill="#30363d"/>
+
+  <!-- GitHub logo placeholder -->
+  <circle cx="24" cy="24" r="12" fill="#f0f6fc" opacity="0.9"/>
+  <text x="56" y="30" fill="#f0f6fc" font-size="14" font-weight="600">colin-gourlay / todoist-playbook</text>
+  <text x="380" y="30" fill="#8b949e" font-size="13">Actions</text>
+
+  <!-- Sidebar area -->
+  <rect x="0" y="48" width="260" height="432" fill="#0d1117"/>
+  <rect x="260" y="48" width="1" height="432" fill="#21262d"/>
+
+  <!-- Sidebar items -->
+  <rect x="8" y="72" width="244" height="32" rx="6" fill="#161b22"/>
+  <text x="20" y="93" fill="#f0f6fc" font-size="13">Create Todoist Project from Template</text>
+
+  <rect x="8" y="112" width="244" height="28" rx="4" fill="transparent"/>
+  <text x="20" y="131" fill="#8b949e" font-size="12">Validate templates</text>
+
+  <rect x="8" y="148" width="244" height="28" rx="4" fill="transparent"/>
+  <text x="20" y="167" fill="#8b949e" font-size="12">Documentation Sync</text>
+
+  <rect x="8" y="184" width="244" height="28" rx="4" fill="transparent"/>
+  <text x="20" y="203" fill="#8b949e" font-size="12">Bump template versions</text>
+
+  <!-- Main content area -->
+  <rect x="276" y="64" width="500" height="400" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+
+  <!-- Panel header -->
+  <text x="296" y="96" fill="#f0f6fc" font-size="15" font-weight="600">Run workflow</text>
+  <rect x="276" y="104" width="500" height="1" fill="#30363d"/>
+
+  <!-- Branch selector -->
+  <text x="296" y="132" fill="#8b949e" font-size="12">Use workflow from</text>
+  <rect x="296" y="140" width="200" height="32" rx="6" fill="#21262d" stroke="#30363d" stroke-width="1"/>
+  <text x="312" y="161" fill="#f0f6fc" font-size="13">Branch: main</text>
+  <text x="472" y="161" fill="#8b949e" font-size="12">▾</text>
+
+  <!-- Template input -->
+  <text x="296" y="198" fill="#f0f6fc" font-size="13" font-weight="500">Template</text>
+  <rect x="296" y="206" width="460" height="36" rx="6" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+  <text x="312" y="229" fill="#f0f6fc" font-size="13">weekly-review</text>
+  <text x="728" y="229" fill="#8b949e" font-size="14">▾</text>
+
+  <!-- Project name input -->
+  <text x="296" y="264" fill="#f0f6fc" font-size="13" font-weight="500">Project name</text>
+  <text x="440" y="264" fill="#8b949e" font-size="12">(optional)</text>
+  <rect x="296" y="272" width="460" height="36" rx="6" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+  <text x="312" y="295" fill="#6e7681" font-size="13">Leave blank to use template default</text>
+
+  <!-- Colour input -->
+  <text x="296" y="330" fill="#f0f6fc" font-size="13" font-weight="500">Colour</text>
+  <rect x="296" y="338" width="460" height="36" rx="6" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+  <text x="312" y="361" fill="#6e7681" font-size="13">(none)</text>
+  <text x="728" y="361" fill="#8b949e" font-size="14">▾</text>
+
+  <!-- Mark as favourite -->
+  <text x="296" y="396" fill="#f0f6fc" font-size="13" font-weight="500">Mark as favourite</text>
+  <rect x="296" y="404" width="460" height="36" rx="6" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+  <text x="312" y="427" fill="#f0f6fc" font-size="13">no</text>
+  <text x="728" y="427" fill="#8b949e" font-size="14">▾</text>
+
+  <!-- Run workflow button -->
+  <rect x="628" y="452" width="148" height="36" rx="6" fill="#238636"/>
+  <text x="702" y="475" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle">Run workflow</text>
+</svg>

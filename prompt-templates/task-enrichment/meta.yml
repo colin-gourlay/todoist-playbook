@@ -7,7 +7,7 @@ tags:
   - task-enrichment
   - todoist
   - productivity
-version: 1.0.0
+version: 0.0.0
 author: Colin Gourlay
 inputs:
   - task_title

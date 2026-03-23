@@ -164,12 +164,40 @@ def load_templates():
 
 
 # ---------------------------------------------------------------------------
-# HTML generation
+# Spotlight selection
 # ---------------------------------------------------------------------------
 
-def generate_html(templates):
+def _semver_key(template):
+    """Return a tuple (major, minor, patch) for semver comparison."""
+    version = template.get("version", "0.0.0") or "0.0.0"
+    parts = version.split(".")
+    try:
+        return tuple(int(p) for p in (parts + ["0", "0"])[:3])
+    except ValueError:
+        return (0, 0, 0)
+
+
+def get_spotlight_template(templates):
+    """Return the template with the highest semantic version, excluding 0.0.0.
+
+    Returns None if all templates are at version 0.0.0 (unreviewed).
+    Only regular templates (type == 'template') are considered.
+    """
+    candidates = [
+        t for t in templates
+        if t.get("type") == "template" and _semver_key(t) > (0, 0, 0)
+    ]
+    if not candidates:
+        return None
+    return max(candidates, key=_semver_key)
+
+
+
+
+def generate_html(templates, spotlight=None):
     templates_json = json.dumps(templates, ensure_ascii=False)
     category_meta_json = json.dumps(CATEGORY_META, ensure_ascii=False)
+    spotlight_json = json.dumps(spotlight, ensure_ascii=False)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -456,11 +484,123 @@ def generate_html(templates):
     }}
     .btn-primary:hover {{ background: var(--red-dark); }}
 
+    /* ── Spotlight ── */
+    .spotlight-section {{
+      margin-bottom: 2.5rem;
+    }}
+    .spotlight-heading {{
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }}
+    .spotlight-card {{
+      background: linear-gradient(135deg, #fff8f8 0%, #ffffff 60%);
+      border: 2px solid var(--red);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 16px rgba(219,64,53,0.12);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0;
+      overflow: hidden;
+    }}
+    .spotlight-body {{
+      padding: 1.5rem;
+    }}
+    .spotlight-badge {{
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--red);
+      background: var(--red-light);
+      border-radius: 999px;
+      padding: 0.2rem 0.6rem;
+      margin-bottom: 0.6rem;
+    }}
+    .spotlight-name {{
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 0.35rem;
+    }}
+    .spotlight-desc {{
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-bottom: 0.85rem;
+    }}
+    .spotlight-tags {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-bottom: 0.85rem;
+    }}
+    .spotlight-stats {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }}
+    .spotlight-footer {{
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }}
+    .spotlight-meta {{ font-size: 0.78rem; color: var(--muted); }}
+    .spotlight-preview {{
+      border-left: 2px solid var(--border);
+      min-width: 220px;
+      max-width: 280px;
+      font-size: 0.79rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }}
+    .spotlight-preview .preview-row {{ border-bottom: 1px solid var(--border); }}
+    .spotlight-preview .preview-row:last-child {{ border-bottom: none; }}
+    @media (max-width: 680px) {{
+      .spotlight-card {{ grid-template-columns: 1fr; }}
+      .spotlight-preview {{ border-left: none; border-top: 2px solid var(--border); max-width: 100%; }}
+    }}
+
     /* ── Responsive ── */
     @media (max-width: 540px) {{
       .site-header h1 {{ font-size: 1.4rem; }}
       .category-grid, .template-grid {{ grid-template-columns: 1fr; }}
     }}
+
+    /* ── Footer ── */
+    .site-footer {{
+      margin-top: 4rem;
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 1rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }}
+    .site-footer .footer-links {{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem 1.5rem;
+      margin-bottom: 0.75rem;
+    }}
+    .site-footer a {{
+      color: var(--red);
+      text-decoration: none;
+      font-weight: 600;
+    }}
+    .site-footer a:hover {{ text-decoration: underline; }}
   </style>
 </head>
 <body>
@@ -480,9 +620,25 @@ def generate_html(templates):
   <!-- Populated by JavaScript -->
 </div>
 
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="https://github.com/colin-gourlay/todoist-playbook/issues/new?template=template-request.yml">
+      💡 Request a Template
+    </a>
+    <a href="https://github.com/colin-gourlay/todoist-playbook/issues/new?template=bug-report.yml">
+      🐛 Report a Bug
+    </a>
+    <a href="https://github.com/colin-gourlay/todoist-playbook">
+      ⭐ View on GitHub
+    </a>
+  </div>
+  <div>Built with ❤️ · <a href="https://github.com/colin-gourlay/todoist-playbook/blob/main/CONTRIBUTING">Contributing Guide</a></div>
+</footer>
+
 <script>
 const TEMPLATES = {templates_json};
 const CATEGORY_META = {category_meta_json};
+const SPOTLIGHT = {spotlight_json};
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -520,12 +676,57 @@ function formatDuration(d) {{
 
 // ── Category home view ────────────────────────────────────────────────────────
 
+function buildSpotlight(t) {{
+  if (!t) return '';
+
+  const tags = t.tags.map(tag => `<span class="tag">${{esc(tag)}}</span>`).join('');
+
+  const stats = [];
+  if (t.task_count)    stats.push(`\u2714\ufe0f ${{t.task_count}}\u202ftask${{t.task_count !== 1 ? 's' : ''}}`);
+  if (t.section_count) stats.push(`\u25b8 ${{t.section_count}}\u202fsection${{t.section_count !== 1 ? 's' : ''}}`);
+  if (t.estimated_duration) stats.push(`\u23f1\ufe0f ${{esc(formatDuration(t.estimated_duration))}}`);
+  if (t.recurrence_suggestion) stats.push(`🔁 ${{esc(t.recurrence_suggestion)}}`);
+
+  const metaLine = [
+    t.author  ? `by ${{esc(t.author)}}`  : '',
+    t.version ? `v${{esc(t.version)}}` : '',
+  ].filter(Boolean).join(' \u00b7 ');
+
+  const previewHtml = t.rows && t.rows.length
+    ? `<div class="spotlight-preview">${{buildPreview(t.rows)}}</div>`
+    : '';
+
+  const actionBtn = t.csv_url
+    ? `<a class="btn-primary" href="${{esc(t.csv_url)}}" download>\u2b07\ufe0f Download CSV</a>`
+    : '';
+
+  return `
+<div class="spotlight-section">
+  <div class="spotlight-heading">\u2b50 Template Spotlight</div>
+  <div class="spotlight-card">
+    <div class="spotlight-body">
+      <div class="spotlight-badge">Featured Template</div>
+      <div class="spotlight-name">${{esc(t.name)}}</div>
+      ${{t.description ? `<div class="spotlight-desc">${{esc(t.description)}}</div>` : ''}}
+      ${{tags ? `<div class="spotlight-tags">${{tags}}</div>` : ''}}
+      ${{stats.length ? `<div class="spotlight-stats">${{stats.join('<span style="margin:0 .2rem;opacity:.4">\u00b7</span>')}}</div>` : ''}}
+      <div class="spotlight-footer">
+        ${{actionBtn}}
+        <span class="spotlight-meta">${{metaLine}}</span>
+      </div>
+    </div>
+    ${{previewHtml}}
+  </div>
+</div>`;
+}}
+
 function renderHome() {{
   const groups = groupByCategory(TEMPLATES);
   const cats = Object.keys(groups).sort();
   const container = document.getElementById('container');
 
-  let html = `<p class="intro">Browse <strong>${{TEMPLATES.length}}</strong> templates across <strong>${{cats.length}}</strong> categories.</p>
+  let html = buildSpotlight(SPOTLIGHT);
+  html += `<p class="intro">Browse <strong>${{TEMPLATES.length}}</strong> templates across <strong>${{cats.length}}</strong> categories.</p>
 <div class="category-grid">`;
 
   cats.forEach(cat => {{
@@ -718,7 +919,8 @@ def main():
                 shutil.copy2(prompt_src, os.path.join(dest_dir, "prompt.md"))
 
     templates = load_templates()
-    html = generate_html(templates)
+    spotlight = get_spotlight_template(templates)
+    html = generate_html(templates, spotlight)
 
     output_path = os.path.join(OUTPUT_DIR, "index.html")
     with open(output_path, "w", encoding="utf-8") as f:

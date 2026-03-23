@@ -1,0 +1,16 @@
+name: Repo Profile Audit
+slug: repo-profile-audit
+description: Baseline audit to align public references to a repository — canonical naming, link consistency, profile updates, and follow-up tracking
+category: brand-and-social
+tags:
+  - github
+  - audit
+  - consistency
+  - discoverability
+  - brand
+  - open-source
+estimated_duration: 60m
+recurrence_suggestion: as-needed
+project_color: teal
+version: 0.0.0
+author: Colin Gourlay
