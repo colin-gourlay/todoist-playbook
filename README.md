@@ -2,6 +2,29 @@
 
 ![Social Preview](.github/assets/social-preview.png)
 
+A curated collection of structured [Todoist](https://www.todoist.com/) templates, workflows, and tooling — designed to reduce friction, standardise recurring work, and get structured projects into Todoist in seconds.
+
+**Who is this for?** Anyone who uses Todoist for personal productivity, team projects, or recurring workflows — and wants a repeatable, structured starting point rather than building task lists from scratch every time.
+
+This repository is a system, not just a storage location:
+
+- **Templates** → ready-made task structures for common projects and workflows
+- **Bundles** → curated multi-template starter kits for larger goals
+- **Automation** → GitHub Actions workflows that create Todoist projects with one click
+- **AI prompt templates** → structured prompts for generating enriched task content
+- **Documentation** → guides, changelogs, and a wiki
+
+---
+
+## 🚦 Start Here
+
+Choose the path that fits you best:
+
+| I want to… | Go here |
+|------------|---------|
+| **Import a template manually into Todoist** | [Browse the catalogue](index.md) → pick a template → download `template.csv` → import into Todoist |
+| **Create a Todoist project automatically via GitHub Actions** | [Set up the secret](#prerequisite) → go to **Actions → Create Todoist Project from Template** → run it |
+| **Contribute a new template or improve an existing one** | Read [CONTRIBUTING](CONTRIBUTING) → follow the template conventions → open a pull request |
 A curated collection of structured [Todoist](https://www.todoist.com/) templates, automation workflows, and AI prompt templates — so you can start any recurring project in seconds instead of from scratch.
 
 Whether you need a weekly review, a 90-day onboarding plan, or a sprint retrospective, the Playbook gives you a proven structure and a one-click workflow to create it directly in Todoist.
@@ -36,6 +59,8 @@ Not sure which type of asset to use? Here is a quick guide:
 ---
 
 ## 🚀 How to Use
+
+<a name="prerequisite"></a>
 
 > **Prerequisite for automated workflows:** Add your Todoist API token as a repository secret named `TODOIST_API_TOKEN`.
 > Retrieve your token from [Todoist Integrations Settings](https://app.todoist.com/app/settings/integrations/developer).
