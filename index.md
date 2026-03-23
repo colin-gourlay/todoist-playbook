@@ -22,6 +22,16 @@ New here? Try one of these two paths to get a Todoist project running in under a
 
 ---
 
+## 🧭 Which type should I use?
+
+| I want to… | Use this | Example |
+|------------|----------|---------|
+| Set up a structured project for a single recurring workflow | **[Template](#-daily--weekly-systems)** | [Weekly Review](templates/weekly-review/) — a GTD-style end-of-week reset with sections for capture, review, and planning |
+| Hit the ground running on a big life event or scenario | **[Bundle](#-starter-kit-bundles)** | [New Job](bundles/new-job/) — combines the Onboarding Checklist, Weekly Review, and One-on-One templates in one starter kit |
+| Generate rich, AI-powered task content tailored to my input | **[Prompt Template](#-ai-prompt-templates)** | [Task Enrichment](prompt-templates/task-enrichment/) — paste a short description into your AI assistant and get a fully structured task back |
+
+---
+
 ## 📦 Starter Kit Bundles
 
 | Bundle | Description | Templates |

@@ -74,6 +74,16 @@ Each prompt template folder includes:
 
 ---
 
+## 🧭 Which type should I use?
+
+| I want to… | Use this | Example |
+|------------|----------|---------|
+| Set up a structured project for a single recurring workflow | **[Template](templates/)** | [Weekly Review](templates/weekly-review/) — a GTD-style end-of-week reset with sections for capture, review, and planning |
+| Hit the ground running on a big life event or scenario | **[Bundle](bundles/)** | [New Job](bundles/new-job/) — combines the Onboarding Checklist, Weekly Review, and One-on-One templates in one starter kit |
+| Generate rich, AI-powered task content tailored to my input | **[Prompt Template](prompt-templates/)** | [Task Enrichment](prompt-templates/task-enrichment/) — paste a short description into your AI assistant and get a fully structured task back |
+
+---
+
 ## 💡 Usage Examples
 
 ### Example 1 — Automated: Weekly Review in 30 seconds
