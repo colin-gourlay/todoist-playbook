@@ -26,13 +26,8 @@ jobs:
         run: python3 .github/scripts/bump_template_versions.py
 
       - name: Commit and push version bumps
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          if ! git diff --quiet; then
-            git add templates/*/meta.yml prompt-templates/*/meta.yml 2>/dev/null || true
-            git commit -m "chore: bump template version(s)"
-            git push origin HEAD:${{ github.head_ref }}
-          else
-            echo "ℹ️  No version changes to commit."
-          fi
+        uses: colin-gourlay/todoist-playbook/.github/actions/commit-and-push@main
+        with:
+          commit_message: "chore: bump template version(s)"
+          add: "templates/*/meta.yml prompt-templates/*/meta.yml"
+          push_to: ${{ github.head_ref }}

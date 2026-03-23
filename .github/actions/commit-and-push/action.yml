@@ -1,0 +1,59 @@
+name: Commit and Push
+description: Stage changed files, commit, and push back to the current branch (or a provided ref).
+
+inputs:
+  commit_message:
+    description: Commit message.
+    required: true
+  add:
+    description: >
+      Space-separated list of paths/globs to stage (passed to `git add`).
+      Defaults to `.` (everything).
+    required: false
+    default: '.'
+  push_to:
+    description: >
+      Branch ref to push to (e.g. `${{ github.head_ref }}`).
+      Defaults to empty, which means `git push` without an explicit refspec.
+    required: false
+    default: ''
+  user_name:
+    description: Git committer name.
+    required: false
+    default: 'github-actions[bot]'
+  user_email:
+    description: Git committer email.
+    required: false
+    default: 'github-actions[bot]@users.noreply.github.com'
+
+runs:
+  using: composite
+  steps:
+    - name: Configure git identity
+      shell: bash
+      run: |
+        git config user.name "${{ inputs.user_name }}"
+        git config user.email "${{ inputs.user_email }}"
+
+    - name: Stage files
+      shell: bash
+      env:
+        ADD_PATHS: ${{ inputs.add }}
+      run: git add $ADD_PATHS
+
+    - name: Commit and push if changed
+      shell: bash
+      env:
+        COMMIT_MESSAGE: ${{ inputs.commit_message }}
+        PUSH_TO: ${{ inputs.push_to }}
+      run: |
+        if git diff --cached --quiet; then
+          echo "ℹ️  No changes to commit."
+          exit 0
+        fi
+        git commit -m "$COMMIT_MESSAGE"
+        if [ -n "$PUSH_TO" ]; then
+          git push origin "HEAD:$PUSH_TO"
+        else
+          git push
+        fi
