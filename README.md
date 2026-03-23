@@ -2,15 +2,36 @@
 
 ![Social Preview](.github/assets/social-preview.png)
 
-A curated collection of structured [Todoist](https://www.todoist.com/) templates, workflows, and tooling.
+A curated collection of structured [Todoist](https://www.todoist.com/) templates, automation workflows, and AI prompt templates — so you can start any recurring project in seconds instead of from scratch.
 
-This repository is not just a storage location - it is a system for:
+Whether you need a weekly review, a 90-day onboarding plan, or a sprint retrospective, the Playbook gives you a proven structure and a one-click workflow to create it directly in Todoist.
 
-- Reusable project templates
-- Workflow patterns
-- Bundled starter kits
-- Automation tooling
-- Documentation & playbooks
+---
+
+## 🧭 Start Here
+
+Not sure where to begin? Pick the path that fits you:
+
+| I want to… | Start here |
+|---|---|
+| **Import a template into Todoist** | [Browse the catalogue](index.md) → pick a template → download and import the CSV |
+| **Create a Todoist project automatically** | Go to **Actions → Create Todoist Project from Template** → select a template → Run workflow |
+| **Use AI to generate enriched task content** | Go to **Actions → Create Todoist Project from Prompt Template** → select a prompt → Run workflow |
+| **Contribute a new template** | Read [CONTRIBUTING](CONTRIBUTING) → follow the template structure → open a PR |
+
+> **New to the repo?** Start with the [weekly-review](templates/weekly-review/) template — it is the fastest way to see how the Playbook works.
+
+---
+
+## 🔍 Templates vs Bundles vs Prompt Templates
+
+Not sure which type of asset to use? Here is a quick guide:
+
+| Type | What it is | When to use it | Example |
+|------|-----------|----------------|---------|
+| **Template** | A single-purpose CSV task list with sections and tasks | You need a structured Todoist project for one specific workflow | [Weekly Review](templates/weekly-review/) |
+| **Bundle** | A curated set of templates for a broader scenario | You are starting something that spans multiple recurring workflows | [New Job Starter Kit](bundles/new-job/) |
+| **Prompt Template** | An AI prompt you fill in and paste into an AI assistant | You want AI-generated, contextually enriched task content | [Task Enrichment](prompt-templates/task-enrichment/) |
 
 ---
 

@@ -13,6 +13,8 @@ Welcome to the **Todoist Playbook** project wiki. This is the central reference 
 | [Setup](Setup) | How to configure the project and start using it |
 | [Screenshots](Screenshots) | Visual walkthroughs of the key workflows |
 | [Roadmap](Roadmap) | Where the project is headed |
+| [Awesome List Outreach](Awesome-List-Outreach) | Target shortlist, submission message template, and tracking table for Awesome List submissions |
+| [Social Profile Audit](Social-Profile-Audit) | Baseline audit of public profiles and canonical naming for discoverability |
 | [Project Board](Project-Board) | Views, field definitions, and working conventions for the GitHub Project |
 
 ---
