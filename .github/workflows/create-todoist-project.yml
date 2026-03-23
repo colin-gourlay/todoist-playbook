@@ -12,6 +12,7 @@ on:
         type: choice
         options:
           - ''
+          - awesome-list-outreach-shortlist
           - awesome-list-submission
           - azure-migration-assessment
           - code-review
@@ -28,11 +29,13 @@ on:
           - radio-show-post-production
           - radio-show-promotion
           - radio-show-system
+          - repo-profile-audit
           - saas-spin-up
           - saas-wind-down
           - socials-health-and-optimization-checklist
           - sprint-retrospective
           - sprint-review
+          - weekly-commitment-reset
           - weekly-review
       project_name:
         description: Project name (leave blank to use the template's default name)

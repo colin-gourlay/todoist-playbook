@@ -1,0 +1,49 @@
+name: Reusable — Deploy Pages Gallery
+
+on:
+  workflow_call:
+    inputs:
+      build_script:
+        description: Path to the gallery-generation script.
+        type: string
+        default: .github/scripts/generate_gallery.py
+      artifact_path:
+        description: Directory to upload as the Pages artifact.
+        type: string
+        default: docs
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Generate gallery
+        run: python3 ${{ inputs.build_script }}
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ${{ inputs.artifact_path }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
