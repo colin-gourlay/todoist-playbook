@@ -1,0 +1,93 @@
+<svg width="800" height="520" viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif">
+  <!-- App background -->
+  <rect width="800" height="520" fill="#fafafa"/>
+
+  <!-- Left sidebar -->
+  <rect width="220" height="520" fill="#f5f3ef"/>
+  <rect x="220" y="0" width="1" height="520" fill="#e8e5df"/>
+
+  <!-- Sidebar header -->
+  <rect x="8" y="16" width="204" height="36" rx="6" fill="#dc4c3e"/>
+  <text x="44" y="39" fill="#ffffff" font-size="13" font-weight="600">+ Add task</text>
+  <text x="20" y="39" fill="#ffffff" font-size="16">+</text>
+
+  <!-- Search -->
+  <rect x="8" y="60" width="204" height="30" rx="6" fill="#ede9e1"/>
+  <text x="24" y="80" fill="#9e9587" font-size="12">🔍  Search</text>
+
+  <!-- Nav items -->
+  <text x="16" y="116" fill="#6b6156" font-size="13">📥  Inbox</text>
+  <text x="16" y="144" fill="#6b6156" font-size="13">📅  Today</text>
+  <text x="16" y="172" fill="#6b6156" font-size="13">📆  Upcoming</text>
+  <text x="16" y="200" fill="#6b6156" font-size="13">🔖  Filters &amp; Labels</text>
+
+  <!-- Projects section -->
+  <text x="16" y="236" fill="#9e9587" font-size="11" font-weight="600">MY PROJECTS</text>
+
+  <!-- Highlighted project -->
+  <rect x="4" y="244" width="212" height="32" rx="6" fill="#e8e5df"/>
+  <text x="16" y="265" fill="#2b2016" font-size="13" font-weight="600">📋  Weekly Review</text>
+
+  <text x="16" y="296" fill="#6b6156" font-size="13">📋  Onboarding Checklist</text>
+  <text x="16" y="320" fill="#6b6156" font-size="13">📋  House Admin</text>
+  <text x="16" y="344" fill="#6b6156" font-size="13">📋  SaaS Spin-Up</text>
+
+  <!-- Main content area -->
+  <rect x="236" y="16" width="548" height="488" rx="0" fill="#fafafa"/>
+
+  <!-- Project header -->
+  <text x="252" y="52" fill="#1a1a1a" font-size="20" font-weight="700">Weekly Review</text>
+  <rect x="252" y="64" width="548" height="1" fill="#e8e5df"/>
+
+  <!-- Section 1 -->
+  <rect x="252" y="80" width="528" height="28" rx="4" fill="#f5f3ef"/>
+  <text x="264" y="99" fill="#555148" font-size="12" font-weight="600">1️⃣ Capture &amp; Clarify</text>
+
+  <!-- Tasks in section 1 -->
+  <rect x="264" y="116" width="16" height="16" rx="8" fill="none" stroke="#dc4c3e" stroke-width="1.5"/>
+  <text x="288" y="129" fill="#1a1a1a" font-size="13">Process inbox to zero</text>
+  <rect x="720" y="119" width="52" height="16" rx="4" fill="#fbe8e7"/>
+  <text x="746" y="131" fill="#dc4c3e" font-size="10" font-weight="600" text-anchor="middle">P1</text>
+
+  <rect x="264" y="144" width="16" height="16" rx="8" fill="none" stroke="#dc4c3e" stroke-width="1.5"/>
+  <text x="288" y="157" fill="#1a1a1a" font-size="13">Review flagged emails</text>
+  <rect x="720" y="147" width="52" height="16" rx="4" fill="#fdf0d9"/>
+  <text x="746" y="159" fill="#e87c1e" font-size="10" font-weight="600" text-anchor="middle">P2</text>
+
+  <rect x="264" y="172" width="16" height="16" rx="8" fill="none" stroke="#c8c4be" stroke-width="1.5"/>
+  <text x="288" y="185" fill="#1a1a1a" font-size="13">Review pending decisions</text>
+
+  <!-- Section 2 -->
+  <rect x="252" y="204" width="528" height="28" rx="4" fill="#f5f3ef"/>
+  <text x="264" y="223" fill="#555148" font-size="12" font-weight="600">2️⃣ Review &amp; Reflect</text>
+
+  <!-- Tasks in section 2 -->
+  <rect x="264" y="240" width="16" height="16" rx="8" fill="none" stroke="#dc4c3e" stroke-width="1.5"/>
+  <text x="288" y="253" fill="#1a1a1a" font-size="13">Review last week's completed tasks</text>
+
+  <rect x="264" y="268" width="16" height="16" rx="8" fill="none" stroke="#c8c4be" stroke-width="1.5"/>
+  <text x="288" y="281" fill="#1a1a1a" font-size="13">Assess progress against goals</text>
+
+  <rect x="264" y="296" width="16" height="16" rx="8" fill="none" stroke="#c8c4be" stroke-width="1.5"/>
+  <text x="288" y="309" fill="#1a1a1a" font-size="13">Note wins and blockers</text>
+
+  <!-- Section 3 -->
+  <rect x="252" y="328" width="528" height="28" rx="4" fill="#f5f3ef"/>
+  <text x="264" y="347" fill="#555148" font-size="12" font-weight="600">3️⃣ Plan Ahead</text>
+
+  <!-- Tasks in section 3 -->
+  <rect x="264" y="364" width="16" height="16" rx="8" fill="none" stroke="#c8c4be" stroke-width="1.5"/>
+  <text x="288" y="377" fill="#1a1a1a" font-size="13">Review upcoming calendar commitments</text>
+
+  <rect x="264" y="392" width="16" height="16" rx="8" fill="none" stroke="#dc4c3e" stroke-width="1.5"/>
+  <text x="288" y="405" fill="#1a1a1a" font-size="13">Set three priorities for the week</text>
+  <rect x="720" y="395" width="52" height="16" rx="4" fill="#fbe8e7"/>
+  <text x="746" y="407" fill="#dc4c3e" font-size="10" font-weight="600" text-anchor="middle">P1</text>
+
+  <rect x="264" y="420" width="16" height="16" rx="8" fill="none" stroke="#c8c4be" stroke-width="1.5"/>
+  <text x="288" y="433" fill="#1a1a1a" font-size="13">Schedule focus blocks</text>
+
+  <!-- Add task line -->
+  <rect x="252" y="452" width="528" height="1" fill="#e8e5df"/>
+  <text x="264" y="476" fill="#9e9587" font-size="13">+ Add task</text>
+</svg>

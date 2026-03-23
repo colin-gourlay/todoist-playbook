@@ -1,5 +1,27 @@
 # Template Catalogue
 
+## 💡 Quick Examples
+
+New here? Try one of these two paths to get a Todoist project running in under a minute.
+
+### ⚡ Automated path (recommended)
+
+1. Go to **Actions → Create Todoist Project from Template → Run workflow**
+2. Select **`weekly-review`** from the template dropdown
+3. Click **Run workflow** — the project appears in Todoist immediately
+
+→ See the [Screenshots wiki](wiki/Screenshots.md) for a visual walkthrough
+
+### 📥 Manual path
+
+1. Download [`templates/onboarding-checklist/template.csv`](templates/onboarding-checklist/template.csv)
+2. Open Todoist → create a new project → **Import from CSV**
+3. Select the downloaded file
+
+→ Full instructions: [Onboarding Checklist README](templates/onboarding-checklist/README.md)
+
+---
+
 ## 📦 Starter Kit Bundles
 
 | Bundle | Description | Templates |
