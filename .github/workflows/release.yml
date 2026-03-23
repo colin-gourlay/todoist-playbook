@@ -12,34 +12,4 @@ permissions:
 
 jobs:
   release:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Generate release assets
-        run: python3 .github/scripts/generate_release_assets.py
-
-      - name: Compute release tag
-        id: tag
-        run: |
-          DATE=$(python3 -c "from datetime import datetime, timezone; d=datetime.now(timezone.utc); print(f'{d.year}.{d.month}.{d.day}')")
-          BASE_TAG="v${DATE}"
-          # Find the next available tag to avoid conflicts on same-day releases
-          TAG="${BASE_TAG}"
-          COUNTER=1
-          while git ls-remote --exit-code --tags origin "refs/tags/${TAG}" > /dev/null 2>&1; do
-            COUNTER=$((COUNTER + 1))
-            TAG="${BASE_TAG}-${COUNTER}"
-          done
-          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
-
-      - name: Create GitHub Release
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release create "${{ steps.tag.outputs.tag }}" \
-            dist/templates.zip \
-            dist/index.json \
-            --title "Release ${{ steps.tag.outputs.tag }}" \
-            --generate-notes
+    uses: colin-gourlay/todoist-playbook/.github/workflows/reusable-release-assets.yml@main
