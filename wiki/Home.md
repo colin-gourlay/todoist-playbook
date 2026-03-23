@@ -13,6 +13,7 @@ Welcome to the **Todoist Playbook** project wiki. This is the central reference 
 | [Setup](Setup) | How to configure the project and start using it |
 | [Screenshots](Screenshots) | Visual walkthroughs of the key workflows |
 | [Roadmap](Roadmap) | Where the project is headed |
+| [Project Board](Project-Board) | Views, field definitions, and working conventions for the GitHub Project |
 
 ---
 
