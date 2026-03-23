@@ -6,6 +6,7 @@
 
 - Wiki: added project wiki pages (`Home`, `Problem Statement`, `Architecture`, `Setup`, `Screenshots`, `Roadmap`) to the `wiki/` folder
 - Script: `.github/scripts/generate_gallery.py` — added template spotlight feature to the GitHub Pages gallery
+- Template: **Awesome List Outreach Shortlist** — pre-qualified shortlist of target Awesome Lists for this repository, with quality signal checklist, reusable submission message template, and submission tracking table
 
 ### Changed
 
