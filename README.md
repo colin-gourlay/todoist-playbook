@@ -2,19 +2,65 @@
 
 ![Social Preview](.github/assets/social-preview.png)
 
-A curated collection of structured [Todoist](https://www.todoist.com/) templates, workflows, and tooling.
+A curated collection of structured [Todoist](https://www.todoist.com/) templates, workflows, and tooling — designed to reduce friction, standardise recurring work, and get structured projects into Todoist in seconds.
 
-This repository is not just a storage location - it is a system for:
+**Who is this for?** Anyone who uses Todoist for personal productivity, team projects, or recurring workflows — and wants a repeatable, structured starting point rather than building task lists from scratch every time.
 
-- Reusable project templates
-- Workflow patterns
-- Bundled starter kits
-- Automation tooling
-- Documentation & playbooks
+This repository is a system, not just a storage location:
+
+- **Templates** → ready-made task structures for common projects and workflows
+- **Bundles** → curated multi-template starter kits for larger goals
+- **Automation** → GitHub Actions workflows that create Todoist projects with one click
+- **AI prompt templates** → structured prompts for generating enriched task content
+- **Documentation** → guides, changelogs, and a wiki
+
+---
+
+## 🚦 Start Here
+
+Choose the path that fits you best:
+
+| I want to… | Go here |
+|------------|---------|
+| **Import a template manually into Todoist** | [Browse the catalogue](index.md) → pick a template → download `template.csv` → import into Todoist |
+| **Create a Todoist project automatically via GitHub Actions** | [Set up the secret](#prerequisite) → go to **Actions → Create Todoist Project from Template** → run it |
+| **Contribute a new template or improve an existing one** | Read [CONTRIBUTING](CONTRIBUTING) → follow the template conventions → open a pull request |
+A curated collection of structured [Todoist](https://www.todoist.com/) templates, automation workflows, and AI prompt templates — so you can start any recurring project in seconds instead of from scratch.
+
+Whether you need a weekly review, a 90-day onboarding plan, or a sprint retrospective, the Playbook gives you a proven structure and a one-click workflow to create it directly in Todoist.
+
+---
+
+## 🧭 Start Here
+
+Not sure where to begin? Pick the path that fits you:
+
+| I want to… | Start here |
+|---|---|
+| **Import a template into Todoist** | [Browse the catalogue](index.md) → pick a template → download and import the CSV |
+| **Create a Todoist project automatically** | Go to **Actions → Create Todoist Project from Template** → select a template → Run workflow |
+| **Use AI to generate enriched task content** | Go to **Actions → Create Todoist Project from Prompt Template** → select a prompt → Run workflow |
+| **Contribute a new template** | Read [CONTRIBUTING](CONTRIBUTING) → follow the template structure → open a PR |
+
+> **New to the repo?** Start with the [weekly-review](templates/weekly-review/) template — it is the fastest way to see how the Playbook works.
+
+---
+
+## 🔍 Templates vs Bundles vs Prompt Templates
+
+Not sure which type of asset to use? Here is a quick guide:
+
+| Type | What it is | When to use it | Example |
+|------|-----------|----------------|---------|
+| **Template** | A single-purpose CSV task list with sections and tasks | You need a structured Todoist project for one specific workflow | [Weekly Review](templates/weekly-review/) |
+| **Bundle** | A curated set of templates for a broader scenario | You are starting something that spans multiple recurring workflows | [New Job Starter Kit](bundles/new-job/) |
+| **Prompt Template** | An AI prompt you fill in and paste into an AI assistant | You want AI-generated, contextually enriched task content | [Task Enrichment](prompt-templates/task-enrichment/) |
 
 ---
 
 ## 🚀 How to Use
+
+<a name="prerequisite"></a>
 
 > **Prerequisite for automated workflows:** Add your Todoist API token as a repository secret named `TODOIST_API_TOKEN`.
 > Retrieve your token from [Todoist Integrations Settings](https://app.todoist.com/app/settings/integrations/developer).
@@ -71,6 +117,16 @@ Each prompt template folder includes:
 - `prompt.md` → the prompt with input placeholders and expected output schema
 - `meta.yml` → machine-readable metadata
 - `README.md` → usage guidance and examples
+
+---
+
+## 🧭 Which type should I use?
+
+| I want to… | Use this | Example |
+|------------|----------|---------|
+| Set up a structured project for a single recurring workflow | **[Template](templates/)** | [Weekly Review](templates/weekly-review/) — a GTD-style end-of-week reset with sections for capture, review, and planning |
+| Hit the ground running on a big life event or scenario | **[Bundle](bundles/)** | [New Job](bundles/new-job/) — combines the Onboarding Checklist, Weekly Review, and One-on-One templates in one starter kit |
+| Generate rich, AI-powered task content tailored to my input | **[Prompt Template](prompt-templates/)** | [Task Enrichment](prompt-templates/task-enrichment/) — paste a short description into your AI assistant and get a fully structured task back |
 
 ---
 

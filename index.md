@@ -22,6 +22,16 @@ New here? Try one of these two paths to get a Todoist project running in under a
 
 ---
 
+## 🧭 Which type should I use?
+
+| I want to… | Use this | Example |
+|------------|----------|---------|
+| Set up a structured project for a single recurring workflow | **[Template](#-daily--weekly-systems)** | [Weekly Review](templates/weekly-review/) — a GTD-style end-of-week reset with sections for capture, review, and planning |
+| Hit the ground running on a big life event or scenario | **[Bundle](#-starter-kit-bundles)** | [New Job](bundles/new-job/) — combines the Onboarding Checklist, Weekly Review, and One-on-One templates in one starter kit |
+| Generate rich, AI-powered task content tailored to my input | **[Prompt Template](#-ai-prompt-templates)** | [Task Enrichment](prompt-templates/task-enrichment/) — paste a short description into your AI assistant and get a fully structured task back |
+
+---
+
 ## 📦 Starter Kit Bundles
 
 | Bundle | Description | Templates |
@@ -38,6 +48,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 | Template | Description | Tags |
 |----------|------------|------|
 | [Daily Review](templates/daily-review/) | GTD-aligned daily review to capture, clarify, and close out each day | review, planning, productivity, daily, gtd |
+| [Weekly Commitment Reset](templates/weekly-commitment-reset/) | Weekly audit and reset of all active commitments — triage waiting items, review someday tasks, and recommit only to what matters | commitments, review, planning, productivity, weekly, gtd |
 | [Weekly Review](templates/weekly-review/) | Structured weekly reset to close loops and plan the week ahead | review, planning, productivity, weekly |
 
 ---
@@ -122,6 +133,9 @@ New here? Try one of these two paths to get a Todoist project running in under a
 
 | Template | Description | Tags |
 |----------|------------|------|
+| [Awesome List Outreach Shortlist](templates/awesome-list-outreach-shortlist/) | Pre-qualified shortlist of target Awesome Lists for this repository — verify quality signals, draft a reusable submission message, submit, and track status | open-source, github, awesome-lists, outreach, discoverability, promotion |
+| [Awesome List Submission](templates/awesome-list-submission/) | End-to-end workflow for getting a GitHub repository listed on curated Awesome Lists — repo readiness, list targeting, submission, and follow-up | open-source, github, awesome-lists, promotion, discoverability |
+| [Repo Profile Audit](templates/repo-profile-audit/) | Baseline audit to align public references to a repository — canonical naming, link consistency, profile updates, and follow-up tracking | github, audit, consistency, discoverability, brand, open-source |
 | [Socials Health & Optimisation Checklist](templates/socials-health-and-optimization-checklist/) | Periodic audit to maintain brand hygiene, consistency, and security across all public-facing platforms — social networks, directories, review sites, and professional registries | social-media, brand, audit, hygiene, security, seo |
 
 ---

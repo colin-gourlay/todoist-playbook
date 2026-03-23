@@ -4,8 +4,12 @@
 
 ### Added
 
+- Template: **Repo Profile Audit** — baseline audit to align public references to a repository — canonical naming, link consistency, social and profile updates, directory listings, link validation, and follow-up tracking for unresolved external references. Derived from the Socials Health & Optimisation Checklist and scoped to a single repository.
+
+- Template: **Weekly Commitment Reset** — weekly audit and reset of all active commitments; triage @waiting items, review @someday tasks, process the @review queue, and recommit only to what matters
 - Wiki: added project wiki pages (`Home`, `Problem Statement`, `Architecture`, `Setup`, `Screenshots`, `Roadmap`) to the `wiki/` folder
 - Script: `.github/scripts/generate_gallery.py` — added template spotlight feature to the GitHub Pages gallery
+- Template: **Awesome List Outreach Shortlist** — pre-qualified shortlist of target Awesome Lists for this repository, with quality signal checklist, reusable submission message template, and submission tracking table
 
 ### Changed
 
