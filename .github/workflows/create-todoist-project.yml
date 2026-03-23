@@ -33,6 +33,7 @@ on:
           - socials-health-and-optimization-checklist
           - sprint-retrospective
           - sprint-review
+          - weekly-commitment-reset
           - weekly-review
       project_name:
         description: Project name (leave blank to use the template's default name)

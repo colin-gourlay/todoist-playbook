@@ -1,0 +1,16 @@
+name: Weekly Commitment Reset
+slug: weekly-commitment-reset
+description: Weekly audit and reset of all active commitments — triage waiting items, review someday tasks, and recommit only to what matters
+category: personal-systems
+tags:
+  - commitments
+  - review
+  - planning
+  - productivity
+  - weekly
+  - gtd
+estimated_duration: 30m
+recurrence_suggestion: weekly
+project_color: orange
+version: 1.0.0
+author: Colin Gourlay

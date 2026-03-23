@@ -38,6 +38,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 | Template | Description | Tags |
 |----------|------------|------|
 | [Daily Review](templates/daily-review/) | GTD-aligned daily review to capture, clarify, and close out each day | review, planning, productivity, daily, gtd |
+| [Weekly Commitment Reset](templates/weekly-commitment-reset/) | Weekly audit and reset of all active commitments — triage waiting items, review someday tasks, and recommit only to what matters | commitments, review, planning, productivity, weekly, gtd |
 | [Weekly Review](templates/weekly-review/) | Structured weekly reset to close loops and plan the week ahead | review, planning, productivity, weekly |
 
 ---

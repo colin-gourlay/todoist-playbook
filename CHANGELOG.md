@@ -4,6 +4,7 @@
 
 ### Added
 
+- Template: **Weekly Commitment Reset** — weekly audit and reset of all active commitments; triage @waiting items, review @someday tasks, process the @review queue, and recommit only to what matters
 - Wiki: added project wiki pages (`Home`, `Problem Statement`, `Architecture`, `Setup`, `Screenshots`, `Roadmap`) to the `wiki/` folder
 - Script: `.github/scripts/generate_gallery.py` — added template spotlight feature to the GitHub Pages gallery
 

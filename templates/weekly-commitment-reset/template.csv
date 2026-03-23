@@ -1,0 +1,38 @@
+TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG
+section,1️⃣ Audit Active Commitments,,,,,,
+task,Open filter: @commitment — review every item returned @when-weekly @duration-10m,1,1,,,,,
+task,For each @commitment item: is it still valid? @when-weekly @duration-10m,1,2,,,,,
+task,Mark any expired or completed commitments as done @when-weekly @duration-10m,2,2,,,,,
+task,Renegotiate or remove any overdue @commitment items you can no longer honour @when-weekly @duration-10m,2,2,,,,,
+task,Confirm remaining @commitment items are still on track @when-weekly @duration-10m,2,2,,,,,
+
+section,2️⃣ Triage Waiting Items,,,,,,
+task,Open filter: @waiting — review every item returned @when-weekly @duration-5m,2,1,,,,,
+task,Chase up any @waiting item that has been outstanding for more than one week @when-weekly @duration-5m,2,2,,,,,
+task,Close out any @waiting item where the external dependency has resolved @when-weekly @duration-5m,2,2,,,,,
+task,Convert unresolvable @waiting items to @someday or delete entirely @when-weekly @duration-5m,2,2,,,,,
+
+section,3️⃣ Review Someday / Maybe,,,,,,
+task,Open filter: @someday — review every item returned @when-weekly @duration-5m,3,1,,,,,
+task,Promote any @someday item that is now relevant and actionable @when-weekly @duration-5m,3,2,,,,,
+task,Add @commitment label to promoted items and assign a clear next action @when-weekly @duration-5m,2,3,,,,,
+task,Remove any @someday items that are no longer interesting or viable @when-weekly @duration-5m,3,2,,,,,
+
+section,4️⃣ Process Review Queue,,,,,,
+task,Open filter: @review — review every item returned @when-weekly @duration-5m,2,1,,,,,
+task,For each @review item: decide to activate, defer, or delete @when-weekly @duration-5m,2,2,,,,,
+task,Replace @review label with the appropriate label: @commitment @waiting or @someday @when-weekly @duration-5m,2,2,,,,,
+task,Ensure no item remains tagged @review after this session @when-weekly @duration-5m,2,2,,,,,
+
+section,5️⃣ Reset & Recommit,,,,,,
+task,Count total active @commitment items @when-weekly @duration-5m,1,1,,,,,
+task,Is the commitment load sustainable for next week? @when-weekly @duration-5m,1,1,,,,,
+task,If overloaded: defer at least one @commitment to @someday @when-weekly @duration-5m,2,2,,,,,
+task,If underloaded: consider promoting one @someday item to @commitment @when-weekly @duration-5m,3,2,,,,,
+task,Write your top three commitments for the week ahead @when-weekly @duration-5m,1,1,,,,,
+
+section,6️⃣ Update & Align,,,,,,
+task,Confirm all retained @commitment items have a clear next action @when-weekly @duration-5m,1,1,,,,,
+task,Ensure each @waiting item has an expected resolution date or a chase date @when-weekly @duration-5m,2,1,,,,,
+task,Archive or delete any tasks that no longer belong in the system @when-weekly @duration-5m,2,1,,,,,
+task,Note any system or process improvements to make next week @when-weekly @duration-5m,3,1,,,,,
