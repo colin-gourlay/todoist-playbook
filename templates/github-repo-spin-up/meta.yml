@@ -1,0 +1,17 @@
+name: GitHub Repo Spin-Up
+slug: github-repo-spin-up
+description: End-to-end checklist for spinning up a new GitHub repository — covering identity, documentation, CI/CD, security, Copilot integration, and developer hygiene
+category: github
+tags:
+  - github
+  - setup
+  - devops
+  - open-source
+  - ci-cd
+  - copilot
+  - security
+estimated_duration: 180m
+recurrence_suggestion: as-needed
+project_color: blue
+version: 1.0.0
+author: Colin Gourlay

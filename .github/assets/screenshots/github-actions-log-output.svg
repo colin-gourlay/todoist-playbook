@@ -1,0 +1,46 @@
+<svg width="800" height="520" viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" font-family="'Courier New', Courier, monospace">
+  <!-- Background -->
+  <rect width="800" height="520" fill="#0d1117"/>
+
+  <!-- Top bar -->
+  <rect width="800" height="48" fill="#161b22"/>
+  <rect x="0" y="47" width="800" height="1" fill="#30363d"/>
+  <text x="24" y="30" fill="#f0f6fc" font-size="14" font-weight="600">Actions — Create Todoist Project from Template</text>
+
+  <!-- Status badge -->
+  <rect x="636" y="14" width="80" height="20" rx="10" fill="#238636"/>
+  <text x="676" y="28" fill="#ffffff" font-size="11" font-weight="600" text-anchor="middle">✓ success</text>
+
+  <!-- Step panel -->
+  <rect x="16" y="64" width="768" height="440" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+
+  <!-- Step header -->
+  <rect x="16" y="64" width="768" height="40" rx="8" fill="#21262d"/>
+  <rect x="16" y="88" width="768" height="16" fill="#21262d"/>
+  <circle cx="40" cy="84" r="8" fill="#238636"/>
+  <text x="36" y="88" fill="#ffffff" font-size="11" text-anchor="middle">✓</text>
+  <text x="60" y="89" fill="#f0f6fc" font-size="13" font-weight="600">Run create_todoist_project.py</text>
+
+  <!-- Log lines -->
+  <text x="36" y="132" fill="#8b949e" font-size="12">📋 Template : weekly-review</text>
+  <text x="36" y="156" fill="#8b949e" font-size="12">📁 Project  : Weekly Review</text>
+  <text x="36" y="180" fill="#8b949e" font-size="12">─────────────────────────────────────────</text>
+
+  <text x="36" y="208" fill="#79c0ff" font-size="12">  📂 1️⃣ Capture &amp; Clarify</text>
+  <text x="36" y="228" fill="#56d364" font-size="12">  ✓ Process inbox to zero</text>
+  <text x="36" y="248" fill="#56d364" font-size="12">  ✓ Review flagged emails</text>
+  <text x="36" y="268" fill="#56d364" font-size="12">  ✓ Review pending decisions</text>
+  <text x="36" y="288" fill="#56d364" font-size="12">  ✓ Update active project notes</text>
+
+  <text x="36" y="316" fill="#79c0ff" font-size="12">  📂 2️⃣ Review &amp; Reflect</text>
+  <text x="36" y="336" fill="#56d364" font-size="12">  ✓ Review last week's completed tasks</text>
+  <text x="36" y="356" fill="#56d364" font-size="12">  ✓ Assess progress against goals</text>
+  <text x="36" y="376" fill="#56d364" font-size="12">  ✓ Note wins and blockers</text>
+
+  <text x="36" y="404" fill="#79c0ff" font-size="12">  📂 3️⃣ Plan Ahead</text>
+  <text x="36" y="424" fill="#56d364" font-size="12">  ✓ Review upcoming calendar commitments</text>
+  <text x="36" y="444" fill="#56d364" font-size="12">  ✓ Set three priorities for the week</text>
+  <text x="36" y="464" fill="#56d364" font-size="12">  ✓ Schedule focus blocks</text>
+
+  <text x="36" y="488" fill="#f0f6fc" font-size="12" font-weight="600">🎉 Done! Project 'Weekly Review' is ready in Todoist.</text>
+</svg>

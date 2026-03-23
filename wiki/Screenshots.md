@@ -16,35 +16,30 @@ The primary entry point for the automated workflow. Navigate to **Actions → Cr
 
 ### Workflow inputs
 
+![GitHub Actions Run Workflow form](../.github/assets/screenshots/github-actions-run-workflow.svg)
+
 The `workflow_dispatch` form presents the following inputs:
 
-```
-Template:        [ weekly-review ▾ ]
-Project name:    [ Leave blank for default           ]
-Colour:          [ (none) ▾                          ]
-Mark as favourite: [ no ▾ ]
-Parent project:  [ (none — top-level project) ▾      ]
+- **Template** — select from the dropdown (e.g. `weekly-review`, `daily-review`, `onboarding-checklist`)
+- **Project name** — optional override; leave blank to use the template's default name
+- **Colour** — optional project colour
+- **Mark as favourite** — pin the new project in the Todoist sidebar
 
-                              [ Run workflow ]
-```
+### Actions log output
 
-After clicking **Run workflow**, the Actions log shows the creation progress:
+![GitHub Actions log output](../.github/assets/screenshots/github-actions-log-output.svg)
 
-```
-📋 Template : weekly-review
-📁 Project  : Weekly Review
+After clicking **Run workflow**, the Actions log shows live creation progress — each section and task as it is added to Todoist.
 
-  📂 1️⃣ Capture & Clarify
-  ✓ Process inbox to zero
-  ✓ Review flagged emails
-  ...
+---
 
-  📂 2️⃣ Review & Reflect
-  ✓ Review last week's completed tasks
-  ...
+## Todoist — Project result
 
-🎉 Done! Project 'Weekly Review' is ready in Todoist.
-```
+After the workflow completes, the project appears immediately in Todoist with all sections and tasks pre-populated:
+
+![Todoist project result — Weekly Review](../.github/assets/screenshots/todoist-project-result.svg)
+
+The project is structured exactly as defined in the template: named sections with tasks underneath, priority flags already applied, and subtasks nested under their parent tasks.
 
 ---
 
