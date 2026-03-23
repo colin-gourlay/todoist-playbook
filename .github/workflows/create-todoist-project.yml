@@ -29,6 +29,7 @@ on:
           - radio-show-post-production
           - radio-show-promotion
           - radio-show-system
+          - repo-profile-audit
           - saas-spin-up
           - saas-wind-down
           - socials-health-and-optimization-checklist
