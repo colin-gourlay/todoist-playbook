@@ -80,6 +80,12 @@ Use **Squash and merge** when merging PRs into `main`. This keeps the `main` his
 - Use consistent section formatting
 - Follow naming conventions
 
+Review tracking:
+
+- Templates at `version: 0.0.0` are treated as unreviewed.
+- The **Sync Template Review Issues** workflow creates or re-opens one GitHub issue per unreviewed template and applies the `to-be-reviewed` label.
+- When a template is approved and its version is moved away from `0.0.0`, the matching issue is closed automatically.
+
 Optional meta.yml fields:
 
 - project_color: Todoist color name (berry_red, red, orange, yellow, olive_green, lime_green, green, mint_green, teal, sky_blue, light_blue, blue, grape, violet, lavender, magenta, salmon, charcoal, grey, taupe)

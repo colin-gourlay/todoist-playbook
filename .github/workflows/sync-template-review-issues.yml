@@ -1,0 +1,30 @@
+name: Sync Template Review Issues
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - templates/**
+      - .github/scripts/sync_template_review_issues.py
+      - .github/workflows/sync-template-review-issues.yml
+  schedule:
+    - cron: "0 6 * * *"
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Sync review issues from template versions
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          REVIEW_ISSUE_ASSIGNEE: colin-gourlay
+        run: python3 .github/scripts/sync_template_review_issues.py
