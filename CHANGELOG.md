@@ -10,6 +10,12 @@
 - Wiki: added project wiki pages (`Home`, `Problem Statement`, `Architecture`, `Setup`, `Screenshots`, `Roadmap`) to the `wiki/` folder
 - Script: `.github/scripts/generate_gallery.py` — added template spotlight feature to the GitHub Pages gallery
 - Template: **Awesome List Outreach Shortlist** — pre-qualified shortlist of target Awesome Lists for this repository, with quality signal checklist, reusable submission message template, and submission tracking table
+- Template: **GitHub Repo Spin-Up** — end-to-end checklist for spinning up a new GitHub repository — covering identity, documentation, CI/CD, security, Copilot integration, and developer hygiene
+- Template: **Radio Show Core Workflow** — core weekly workflow for preparing and delivering a radio show — creative prep, logistics, studio setup, and live broadcast
+- Template: **Radio Show Guest Feature** — workflow for preparing and running a guest or feature segment — interviews, artist spotlights, and festival coverage
+- Template: **Radio Show Post Production** — publishing and archiving workflow after a radio broadcast — site publishing, media distribution, and reflection
+- Template: **Radio Show Promotion** — workflow for promoting a radio show across social channels — pre-show announcements and post-show engagement
+- Bundle: **Radio Show Week Kit** — complete system for producing a weekly radio show — core workflow, promotion, post production, and optional guest features
 
 ### Changed
 
