@@ -7,7 +7,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 ### ⚡ Automated path (recommended)
 
 1. Go to **Actions → Create Todoist Project from Template → Run workflow**
-2. Select **`weekly-review`** from the template dropdown
+2. Select **`weekly-close`** (Friday) or **`weekly-plan`** (Sunday) from the template dropdown
 3. Click **Run workflow** — the project appears in Todoist immediately
 
 → See the [Screenshots wiki](wiki/Screenshots.md) for a visual walkthrough
@@ -26,8 +26,8 @@ New here? Try one of these two paths to get a Todoist project running in under a
 
 | I want to… | Use this | Example |
 |------------|----------|---------|
-| Set up a structured project for a single recurring workflow | **[Template](#-daily--weekly-systems)** | [Weekly Review](templates/weekly-review/) — a GTD-style end-of-week reset with sections for capture, review, and planning |
-| Hit the ground running on a big life event or scenario | **[Bundle](#-starter-kit-bundles)** | [New Job](bundles/new-job/) — combines the Onboarding Checklist, Weekly Review, and One-on-One templates in one starter kit |
+| Set up a structured project for a single recurring workflow | **[Template](#-daily--weekly-systems)** | [Weekly Close](templates/weekly-close/) and [Weekly Plan](templates/weekly-plan/) — a two-part weekly system for closure then planning |
+| Hit the ground running on a big life event or scenario | **[Bundle](#-starter-kit-bundles)** | [New Job](bundles/new-job/) — combines Onboarding Checklist, Weekly Close, Weekly Plan, and One-on-One in one starter kit |
 | Generate rich, AI-powered task content tailored to my input | **[Prompt Template](#-ai-prompt-templates)** | [Task Enrichment](prompt-templates/task-enrichment/) — paste a short description into your AI assistant and get a fully structured task back |
 
 ---
@@ -36,7 +36,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 
 | Bundle | Description | Templates |
 |--------|-------------|-----------|
-| [New Job](bundles/new-job/) | Hit the ground running at a new job — onboarding, weekly planning, and 1:1 meetings | onboarding-checklist, weekly-review, one-on-one |
+| [New Job](bundles/new-job/) | Hit the ground running at a new job — onboarding, weekly close and planning rituals, and 1:1 meetings | onboarding-checklist, weekly-close, weekly-plan, one-on-one |
 | [Radio Show Week](bundles/radio-show-week/) | Full radio show week — prep, playlists, comms, upload, and socials | radio-show-system |
 | [Radio Show Week Kit](bundles/radio-show-week-kit/) | Complete system for producing a weekly radio show — core workflow, promotion, post production, and optional guest features | radio-show-core, radio-show-promotion, radio-show-post-production, radio-show-guest-feature |
 | [House Admin](bundles/house-admin/) | Annual household administration — bills, renewals, MOT, and property upkeep | house-admin |
@@ -48,8 +48,10 @@ New here? Try one of these two paths to get a Todoist project running in under a
 | Template | Description | Tags |
 |----------|------------|------|
 | [Daily Review](templates/daily-review/) | GTD-aligned daily review to capture, clarify, and close out each day | review, planning, productivity, daily, gtd |
+| [Weekly Close](templates/weekly-close/) | Friday shutdown review to close loops, process commitments, and capture learnings | review, planning, productivity, weekly, gtd |
+| [Weekly Plan](templates/weekly-plan/) | Sunday planning session to define priorities, schedule commitments, and start the week with clarity | review, planning, productivity, weekly, focus |
 | [Weekly Commitment Reset](templates/weekly-commitment-reset/) | Weekly audit and reset of all active commitments — triage waiting items, review someday tasks, and recommit only to what matters | commitments, review, planning, productivity, weekly, gtd |
-| [Weekly Review](templates/weekly-review/) | Structured weekly reset to close loops and plan the week ahead | review, planning, productivity, weekly |
+| [Weekly Review](templates/weekly-review/) | Combined single-session weekly reset (fallback option when not using the split Friday/Sunday system) | review, planning, productivity, weekly |
 
 ---
 

@@ -1,0 +1,15 @@
+name: Weekly Plan
+slug: weekly-plan
+description: Sunday planning session to define priorities, schedule commitments, and start the week with clarity
+category: personal-systems
+tags:
+  - review
+  - planning
+  - productivity
+  - weekly
+  - focus
+estimated_duration: 30m
+recurrence_suggestion: weekly
+project_color: blue
+version: 0.0.0
+author: Colin Gourlay

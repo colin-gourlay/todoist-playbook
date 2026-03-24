@@ -1,8 +1,11 @@
 # Weekly Review
 
-A structured reset process designed to reduce cognitive load and increase clarity.
+A combined single-session weekly reset for people who prefer one review block.
 
-This template is designed to be used once per week.
+This template is now a fallback option. The recommended workflow is the two-part system:
+
+- [Weekly Close](../weekly-close/) for Friday closure
+- [Weekly Plan](../weekly-plan/) for Sunday planning
 
 ---
 
@@ -19,9 +22,9 @@ Estimated duration: 30–45 minutes.
 
 ## When to Use
 
-- Friday afternoon
-- Sunday evening
-- Whenever feeling overwhelmed
+- Once per week in a single uninterrupted session
+- Friday afternoon if you prefer a close-first rhythm
+- Sunday evening if you prefer a plan-first rhythm
 
 ---
 
@@ -33,6 +36,17 @@ Estimated duration: 30–45 minutes.
 4. Plan the Future
 5. Performance Review & Alignment
 6. Stop / Start / Continue
+
+---
+
+## Recommendation
+
+If you run review automation from GitHub Actions, use the split templates for clearer intent and lower cognitive load:
+
+- Friday schedule creates [Weekly Close](../weekly-close/)
+- Sunday schedule creates [Weekly Plan](../weekly-plan/)
+
+Use this combined template when you only want one weekly project to import or run.
 
 ---
 
@@ -119,7 +133,7 @@ This produces a project name such as `Weekly Review – Week of 14/03`.
 
 ## Optional Recurrence Automation
 
-To run this review automatically each week without manually importing the CSV, use one of the following approaches:
+To run your weekly system automatically without manually importing CSV files, use one of the following approaches:
 
 ### Option A — Todoist Recurring Task (no-code)
 
@@ -139,11 +153,11 @@ The `create-todoist-project.yml` workflow in this repository supports both manua
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 15 * * 5'   # Every Friday at 15:00 UTC
-    - cron: '0 5 * * 0'    # Every Sunday at 05:00 UTC
+    - cron: '0 15 * * 5'   # Every Friday at 15:00 UTC -> weekly-close
+    - cron: '0 18 * * 0'   # Every Sunday at 18:00 UTC -> weekly-plan
 ```
 
-Each scheduled run creates a fresh Todoist project using the `weekly-review` template as the default. You can still run the same workflow manually whenever you want an extra review project outside those times.
+Each scheduled run creates a fresh Todoist project using a purpose-built template for that day. You can still run the same workflow manually and choose `weekly-review` when you want a single combined session.
 
 ---
 

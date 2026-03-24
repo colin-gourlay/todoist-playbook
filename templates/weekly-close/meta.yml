@@ -1,12 +1,13 @@
-name: Weekly Review
-slug: weekly-review
-description: Combined single-session weekly reset (fallback to weekly-close and weekly-plan split)
+name: Weekly Close
+slug: weekly-close
+description: Friday shutdown review to close loops, process commitments, and capture learnings
 category: personal-systems
 tags:
   - review
   - planning
   - productivity
   - weekly
+  - gtd
 estimated_duration: 45m
 recurrence_suggestion: weekly
 project_color: red
