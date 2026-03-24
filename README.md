@@ -241,6 +241,16 @@ Each template carries a `version` field in its `meta.yml` that follows [Semantic
 | `0.1.0` | **Reviewed** — manually verified and considered stable. |
 | `0.1.x` | **Iterating** — reviewed template receiving incremental improvements. |
 
+### Review queue in GitHub Issues
+
+The **Sync Template Review Issues** workflow keeps GitHub issues aligned with unreviewed templates:
+
+- For each template at `version: 0.0.0`, it ensures one open issue labelled `to-be-reviewed`.
+- If a template moves away from `0.0.0`, the matching review issue is closed automatically.
+- Issues are assigned to `colin-gourlay` by default.
+
+Run the workflow manually from **Actions → Sync Template Review Issues** to backfill or re-sync state.
+
 ### Workflow
 
 1. **All new templates start at `0.0.0`** to signal they have not been reviewed.
