@@ -163,5 +163,4 @@ options:
 ## Known Errors & Workarounds
 
 - **`meta.yml` slug mismatch**: The CI check is case-sensitive and strips only single and double quotes. Ensure the `slug:` value is plain lowercase kebab-case with no surrounding quotes.
-- **CSV TYPE validation caveat**: The CI uses a `while read` pipeline which runs in a subshell; a failed check inside the loop sets `failed=1` inside the subshell and does **not** propagate to the outer script. This means invalid TYPE values may not cause the CI to fail. Do not rely on CI alone to catch bad TYPE values — review CSVs manually.
 - **No local test runner**: There is no `make`, `npm`, or `pytest` setup. The only automated checks are in CI. To validate locally, copy the shell commands from the `run:` block of `validate-templates.yml` and run them at the repo root.

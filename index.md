@@ -125,7 +125,6 @@ New here? Try one of these two paths to get a Todoist project running in under a
 | Template | Description | Tags |
 |----------|------------|------|
 | [GitHub Repo Spin-Up](templates/github-repo-spin-up/) | End-to-end checklist for spinning up a new GitHub repository — identity, documentation, CI/CD, security, Copilot integration, and developer hygiene | github, setup, devops, open-source, ci-cd, copilot, security |
-| [Awesome List Submission](templates/awesome-list-submission/) | End-to-end workflow for getting a GitHub repository listed on curated Awesome Lists — repo readiness, list targeting, submission, and follow-up | open-source, github, awesome-lists, promotion, discoverability |
 
 ---
 
