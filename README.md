@@ -16,21 +16,6 @@ This repository is a system, not just a storage location:
 
 ---
 
-## 🚦 Start Here
-
-Choose the path that fits you best:
-
-| I want to… | Go here |
-|------------|---------|
-| **Import a template manually into Todoist** | [Browse the catalogue](index.md) → pick a template → download `template.csv` → import into Todoist |
-| **Create a Todoist project automatically via GitHub Actions** | [Set up the secret](#prerequisite) → go to **Actions → Create Todoist Project from Template** → run it |
-| **Contribute a new template or improve an existing one** | Read [CONTRIBUTING](CONTRIBUTING) → follow the template conventions → open a pull request |
-A curated collection of structured [Todoist](https://www.todoist.com/) templates, automation workflows, and AI prompt templates — so you can start any recurring project in seconds instead of from scratch.
-
-Whether you need a weekly review, a 90-day onboarding plan, or a sprint retrospective, the Playbook gives you a proven structure and a one-click workflow to create it directly in Todoist.
-
----
-
 ## 🧭 Start Here
 
 Not sure where to begin? Pick the path that fits you:
@@ -199,8 +184,7 @@ Visual walkthroughs of the key workflows are available in the [Screenshots wiki 
 - `/templates` → Individual reusable templates
 - `/prompt-templates` → AI prompt templates for generating enriched Todoist task content
 - `/bundles` → Multi-template starter kits
-- `/cli` → Automation tooling
-- `/docs` → GitHub Pages site
+- `/.github/scripts` → Automation scripts for creating Todoist projects and generating release assets
 - `/wiki` → Project wiki (problem statement, architecture, setup, roadmap, screenshots)
 
 ---

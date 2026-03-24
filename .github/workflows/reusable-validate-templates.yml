@@ -126,12 +126,12 @@ jobs:
               fi
 
               # Validate TYPE column values
-              awk -F',' 'NR>1 {print $1}' "${dir}template.csv" | while read -r type; do
+              while read -r type; do
                 if [ "$type" != "section" ] && [ "$type" != "task" ] && [ -n "$type" ]; then
                   echo "❌ Invalid TYPE '$type' in ${dir}template.csv"
                   failed=1
                 fi
-              done
+              done < <(awk -F',' 'NR>1 {print $1}' "${dir}template.csv")
             fi
 
           done
