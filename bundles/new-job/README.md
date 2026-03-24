@@ -2,7 +2,7 @@
 
 A curated set of templates to hit the ground running at a new job.
 
-This bundle covers the three core areas that determine how well you transition into a new role: structured onboarding, consistent weekly planning, and effective 1:1 meetings.
+This bundle covers the core areas that determine how well you transition into a new role: structured onboarding, weekly close and planning rituals, and effective 1:1 meetings.
 
 ---
 
@@ -11,7 +11,8 @@ This bundle covers the three core areas that determine how well you transition i
 | Template | Purpose |
 |----------|---------|
 | [Onboarding Checklist](../../templates/onboarding-checklist/) | Structured first-90-days checklist — admin, people, learning, early wins |
-| [Weekly Review](../../templates/weekly-review/) | Recurring weekly reset to close loops, review commitments, and plan ahead |
+| [Weekly Close](../../templates/weekly-close/) | Friday shutdown ritual to close loops, process commitments, and capture learnings |
+| [Weekly Plan](../../templates/weekly-plan/) | Sunday planning ritual to set priorities and schedule key commitments |
 | [One-on-One](../../templates/one-on-one/) | Recurring 1:1 meeting preparation and follow-up |
 
 ---
@@ -27,8 +28,9 @@ This bundle covers the three core areas that determine how well you transition i
 ## Suggested Setup
 
 1. Import **Onboarding Checklist** first — work through it over your first 90 days
-2. Import **Weekly Review** and schedule it as a recurring Friday ritual
-3. Import **One-on-One** for each person you have a regular 1:1 with — name each project after that person
+2. Import **Weekly Close** and complete it on Friday
+3. Import **Weekly Plan** and complete it on Sunday evening
+4. Import **One-on-One** for each person you have a regular 1:1 with — name each project after that person
 
 ---
 

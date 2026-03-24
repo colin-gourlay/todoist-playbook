@@ -1,0 +1,30 @@
+TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG
+section,1️⃣ Close the Past,,,,,,
+task,Review completed tasks from last week @people-self @place-anywhere @tools-todoist @when-evening @duration-5m,2,1,,,,,
+task,Celebrate wins (write 3) @people-self @place-anywhere @tools-todoist @when-evening @duration-5m,2,1,,,,,
+task,Identify unfinished commitments @people-self @place-anywhere @tools-todoist @when-evening @duration-10m,2,1,,,,,
+
+section,2️⃣ Clear the Present,,,,,,
+task,Empty inbox to zero @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,1,1,,,,,
+task,Process loose notes and captured inputs @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,1,1,,,,,
+task,Clear email backlog @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,3,1,,,,,
+
+section,3️⃣ Review Commitments,,,,,,
+task,Review all active projects @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,1,1,,,,,
+task,Check waiting-for items @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,2,1,,,,,
+task,Review recurring commitments @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,2,1,,,,,
+
+section,4️⃣ Performance Review & Alignment,,,,,,
+task,Did I reach my target deep work hours this week? @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,1,1,,,,,
+task,If target met: note what worked well and what to repeat @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,2,2,,,,,
+task,If target missed: note blockers and one fix to test next week @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,2,2,,,,,
+task,How many high-impact tasks did I complete? @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,1,1,,,,,
+task,What were the highest-leverage outcomes? @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,2,1,,,,,
+task,What do I want to accomplish next week? @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,1,1,,,,,
+task,What adjustments are required to reach next week's goals? @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,1,1,,,,,
+
+section,5️⃣ Stop / Start / Continue,,,,,,
+task,Identify 1 thing to STOP doing next week @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,1,1,,,,,
+task,Identify 1 thing to START doing next week @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,1,1,,,,,
+task,Convert START item into scheduled task @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,1,2,,,,,
+task,Identify 1 thing to CONTINUE doing intentionally @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,1,1,,,,,

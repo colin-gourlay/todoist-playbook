@@ -3,7 +3,7 @@ name: Create Todoist Project from Template
 on:
   schedule:
     - cron: '0 15 * * 5'
-    - cron: '0 5 * * 0'
+    - cron: '0 18 * * 0'
   workflow_dispatch:
     inputs:
       template:
@@ -36,7 +36,9 @@ on:
           - socials-health-and-optimization-checklist
           - sprint-retrospective
           - sprint-review
+          - weekly-close
           - weekly-commitment-reset
+          - weekly-plan
           - weekly-review
       project_name:
         description: Project name (leave blank to use the template's default name)
@@ -98,10 +100,13 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Create Todoist project from CSV template
-        # Leaving template blank defaults to the 'weekly-review' CSV template.
+        # Leaving template blank defaults to:
+        # - 'weekly-close' on Friday scheduled run
+        # - 'weekly-plan' on Sunday scheduled run
+        # - 'weekly-close' on manual runs
         env:
           TODOIST_API_TOKEN: ${{ secrets.TODOIST_API_TOKEN }}
-          TEMPLATE: ${{ inputs.template || 'weekly-review' }}
+          TEMPLATE: ${{ inputs.template || (github.event_name == 'schedule' && (github.event.schedule == '0 15 * * 5' && 'weekly-close' || 'weekly-plan')) || 'weekly-close' }}
           PROJECT_NAME: ${{ inputs.project_name }}
           PROJECT_COLOR: ${{ inputs.color }}
           IS_FAVORITE: ${{ inputs.is_favorite }}

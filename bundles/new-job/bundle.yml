@@ -12,5 +12,6 @@ version: 1.0.0
 author: Colin Gourlay
 templates:
   - onboarding-checklist
-  - weekly-review
+  - weekly-close
+  - weekly-plan
   - one-on-one
