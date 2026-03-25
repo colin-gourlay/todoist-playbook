@@ -32,6 +32,9 @@
 
 ### Added
 
+- Template: **Weekly Close** — Friday shutdown review to close loops, process commitments, and capture learnings
+- Template: **Weekly Plan** — Sunday planning session to define priorities, schedule commitments, and start the week with clarity
+- Workflow: `sync-template-review-issues.yml` — runs daily (and on push to main) to keep GitHub issues aligned with unreviewed templates; creates or re-opens one issue per template at `version: 0.0.0` and closes issues automatically when templates are reviewed
 - Script: `.github/scripts/sync_project_options.py` — fetches all Todoist projects via the API and rewrites the `parent_project` options in `create-todoist-project.yml`
 - Workflow: `sync-todoist-projects.yml` — runs daily (and on demand) to keep the `parent_project` dropdown in sync with the Todoist account
 - Template: **Awesome List Submission** — end-to-end workflow for getting a GitHub repository listed on curated Awesome Lists — repo readiness, list targeting, submission, and follow-up

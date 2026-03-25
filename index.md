@@ -127,7 +127,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 | Template | Description | Tags |
 | ---------- | ------------ | ------ |
 | [GitHub Repo Spin-Up](templates/github-repo-spin-up/) | End-to-end checklist for spinning up a new GitHub repository — identity, ecosystem-watch setup, documentation, CI/CD, security, Copilot integration, and developer hygiene | github, setup, devops, open-source, ci-cd, copilot, security |
-| [Repo Ecosystem Watch](templates/repo-ecosystem-watch/) | Recurring 4-week review checklist for monitoring adjacent repositories, maintenance signals, and reusable ecosystem ideas | github, open-source, review, ecosystem, discoverability, productivity |
+| [Repo Ecosystem Watch](templates/repo-ecosystem-watch/) | Recurring 4-week review checklist for monitoring adjacent repositories, ecosystem signals, and reusable ideas for this repo | github, open-source, review, ecosystem, discoverability, productivity |
 
 ---
 
