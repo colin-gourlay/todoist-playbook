@@ -8,6 +8,7 @@ An end-to-end checklist for spinning up a new GitHub repository — or applying 
 
 - Ensure the repository is correctly named, scoped, described, and discoverable
 - Establish an ecosystem-watch habit by reviewing adjacent repositories during spin-up
+- Identify automation opportunities using GitHub Script and/or GitHub Actions during initial setup
 - Establish clear, comprehensive documentation from day one
 - Set up a strong visual identity with social preview images and profile assets
 - Configure GitHub features including Issues, Discussions, Projects, Releases, and Tags
