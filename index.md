@@ -25,7 +25,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 ## 🧭 Which type should I use?
 
 | I want to… | Use this | Example |
-|------------|----------|---------|
+| ------------ | ---------- | --------- |
 | Set up a structured project for a single recurring workflow | **[Template](#-daily--weekly-systems)** | [Weekly Close](templates/weekly-close/) and [Weekly Plan](templates/weekly-plan/) — a two-part weekly system for closure then planning |
 | Hit the ground running on a big life event or scenario | **[Bundle](#-starter-kit-bundles)** | [New Job](bundles/new-job/) — combines Onboarding Checklist, Weekly Close, Weekly Plan, and One-on-One in one starter kit |
 | Generate rich, AI-powered task content tailored to my input | **[Prompt Template](#-ai-prompt-templates)** | [Task Enrichment](prompt-templates/task-enrichment/) — paste a short description into your AI assistant and get a fully structured task back |
@@ -35,7 +35,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 ## 📦 Starter Kit Bundles
 
 | Bundle | Description | Templates |
-|--------|-------------|-----------|
+| -------- | ------------- | ----------- |
 | [New Job](bundles/new-job/) | Hit the ground running at a new job — onboarding, weekly close and planning rituals, and 1:1 meetings | onboarding-checklist, weekly-close, weekly-plan, one-on-one |
 | [Radio Show Week](bundles/radio-show-week/) | Full radio show week — prep, playlists, comms, upload, and socials | radio-show-system |
 | [Radio Show Week Kit](bundles/radio-show-week-kit/) | Complete system for producing a weekly radio show — core workflow, promotion, post production, and optional guest features | radio-show-core, radio-show-promotion, radio-show-post-production, radio-show-guest-feature |
@@ -46,7 +46,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 ## 🔁 Daily & Weekly Systems
 
 | Template | Description | Tags |
-|----------|------------|------|
+| ---------- | ------------ | ------ |
 | [Daily Review](templates/daily-review/) | GTD-aligned daily review to capture, clarify, and close out each day | review, planning, productivity, daily, gtd |
 | [Weekly Close](templates/weekly-close/) | Friday shutdown review to close loops, process commitments, and capture learnings | review, planning, productivity, weekly, gtd |
 | [Weekly Plan](templates/weekly-plan/) | Sunday planning session to define priorities, schedule commitments, and start the week with clarity | review, planning, productivity, weekly, focus |
@@ -58,7 +58,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 ## 🎙 Radio & Creative Work
 
 | Template | Description | Tags |
-|----------|------------|------|
+| ---------- | ------------ | ------ |
 | [Radio Show System](templates/radio-show-system/) | Pre and post tasks associated with a given show | review, planning, productivity, weekly |
 | [Radio Show Core](templates/radio-show-core/) | Core weekly workflow for preparing and delivering a radio show — creative prep, logistics, studio setup, and live broadcast | radio, broadcast, media, creative |
 | [Radio Show Guest Feature](templates/radio-show-guest-feature/) | Workflow for preparing and running a guest or feature segment — interviews, artist spotlights, and festival coverage | radio, interview, broadcast |
@@ -70,7 +70,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 ## 🎓 Professional Development
 
 | Template | Description | Tags |
-|----------|------------|------|
+| ---------- | ------------ | ------ |
 | [Exam Certification Workflow](templates/exam-certification-workflow/) | End-to-end checklist for preparing, registering, sitting, and following up on a certification exam | certification, exam, learning, career |
 
 ---
@@ -78,7 +78,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 ## 🧑‍💼 Career & Meetings
 
 | Template | Description | Tags |
-|----------|------------|------|
+| ---------- | ------------ | ------ |
 | [Onboarding Checklist](templates/onboarding-checklist/) | Structured first-90-days checklist for starting a new job — admin, relationships, learning, and early wins | onboarding, career, new-job, planning |
 | [One-on-One](templates/one-on-one/) | Recurring preparation and follow-up checklist for 1:1 meetings with a manager or direct report | meetings, one-on-one, career, management |
 
@@ -87,7 +87,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 ## 🔄 Agile & Sprint Ceremonies
 
 | Template | Description | Tags |
-|----------|------------|------|
+| ---------- | ------------ | ------ |
 | [Sprint Retrospective](templates/sprint-retrospective/) | Structured checklist for running a safe, blameless sprint retrospective — gather data, generate insights, and commit to actionable improvements | agile, sprint, retrospective, meetings, continuous-improvement |
 | [Sprint Review](templates/sprint-review/) | Structured checklist for running a collaborative sprint review — demonstrate delivered value, capture stakeholder feedback, and adapt the product backlog | agile, sprint, review, meetings, stakeholders |
 
@@ -96,7 +96,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 ## 💻 Work Projects
 
 | Template | Description | Tags |
-|----------|------------|------|
+| ---------- | ------------ | ------ |
 | [Azure Migration Assessment](templates/azure-migration-assessment/) | Assess, design, and plan the migration of an on-premises .NET, Angular, and SQL Server application to Microsoft Azure | azure, migration, cloud, dotnet, architecture, devops, assessment |
 | [Code Review](templates/code-review/) | Structured checklist for conducting thorough .NET code reviews covering hygiene, unit testing, code structure, Entity Framework, and general best practices | code-review, dotnet, testing, clean-code, best-practices |
 | [Code Review Checklist](templates/code-review-checklist/) | Structured checklist for performing thorough code reviews across any language or repository | code-review, quality, engineering, software |
@@ -108,7 +108,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 ## ☁️ SaaS Management
 
 | Template | Description | Tags |
-|----------|------------|------|
+| ---------- | ------------ | ------ |
 | [SaaS Spin-Up](templates/saas-spin-up/) | End-to-end checklist for onboarding a new SaaS subscription — evaluation, security, billing, integrations, and ongoing maintenance | saas, setup, onboarding, security |
 | [SaaS Wind-Down](templates/saas-wind-down/) | End-to-end checklist for safely winding down a SaaS subscription — data export, billing cancellation, and account closure | saas, offboarding, wind-down, security |
 
@@ -117,7 +117,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 ## 🏠 Home & Personal
 
 | Template | Description | Tags |
-|----------|------------|------|
+| ---------- | ------------ | ------ |
 | [House Admin](templates/house-admin/) | Annual household administration checklist covering bills, renewals, vehicle maintenance, and home upkeep | home, admin, bills, renewals, planning |
 
 ---
@@ -125,15 +125,16 @@ New here? Try one of these two paths to get a Todoist project running in under a
 ## 🐙 GitHub & Open Source
 
 | Template | Description | Tags |
-|----------|------------|------|
-| [GitHub Repo Spin-Up](templates/github-repo-spin-up/) | End-to-end checklist for spinning up a new GitHub repository — identity, documentation, CI/CD, security, Copilot integration, and developer hygiene | github, setup, devops, open-source, ci-cd, copilot, security |
+| ---------- | ------------ | ------ |
+| [GitHub Repo Spin-Up](templates/github-repo-spin-up/) | End-to-end checklist for spinning up a new GitHub repository — identity, ecosystem-watch setup, documentation, CI/CD, security, Copilot integration, and developer hygiene | github, setup, devops, open-source, ci-cd, copilot, security |
+| [Repo Ecosystem Watch](templates/repo-ecosystem-watch/) | Recurring 4-week review checklist for monitoring adjacent repositories, maintenance signals, and reusable ecosystem ideas | github, open-source, review, ecosystem, discoverability, productivity |
 
 ---
 
 ## 🌐 Brand & Social
 
 | Template | Description | Tags |
-|----------|------------|------|
+| ---------- | ------------ | ------ |
 | [Awesome List Outreach Shortlist](templates/awesome-list-outreach-shortlist/) | Pre-qualified shortlist of target Awesome Lists for this repository — verify quality signals, draft a reusable submission message, submit, and track status | open-source, github, awesome-lists, outreach, discoverability, promotion |
 | [Awesome List Submission](templates/awesome-list-submission/) | End-to-end workflow for getting a GitHub repository listed on curated Awesome Lists — repo readiness, list targeting, submission, and follow-up | open-source, github, awesome-lists, promotion, discoverability |
 | [Repo Profile Audit](templates/repo-profile-audit/) | Baseline audit to align public references to a repository — canonical naming, link consistency, profile updates, and follow-up tracking | github, audit, consistency, discoverability, brand, open-source |
@@ -144,7 +145,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 ## 🤖 AI Prompt Templates
 
 | Prompt Template | Description | Inputs |
-|-----------------|-------------|--------|
+| ----------------- | ------------- | -------- |
 | [Task Enrichment](prompt-templates/task-enrichment/) | Generate a structured Todoist task title and description from a brief input and context | task_title, context, priority |
 
 ---
@@ -152,5 +153,5 @@ New here? Try one of these two paths to get a Todoist project running in under a
 ## 🔗 MCP Workflows
 
 | Workflow | Description | Trigger |
-|----------|-------------|---------|
+| ---------- | ------------- | --------- |
 | [Create Todoist Project via MCP](.github/workflows/create-todoist-project-via-mcp.yml) | Create a Todoist project from any CSV template by routing all API calls through the [Todoist MCP server](https://ai.todoist.net/mcp) | workflow_dispatch |

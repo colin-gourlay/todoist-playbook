@@ -1,0 +1,30 @@
+TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG
+section,1️⃣ Prepare Review Inputs,,,,,,
+task,Open the Repo Ecosystem Watch wiki page and the previous review notes,2,1,,,,,
+task,Confirm your active shortlist still reflects current repo priorities,2,1,,,,,
+task,Create a new review note for this cycle and capture the review date,3,1,,,,,
+
+section,2️⃣ Review Todoist-Native Repositories,,,,,,
+task,Check recent commits and release activity for each Todoist-native repo,2,1,,,,,
+task,Note meaningful API or workflow changes that could affect your setup,2,1,,,,,
+task,Mark stale or archived repos for downgrade (Watch -> Star or reference-only),2,1,,,,,
+
+section,3️⃣ Review Adjacent Productivity Tooling,,,,,,
+task,Review Obsidian and adjacent task-system repos for useful patterns,3,1,,,,,
+task,Capture any reusable checklist, taxonomy, or project-structure ideas,2,1,,,,,
+task,Identify one candidate repo to evaluate more deeply this cycle,3,1,,,,,
+
+section,4️⃣ Evaluate Signals & Decide Actions,,,,,,
+task,Review maintenance signals (issues, releases, responsiveness, roadmap),2,1,,,,,
+task,Decide per repo: Watch, Star only, or reference-only,1,1,,,,,
+task,Record the reason for each action decision to avoid future churn,2,1,,,,,
+
+section,5️⃣ Convert Insights into Backlog Work,,,,,,
+task,Create follow-up tasks for ideas that should be implemented in this repo,1,1,,,,,
+task,Link each follow-up to source repositories or notes for traceability,2,1,,,,,
+task,Close or defer low-value ideas with a short rationale,3,1,,,,,
+
+section,6️⃣ Close the Cycle,,,,,,
+task,Update the wiki shortlist status and notes based on this review,2,1,,,,,
+task,Summarise the cycle outcomes in 3 to 5 bullets,3,1,,,,,
+task,Schedule the next review for four weeks from today,1,1,,,,,

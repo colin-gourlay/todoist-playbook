@@ -7,12 +7,13 @@ Welcome to the **Todoist Playbook** project wiki. This is the central reference 
 ## 📖 Contents
 
 | Page | What you will find |
-|------|--------------------|
+| ------ | -------------------- |
 | [Problem Statement](Problem-Statement) | Why this project exists and the problem it solves |
 | [Architecture](Architecture) | How the repository hangs together technically |
 | [Setup](Setup) | How to configure the project and start using it |
 | [Screenshots](Screenshots) | Visual walkthroughs of the key workflows |
 | [Roadmap](Roadmap) | Where the project is headed |
+| [Repo Ecosystem Watch](Repo-Ecosystem-Watch) | Curated shortlist of adjacent repositories with manual Watch/Star review guidance |
 | [Awesome List Outreach](Awesome-List-Outreach) | Target shortlist, submission message template, and tracking table for Awesome List submissions |
 | [Social Profile Audit](Social-Profile-Audit) | Baseline audit of public profiles and canonical naming for discoverability |
 | [Project Board](Project-Board) | Views, field definitions, and working conventions for the GitHub Project |
@@ -41,7 +42,7 @@ Instead of rebuilding the same project structure from scratch each time you star
 ## 🧠 Core Concepts
 
 | Concept | Description |
-|---------|-------------|
+| --------- | ------------- |
 | **Template** | A folder containing a `template.csv`, `meta.yml`, and `README.md` |
 | **Bundle** | A curated set of templates grouped for a common scenario (e.g. starting a new job) |
 | **Prompt Template** | An AI prompt you fill in and paste into an AI assistant to enrich task content |
