@@ -7,6 +7,7 @@ An end-to-end checklist for spinning up a new GitHub repository — or applying 
 ## Objective
 
 - Ensure the repository is correctly named, scoped, described, and discoverable
+- Establish an ecosystem-watch habit by reviewing adjacent repositories during spin-up
 - Establish clear, comprehensive documentation from day one
 - Set up a strong visual identity with social preview images and profile assets
 - Configure GitHub features including Issues, Discussions, Projects, Releases, and Tags
@@ -30,7 +31,7 @@ Estimated duration: 2–3 hours (spread across initial setup days).
 
 ## Structure Overview
 
-1. Repository Identity & Discoverability
+1. Repository Identity & Discoverability (including ecosystem watch/Star decisions)
 2. Documentation
 3. Visual Identity
 4. GitHub Features & Ecosystem

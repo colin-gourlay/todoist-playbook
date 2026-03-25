@@ -30,6 +30,7 @@ on:
           - radio-show-post-production
           - radio-show-promotion
           - radio-show-system
+          - repo-ecosystem-watch
           - repo-profile-audit
           - saas-spin-up
           - saas-wind-down

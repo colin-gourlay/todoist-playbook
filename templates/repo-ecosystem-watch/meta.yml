@@ -1,0 +1,16 @@
+name: Repo Ecosystem Watch
+slug: repo-ecosystem-watch
+description: Recurring 4-week review checklist for monitoring adjacent repositories, ecosystem signals, and reusable ideas for this repo
+category: github
+tags:
+  - github
+  - open-source
+  - review
+  - ecosystem
+  - discoverability
+  - productivity
+estimated_duration: 45m
+recurrence_suggestion: every 4 weeks
+project_color: blue
+version: 0.0.0
+author: Colin Gourlay

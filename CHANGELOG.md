@@ -2,8 +2,10 @@
 
 ## [Unreleased]
 
-### Added
+### Added (Historical)
 
+- Template: **Repo Ecosystem Watch** — recurring 4-week checklist for monitoring adjacent repositories, reviewing maintenance signals, and converting ecosystem insights into actionable follow-up tasks.
+- Wiki: **Repo Ecosystem Watch** page — persisted shortlist of Todoist-native and adjacent productivity repositories with manual Watch/Star guidance and review prompts.
 - Template: **Repo Profile Audit** — baseline audit to align public references to a repository — canonical naming, link consistency, social and profile updates, directory listings, link validation, and follow-up tracking for unresolved external references. Derived from the Socials Health & Optimisation Checklist and scoped to a single repository.
 
 - Template: **Weekly Commitment Reset** — weekly audit and reset of all active commitments; triage @waiting items, review @someday tasks, process the @review queue, and recommit only to what matters
@@ -19,11 +21,11 @@
 
 ### Changed
 
+- Template: `github-repo-spin-up` — added a Section 1 checklist reminder to run the Repo Ecosystem Watch exercise during repository setup, and updated supporting template documentation to match.
 - Template: `weekly-review` — refined task duration labels for the "Close the Past" section: "Review completed tasks from last week" changed to `@duration-5m`, "Celebrate wins (write 3)" changed to `@duration-10m`, and "Identify unfinished commitments" changed to `@duration-15m`
 - Template: `weekly-review` — bumped version to `0.1.0` (manually reviewed and considered stable)
 - Template: `weekly-review` — refined task wording for clarity, added a calendar review step to the Plan the Future section, and reordered Stop / Start / Continue tasks so Convert START item follows immediately after START
 - Workflow: `create-todoist-project.yml` — added scheduled triggers to auto-create a weekly review project every Friday at 15:00 UTC and every Sunday at 05:00 UTC
-
 - Renamed template `certification-exam` to `exam-certification-workflow`
 - Sorted workflow dispatch template options alphabetically in `create-todoist-project.yml`
 - `parent_project` input in `create-todoist-project.yml` is now a dropdown (`type: choice`) populated with existing Todoist project names instead of a free-text field
@@ -32,7 +34,6 @@
 
 - Script: `.github/scripts/sync_project_options.py` — fetches all Todoist projects via the API and rewrites the `parent_project` options in `create-todoist-project.yml`
 - Workflow: `sync-todoist-projects.yml` — runs daily (and on demand) to keep the `parent_project` dropdown in sync with the Todoist account
-
 - Template: **Awesome List Submission** — end-to-end workflow for getting a GitHub repository listed on curated Awesome Lists — repo readiness, list targeting, submission, and follow-up
 - Template: **Code Review Checklist** — structured checklist for performing thorough code reviews across any language or repository
 - `bundles/` folder introducing multi-template starter kits
@@ -47,4 +48,3 @@
 - Script: `.github/scripts/create_via_mcp.py` — minimal MCP client (stdlib only) that initialises a session, discovers tools via `tools/list`, and calls `create_project`, `create_section`, and `create_task` in sequence
 - Updated `index.md` with MCP Workflows section
 - Workflow: `doc-sync.lock.yml` — runs daily to automatically detect documentation files that are out of sync with recent code or content changes, and opens a pull request with the necessary updates
-
