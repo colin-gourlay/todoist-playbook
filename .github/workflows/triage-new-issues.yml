@@ -1,0 +1,157 @@
+name: Triage New Issues
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+  repository-projects: write
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Label issue and add to project Backlog
+        uses: actions/github-script@v7
+        with:
+          # A PAT with the 'project' scope is required if 'Todoist Playbook Roadmap'
+          # is a user-level project rather than a repository-level project.
+          # Replace with: ${{ secrets.PROJECT_PAT }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const PROJECT_NAME = 'Todoist Playbook Roadmap';
+            const TRIAGE_LABEL  = 'triage';
+            const TARGET_STATUS = 'Backlog';
+
+            // Step 1: Add the 'triage' label to the issue.
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo:  context.repo.repo,
+              issue_number: context.issue.number,
+              labels: [TRIAGE_LABEL],
+            });
+            core.info(`Label '${TRIAGE_LABEL}' added to issue #${context.issue.number}`);
+
+            // Step 2: Locate the project by name.
+            // Check repository-level projects first, then fall back to the owner's projects.
+            let projectId;
+
+            const repoProjects = await github.graphql(`
+              query($owner: String!, $repo: String!) {
+                repository(owner: $owner, name: $repo) {
+                  projectsV2(first: 20) {
+                    nodes { id title }
+                  }
+                }
+              }
+            `, { owner: context.repo.owner, repo: context.repo.repo });
+
+            const repoMatch = repoProjects.repository.projectsV2.nodes
+              .find(p => p.title === PROJECT_NAME);
+
+            if (repoMatch) {
+              projectId = repoMatch.id;
+              core.info(`Found project at repository level: ${projectId}`);
+            } else {
+              // Fall back to user-level projects.
+              const userProjects = await github.graphql(`
+                query($login: String!) {
+                  user(login: $login) {
+                    projectsV2(first: 20) {
+                      nodes { id title }
+                    }
+                  }
+                }
+              `, { login: context.repo.owner });
+
+              const userMatch = userProjects.user.projectsV2.nodes
+                .find(p => p.title === PROJECT_NAME);
+
+              if (!userMatch) {
+                core.setFailed(`Project "${PROJECT_NAME}" was not found. ` +
+                  `Check the name and ensure the token has the 'project' scope.`);
+                return;
+              }
+              projectId = userMatch.id;
+              core.info(`Found project at user level: ${projectId}`);
+            }
+
+            // Step 3: Add the issue to the project.
+            const addResult = await github.graphql(`
+              mutation($projectId: ID!, $contentId: ID!) {
+                addProjectV2ItemById(input: {
+                  projectId: $projectId
+                  contentId: $contentId
+                }) {
+                  item { id }
+                }
+              }
+            `, {
+              projectId,
+              contentId: context.payload.issue.node_id,
+            });
+
+            const itemId = addResult.addProjectV2ItemById.item.id;
+            core.info(`Issue added to project as item: ${itemId}`);
+
+            // Step 4: Find the 'Status' single-select field and the 'Backlog' option.
+            const fieldsResult = await github.graphql(`
+              query($projectId: ID!) {
+                node(id: $projectId) {
+                  ... on ProjectV2 {
+                    fields(first: 20) {
+                      nodes {
+                        ... on ProjectV2SingleSelectField {
+                          id
+                          name
+                          options { id name }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `, { projectId });
+
+            const statusField = fieldsResult.node.fields.nodes
+              .find(f => f.name === 'Status');
+
+            if (!statusField) {
+              core.setFailed(`'Status' field not found in project "${PROJECT_NAME}".`);
+              return;
+            }
+
+            const backlogOption = statusField.options
+              .find(o => o.name === TARGET_STATUS);
+
+            if (!backlogOption) {
+              core.setFailed(`'${TARGET_STATUS}' option not found in the Status field. ` +
+                `Available options: ${statusField.options.map(o => o.name).join(', ')}`);
+              return;
+            }
+
+            // Step 5: Set the item's Status to 'Backlog'.
+            await github.graphql(`
+              mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $optionId: String!) {
+                updateProjectV2ItemFieldValue(input: {
+                  projectId: $projectId
+                  itemId:    $itemId
+                  fieldId:   $fieldId
+                  value: { singleSelectOptionId: $optionId }
+                }) {
+                  projectV2Item { id }
+                }
+              }
+            `, {
+              projectId,
+              itemId,
+              fieldId:  statusField.id,
+              optionId: backlogOption.id,
+            });
+
+            core.info(
+              `Issue #${context.issue.number} labelled '${TRIAGE_LABEL}' ` +
+              `and placed in '${PROJECT_NAME}' › ${TARGET_STATUS}`
+            );
