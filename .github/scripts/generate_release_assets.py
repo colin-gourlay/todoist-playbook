@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Generate release assets: index.json and templates.zip.
+"""Generate release assets: index.json and csv-templates.zip.
 
 Usage:
     python3 generate_release_assets.py
 
 Environment variables:
-    TEMPLATES_DIR   Path to the templates folder (default: templates)
+    TEMPLATES_DIR   Path to the CSV templates folder (default: csv-templates)
     OUTPUT_DIR      Path to write generated files to (default: dist)
 """
 
@@ -17,7 +17,7 @@ import sys
 import zipfile
 from datetime import datetime, timezone
 
-TEMPLATES_DIR = os.environ.get("TEMPLATES_DIR", "templates")
+TEMPLATES_DIR = os.environ.get("TEMPLATES_DIR", "csv-templates")
 OUTPUT_DIR = os.environ.get("OUTPUT_DIR", "dist")
 
 
@@ -131,7 +131,7 @@ def generate_templates_zip(output_path):
             for filename in sorted(os.listdir(template_dir)):
                 file_path = os.path.join(template_dir, filename)
                 if os.path.isfile(file_path):
-                    arcname = os.path.join("templates", slug, filename)
+                    arcname = os.path.join("csv-templates", slug, filename)
                     zf.write(file_path, arcname)
 
 
@@ -141,7 +141,7 @@ def generate_templates_zip(output_path):
 
 def main():
     if not os.path.isdir(TEMPLATES_DIR):
-        print(f"Error: templates directory not found: {TEMPLATES_DIR}", file=sys.stderr)
+        print(f"Error: CSV templates directory not found: {TEMPLATES_DIR}", file=sys.stderr)
         sys.exit(1)
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -154,10 +154,10 @@ def main():
         f.write(generate_index_json(templates))
     print(f"✅ index.json written: {index_path} ({len(templates)} templates)")
 
-    # Generate templates.zip
-    zip_path = os.path.join(OUTPUT_DIR, "templates.zip")
+    # Generate csv-templates.zip
+    zip_path = os.path.join(OUTPUT_DIR, "csv-templates.zip")
     generate_templates_zip(zip_path)
-    print(f"✅ templates.zip written: {zip_path}")
+    print(f"✅ csv-templates.zip written: {zip_path}")
 
 
 if __name__ == "__main__":

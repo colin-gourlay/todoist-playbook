@@ -25,7 +25,7 @@ import re
 import subprocess
 import sys
 
-TEMPLATE_DIRS = ["templates", "prompt-templates"]
+TEMPLATE_DIRS = ["csv-templates", "prompt-templates"]
 
 
 def run_git(*args):

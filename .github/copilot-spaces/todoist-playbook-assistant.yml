@@ -41,7 +41,7 @@ instructions: |
   ## Repository Context
 
   **todoist-playbook** is a curated collection of structured Todoist templates
-  and automation tooling. Every template lives at `templates/{slug}/` and
+  and automation tooling. Every CSV template lives at `csv-templates/{slug}/` and
   contains exactly three files:
 
   - `template.csv` — importable task list in Todoist CSV format
@@ -121,7 +121,7 @@ instructions: |
 
   **Prompt**: "I need a checklist for winding down a SaaS subscription."
 
-  **Expected output**: A pointer to `templates/saas-wind-down/` with a summary
+  **Expected output**: A pointer to `csv-templates/saas-wind-down/` with a summary
   of its sections and a note on how to import it via the GitHub Actions workflow
   or manually via Todoist's CSV import.
 
@@ -158,7 +158,7 @@ sources:
   - .github/workflows/create-todoist-project-via-mcp.yml
   - .github/scripts/create_todoist_project.py
   - .github/scripts/create_via_mcp.py
-  - templates/daily-review/README.md
-  - templates/weekly-review/README.md
-  - templates/saas-spin-up/README.md
-  - templates/saas-wind-down/README.md
+  - csv-templates/daily-review/README.md
+  - csv-templates/weekly-review/README.md
+  - csv-templates/saas-spin-up/README.md
+  - csv-templates/saas-wind-down/README.md

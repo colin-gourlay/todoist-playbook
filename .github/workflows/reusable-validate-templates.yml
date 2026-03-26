@@ -4,9 +4,9 @@ on:
   workflow_call:
     inputs:
       templates_path:
-        description: Path to the templates directory.
+        description: Path to the CSV templates directory.
         type: string
-        default: templates
+        default: csv-templates
       prompt_templates_path:
         description: Path to the prompt-templates directory.
         type: string
@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Validate template structure
+      - name: Validate CSV template structure
         run: |
           set -euo pipefail
 
@@ -141,7 +141,7 @@ jobs:
             exit 1
           fi
 
-          echo "✅ All templates validated successfully"
+          echo "✅ All CSV templates validated successfully"
 
       - name: Validate prompt template structure
         run: |

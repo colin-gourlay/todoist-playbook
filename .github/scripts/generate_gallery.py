@@ -5,7 +5,7 @@ Usage:
     python3 generate_gallery.py
 
 Environment variables:
-    TEMPLATES_DIR         Path to the templates folder (default: templates)
+  TEMPLATES_DIR         Path to the CSV templates folder (default: csv-templates)
     PROMPT_TEMPLATES_DIR  Path to the prompt-templates folder (default: prompt-templates)
     OUTPUT_DIR            Path to the output folder (default: docs)
 """
@@ -17,7 +17,7 @@ import re
 import shutil
 import sys
 
-TEMPLATES_DIR = os.environ.get("TEMPLATES_DIR", "templates")
+TEMPLATES_DIR = os.environ.get("TEMPLATES_DIR", "csv-templates")
 PROMPT_TEMPLATES_DIR = os.environ.get("PROMPT_TEMPLATES_DIR", "prompt-templates")
 OUTPUT_DIR = os.environ.get("OUTPUT_DIR", "docs")
 
@@ -125,7 +125,7 @@ def load_templates():
                 "task_count": task_count,
                 "section_count": section_count,
                 "rows": rows,
-                "csv_url": f"templates/{slug}/template.csv",
+                "csv_url": f"csv-templates/{slug}/template.csv",
                 "prompt_url": "",
                 "inputs": [],
                 "type": "template",
@@ -890,7 +890,7 @@ handleRoute();
 
 def main():
     if not os.path.isdir(TEMPLATES_DIR):
-        print(f"Error: templates directory not found: {TEMPLATES_DIR}", file=sys.stderr)
+        print(f"Error: CSV templates directory not found: {TEMPLATES_DIR}", file=sys.stderr)
         sys.exit(1)
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -904,7 +904,7 @@ def main():
         template_dir = os.path.join(TEMPLATES_DIR, slug)
         csv_src = os.path.join(template_dir, "template.csv")
         if os.path.isdir(template_dir) and os.path.exists(csv_src):
-            dest_dir = os.path.join(OUTPUT_DIR, "templates", slug)
+            dest_dir = os.path.join(OUTPUT_DIR, "csv-templates", slug)
             os.makedirs(dest_dir, exist_ok=True)
             shutil.copy2(csv_src, os.path.join(dest_dir, "template.csv"))
 

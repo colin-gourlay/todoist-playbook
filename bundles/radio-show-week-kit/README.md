@@ -10,10 +10,10 @@ This bundle combines four focused templates into a reusable weekly workflow that
 
 | Template | Purpose | Required |
 |----------|---------|----------|
-| [Radio Show Core](../../templates/radio-show-core/) | Core weekly workflow — creative prep, logistics, studio setup, and live broadcast | ✅ Every week |
-| [Radio Show Promotion](../../templates/radio-show-promotion/) | Pre-show and post-show promotion across social channels | ✅ Every week |
-| [Radio Show Post Production](../../templates/radio-show-post-production/) | Publishing, media distribution, archiving, and reflection | ✅ Every week |
-| [Radio Show Guest Feature](../../templates/radio-show-guest-feature/) | Guest or feature segment preparation and follow-up | ⚙️ Optional |
+| [Radio Show Core](../../csv-templates/radio-show-core/) | Core weekly workflow — creative prep, logistics, studio setup, and live broadcast | ✅ Every week |
+| [Radio Show Promotion](../../csv-templates/radio-show-promotion/) | Pre-show and post-show promotion across social channels | ✅ Every week |
+| [Radio Show Post Production](../../csv-templates/radio-show-post-production/) | Publishing, media distribution, archiving, and reflection | ✅ Every week |
+| [Radio Show Guest Feature](../../csv-templates/radio-show-guest-feature/) | Guest or feature segment preparation and follow-up | ⚙️ Optional |
 
 ---
 

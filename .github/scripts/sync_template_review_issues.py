@@ -24,7 +24,7 @@ LABEL_NAME = "to-be-reviewed"
 LABEL_COLOR = "d4c5f9"
 LABEL_DESCRIPTION = "Template is pending feature-completeness review"
 
-TEMPLATE_ROOT = "templates"
+TEMPLATE_ROOT = "csv-templates"
 TEMPLATE_MARKER_RE = re.compile(r"template-review-slug:\s*([a-z0-9-]+)")
 MISSING_META_MARKER = "template-review-maintenance: missing-meta-yml"
 

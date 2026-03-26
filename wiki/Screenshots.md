@@ -53,7 +53,7 @@ Every push to `main` and every pull request triggers the **Validate templates** 
 🔎 Checking code-review
 🔎 Checking code-review-checklist
 ...
-✅ All templates validated successfully
+✅ All CSV templates validated successfully
 ✅ All prompt templates validated successfully
 ```
 
@@ -61,8 +61,8 @@ A failing run produces targeted error messages:
 
 ```
 🔎 Checking my-new-template
-❌ meta.yml missing key: description: in templates/my-new-template/
-❌ README.md does not contain import instructions in templates/my-new-template/
+❌ meta.yml missing key: description: in csv-templates/my-new-template/
+❌ README.md does not contain import instructions in csv-templates/my-new-template/
 💥 Validation failed
 ```
 
@@ -102,10 +102,10 @@ The **Deploy Template Gallery** workflow builds a searchable static HTML gallery
 
 ## Template Folder Structure
 
-Each template lives in a `templates/{slug}/` folder:
+Each CSV template lives in a `csv-templates/{slug}/` folder:
 
 ```
-templates/weekly-review/
+csv-templates/weekly-review/
 ├── template.csv     ← importable task list
 ├── meta.yml         ← machine-readable metadata
 └── README.md        ← explanation and usage guide
@@ -145,7 +145,7 @@ task,Review last week's completed tasks,2,1,,,,,
 When a pull request modifies a reviewed template (version ≥ `0.1.0`), the **Bump template versions** workflow automatically increments the patch version and commits back to the PR branch:
 
 ```
-Detected changes in: templates/weekly-review
+Detected changes in: csv-templates/weekly-review
 Current version: 0.1.4
 Bumped to: 0.1.5
 Committed version bump for weekly-review

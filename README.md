@@ -8,7 +8,7 @@ A curated collection of structured [Todoist](https://www.todoist.com/) templates
 
 This repository is a system, not just a storage location:
 
-- **Templates** → ready-made task structures for common projects and workflows
+- **CSV templates** → ready-made task structures for common projects and workflows
 - **Bundles** → curated multi-template starter kits for larger goals
 - **Automation** → GitHub Actions workflows that create Todoist projects with one click
 - **AI prompt templates** → structured prompts for generating enriched task content
@@ -27,7 +27,7 @@ Not sure where to begin? Pick the path that fits you:
 | **Use AI to generate enriched task content** | Go to **Actions → Create Todoist Project from Prompt Template** → select a prompt → Run workflow |
 | **Contribute a new template** | Read [CONTRIBUTING](CONTRIBUTING) → follow the template structure → open a PR |
 
-> **New to the repo?** Start with the [weekly-review](templates/weekly-review/) template — it is the fastest way to see how the Playbook works.
+> **New to the repo?** Start with the [weekly-review](csv-templates/weekly-review/) template — it is the fastest way to see how the Playbook works.
 
 ---
 
@@ -37,7 +37,7 @@ Not sure which type of asset to use? Here is a quick guide:
 
 | Type | What it is | When to use it | Example |
 |------|-----------|----------------|---------|
-| **Template** | A single-purpose CSV task list with sections and tasks | You need a structured Todoist project for one specific workflow | [Weekly Review](templates/weekly-review/) |
+| **Template** | A single-purpose CSV task list with sections and tasks | You need a structured Todoist project for one specific workflow | [Weekly Review](csv-templates/weekly-review/) |
 | **Bundle** | A curated set of templates for a broader scenario | You are starting something that spans multiple recurring workflows | [New Job Starter Kit](bundles/new-job/) |
 | **Prompt Template** | An AI prompt you fill in and paste into an AI assistant | You want AI-generated, contextually enriched task content | [Task Enrichment](prompt-templates/task-enrichment/) |
 
@@ -74,7 +74,7 @@ Use the **Create Todoist Project from Prompt Template** GitHub Actions workflow 
 ### 📥 Manual
 
 1. Browse the template catalogue in `index.md`
-2. Navigate to a template folder
+2. Navigate to a CSV template folder
 3. Download `template.csv`
 4. Import into Todoist:
    - Open Todoist
@@ -109,7 +109,7 @@ Each prompt template folder includes:
 
 | I want to… | Use this | Example |
 |------------|----------|---------|
-| Set up a structured project for a single recurring workflow | **[Template](templates/)** | [Weekly Review](templates/weekly-review/) — a GTD-style end-of-week reset with sections for capture, review, and planning |
+| Set up a structured project for a single recurring workflow | **[Template](csv-templates/)** | [Weekly Review](csv-templates/weekly-review/) — a GTD-style end-of-week reset with sections for capture, review, and planning |
 | Hit the ground running on a big life event or scenario | **[Bundle](bundles/)** | [New Job](bundles/new-job/) — combines the Onboarding Checklist, Weekly Review, and One-on-One templates in one starter kit |
 | Generate rich, AI-powered task content tailored to my input | **[Prompt Template](prompt-templates/)** | [Task Enrichment](prompt-templates/task-enrichment/) — paste a short description into your AI assistant and get a fully structured task back |
 
@@ -155,7 +155,7 @@ See the [Screenshots wiki page](wiki/Screenshots.md) for a visual walkthrough of
 
 > **Scenario:** You are starting a new role and want a 90-day onboarding plan in Todoist, imported from your own fork of the repository.
 
-1. Navigate to [`templates/onboarding-checklist/`](templates/onboarding-checklist/)
+1. Navigate to [`csv-templates/onboarding-checklist/`](csv-templates/onboarding-checklist/)
 2. Download `template.csv` (click the file, then **Raw**, then save)
 3. Open [Todoist](https://app.todoist.com) and create a new project named `Onboarding – [Company Name]`
 4. Open the project → click **⋯ More actions** → **Import from CSV**
@@ -163,7 +163,7 @@ See the [Screenshots wiki page](wiki/Screenshots.md) for a visual walkthrough of
 
 Todoist imports all five sections (Day 1, Week 1, Weeks 2–4, Month 1–3, Ongoing) with tasks nested under each. Work through them in order, adapting tasks to your specific role and organisation.
 
-> **Tip:** Read the template [`README.md`](templates/onboarding-checklist/README.md) before importing — it explains what each section covers and suggests how to customise it.
+> **Tip:** Read the template [`README.md`](csv-templates/onboarding-checklist/README.md) before importing — it explains what each section covers and suggests how to customise it.
 
 ---
 
@@ -181,11 +181,23 @@ Visual walkthroughs of the key workflows are available in the [Screenshots wiki 
 
 ## 📂 Structure
 
-- `/templates` → Individual reusable templates
+- `/csv-templates` → Individual reusable CSV templates
 - `/prompt-templates` → AI prompt templates for generating enriched Todoist task content
 - `/bundles` → Multi-template starter kits
 - `/.github/scripts` → Automation scripts for creating Todoist projects and generating release assets
 - `/wiki` → Project wiki (problem statement, architecture, setup, roadmap, screenshots)
+
+### Migration note
+
+The repository previously used `/templates` for CSV template folders. This has been renamed to `/csv-templates` to clearly distinguish CSV templates from prompt templates.
+
+If you consume repository paths directly, update any references from:
+
+- `templates/{slug}/...` → `csv-templates/{slug}/...`
+
+If you consume release assets, the ZIP filename is now:
+
+- `dist/templates.zip` → `dist/csv-templates.zip`
 
 ---
 
@@ -212,7 +224,7 @@ accurate and up to date.
 
 On each run, the workflow:
 
-1. Scans for changes made in the last 24 hours to templates, prompt templates, bundles,
+1. Scans for changes made in the last 24 hours to CSV templates, prompt templates, bundles,
    and scripts.
 2. Compares those changes against the relevant documentation files (`index.md`,
    `CHANGELOG.md`, `README.md`, and individual template `README.md` files).

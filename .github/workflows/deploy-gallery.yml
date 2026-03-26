@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - "templates/**"
+      - "csv-templates/**"
       - "prompt-templates/**"
       - ".github/scripts/generate_gallery.py"
       - ".github/workflows/deploy-gallery.yml"

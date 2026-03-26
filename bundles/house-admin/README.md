@@ -8,7 +8,7 @@ A curated set of templates for keeping on top of household administration — bi
 
 | Template | Purpose |
 |----------|---------|
-| [House Admin](../../templates/house-admin/) | Annual household checklist — bills, insurance renewals, MOT, property maintenance, and financial records |
+| [House Admin](../../csv-templates/house-admin/) | Annual household checklist — bills, insurance renewals, MOT, property maintenance, and financial records |
 
 ---
 

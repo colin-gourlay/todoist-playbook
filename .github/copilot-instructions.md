@@ -17,7 +17,7 @@ There is no application build, package manager, or unit-test framework in this r
 ## Repository Structure
 
 ```
-templates/                # CSV-based Todoist templates
+csv-templates/            # CSV-based Todoist templates
   {slug}/
     template.csv          # Importable Todoist task list
     meta.yml              # Machine-readable metadata
@@ -72,7 +72,7 @@ If this file conflicts with the files above, follow the implementation and updat
 
 ### CSV Templates
 
-Every CSV template lives at `templates/{slug}/` and must contain exactly three files:
+Every CSV template lives at `csv-templates/{slug}/` and must contain exactly three files:
 
 - `template.csv`
 - `meta.yml`
@@ -272,7 +272,7 @@ When proposing or making changes in this repository:
 
 ## Adding a New CSV Template
 
-1. Create `templates/{slug}/` using kebab-case
+1. Create `csv-templates/{slug}/` using kebab-case
 2. Add `meta.yml`, `template.csv`, and `README.md`
 3. Ensure `meta.yml` includes all required keys and `slug:` matches the folder
 4. Use `version: 0.0.0` for new unreviewed templates
@@ -299,7 +299,7 @@ When proposing or making changes in this repository:
 
 1. Create `bundles/{slug}/` using kebab-case
 2. Add `bundle.yml` and `README.md`
-3. Ensure `bundle.yml` references existing template slugs in `templates:`
+3. Ensure `bundle.yml` references existing CSV template slugs in `templates:`
 4. Update `index.md`
 5. Update `README.md` if the bundle changes user-facing discovery or usage guidance
 

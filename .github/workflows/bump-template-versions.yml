@@ -29,5 +29,5 @@ jobs:
         uses: colin-gourlay/todoist-playbook/.github/actions/commit-and-push@main
         with:
           commit_message: "chore: bump template version(s)"
-          add: "templates/*/meta.yml prompt-templates/*/meta.yml"
+          add: "csv-templates/*/meta.yml prompt-templates/*/meta.yml"
           push_to: ${{ github.head_ref }}

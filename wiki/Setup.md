@@ -86,7 +86,7 @@ Within a few seconds the project will appear in your Todoist inbox.
 ### Using the Manual Import
 
 1. Browse `index.md` to find a template
-2. Navigate to the template folder (e.g. `templates/weekly-review/`)
+2. Navigate to the CSV template folder (e.g. `csv-templates/weekly-review/`)
 3. Download `template.csv`
 4. In Todoist:
    - Create a new project
@@ -161,7 +161,7 @@ Some workflows run on a schedule in addition to on-demand:
 
 See [CONTRIBUTING](../CONTRIBUTING) for the full guide. In brief:
 
-1. Create a folder `templates/{slug}/` using kebab-case naming
+1. Create a folder `csv-templates/{slug}/` using kebab-case naming
 2. Add `meta.yml` with the required keys (`name`, `slug`, `description`, `category`, `tags`, `version`)
 3. Add `template.csv` starting with the `TYPE` header
 4. Add `README.md` with usage guidance and import instructions

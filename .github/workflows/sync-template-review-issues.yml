@@ -5,7 +5,7 @@ on:
   push:
     branches: [main]
     paths:
-      - templates/**
+      - csv-templates/**
       - .github/scripts/sync_template_review_issues.py
       - .github/workflows/sync-template-review-issues.yml
   schedule:
@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Sync review issues from template versions
+      - name: Sync review issues from CSV template versions
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}

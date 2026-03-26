@@ -1,6 +1,6 @@
 # Repo Ecosystem Watch
 
-This page persists the curated shortlist of repositories to monitor around the Todoist and productivity ecosystem. It is the reference source for the recurring [repo-ecosystem-watch](../templates/repo-ecosystem-watch/) template.
+This page persists the curated shortlist of repositories to monitor around the Todoist and productivity ecosystem. It is the reference source for the recurring [repo-ecosystem-watch](../csv-templates/repo-ecosystem-watch/) template.
 
 The process is intentionally manual: use this page to review, re-rank, and decide whether each repository should be `Watch`, `Star`, or `reference-only`.
 
@@ -74,5 +74,5 @@ Track each review cycle in a compact format.
 
 ## Related
 
-- Template: [Repo Ecosystem Watch](../templates/repo-ecosystem-watch/)
-- Companion: [GitHub Repo Spin-Up](../templates/github-repo-spin-up/)
+- Template: [Repo Ecosystem Watch](../csv-templates/repo-ecosystem-watch/)
+- Companion: [GitHub Repo Spin-Up](../csv-templates/github-repo-spin-up/)
