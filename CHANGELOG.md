@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+### Added
+
+- Workflow: `triage-new-issues.yml` — automatically labels newly opened issues with `triage` and adds them to the project Backlog in the Todoist Playbook Roadmap
+- Workflow: `dependabot-auto-merge.yml` — automatically approves and enables auto-merge for Dependabot patch, minor, and security updates
+
+### Changed
+
+- Template: `github-repo-spin-up` — added GitHub Packages publishing planning and workflow tasks to the CI/CD & Automation section
+
+---
+
 ### Added (Historical)
 
 - Template: **Repo Ecosystem Watch** — recurring 4-week checklist for monitoring adjacent repositories, reviewing maintenance signals, and converting ecosystem insights into actionable follow-up tasks.
