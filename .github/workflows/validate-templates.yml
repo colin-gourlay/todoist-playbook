@@ -20,13 +20,14 @@ on:
   workflow_dispatch:
   merge_group:
 
-permissions:
-  contents: read
+permissions: {}
 
 concurrency:
-  group: validate-templates-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
   
 jobs:
   validate:
+    permissions:
+      contents: read
     uses: ./.github/workflows/reusable-validate-templates.yml
