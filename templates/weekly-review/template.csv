@@ -11,7 +11,6 @@ task,Clear email backlog @people-self @place-anywhere @tools-todoist @when-eveni
 
 section,3️⃣ Review Commitments,,,,,,
 task,Review all active projects @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,1,1,,,,,
-task,Introduce Dependabot in active repositories where missing @people-self @place-anywhere @tools-github @when-evening @duration-25m,2,1,,,,,
 task,Check waiting-for items @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,2,1,,,,,
 task,Review recurring commitments @people-self @place-anywhere @tools-todoist @when-evening @duration-25m,2,1,,,,,
 

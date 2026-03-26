@@ -284,7 +284,7 @@ templates/weekly-review/
 - The Todoist API token is stored as a **GitHub repository secret** (`TODOIST_API_TOKEN`) and is never exposed in logs or committed to the repository.
 - All API calls are made over HTTPS to `https://api.todoist.com/api/v1`.
 - The automation scripts use only Python standard library — no third-party pip packages means no supply-chain risk from Python dependencies.
-- Dependabot monitors GitHub Actions and Python dependencies for known vulnerabilities.
+- Dependabot monitors GitHub Actions dependencies, and Dependabot PRs are auto-reviewed and auto-merged (minor/patch/security) via GitHub Actions.
 - Branch protection rules require pull request reviews before merging to `main`.
 
 ---
