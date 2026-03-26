@@ -14,6 +14,7 @@ An end-to-end checklist for spinning up a new GitHub repository — or applying 
 - Configure GitHub features including Issues, Discussions, Projects, Releases, and Tags
 - Automate CI/CD, linting, release notes, and documentation synchronisation via Actions
 - Plan and implement release publishing to GitHub Packages (Docker, npm, or other registries as applicable)
+- Introduce Dependabot in active repositories where it is missing
 - Enforce security and maintenance best practices via Dependabot and branch rulesets
 - Configure the `.github/` directory with community health files and Copilot integration
 - Set up developer workflow standards including branching conventions and PR templates
