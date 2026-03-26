@@ -6,7 +6,7 @@ on:
       assets_zip_path:
         description: Path to the ZIP asset to attach to the release.
         type: string
-        default: dist/templates.zip
+        default: dist/csv-templates.zip
       assets_index_path:
         description: Path to the JSON index asset to attach to the release.
         type: string

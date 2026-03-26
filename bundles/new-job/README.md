@@ -10,10 +10,10 @@ This bundle covers the core areas that determine how well you transition into a 
 
 | Template | Purpose |
 |----------|---------|
-| [Onboarding Checklist](../../templates/onboarding-checklist/) | Structured first-90-days checklist — admin, people, learning, early wins |
-| [Weekly Close](../../templates/weekly-close/) | Friday shutdown ritual to close loops, process commitments, and capture learnings |
-| [Weekly Plan](../../templates/weekly-plan/) | Sunday planning ritual to set priorities and schedule key commitments |
-| [One-on-One](../../templates/one-on-one/) | Recurring 1:1 meeting preparation and follow-up |
+| [Onboarding Checklist](../../csv-templates/onboarding-checklist/) | Structured first-90-days checklist — admin, people, learning, early wins |
+| [Weekly Close](../../csv-templates/weekly-close/) | Friday shutdown ritual to close loops, process commitments, and capture learnings |
+| [Weekly Plan](../../csv-templates/weekly-plan/) | Sunday planning ritual to set priorities and schedule key commitments |
+| [One-on-One](../../csv-templates/one-on-one/) | Recurring 1:1 meeting preparation and follow-up |
 
 ---
 

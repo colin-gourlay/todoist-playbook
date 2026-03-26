@@ -1,6 +1,6 @@
 # Awesome List Outreach
 
-This page documents the outreach shortlist and submission playbook for getting **Todoist Playbook** listed on curated Awesome Lists. It is derived from the [awesome-list-submission](../templates/awesome-list-submission/) template.
+This page documents the outreach shortlist and submission playbook for getting **Todoist Playbook** listed on curated Awesome Lists. It is derived from the [awesome-list-submission](../csv-templates/awesome-list-submission/) template.
 
 ---
 
@@ -98,6 +98,6 @@ For each target list:
 
 ## Related
 
-- Template: [Awesome List Submission](../templates/awesome-list-submission/)
+- Template: [Awesome List Submission](../csv-templates/awesome-list-submission/)
 - Issue: [#125 Create Awesome List outreach shortlist and submission playbook](https://github.com/colin-gourlay/todoist-playbook/issues/125)
 - Parent: [#118 Turn visibility work into concrete repository improvements](https://github.com/colin-gourlay/todoist-playbook/issues/118)

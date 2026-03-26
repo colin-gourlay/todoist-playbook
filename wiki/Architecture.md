@@ -11,7 +11,7 @@ This page describes how the Todoist Playbook repository is structured, how its c
 │                  GitHub Repository                   │
 │                                                     │
 │  ┌───────────┐  ┌───────────┐  ┌─────────────────┐ │
-│  │ templates/│  │  bundles/ │  │ prompt-templates/│ │
+│ │csv-templates/│ │  bundles/ │ │ prompt-templates/│ │
 │  │  (CSV +   │  │ (grouped  │  │  (AI prompts +  │ │
 │  │  meta.yml)│  │ templates)│  │   meta.yml)     │ │
 │  └─────┬─────┘  └─────┬─────┘  └────────┬────────┘ │
@@ -39,7 +39,7 @@ This page describes how the Todoist Playbook repository is structured, how its c
 
 ```
 todoist-playbook/
-├── templates/                    # Individual reusable templates
+├── csv-templates/                # Individual reusable CSV templates
 │   └── {slug}/
 │       ├── template.csv          # Importable task list (Todoist CSV format)
 │       ├── meta.yml              # Machine-readable metadata
@@ -206,7 +206,7 @@ User triggers workflow_dispatch
 Runs on every push to `main` and every pull request:
 
 ```
-For each templates/{slug}/:
+For each csv-templates/{slug}/:
   1. Slug must be kebab-case
   2. template.csv, meta.yml, README.md must all exist
   3. meta.yml must have: name, slug, description, category, tags, version
@@ -234,7 +234,7 @@ Runs on every pull request targeting `main`:
 
 Runs daily (and on demand):
 
-- Scans for changes to templates, prompt templates, bundles, and scripts in the last 24 hours
+- Scans for changes to CSV templates, prompt templates, bundles, and scripts in the last 24 hours
 - Compares changes against `index.md`, `CHANGELOG.md`, `README.md`, and template READMEs
 - Generates updates using GitHub Copilot
 - Opens (or updates) a pull request on the `doc-sync/automated-updates` branch
@@ -259,7 +259,7 @@ Runs daily (and on demand):
 ## Data Flow: Template to Todoist Project
 
 ```
-templates/weekly-review/
+csv-templates/weekly-review/
   ├── template.csv  ──┐
   └── meta.yml      ──┤
                       │

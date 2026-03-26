@@ -1,6 +1,6 @@
 # Social Profile Audit
 
-This page documents the baseline social and profile consistency audit for **Todoist Playbook**. It is derived from the [socials-health-and-optimization-checklist](../templates/socials-health-and-optimization-checklist/) template.
+This page documents the baseline social and profile consistency audit for **Todoist Playbook**. It is derived from the [socials-health-and-optimization-checklist](../csv-templates/socials-health-and-optimization-checklist/) template.
 
 ---
 
@@ -53,7 +53,7 @@ The table below records the baseline audit of the GitHub repository's public-fac
 
 ## 📋 Baseline Audit Checklist
 
-Derived from the [Socials Health & Optimisation Checklist](../templates/socials-health-and-optimization-checklist/) template.
+Derived from the [Socials Health & Optimisation Checklist](../csv-templates/socials-health-and-optimization-checklist/) template.
 
 ### Cross-Platform Inventory
 
@@ -99,7 +99,7 @@ Items that cannot be resolved in this repository and require external action:
 
 ## Related
 
-- Template: [Socials Health & Optimisation Checklist](../templates/socials-health-and-optimization-checklist/)
+- Template: [Socials Health & Optimisation Checklist](../csv-templates/socials-health-and-optimization-checklist/)
 - Related: [Awesome List Outreach](Awesome-List-Outreach)
 - Issue: [#127 Run a social/profile consistency audit and align repository references](https://github.com/colin-gourlay/todoist-playbook/issues/127)
 - Parent: [#118 Turn visibility work into concrete repository improvements](https://github.com/colin-gourlay/todoist-playbook/issues/118)

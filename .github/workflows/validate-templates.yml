@@ -3,13 +3,30 @@ name: Validate templates
 on:
   push:
     branches: [ main ]
+    paths:
+      - csv-templates/**
+      - prompt-templates/**
+      - .github/workflows/validate-templates.yml
+      - .github/workflows/reusable-validate-templates.yml
+      - .github/scripts/project_colors.txt
   pull_request:
     branches: [ main ]
+    paths:
+      - csv-templates/**
+      - prompt-templates/**
+      - .github/workflows/validate-templates.yml
+      - .github/workflows/reusable-validate-templates.yml
+      - .github/scripts/project_colors.txt
   workflow_dispatch:
+  merge_group:
 
 permissions:
   contents: read
 
+concurrency:
+  group: validate-templates-${{ github.ref }}
+  cancel-in-progress: true
+  
 jobs:
   validate:
-    uses: colin-gourlay/todoist-playbook/.github/workflows/reusable-validate-templates.yml@main
+    uses: ./.github/workflows/reusable-validate-templates.yml

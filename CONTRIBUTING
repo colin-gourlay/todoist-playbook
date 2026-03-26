@@ -72,6 +72,7 @@ Use **Squash and merge** when merging PRs into `main`. This keeps the `main` his
 
 ## Templates must:
 
+- Live under `csv-templates/{slug}/`
 - Include:
   - template.csv
   - meta.yml

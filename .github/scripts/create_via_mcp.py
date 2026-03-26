@@ -231,7 +231,7 @@ def main() -> None:
         print("❌ TEMPLATE input is not set.", file=sys.stderr)
         sys.exit(1)
 
-    template_dir = os.path.join("templates", template_slug)
+    template_dir = os.path.join("csv-templates", template_slug)
     csv_path = os.path.join(template_dir, "template.csv")
 
     if not os.path.exists(csv_path):

@@ -35,7 +35,7 @@ git log --since="24 hours ago" --oneline --name-status
 ```
 
 Look for changes to:
-- `templates/*/` — new or modified templates (`template.csv`, `meta.yml`, `README.md`)
+- `csv-templates/*/` — new or modified CSV templates (`template.csv`, `meta.yml`, `README.md`)
 - `prompt-templates/*/` — new or modified prompt templates
 - `bundles/` — new or modified bundles
 - `.github/scripts/` — script changes that may affect documented workflows
@@ -53,7 +53,7 @@ For each changed area, check whether the corresponding documentation is still ac
 
 | Changed area | Documentation to check |
 |---|---|
-| New template in `templates/` | `index.md` catalogue table, `CHANGELOG.md` |
+| New template in `csv-templates/` | `index.md` catalogue table, `CHANGELOG.md` |
 | Modified template files | The template's own `README.md`, `index.md` if description changed |
 | New prompt template in `prompt-templates/` | `index.md` catalogue table, `CHANGELOG.md` |
 | Bundle changes in `bundles/` | `index.md`, `CHANGELOG.md` |

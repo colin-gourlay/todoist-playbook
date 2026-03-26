@@ -10,7 +10,7 @@ This bundle collects the complete end-to-end workflow for producing and broadcas
 
 | Template | Purpose |
 |----------|---------|
-| [Radio Show System](../../templates/radio-show-system/) | Full pre-production, live broadcast, post-production, and reflection workflow |
+| [Radio Show System](../../csv-templates/radio-show-system/) | Full pre-production, live broadcast, post-production, and reflection workflow |
 
 ---
 

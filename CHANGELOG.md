@@ -21,6 +21,8 @@
 
 ### Changed
 
+- Migration: renamed top-level CSV template folder from `templates/` to `csv-templates/` across workflows, scripts, and docs; release ZIP asset path updated from `dist/templates.zip` to `dist/csv-templates.zip`
+
 - Template: `github-repo-spin-up` — added a Section 1 checklist reminder to run the Repo Ecosystem Watch exercise during repository setup, and updated supporting template documentation to match.
 - Template: `weekly-review` — refined task duration labels for the "Close the Past" section: "Review completed tasks from last week" changed to `@duration-5m`, "Celebrate wins (write 3)" changed to `@duration-10m`, and "Identify unfinished commitments" changed to `@duration-15m`
 - Template: `weekly-review` — bumped version to `0.1.0` (manually reviewed and considered stable)

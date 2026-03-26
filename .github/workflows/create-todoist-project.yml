@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       template:
-        description: Template to use
+        description: CSV template to use
         required: false
         type: choice
         options:
@@ -42,11 +42,11 @@ on:
           - weekly-plan
           - weekly-review
       project_name:
-        description: Project name (leave blank to use the template's default name)
+        description: Project name (leave blank to use the CSV template's default name)
         required: false
         type: string
       color:
-        description: Project colour (leave blank to use the template or system default)
+        description: Project colour (leave blank to use the CSV template or system default)
         required: false
         type: choice
         options:

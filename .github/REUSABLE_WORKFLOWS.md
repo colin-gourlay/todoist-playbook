@@ -8,13 +8,13 @@ The workflows and composite action in this repository are designed to be called 
 
 ### 1. `reusable-validate-templates.yml` â€” Validate template structure
 
-Validates that every folder under `templates/` and `prompt-templates/` conforms to the required structure (kebab-case slug, required files, `meta.yml` keys, CSV format, README import instructions).
+Validates that every folder under `csv-templates/` and `prompt-templates/` conforms to the required structure (kebab-case slug, required files, `meta.yml` keys, CSV format, README import instructions).
 
 **Inputs**
 
 | Input | Description | Default |
 |---|---|---|
-| `templates_path` | Path to the templates directory | `templates` |
+| `templates_path` | Path to the CSV templates directory | `csv-templates` |
 | `prompt_templates_path` | Path to the prompt-templates directory | `prompt-templates` |
 
 **Example**
@@ -24,7 +24,7 @@ jobs:
   validate:
     uses: colin-gourlay/todoist-playbook/.github/workflows/reusable-validate-templates.yml@v2026.3.22
     with:
-      templates_path: templates
+      templates_path: csv-templates
       prompt_templates_path: prompt-templates
 ```
 
@@ -78,7 +78,7 @@ permissions:
 
 | Input | Description | Default |
 |---|---|---|
-| `assets_zip_path` | Path to the ZIP asset | `dist/templates.zip` |
+| `assets_zip_path` | Path to the ZIP asset | `dist/csv-templates.zip` |
 | `assets_index_path` | Path to the JSON index asset | `dist/index.json` |
 | `tag_prefix` | Prefix for the computed date tag | `v` |
 
@@ -89,7 +89,7 @@ jobs:
   release:
     uses: colin-gourlay/todoist-playbook/.github/workflows/reusable-release-assets.yml@v2026.3.22
     with:
-      assets_zip_path: dist/templates.zip
+      assets_zip_path: dist/csv-templates.zip
       assets_index_path: dist/index.json
 ```
 
@@ -130,7 +130,7 @@ Configures git identity, stages files, checks for changes, commits, and pushes â
   uses: colin-gourlay/todoist-playbook/.github/actions/commit-and-push@v2026.3.22
   with:
     commit_message: "chore: bump version(s)"
-    add: "templates/*/meta.yml"
+    add: "csv-templates/*/meta.yml"
     push_to: ${{ github.head_ref }}
 ```
 
