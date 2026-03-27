@@ -38,7 +38,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 | -------- | ------------- | ----------- |
 | [New Job](bundles/new-job/) | Hit the ground running at a new job — onboarding, weekly close and planning rituals, and 1:1 meetings | onboarding-checklist, weekly-close, weekly-plan, one-on-one |
 | [Radio Show Week](bundles/radio-show-week/) | Full radio show week — prep, playlists, comms, upload, and socials | radio-show-system |
-| [Radio Show Week Kit](bundles/radio-show-week-kit/) | Complete system for producing a weekly radio show — core workflow, promotion, post production, and optional guest features | radio-show-core, radio-show-promotion, radio-show-post-production, radio-show-guest-feature |
+| [Radio Show Week Kit](bundles/radio-show-week-kit/) | Complete system for producing a weekly radio show — core workflow, promotion, post production, guest features, and interview outreach | radio-show-core, radio-show-promotion, radio-show-post-production, radio-show-guest-feature, artist-interview-invite-workflow |
 | [House Admin](bundles/house-admin/) | Annual household administration — bills, renewals, MOT, and property upkeep | house-admin |
 
 ---
@@ -62,6 +62,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 | [Radio Show System](csv-templates/radio-show-system/) | Pre and post tasks associated with a given show | review, planning, productivity, weekly |
 | [Radio Show Core](csv-templates/radio-show-core/) | Core weekly workflow for preparing and delivering a radio show — creative prep, logistics, studio setup, and live broadcast | radio, broadcast, media, creative |
 | [Radio Show Guest Feature](csv-templates/radio-show-guest-feature/) | Workflow for preparing and running a guest or feature segment — interviews, artist spotlights, and festival coverage | radio, interview, broadcast |
+| [Artist Interview Invite Workflow](csv-templates/artist-interview-invite-workflow/) | Checklist for inviting artists or bands for live studio interviews — outreach, follow-up, booking logistics, and interview preparation | radio, interview, outreach, music |
 | [Radio Show Promotion](csv-templates/radio-show-promotion/) | Workflow for promoting a radio show across social channels — pre-show announcements and post-show engagement | radio, marketing, promotion |
 | [Radio Show Post Production](csv-templates/radio-show-post-production/) | Publishing and archiving workflow after a radio broadcast — site publishing, media distribution, and reflection | radio, publishing, media |
 
@@ -147,6 +148,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 | Prompt Template | Description | Inputs |
 | ----------------- | ------------- | -------- |
 | [Task Enrichment](prompt-templates/task-enrichment/) | Generate a structured Todoist task title and description from a brief input and context | task_title, context, priority |
+| [Artist Interview Invite Email](prompt-templates/artist-interview-invite-email/) | Generate concise interview invite and follow-up email copy for artists, bands, and representatives | task_title, context, priority |
 
 ---
 

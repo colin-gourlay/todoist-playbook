@@ -1,0 +1,16 @@
+name: Artist Interview Invite Email
+slug: artist-interview-invite-email
+description: Generate concise, high-impact studio interview invite emails for artists, bands, and representatives
+category: content-generation
+tags:
+  - ai
+  - email
+  - interview
+  - radio
+  - outreach
+version: 0.0.0
+author: Colin Gourlay
+inputs:
+  - task_title
+  - context
+  - priority

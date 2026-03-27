@@ -8,6 +8,7 @@ on:
         required: true
         type: choice
         options:
+          - artist-interview-invite-email
           - task-enrichment
       task_title:
         description: 'Task title (required)'
