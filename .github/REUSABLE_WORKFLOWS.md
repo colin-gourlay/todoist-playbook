@@ -79,6 +79,7 @@ permissions:
 | Input | Description | Default |
 |---|---|---|
 | `assets_zip_path` | Path to the ZIP asset | `dist/csv-templates.zip` |
+| `prompt_assets_zip_path` | Path to the prompt templates ZIP asset | `dist/prompt-templates.zip` |
 | `assets_index_path` | Path to the JSON index asset | `dist/index.json` |
 | `tag_prefix` | Prefix for the computed date tag | `v` |
 
@@ -90,6 +91,7 @@ jobs:
     uses: colin-gourlay/todoist-playbook/.github/workflows/reusable-release-assets.yml@v2026.3.22
     with:
       assets_zip_path: dist/csv-templates.zip
+      prompt_assets_zip_path: dist/prompt-templates.zip
       assets_index_path: dist/index.json
 ```
 

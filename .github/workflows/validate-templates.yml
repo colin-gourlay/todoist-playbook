@@ -6,6 +6,9 @@ on:
     paths:
       - csv-templates/**
       - prompt-templates/**
+      - .github/scripts/generate_release_assets.py
+      - .github/workflows/release.yml
+      - .github/workflows/reusable-release-assets.yml
       - .github/workflows/validate-templates.yml
       - .github/workflows/reusable-validate-templates.yml
       - .github/scripts/project_colors.txt
@@ -14,6 +17,9 @@ on:
     paths:
       - csv-templates/**
       - prompt-templates/**
+      - .github/scripts/generate_release_assets.py
+      - .github/workflows/release.yml
+      - .github/workflows/reusable-release-assets.yml
       - .github/workflows/validate-templates.yml
       - .github/workflows/reusable-validate-templates.yml
       - .github/scripts/project_colors.txt

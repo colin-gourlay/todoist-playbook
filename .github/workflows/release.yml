@@ -1,15 +1,24 @@
 name: Publish Release
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - "csv-templates/**"
+  workflow_run:
+    workflows:
+      - Validate templates
+    types:
+      - completed
+    branches:
+      - main
   workflow_dispatch:
 
-permissions:
-  contents: write
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-main
+  cancel-in-progress: false
 
 jobs:
   release:
-    uses: colin-gourlay/todoist-playbook/.github/workflows/reusable-release-assets.yml@main
+    permissions:
+      contents: write
+    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
+    uses: ./.github/workflows/reusable-release-assets.yml

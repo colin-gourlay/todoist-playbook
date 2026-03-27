@@ -7,6 +7,10 @@ on:
         description: Path to the ZIP asset to attach to the release.
         type: string
         default: dist/csv-templates.zip
+      prompt_assets_zip_path:
+        description: Path to the prompt templates ZIP asset to attach to the release.
+        type: string
+        default: dist/prompt-templates.zip
       assets_index_path:
         description: Path to the JSON index asset to attach to the release.
         type: string
@@ -16,11 +20,12 @@ on:
         type: string
         default: v
 
-permissions:
-  contents: write
+permissions: {}
 
 jobs:
   release:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
 
     steps:
@@ -49,6 +54,7 @@ jobs:
         run: |
           gh release create "${{ steps.tag.outputs.tag }}" \
             "${{ inputs.assets_zip_path }}" \
+            "${{ inputs.prompt_assets_zip_path }}" \
             "${{ inputs.assets_index_path }}" \
             --title "Release ${{ steps.tag.outputs.tag }}" \
             --generate-notes
