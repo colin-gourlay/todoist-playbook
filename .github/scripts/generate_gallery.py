@@ -251,6 +251,56 @@ def generate_html(templates, spotlight=None):
       font-size: 1rem;
     }}
 
+    /* ── Search bar ── */
+    .search-bar {{
+      margin: 1.25rem auto 0;
+      max-width: 520px;
+      position: relative;
+    }}
+    .search-bar input {{
+      width: 100%;
+      padding: 0.65rem 2.75rem 0.65rem 1rem;
+      border: none;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      outline: none;
+      transition: background 0.15s;
+    }}
+    .search-bar input::placeholder {{ color: rgba(255,255,255,0.7); }}
+    .search-bar input:focus {{ background: rgba(255,255,255,0.28); }}
+    .search-bar .search-clear {{
+      display: none;
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: rgba(255,255,255,0.8);
+      font-size: 1.1rem;
+      line-height: 1;
+      padding: 0;
+    }}
+    .search-bar .search-clear:hover {{ color: #fff; }}
+
+    /* ── Search results ── */
+    .search-summary {{
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }}
+    .search-summary strong {{ color: var(--text); }}
+    .no-results {{
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
+    }}
+    .no-results .no-results-icon {{ font-size: 2.5rem; margin-bottom: 0.75rem; }}
+    .no-results p {{ font-size: 0.95rem; }}
+
     /* ── Breadcrumb bar ── */
     .breadcrumb {{
       display: none;
@@ -608,6 +658,11 @@ def generate_html(templates, spotlight=None):
 <header class="site-header">
   <h1>📋 Todoist Playbook</h1>
   <p>Curated templates for getting things done</p>
+  <div class="search-bar" role="search">
+    <input type="search" id="search-input" placeholder="🔍 Search templates…"
+           aria-label="Search templates" autocomplete="off" spellcheck="false">
+    <button class="search-clear" id="search-clear" aria-label="Clear search">✕</button>
+  </div>
 </header>
 
 <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb">
@@ -639,6 +694,15 @@ def generate_html(templates, spotlight=None):
 const TEMPLATES = {templates_json};
 const CATEGORY_META = {category_meta_json};
 const SPOTLIGHT = {spotlight_json};
+
+// Preprocessed lowercase search index — built once at load time
+const SEARCH_INDEX = TEMPLATES.map(t => ({{
+  template: t,
+  name: t.name.toLowerCase(),
+  description: t.description.toLowerCase(),
+  category: t.category.toLowerCase(),
+  tags: t.tags.map(tag => tag.toLowerCase()),
+}}));
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -854,6 +918,51 @@ function renderCategory(cat) {{
   document.getElementById('breadcrumb').style.display = 'block';
 }}
 
+// ── Search ────────────────────────────────────────────────────────────────────
+
+function matchesQuery(entry, query) {{
+  return (
+    entry.name.includes(query) ||
+    entry.description.includes(query) ||
+    entry.category.includes(query) ||
+    entry.tags.some(tag => tag.includes(query))
+  );
+}}
+
+function renderSearch(query) {{
+  const trimmed = query.trim();
+  const container = document.getElementById('container');
+
+  if (!trimmed) {{
+    renderHome();
+    document.getElementById('breadcrumb').style.display = 'none';
+    return;
+  }}
+
+  const q = trimmed.toLowerCase();
+  const results = SEARCH_INDEX.filter(entry => matchesQuery(entry, q)).map(entry => entry.template);
+
+  let html = `<p class="search-summary">`;
+  if (results.length === 0) {{
+    html += `No results for <strong>${{esc(trimmed)}}</strong>`;
+  }} else {{
+    html += `<strong>${{results.length}}</strong> result${{results.length !== 1 ? 's' : ''}} for <strong>${{esc(trimmed)}}</strong>`;
+  }}
+  html += `</p>`;
+
+  if (results.length === 0) {{
+    html += `<div class="no-results">
+  <div class="no-results-icon">🔍</div>
+  <p>No templates matched your search. Try different keywords or browse by category.</p>
+</div>`;
+  }} else {{
+    html += `<div class="template-grid">${{results.map(buildTemplateCard).join('')}}</div>`;
+  }}
+
+  container.innerHTML = html;
+  document.getElementById('breadcrumb').style.display = 'none';
+}}
+
 // ── Hash-based routing ────────────────────────────────────────────────────────
 
 function navigate(cat) {{
@@ -873,10 +982,38 @@ function handleRoute() {{
 }}
 
 document.getElementById('btn-back').addEventListener('click', () => {{
+  document.getElementById('search-input').value = '';
+  document.getElementById('search-clear').style.display = 'none';
   window.location.hash = '';
 }});
 
-window.addEventListener('hashchange', handleRoute);
+// ── Search input wiring ───────────────────────────────────────────────────────
+
+const searchInput = document.getElementById('search-input');
+const searchClear = document.getElementById('search-clear');
+
+searchInput.addEventListener('input', () => {{
+  const query = searchInput.value;
+  searchClear.style.display = query ? 'block' : 'none';
+  renderSearch(query);
+}});
+
+searchClear.addEventListener('click', () => {{
+  searchInput.value = '';
+  searchClear.style.display = 'none';
+  renderHome();
+  document.getElementById('breadcrumb').style.display = 'none';
+  searchInput.focus();
+}});
+
+window.addEventListener('hashchange', () => {{
+  // When navigating via hash, clear any active search
+  if (searchInput.value) {{
+    searchInput.value = '';
+    searchClear.style.display = 'none';
+  }}
+  handleRoute();
+}});
 handleRoute();
 </script>
 </body>
