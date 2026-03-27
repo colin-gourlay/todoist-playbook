@@ -16,3 +16,4 @@ templates:
   - radio-show-post-production
 optional_templates:
   - radio-show-guest-feature
+  - artist-interview-invite-workflow
