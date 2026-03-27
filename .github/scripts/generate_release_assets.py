@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Generate release assets: index.json and csv-templates.zip.
+"""Generate release assets: index.json, csv-templates.zip, and prompt-templates.zip.
 
 Usage:
     python3 generate_release_assets.py
 
 Environment variables:
-    TEMPLATES_DIR   Path to the CSV templates folder (default: csv-templates)
-    OUTPUT_DIR      Path to write generated files to (default: dist)
+    TEMPLATES_DIR         Path to the CSV templates folder (default: csv-templates)
+    PROMPT_TEMPLATES_DIR  Path to the prompt templates folder (default: prompt-templates)
+    OUTPUT_DIR            Path to write generated files to (default: dist)
 """
 
 import csv
@@ -18,6 +19,7 @@ import zipfile
 from datetime import datetime, timezone
 
 TEMPLATES_DIR = os.environ.get("TEMPLATES_DIR", "csv-templates")
+PROMPT_TEMPLATES_DIR = os.environ.get("PROMPT_TEMPLATES_DIR", "prompt-templates")
 OUTPUT_DIR = os.environ.get("OUTPUT_DIR", "dist")
 
 
@@ -107,16 +109,48 @@ def load_templates():
     return templates
 
 
+def load_prompt_templates():
+    prompt_templates = []
+    if not os.path.isdir(PROMPT_TEMPLATES_DIR):
+        return prompt_templates
+
+    for slug in sorted(os.listdir(PROMPT_TEMPLATES_DIR)):
+        template_dir = os.path.join(PROMPT_TEMPLATES_DIR, slug)
+        if not os.path.isdir(template_dir):
+            continue
+        meta_path = os.path.join(template_dir, "meta.yml")
+        prompt_path = os.path.join(template_dir, "prompt.md")
+        if not os.path.exists(meta_path):
+            continue
+
+        meta = parse_meta(meta_path)
+        has_prompt_file = os.path.exists(prompt_path)
+
+        prompt_templates.append({
+            "slug": slug,
+            "name": meta.get("name", slug),
+            "description": meta.get("description", ""),
+            "category": meta.get("category", ""),
+            "tags": meta.get("tags", []),
+            "version": meta.get("version", ""),
+            "has_prompt_file": has_prompt_file,
+        })
+
+    return prompt_templates
+
+
 # ---------------------------------------------------------------------------
 # Asset generation
 # ---------------------------------------------------------------------------
 
-def generate_index_json(templates):
+def generate_index_json(templates, prompt_templates):
     """Return the index.json content as a string."""
     catalog = {
         "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
         "template_count": len(templates),
+        "prompt_template_count": len(prompt_templates),
         "templates": templates,
+        "prompt_templates": prompt_templates,
     }
     return json.dumps(catalog, indent=2, ensure_ascii=False)
 
@@ -135,6 +169,23 @@ def generate_templates_zip(output_path):
                     zf.write(file_path, arcname)
 
 
+def generate_prompt_templates_zip(output_path):
+    """Create a zip archive of all prompt template folders."""
+    if not os.path.isdir(PROMPT_TEMPLATES_DIR):
+        return
+
+    with zipfile.ZipFile(output_path, "w", zipfile.ZIP_DEFLATED) as zf:
+        for slug in sorted(os.listdir(PROMPT_TEMPLATES_DIR)):
+            template_dir = os.path.join(PROMPT_TEMPLATES_DIR, slug)
+            if not os.path.isdir(template_dir):
+                continue
+            for filename in sorted(os.listdir(template_dir)):
+                file_path = os.path.join(template_dir, filename)
+                if os.path.isfile(file_path):
+                    arcname = os.path.join("prompt-templates", slug, filename)
+                    zf.write(file_path, arcname)
+
+
 # ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
@@ -147,17 +198,29 @@ def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     templates = load_templates()
+    prompt_templates = load_prompt_templates()
 
     # Generate index.json
     index_path = os.path.join(OUTPUT_DIR, "index.json")
     with open(index_path, "w", encoding="utf-8") as f:
-        f.write(generate_index_json(templates))
-    print(f"✅ index.json written: {index_path} ({len(templates)} templates)")
+        f.write(generate_index_json(templates, prompt_templates))
+    print(
+        f"✅ index.json written: {index_path} "
+        f"({len(templates)} templates, {len(prompt_templates)} prompt templates)"
+    )
 
     # Generate csv-templates.zip
     zip_path = os.path.join(OUTPUT_DIR, "csv-templates.zip")
     generate_templates_zip(zip_path)
     print(f"✅ csv-templates.zip written: {zip_path}")
+
+    # Generate prompt-templates.zip
+    prompt_zip_path = os.path.join(OUTPUT_DIR, "prompt-templates.zip")
+    generate_prompt_templates_zip(prompt_zip_path)
+    if os.path.isdir(PROMPT_TEMPLATES_DIR):
+        print(f"✅ prompt-templates.zip written: {prompt_zip_path}")
+    else:
+        print(f"ℹ️ prompt templates directory not found: {PROMPT_TEMPLATES_DIR}")
 
 
 if __name__ == "__main__":
