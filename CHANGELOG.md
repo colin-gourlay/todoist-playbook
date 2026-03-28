@@ -2,6 +2,20 @@
 
 ## [Unreleased]
 
+### Added
+
+- Template: **Artist Interview Invite Workflow** — checklist for inviting an artist or band for a live studio interview and managing follow-through
+- Prompt template: **Artist Interview Invite Email** — generate concise, high-impact studio interview invite emails for artists, bands, and representatives
+- Gallery: live search bar added to the GitHub Pages template gallery — filters cards in real time as you type
+
+### Changed
+
+- Bundle: `radio-show-week-kit` — `artist-interview-invite-workflow` added as an optional template
+- Template: `weekly-review` — "Empty inbox to zero" task duration changed from `@duration-15m` to `@duration-10m`
+- Workflow: `validate-templates.yml` — validation now also triggers on changes to `release.yml`, `reusable-release-assets.yml`, and `generate_release_assets.py`; release workflow is gated on passing validation and now includes prompt template assets in the release ZIP
+
+---
+
 ### Added (Historical)
 
 - Template: **Repo Ecosystem Watch** — recurring 4-week checklist for monitoring adjacent repositories, reviewing maintenance signals, and converting ecosystem insights into actionable follow-up tasks.
