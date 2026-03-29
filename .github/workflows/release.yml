@@ -13,12 +13,12 @@ on:
 permissions: {}
 
 concurrency:
-  group: ${{ github.workflow }}-main
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
   release:
     permissions:
       contents: write
-    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push') }}
     uses: ./.github/workflows/reusable-release-assets.yml

@@ -7,6 +7,8 @@ on:
       - csv-templates/**
       - prompt-templates/**
       - .github/scripts/generate_release_assets.py
+      - .github/workflows/deploy-gallery.yml
+      - .github/workflows/reusable-deploy-pages-gallery.yml
       - .github/workflows/release.yml
       - .github/workflows/reusable-release-assets.yml
       - .github/workflows/validate-templates.yml
@@ -18,6 +20,8 @@ on:
       - csv-templates/**
       - prompt-templates/**
       - .github/scripts/generate_release_assets.py
+      - .github/workflows/deploy-gallery.yml
+      - .github/workflows/reusable-deploy-pages-gallery.yml
       - .github/workflows/release.yml
       - .github/workflows/reusable-release-assets.yml
       - .github/workflows/validate-templates.yml
