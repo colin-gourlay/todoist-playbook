@@ -5,12 +5,13 @@ on:
     branches: [main]
     types: [opened, synchronize, reopened]
 
-permissions:
-  contents: write
+permissions: {}
 
 jobs:
   bump:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v6

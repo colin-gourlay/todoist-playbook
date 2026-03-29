@@ -61,6 +61,8 @@ on:
           - 'no'
           - 'yes'
 
+permissions: {}
+
 jobs:
   create-project:
     runs-on: ubuntu-latest

@@ -1,20 +1,26 @@
 name: Deploy Template Gallery to GitHub Pages
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - "csv-templates/**"
-      - "prompt-templates/**"
-      - ".github/scripts/generate_gallery.py"
-      - ".github/workflows/deploy-gallery.yml"
+  workflow_run:
+    workflows:
+      - Validate templates
+    types:
+      - completed
+    branches:
+      - main
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   deploy:
-    uses: colin-gourlay/todoist-playbook/.github/workflows/reusable-deploy-pages-gallery.yml@main
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push') }}
+    uses: ./.github/workflows/reusable-deploy-pages-gallery.yml

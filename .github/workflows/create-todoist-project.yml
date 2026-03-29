@@ -92,6 +92,8 @@ on:
           - ''
           # END_TODOIST_PROJECTS
 
+permissions: {}
+
 jobs:
   create-project:
     runs-on: ubuntu-latest
