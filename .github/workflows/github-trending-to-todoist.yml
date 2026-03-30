@@ -10,6 +10,13 @@ on:
           Project name (leave blank to use "GitHub Trending — YYYY-MM-DD")
         required: false
         type: string
+      languages:
+        description: >
+          Optional comma-separated language filters from GitHub Trending
+          (for example: "Bicep" or "Python,TypeScript"). Leave blank or use
+          "Any" for no language filter.
+        required: false
+        type: string
 
 permissions: {}
 
@@ -26,4 +33,5 @@ jobs:
         env:
           TODOIST_API_TOKEN: ${{ secrets.TODOIST_API_TOKEN }}
           PROJECT_NAME: ${{ inputs.project_name }}
+          LANGUAGES: ${{ inputs.languages }}
         run: python3 .github/scripts/fetch_github_trending.py

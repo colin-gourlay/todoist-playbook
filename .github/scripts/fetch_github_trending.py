@@ -5,6 +5,8 @@ Environment variables
 ---------------------
 TODOIST_API_TOKEN  – Todoist personal API token (required)
 PROJECT_NAME       – Override the default project name (optional)
+LANGUAGES          – Optional comma-separated GitHub Trending languages.
+                     Leave blank or use "Any" for no filter.
 """
 
 import datetime
@@ -14,6 +16,7 @@ import os
 import re
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 
 TODOIST_API_BASE = "https://api.todoist.com/api/v1"
@@ -38,20 +41,26 @@ _TASK_PRIORITY = 2
 # ---------------------------------------------------------------------------
 
 
-def fetch_trending(since: str) -> list[dict]:
+def fetch_trending(since: str, language: str | None = None) -> list[dict]:
     """Fetch and parse trending repos for the given period.
 
     Parameters
     ----------
     since:
-        One of ``daily``, ``weekly``, or ``monthly`` — passed verbatim as the
-        ``?since=`` query parameter on the GitHub Trending page.
+        One of ``daily``, ``weekly``, or ``monthly`` — passed as
+        the ``?since=`` query parameter.
+    language:
+        Optional GitHub Trending language name (for example ``Python`` or
+        ``Bicep``). When ``None``, no language filter is applied.
 
     Returns
     -------
     list of dicts with keys ``slug``, ``url``, and ``description``.
     """
-    url = f"{GITHUB_TRENDING_URL}?since={since}"
+    query_params = {"since": since}
+    if language:
+        query_params["l"] = language
+    url = f"{GITHUB_TRENDING_URL}?{urllib.parse.urlencode(query_params)}"
     headers = {
         "User-Agent": (
             "Mozilla/5.0 (compatible; todoist-playbook-trending-bot/1.0; "
@@ -64,7 +73,7 @@ def fetch_trending(since: str) -> list[dict]:
             body = response.read().decode("utf-8", errors="replace")
     except urllib.error.URLError as exc:
         print(
-            f"❌ Failed to fetch GitHub Trending (since={since}): {exc}",
+            f"❌ Failed to fetch GitHub Trending (since={since}, language={language or 'Any'}): {exc}",
             file=sys.stderr,
         )
         sys.exit(1)
@@ -313,6 +322,63 @@ def _build_task_description(repo: dict) -> str:
     return "\n\n".join(parts)
 
 
+def _parse_language_filters(raw: str) -> list[str]:
+    """Parse comma-separated languages from workflow input.
+
+    Returns an ordered unique list. Empty list means "Any".
+    """
+    if not raw.strip():
+        return []
+
+    parts = [p.strip() for p in raw.split(",") if p.strip()]
+    if not parts:
+        return []
+
+    seen: set[str] = set()
+    languages: list[str] = []
+    for part in parts:
+        if part.lower() == "any":
+            continue
+        key = part.casefold()
+        if key in seen:
+            continue
+        seen.add(key)
+        languages.append(part)
+    return languages
+
+
+def _build_project_name(base_name: str, today: str, languages: list[str]) -> str:
+    """Build project name with optional language suffix."""
+    language_suffix = f" ({', '.join(languages)})" if languages else ""
+
+    if base_name:
+        if languages:
+            return f"{base_name}{language_suffix}"
+        return base_name
+
+    return f"GitHub Trending{language_suffix} — {today}"
+
+
+def _fetch_for_languages(since: str, languages: list[str]) -> list[dict]:
+    """Fetch and merge repos for one period across selected languages."""
+    if not languages:
+        return fetch_trending(since)
+
+    merged: list[dict] = []
+    seen_slugs: set[str] = set()
+
+    for language in languages:
+        repos = fetch_trending(since, language)
+        for repo in repos:
+            slug = repo.get("slug", "")
+            if slug in seen_slugs:
+                continue
+            seen_slugs.add(slug)
+            merged.append(repo)
+
+    return merged
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -325,11 +391,14 @@ def main() -> None:
         sys.exit(1)
 
     today = datetime.date.today().isoformat()
-    project_name = (
-        os.environ.get("PROJECT_NAME", "").strip() or f"GitHub Trending — {today}"
-    )
+    project_name_input = os.environ.get("PROJECT_NAME", "").strip()
+    languages = _parse_language_filters(os.environ.get("LANGUAGES", ""))
+    project_name = _build_project_name(project_name_input, today, languages)
+
+    language_summary = ", ".join(languages) if languages else "Any"
 
     print(f"📁 Project  : {project_name}")
+    print(f"🧪 Languages: {language_summary}")
     print()
 
     project = _todoist_post("projects", token, {"name": project_name})
@@ -338,7 +407,7 @@ def main() -> None:
 
     for since, section_label, due_string in _PERIODS:
         print(f"\n🔍 Fetching {section_label}...")
-        repos = fetch_trending(since)
+        repos = _fetch_for_languages(since, languages)
         if not repos:
             print(f"  ⚠️  No repositories found for {section_label}")
             continue
