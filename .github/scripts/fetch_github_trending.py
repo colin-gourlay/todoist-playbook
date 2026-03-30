@@ -364,14 +364,16 @@ def _parse_language_filters(raw: str) -> list[str]:
 
 def _build_project_name(base_name: str, today: str, languages: list[str]) -> str:
     """Build project name with optional language suffix."""
-    language_suffix = f" ({', '.join(languages)})" if languages else ""
-
     if base_name:
+        language_suffix = f" ({', '.join(languages)})" if languages else ""
         if languages:
             return f"{base_name}{language_suffix}"
         return base_name
 
-    return f"GitHub Trending{language_suffix} — {today}"
+    language_segment = "-".join(_to_kebab_label(lang) for lang in languages if lang)
+    if language_segment:
+        return f"github-trending-{language_segment}-{today}"
+    return f"github-trending-{today}"
 
 
 def _fetch_for_languages(since: str, languages: list[str]) -> list[dict]:
