@@ -28,13 +28,12 @@ Estimated duration: 45 minutes.
 
 ## Structure Overview
 
-1. Set Up Your Discovery Inputs
-2. Evaluate Each Candidate Repo
-3. Organise Your Stars as a Knowledge System
-4. Reverse Engineer High-Signal Repos
-5. Extract Insights and Convert to Actions
-6. Track Star Velocity and Momentum
-7. Close the Review
+1. Evaluate Each Candidate Repo
+2. Organise Your Stars as a Knowledge System
+3. Reverse Engineer High-Signal Repos
+4. Extract Insights and Convert to Actions
+5. Track Star Velocity and Momentum
+6. Close the Review
 
 ---
 
