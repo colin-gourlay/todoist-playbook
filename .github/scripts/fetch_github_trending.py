@@ -322,6 +322,21 @@ def _build_task_description(repo: dict) -> str:
     return "\n\n".join(parts)
 
 
+def _to_kebab_label(value: str) -> str:
+    """Convert a language name into a lowercase kebab-case Todoist label."""
+    if not value:
+        return ""
+
+    # Expand common symbol-heavy language names before cleanup.
+    normalised = (
+        value.replace("+", " plus ")
+        .replace("#", " sharp ")
+        .replace(".", " dot ")
+    )
+    label = re.sub(r"[^a-z0-9]+", "-", normalised.lower()).strip("-")
+    return re.sub(r"-+", "-", label)
+
+
 def _parse_language_filters(raw: str) -> list[str]:
     """Parse comma-separated languages from workflow input.
 
@@ -423,6 +438,10 @@ def main() -> None:
 
         for repo in repos:
             content = _build_task_content(repo)
+            labels = [_READ_LATER_LABEL]
+            language_label = _to_kebab_label(repo.get("language", ""))
+            if language_label and language_label not in labels:
+                labels.append(language_label)
             task_data: dict = {
                 "content": content,
                 "description": _build_task_description(repo),
@@ -430,7 +449,7 @@ def main() -> None:
                 "section_id": section_id,
                 # Todoist REST API v1 accepts label names directly as strings.
                 # If the label does not yet exist in Todoist it will be created.
-                "labels": [_READ_LATER_LABEL],
+                "labels": labels,
                 "priority": _TASK_PRIORITY,
             }
             if due_string:
