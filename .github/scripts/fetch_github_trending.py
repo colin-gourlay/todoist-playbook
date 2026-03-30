@@ -81,54 +81,83 @@ def _strip_tags(text: str) -> str:
 def _parse_trending_html(body: str) -> list[dict]:
     """Extract repo metadata from the GitHub Trending page HTML.
 
-    The page renders each repository as an ``<article class="Box-row">``
-    element. This parser uses lightweight regex extraction rather than a
-    full HTML parser so there are no extra dependencies.
+    Uses two strategies in sequence so the parser degrades gracefully when
+    GitHub updates its HTML structure:
+
+    1. Article-based: look for ``<article>`` elements that contain a repo
+       link inside an ``<h2>``.  GitHub historically rendered each repo as
+       ``<article class="Box-row">``, but the class name is intentionally
+       not hard-coded so minor redesigns don't break this.
+
+    2. Heading-based fallback: scan every ``<h2>`` that contains an
+       ``<a href="/owner/repo">`` link.  This is more permissive but still
+       requires a two-segment path, which filters out navigation links.
 
     Note: this approach is inherently dependent on GitHub's HTML structure.
-    If the trending page layout changes, the regex patterns below may need
-    updating. A return value of an empty list indicates either no trending
-    repos for the period or a parsing failure.
+    A return value of an empty list indicates either no trending repos for
+    the period or a parsing failure.
     """
     repos: list[dict] = []
+    seen_slugs: set[str] = set()
 
-    article_re = re.compile(
-        r'<article[^>]*class="[^"]*Box-row[^"]*"[^>]*>(.*?)</article>',
+    # Compiled patterns reused across both strategies.
+    h2_link_re = re.compile(
+        r'<h2[^>]*>.*?<a\s+href="/([^/"?#][^"?#]*/[^"?#"]+)"',
+        re.DOTALL,
+    )
+    desc_re = re.compile(
+        r'<p[^>]*>(.*?)</p>',
         re.DOTALL,
     )
 
+    def _extract_slug_and_url(fragment: str) -> tuple[str, str] | None:
+        m = h2_link_re.search(fragment)
+        if not m:
+            return None
+        raw = html_module.unescape(m.group(1).strip())
+        slug = re.sub(r"\s*/\s*", "/", raw)
+        # Must be exactly owner/repo (two segments, no further slashes).
+        if slug.count("/") != 1:
+            return None
+        return slug, f"https://github.com/{slug}"
+
+    def _extract_description(fragment: str) -> str:
+        m = desc_re.search(fragment)
+        if not m:
+            return ""
+        return _strip_tags(html_module.unescape(m.group(1)))
+
+    def _add(slug: str, url: str, description: str) -> None:
+        if slug not in seen_slugs:
+            seen_slugs.add(slug)
+            repos.append({"slug": slug, "url": url, "description": description})
+
+    # Strategy 1 — article-based (matches historical and many current layouts).
+    article_re = re.compile(r'<article\b[^>]*>(.*?)</article>', re.DOTALL)
     for article_match in article_re.finditer(body):
         article = article_match.group(1)
+        result = _extract_slug_and_url(article)
+        if result:
+            slug, url = result
+            _add(slug, url, _extract_description(article))
 
-        # Repo slug and URL — look for the <a href="/owner/repo"> inside an <h2>
-        name_match = re.search(
-            r'<h2[^>]*>\s*<a\s+href="/([^/"?#][^"?#]*)"',
-            article,
-        )
-        if not name_match:
-            continue
+    if repos:
+        return repos
 
-        slug = html_module.unescape(name_match.group(1).strip())
-        # Normalise spacing that GitHub sometimes renders as " owner / repo "
-        slug = re.sub(r"\s*/\s*", "/", slug)
-        repo_url = f"https://github.com/{slug}"
+    # Strategy 2 — heading-based fallback for redesigned layouts.
+    # Split on <h2 tags so we can associate the nearest <p> with each heading.
+    for chunk in re.split(r'(?=<h2\b)', body):
+        result = _extract_slug_and_url(chunk)
+        if result:
+            slug, url = result
+            _add(slug, url, _extract_description(chunk))
 
-        # Description — the <p> element with class col-9
-        desc_match = re.search(
-            r'<p[^>]*class="[^"]*col-9[^"]*"[^>]*>(.*?)</p>',
-            article,
-            re.DOTALL,
-        )
-        description = ""
-        if desc_match:
-            description = _strip_tags(html_module.unescape(desc_match.group(1)))
-
-        repos.append(
-            {
-                "slug": slug,
-                "url": repo_url,
-                "description": description,
-            }
+    if not repos:
+        print(
+            "⚠️  HTML parser found no repositories. GitHub may have changed "
+            "its page structure. Raw HTML length: "
+            f"{len(body)} chars. First 500 chars:\n{body[:500]}",
+            file=sys.stderr,
         )
 
     return repos
