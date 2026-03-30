@@ -108,8 +108,24 @@ def _parse_trending_html(body: str) -> list[dict]:
         re.DOTALL,
     )
     desc_re = re.compile(
-        r'<p[^>]*>(.*?)</p>',
+        r'<p[^>]*class="[^"]*col-9[^"]*"[^>]*>(.*?)</p>',
         re.DOTALL,
+    )
+    stars_re = re.compile(
+        r'([0-9][0-9,]*)\s+stars\s+(today|this week|this month)',
+        re.IGNORECASE,
+    )
+    total_stars_re = re.compile(
+        r'/stargazers"[^>]*>.*?</svg>\s*([0-9][0-9,]*)\s*</a>',
+        re.IGNORECASE | re.DOTALL,
+    )
+    forks_re = re.compile(
+        r'/forks"[^>]*>.*?</svg>\s*([0-9][0-9,]*)\s*</a>',
+        re.IGNORECASE | re.DOTALL,
+    )
+    language_re = re.compile(
+        r'<span[^>]*itemprop="programmingLanguage"[^>]*>(.*?)</span>',
+        re.IGNORECASE | re.DOTALL,
     )
 
     def _extract_slug_and_url(fragment: str) -> tuple[str, str] | None:
@@ -125,14 +141,74 @@ def _parse_trending_html(body: str) -> list[dict]:
 
     def _extract_description(fragment: str) -> str:
         m = desc_re.search(fragment)
+        if m:
+            return _strip_tags(html_module.unescape(m.group(1)))
+        # Fallback when class names change: pick the first non-empty paragraph.
+        fallback = re.search(r'<p[^>]*>(.*?)</p>', fragment, re.DOTALL)
+        if fallback:
+            return _strip_tags(html_module.unescape(fallback.group(1)))
+        return ""
+
+    def _extract_stars_text(fragment: str) -> str:
+        plain = _strip_tags(html_module.unescape(fragment))
+        m = stars_re.search(plain)
+        if not m:
+            return ""
+        number = m.group(1)
+        period = m.group(2).lower()
+        return f"{number} stars {period}"
+
+    def _extract_total_stars(fragment: str) -> str:
+        # Prefer the value adjacent to GitHub's stargazer metric in card markup.
+        m = total_stars_re.search(fragment)
+        if m:
+            return m.group(1)
+
+        # Fallback for markup shifts: infer from plain text where "star" appears.
+        plain = _strip_tags(html_module.unescape(fragment))
+        fallback = re.search(r'star\s*([0-9][0-9,]*)', plain, re.IGNORECASE)
+        if fallback:
+            return fallback.group(1)
+        return ""
+
+    def _extract_forks(fragment: str) -> str:
+        m = forks_re.search(fragment)
+        if m:
+            return m.group(1)
+        plain = _strip_tags(html_module.unescape(fragment))
+        fallback = re.search(r'fork\s*([0-9][0-9,]*)', plain, re.IGNORECASE)
+        if fallback:
+            return fallback.group(1)
+        return ""
+
+    def _extract_language(fragment: str) -> str:
+        m = language_re.search(fragment)
         if not m:
             return ""
         return _strip_tags(html_module.unescape(m.group(1)))
 
-    def _add(slug: str, url: str, description: str) -> None:
+    def _add(
+        slug: str,
+        url: str,
+        description: str,
+        stars_text: str,
+        total_stars: str,
+        forks: str,
+        language: str,
+    ) -> None:
         if slug not in seen_slugs:
             seen_slugs.add(slug)
-            repos.append({"slug": slug, "url": url, "description": description})
+            repos.append(
+                {
+                    "slug": slug,
+                    "url": url,
+                    "description": description,
+                    "stars_text": stars_text,
+                    "total_stars": total_stars,
+                    "forks": forks,
+                    "language": language,
+                }
+            )
 
     # Strategy 1 — article-based (matches historical and many current layouts).
     article_re = re.compile(r'<article\b[^>]*>(.*?)</article>', re.DOTALL)
@@ -141,7 +217,15 @@ def _parse_trending_html(body: str) -> list[dict]:
         result = _extract_slug_and_url(article)
         if result:
             slug, url = result
-            _add(slug, url, _extract_description(article))
+            _add(
+                slug,
+                url,
+                _extract_description(article),
+                _extract_stars_text(article),
+                _extract_total_stars(article),
+                _extract_forks(article),
+                _extract_language(article),
+            )
 
     if repos:
         return repos
@@ -152,7 +236,15 @@ def _parse_trending_html(body: str) -> list[dict]:
         result = _extract_slug_and_url(chunk)
         if result:
             slug, url = result
-            _add(slug, url, _extract_description(chunk))
+            _add(
+                slug,
+                url,
+                _extract_description(chunk),
+                _extract_stars_text(chunk),
+                _extract_total_stars(chunk),
+                _extract_forks(chunk),
+                _extract_language(chunk),
+            )
 
     if not repos:
         print(
@@ -196,11 +288,29 @@ def _todoist_post(endpoint: str, token: str, data: dict) -> dict:
 
 
 def _build_task_content(repo: dict) -> str:
-    """Build the task content string: ``slug — url[ — description]``."""
-    parts = [repo["slug"], repo["url"]]
-    if repo["description"]:
+    """Build task title in a GitHub-card-like metric order."""
+    metrics: list[str] = []
+    if repo.get("language"):
+        metrics.append(repo["language"])
+    if repo.get("total_stars"):
+        metrics.append(f"⭐ {repo['total_stars']}")
+    if repo.get("forks"):
+        metrics.append(f"🍴 {repo['forks']}")
+    if repo.get("stars_text"):
+        metrics.append(f"⭐ {repo['stars_text']}")
+
+    if not metrics:
+        return repo["slug"]
+    return f"{repo['slug']} — {' • '.join(metrics)}"
+
+
+def _build_task_description(repo: dict) -> str:
+    """Build task description with blurb and source URL."""
+    parts: list[str] = []
+    if repo.get("description"):
         parts.append(repo["description"])
-    return " — ".join(parts)
+    parts.append(repo["url"])
+    return "\n\n".join(parts)
 
 
 # ---------------------------------------------------------------------------
@@ -246,6 +356,7 @@ def main() -> None:
             content = _build_task_content(repo)
             task_data: dict = {
                 "content": content,
+                "description": _build_task_description(repo),
                 "project_id": project_id,
                 "section_id": section_id,
                 # Todoist REST API v1 accepts label names directly as strings.
