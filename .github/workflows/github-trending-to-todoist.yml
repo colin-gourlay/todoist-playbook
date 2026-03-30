@@ -1,0 +1,29 @@
+name: GitHub Trending to Todoist
+
+on:
+  schedule:
+    - cron: "0 8 * * *" # 8am UTC daily
+  workflow_dispatch:
+    inputs:
+      project_name:
+        description: >
+          Project name (leave blank to use "GitHub Trending — YYYY-MM-DD")
+        required: false
+        type: string
+
+permissions: {}
+
+jobs:
+  trending-to-todoist:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Fetch trending repos and push to Todoist
+        env:
+          TODOIST_API_TOKEN: ${{ secrets.TODOIST_API_TOKEN }}
+          PROJECT_NAME: ${{ inputs.project_name }}
+        run: python3 .github/scripts/fetch_github_trending.py
