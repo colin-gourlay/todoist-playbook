@@ -101,8 +101,10 @@ def _parse_trending_html(body: str) -> list[dict]:
     seen_slugs: set[str] = set()
 
     # Compiled patterns reused across both strategies.
+    # Use <a\b[^>]*\bhref= so that other attributes (e.g. data-hydro-click)
+    # before href are tolerated.
     h2_link_re = re.compile(
-        r'<h2[^>]*>.*?<a\s+href="/([^/"?#][^"?#]*/[^"?#"]+)"',
+        r'<h2[^>]*>.*?<a\b[^>]*\bhref="/([^/"?#][^"?#]*/[^"?#]+)"',
         re.DOTALL,
     )
     desc_re = re.compile(
