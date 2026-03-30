@@ -152,6 +152,7 @@ Some workflows run on a schedule in addition to on-demand:
 | Workflow | Schedule | Default behaviour |
 |----------|----------|-------------------|
 | **Create Todoist Project from Template** | Fridays at 15:00 UTC, Sundays at 05:00 UTC | Creates a `weekly-review` project |
+| **GitHub Trending to Todoist** | Daily at 08:00 UTC | Creates a dated project with trending repos as `read-later` tasks |
 | **Sync Todoist Project List** | Daily | Updates the parent project dropdown |
 | **Documentation Sync** | Daily | Keeps `index.md`, `CHANGELOG.md`, and READMEs up to date |
 

@@ -158,3 +158,11 @@ New here? Try one of these two paths to get a Todoist project running in under a
 | Workflow | Description | Trigger |
 | ---------- | ------------- | --------- |
 | [Create Todoist Project via MCP](.github/workflows/create-todoist-project-via-mcp.yml) | Create a Todoist project from any CSV template by routing all API calls through the [Todoist MCP server](https://ai.todoist.net/mcp) | workflow_dispatch |
+
+---
+
+## 🤖 Automation Workflows
+
+| Workflow | Description | Trigger |
+| ---------- | ------------- | --------- |
+| [GitHub Trending to Todoist](.github/workflows/github-trending-to-todoist.yml) | Fetches today's, this week's, and this month's trending GitHub repositories and pushes them into a Todoist project as `read-later` tasks, grouped by period | Daily schedule (08:00 UTC) + workflow_dispatch |
