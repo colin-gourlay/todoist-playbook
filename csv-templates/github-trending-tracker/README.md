@@ -28,7 +28,7 @@ Estimated duration: 45 minutes.
 
 ## Structure Overview
 
-1. Evaluate Each Candidate Repo
+1. Evaluate Trending Repos
 2. Organise Your Stars as a Knowledge System
 3. Reverse Engineer High-Signal Repos
 4. Extract Insights and Convert to Actions
