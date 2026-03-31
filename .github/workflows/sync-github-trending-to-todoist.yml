@@ -1,8 +1,8 @@
-name: GitHub Trending to Todoist
+name: Sync GitHub Trending to Todoist
 
 on:
   schedule:
-    - cron: "0 8 * * *" # 8am UTC daily
+    - cron: "30 5 * * *" # 8am UTC daily
   workflow_dispatch:
     inputs:
       project_name:
