@@ -4,6 +4,7 @@
 
 ### Added
 
+- Template: **GitHub Trending Tracker** — weekly review system for discovering, evaluating, and acting on trending GitHub repositories — using stars as signal and structured habits to convert insights into value
 - Template: **Artist Interview Invite Workflow** — checklist for inviting an artist or band for a live studio interview and managing follow-through
 - Prompt template: **Artist Interview Invite Email** — generate concise, high-impact studio interview invite emails for artists, bands, and representatives
 - Gallery: live search bar added to the GitHub Pages template gallery — filters cards in real time as you type
