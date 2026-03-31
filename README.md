@@ -215,6 +215,29 @@ The goal of this repository is to:
 
 ---
 
+## 📈 GitHub Trending to Todoist
+
+The **GitHub Trending to Todoist** workflow runs daily at 08:00 UTC. It fetches the repositories currently trending on GitHub (today, this week, and this month) and pushes them into a dated Todoist project as `read-later` tasks, grouped by period.
+
+### What it does
+
+- Creates a Todoist project named `github-trending-YYYY-MM-DD` (or a custom name you supply)
+- Adds one task per trending repository, with stars, forks, star velocity, and language in the task description
+- Groups tasks into three sections: **Trending (Today)**, **Trending (This Week)**, **Trending (This Month)**
+- Optionally filters by one or more programming languages (e.g. `Python` or `Python,TypeScript`)
+- Applies a `read-later` label to every task for easy filtering in Todoist
+
+### How to trigger manually
+
+1. Go to **Actions → GitHub Trending to Todoist**
+2. Click **Run workflow**
+3. Optionally enter a custom project name or language filter
+4. Click **Run workflow** — the project appears in Todoist immediately
+
+> **Prerequisite:** The `TODOIST_API_TOKEN` repository secret must be set.
+
+---
+
 ## 🤖 Automated Documentation Sync
 
 The **Documentation Sync** workflow runs daily to keep this repository's documentation

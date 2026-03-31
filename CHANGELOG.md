@@ -4,6 +4,7 @@
 
 ### Added
 
+- Workflow: **GitHub Trending to Todoist** — daily automation that fetches trending GitHub repositories (today, this week, this month) and pushes them into a Todoist project as `read-later` tasks, grouped by period; supports optional language filtering and language-aware project naming
 - Template: **GitHub Trending Tracker** — weekly review system for discovering, evaluating, and acting on trending GitHub repositories — using stars as signal and structured habits to convert insights into value
 - Template: **Artist Interview Invite Workflow** — checklist for inviting an artist or band for a live studio interview and managing follow-through
 - Prompt template: **Artist Interview Invite Email** — generate concise, high-impact studio interview invite emails for artists, bands, and representatives
@@ -13,6 +14,7 @@
 
 - Bundle: `radio-show-week-kit` — `artist-interview-invite-workflow` added as an optional template
 - Template: `weekly-review` — "Empty inbox to zero" task duration changed from `@duration-15m` to `@duration-10m`
+- Workflow: `github-trending-to-todoist.yml` — added optional multi-language filtering (`languages` input); project names are now lowercase kebab-case by default; task descriptions now include language, stars, forks, and star-velocity metrics; language-aware project naming appended when filters are active
 - Workflow: `validate-templates.yml` — validation now also triggers on changes to `release.yml`, `reusable-release-assets.yml`, and `generate_release_assets.py`; release workflow is gated on passing validation and now includes prompt template assets in the release ZIP
 
 ---
