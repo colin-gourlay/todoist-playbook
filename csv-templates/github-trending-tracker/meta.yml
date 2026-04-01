@@ -1,6 +1,6 @@
 name: GitHub Trending Tracker
 slug: github-trending-tracker
-description: Weekly review system for discovering, evaluating, and acting on trending GitHub repositories — using stars as signal and structured habits to convert insights into value
+description: Review system for discovering, evaluating, and acting on trending GitHub repositories — using stars as signal and structured habits to convert insights into value
 category: github
 tags:
   - github
