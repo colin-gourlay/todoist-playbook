@@ -14,6 +14,7 @@
 
 - Bundle: `radio-show-week-kit` — `artist-interview-invite-workflow` added as an optional template
 - Template: `weekly-review` — "Empty inbox to zero" task duration changed from `@duration-15m` to `@duration-10m`
+- Template: `github-trending-tracker` — section 1 renamed from "Evaluate Each Candidate Repo" to "Evaluate Trending Repos"
 - Workflow: `github-trending-to-todoist.yml` — added optional multi-language filtering (`languages` input); project names are now lowercase kebab-case by default; task descriptions now include language, stars, forks, and star-velocity metrics; language-aware project naming appended when filters are active
 - Workflow: `validate-templates.yml` — validation now also triggers on changes to `release.yml`, `reusable-release-assets.yml`, and `generate_release_assets.py`; release workflow is gated on passing validation and now includes prompt template assets in the release ZIP
 
