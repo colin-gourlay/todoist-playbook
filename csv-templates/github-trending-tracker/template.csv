@@ -1,6 +1,6 @@
 TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG
 section,1️⃣ Evaluate Trending Repos,,,,,,
-task,Apply the 5-second test — can you immediately understand the value from the README?,2,1,,,,,
+task,Apply the 5-second test - can you immediately understand the value from the README?,2,1,,,,,
 task,Check the README structure — does it have a clear value proposition and quick start?,2,1,,,,,
 task,Check maintenance signals — recent commits, open issues, response rate, and roadmap,2,1,,,,,
 task,Decide an action for each repo: Star, Watch, Reference Only, or Ignore,1,1,,,,,
