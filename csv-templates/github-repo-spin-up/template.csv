@@ -76,6 +76,7 @@ task,Enable sensible repository settings (default branch, merge strategies),2,1,
 task,Add workflow template(s),2,1,,,,,
 task,Add reusable template(s) for Actions,2,1,,,,,
 task,Add reusable template(s) for Workflows,2,1,,,,,
+task,Add CodeQL from GitHub marketplace to repo,2,1,,,,,
 
 section,🔟 Centralised Workflows,,,,,,
 task,Identify any workflows that could or should be shared and move to the central actions repo,2,1,,,,,
