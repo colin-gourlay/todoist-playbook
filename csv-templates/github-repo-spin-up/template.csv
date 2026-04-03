@@ -66,7 +66,7 @@ task,"Create .github/copilot-instructions.md and specify that all documentation 
 task,Add appropriate Copilot prompt.md files for the project,2,1,,,,,
 task,Add relevant agent skills and custom agent personas,2,1,,,,,
 task,Review community-curated agents at awesome-copilot (github.com) for applicable agents,3,1,,,,,
-task,Identify any MCP servers that can be leveraged for the project,2,1,,,,,
+task,Identify any MCP servers that can be leveraged for the project e.g. ToDoist for playbook; spotify, lidarr etc,2,1,,,,,
 
 section,9️⃣ Developer Workflow & Hygiene,,,,,,
 task,Define and document branching convention,1,1,,,,,
