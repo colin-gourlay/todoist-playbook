@@ -1,6 +1,6 @@
 # GitHub Trending Tracker
 
-A weekly review system for discovering, evaluating, and acting on trending GitHub repositories. This template turns GitHub Stars into a structured personal knowledge system, helps you reverse engineer high-signal repos, and converts external ecosystem insights into concrete improvements to your own work.
+A review system for discovering, evaluating, and acting on trending GitHub repositories. This template turns GitHub Stars into a structured personal knowledge system, helps you reverse engineer high-signal repos, and converts external ecosystem insights into concrete improvements to your own work.
 
 ---
 
