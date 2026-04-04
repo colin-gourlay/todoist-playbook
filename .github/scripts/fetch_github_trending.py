@@ -20,6 +20,7 @@ import urllib.parse
 import urllib.request
 
 TODOIST_API_BASE = "https://api.todoist.com/api/v1"
+TODOIST_SYNC_API_BASE = "https://api.todoist.com/sync/v9"
 GITHUB_TRENDING_URL = "https://github.com/trending"
 
 # (github_since_param, section_label, todoist_due_string_or_None)
@@ -272,14 +273,18 @@ def _parse_trending_html(body: str) -> list[dict]:
 
 
 def _todoist_get(
-    endpoint: str, token: str, params: dict | None = None
+    endpoint: str,
+    token: str,
+    params: dict | None = None,
+    base_url: str | None = None,
 ) -> dict | list | None:
-    """GET from the Todoist REST API.
+    """GET from the Todoist REST API (or Sync API when *base_url* is given).
 
     Returns the parsed JSON response, or ``None`` on error so that callers
     can treat a failed lookup as an empty result without aborting the run.
     """
-    url = f"{TODOIST_API_BASE.rstrip('/')}/{endpoint.lstrip('/')}"
+    base = (base_url or TODOIST_API_BASE).rstrip("/")
+    url = f"{base}/{endpoint.lstrip('/')}"
     if params:
         url = f"{url}?{urllib.parse.urlencode(params)}"
     headers = {"Authorization": f"Bearer {token}"}
@@ -388,6 +393,13 @@ def _fetch_processed_slugs(token: str) -> set[str]:
     completed tasks (repos that have been reviewed and marked done) so
     that no repository is imported more than once.
 
+    Active tasks are fetched via the Todoist REST API v1 (which returns a
+    paginated response ``{"items": [...], "next_cursor": "..."}`` or a
+    plain list depending on the API version).  Completed tasks are fetched
+    via the Todoist Sync API v9, which exposes
+    ``GET /sync/v9/items/completed/get_all`` — that endpoint is absent from
+    the v1 REST API.
+
     If either API call fails the function silently skips that source and
     continues — the worst-case outcome is that some repos may be imported
     again rather than the whole run being aborted.
@@ -395,34 +407,61 @@ def _fetch_processed_slugs(token: str) -> set[str]:
     processed: set[str] = set()
 
     # Active read-later tasks (already queued for review).
-    active = _todoist_get("tasks", token, {"label": _READ_LATER_LABEL})
-    if isinstance(active, list):
-        active_count = 0
-        for task in active:
+    # The v1 REST API may return a paginated dict {"items": [...], "next_cursor": ...}
+    # or a plain list — handle both.
+    cursor: str | None = None
+    active_count = 0
+    while True:
+        params: dict = {"label": _READ_LATER_LABEL}
+        if cursor:
+            params["cursor"] = cursor
+        active = _todoist_get("tasks", token, params)
+
+        tasks: list = []
+        next_cursor: str | None = None
+        if isinstance(active, list):
+            tasks = active
+        elif isinstance(active, dict):
+            tasks = active.get("items", [])
+            next_cursor = active.get("next_cursor")
+        else:
+            break
+
+        for task in tasks:
             slug = _extract_slug_from_content(task.get("content", ""))
             if slug:
                 processed.add(slug)
                 active_count += 1
+
+        if not next_cursor:
+            break
+        cursor = next_cursor
+
+    if active_count:
         print(f"  ↳ {active_count} slug(s) from active tasks")
 
-    # Completed tasks (already reviewed), paginated.
-    cursor: str | None = None
+    # Completed tasks (already reviewed).
+    # The v1 REST API does not expose a completed-tasks endpoint; use the
+    # Sync API v9 instead, which supports offset-based pagination.
+    offset = 0
     completed_count = 0
     while True:
-        params: dict = {"limit": 200}
-        if cursor:
-            params["cursor"] = cursor
-        result = _todoist_get("tasks/completed/get_all", token, params)
+        params = {"limit": 200, "offset": offset}
+        result = _todoist_get(
+            "items/completed/get_all", token, params, base_url=TODOIST_SYNC_API_BASE
+        )
         if not isinstance(result, dict):
             break
-        for task in result.get("items", []):
+        items = result.get("items", [])
+        for task in items:
             slug = _extract_slug_from_content(task.get("content", ""))
             if slug:
                 processed.add(slug)
                 completed_count += 1
-        cursor = result.get("next_cursor")
-        if not cursor:
+        if len(items) < 200:
             break
+        offset += 200
+
     if completed_count:
         print(f"  ↳ {completed_count} slug(s) from completed tasks")
 
