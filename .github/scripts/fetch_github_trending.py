@@ -271,6 +271,36 @@ def _parse_trending_html(body: str) -> list[dict]:
 # ---------------------------------------------------------------------------
 
 
+def _todoist_get(
+    endpoint: str, token: str, params: dict | None = None
+) -> dict | list | None:
+    """GET from the Todoist REST API.
+
+    Returns the parsed JSON response, or ``None`` on error so that callers
+    can treat a failed lookup as an empty result without aborting the run.
+    """
+    url = f"{TODOIST_API_BASE.rstrip('/')}/{endpoint.lstrip('/')}"
+    if params:
+        url = f"{url}?{urllib.parse.urlencode(params)}"
+    headers = {"Authorization": f"Bearer {token}"}
+    req = urllib.request.Request(url, headers=headers)
+    try:
+        with urllib.request.urlopen(req) as response:
+            return json.loads(response.read().decode())
+    except urllib.error.HTTPError as exc:
+        print(
+            f"⚠️  Todoist GET /{endpoint} returned {exc.code} — skipping",
+            file=sys.stderr,
+        )
+        return None
+    except urllib.error.URLError as exc:
+        print(
+            f"⚠️  Todoist GET /{endpoint} failed: {exc} — skipping",
+            file=sys.stderr,
+        )
+        return None
+
+
 def _todoist_post(endpoint: str, token: str, data: dict) -> dict:
     """POST to the Todoist REST API and return the parsed JSON response."""
     url = f"{TODOIST_API_BASE.rstrip('/')}/{endpoint.lstrip('/')}"
@@ -335,6 +365,68 @@ def _to_kebab_label(value: str) -> str:
     )
     label = re.sub(r"[^a-z0-9]+", "-", normalised.lower()).strip("-")
     return re.sub(r"-+", "-", label)
+
+
+def _extract_slug_from_content(content: str) -> str | None:
+    """Extract the ``owner/repo`` slug from a task content string.
+
+    Task content is formatted as ``owner/repo — Python • ⭐ 1,234`` or,
+    for tasks without metrics, simply ``owner/repo``.  The slug is the
+    segment before the first `` — `` separator.  It must contain exactly
+    one forward slash and no whitespace to be considered valid.
+    """
+    name_part = content.split(" — ")[0].strip()
+    if re.match(r"^[^/\s]+/[^/\s]+$", name_part):
+        return name_part
+    return None
+
+
+def _fetch_processed_slugs(token: str) -> set[str]:
+    """Return the set of ``owner/repo`` slugs already present in Todoist.
+
+    Checks both active tasks (repos queued but not yet reviewed) and
+    completed tasks (repos that have been reviewed and marked done) so
+    that no repository is imported more than once.
+
+    If either API call fails the function silently skips that source and
+    continues — the worst-case outcome is that some repos may be imported
+    again rather than the whole run being aborted.
+    """
+    processed: set[str] = set()
+
+    # Active read-later tasks (already queued for review).
+    active = _todoist_get("tasks", token, {"label": _READ_LATER_LABEL})
+    if isinstance(active, list):
+        active_count = 0
+        for task in active:
+            slug = _extract_slug_from_content(task.get("content", ""))
+            if slug:
+                processed.add(slug)
+                active_count += 1
+        print(f"  ↳ {active_count} slug(s) from active tasks")
+
+    # Completed tasks (already reviewed), paginated.
+    cursor: str | None = None
+    completed_count = 0
+    while True:
+        params: dict = {"limit": 200}
+        if cursor:
+            params["cursor"] = cursor
+        result = _todoist_get("tasks/completed/get_all", token, params)
+        if not isinstance(result, dict):
+            break
+        for task in result.get("items", []):
+            slug = _extract_slug_from_content(task.get("content", ""))
+            if slug:
+                processed.add(slug)
+                completed_count += 1
+        cursor = result.get("next_cursor")
+        if not cursor:
+            break
+    if completed_count:
+        print(f"  ↳ {completed_count} slug(s) from completed tasks")
+
+    return processed
 
 
 def _parse_language_filters(raw: str) -> list[str]:
@@ -422,13 +514,29 @@ def main() -> None:
     project_id = project["id"]
     print(f"✅ Project created (id={project_id})")
 
+    print("\n🔍 Checking for already-processed repositories...")
+    processed_slugs = _fetch_processed_slugs(token)
+    print(f"  ⏭️  {len(processed_slugs)} repository slug(s) will be skipped")
+
     for since, section_label, due_string in _PERIODS:
         print(f"\n🔍 Fetching {section_label}...")
         repos = _fetch_for_languages(since, languages)
         if not repos:
             print(f"  ⚠️  No repositories found for {section_label}")
             continue
-        print(f"  Found {len(repos)} repositories")
+
+        before = len(repos)
+        repos = [r for r in repos if r["slug"] not in processed_slugs]
+        skipped = before - len(repos)
+        if skipped:
+            print(
+                f"  ⏭️  Skipped {skipped} already-processed "
+                f"repositor{'y' if skipped == 1 else 'ies'}"
+            )
+        if not repos:
+            print(f"  ✅ All {before} repositories for {section_label} already processed")
+            continue
+        print(f"  Found {len(repos)} new repositories")
 
         section = _todoist_post(
             "sections",
@@ -457,6 +565,9 @@ def main() -> None:
             if due_string:
                 task_data["due_string"] = due_string
             _todoist_post("tasks", token, task_data)
+            # Track as processed so a repo appearing in multiple periods
+            # (e.g. trending today AND this week) is only imported once.
+            processed_slugs.add(repo["slug"])
             print(f"    ✓ {content[:100]}")
 
     print()

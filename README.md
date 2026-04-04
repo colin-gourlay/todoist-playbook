@@ -226,6 +226,7 @@ The **GitHub Trending to Todoist** workflow runs daily at 08:00 UTC. It fetches 
 - Groups tasks into three sections: **Trending (Today)**, **Trending (This Week)**, **Trending (This Month)**
 - Optionally filters by one or more programming languages (e.g. `Python` or `Python,TypeScript`)
 - Applies a `read-later` label to every task for easy filtering in Todoist
+- Skips repositories that are already present as active or completed `read-later` tasks in Todoist, preventing duplicates across runs
 
 ### How to trigger manually
 
