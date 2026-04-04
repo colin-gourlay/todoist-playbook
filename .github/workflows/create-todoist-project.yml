@@ -1,6 +1,13 @@
 name: Create Todoist Project from Template
 
 on:
+  workflow_run:
+    workflows:
+      - Sync GitHub Trending to Todoist
+    types:
+      - completed
+    branches:
+      - main
   schedule:
     - cron: '0 15 * * 5'
     - cron: '0 18 * * 0'
@@ -98,6 +105,7 @@ permissions: {}
 jobs:
   create-project:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     permissions:
       contents: read
 
@@ -111,7 +119,7 @@ jobs:
         # - 'weekly-close' on manual runs
         env:
           TODOIST_API_TOKEN: ${{ secrets.TODOIST_API_TOKEN }}
-          TEMPLATE: ${{ inputs.template || (github.event_name == 'schedule' && (github.event.schedule == '0 15 * * 5' && 'weekly-close' || 'weekly-plan')) || 'weekly-close' }}
+          TEMPLATE: ${{ (github.event_name == 'workflow_run' && 'github-trending-tracker') || inputs.template || (github.event_name == 'schedule' && (github.event.schedule == '0 15 * * 5' && 'weekly-close' || 'weekly-plan')) || 'weekly-close' }}
           PROJECT_NAME: ${{ inputs.project_name }}
           PROJECT_COLOR: ${{ inputs.color }}
           IS_FAVORITE: ${{ inputs.is_favorite }}
