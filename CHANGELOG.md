@@ -15,7 +15,7 @@
 - Script: `fetch_github_trending.py` — already-processed repositories (both active and completed `read-later` tasks in Todoist) are now excluded from each import run, preventing duplicate tasks; repositories that appear in multiple trending periods within the same run are also de-duplicated
 - Bundle: `radio-show-week-kit` — `artist-interview-invite-workflow` added as an optional template
 - Template: `weekly-review` — "Empty inbox to zero" task duration changed from `@duration-15m` to `@duration-10m`
-- Workflow: `github-trending-to-todoist.yml` — added optional multi-language filtering (`languages` input); project names are now lowercase kebab-case by default; task descriptions now include language, stars, forks, and star-velocity metrics; language-aware project naming appended when filters are active
+- Workflow: `sync-github-trending-to-todoist.yml` — added optional multi-language filtering (`languages` input); project names are now lowercase kebab-case by default; task descriptions now include language, stars, forks, and star-velocity metrics; language-aware project naming appended when filters are active
 - Workflow: `validate-templates.yml` — validation now also triggers on changes to `release.yml`, `reusable-release-assets.yml`, and `generate_release_assets.py`; release workflow is gated on passing validation and now includes prompt template assets in the release ZIP
 
 ---
@@ -45,7 +45,7 @@
 - Template: `weekly-review` — refined task duration labels for the "Close the Past" section: "Review completed tasks from last week" changed to `@duration-5m`, "Celebrate wins (write 3)" changed to `@duration-10m`, and "Identify unfinished commitments" changed to `@duration-15m`
 - Template: `weekly-review` — bumped version to `0.1.0` (manually reviewed and considered stable)
 - Template: `weekly-review` — refined task wording for clarity, added a calendar review step to the Plan the Future section, and reordered Stop / Start / Continue tasks so Convert START item follows immediately after START
-- Workflow: `create-todoist-project.yml` — added scheduled triggers to auto-create a weekly review project every Friday at 15:00 UTC and every Sunday at 05:00 UTC
+- Workflow: `create-todoist-project.yml` — added scheduled triggers for automated Friday and Sunday project creation
 - Renamed template `certification-exam` to `exam-certification-workflow`
 - Sorted workflow dispatch template options alphabetically in `create-todoist-project.yml`
 - `parent_project` input in `create-todoist-project.yml` is now a dropdown (`type: choice`) populated with existing Todoist project names instead of a free-text field

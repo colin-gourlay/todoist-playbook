@@ -215,9 +215,14 @@ To validate locally, copy the shell commands from the `run:` blocks in `.github/
 ### Maintenance and Sync
 
 - `sync-template-review-issues.yml` opens or closes review issues based on template version state
+- `sync-github-trending-to-todoist.yml` fetches GitHub Trending repositories and pushes them into Todoist as `read-later` tasks
 - `sync-todoist-projects.yml` refreshes the `parent_project` dropdown in `create-todoist-project.yml`
 - `bump-template-versions.yml` bumps reviewed template and prompt-template patch versions on pull requests
-- `doc-sync.lock.yml` supports automated documentation sync
+- `triage-new-issues.yml` labels new issues and adds them to the Todoist Playbook Roadmap project backlog
+- `dependabot-auto-merge.yml` approves eligible Dependabot pull requests and enables auto-merge
+- `copilot-setup-steps.yml` verifies the repository Python automation scripts still compile when the workflow file changes
+- `doc-sync.md` is the authoring source for the documentation-maintenance agent workflow
+- `doc-sync.lock.yml` is the compiled workflow file that executes the documentation sync on schedule
 
 ### Publishing and Release
 
@@ -234,6 +239,7 @@ Important scripts under `.github/scripts/` include:
 - `create_todoist_project.py` for direct Todoist API project creation from CSV templates
 - `run_prompt_template.py` for prompt-template-driven project creation
 - `create_via_mcp.py` for MCP-based project creation
+- `fetch_github_trending.py` for GitHub Trending ingestion and Todoist sync
 - `sync_template_review_issues.py` for issue synchronization against template versions
 - `sync_project_options.py` for updating `parent_project` options in `create-todoist-project.yml`
 - `bump_template_versions.py` for patch-version automation on pull requests

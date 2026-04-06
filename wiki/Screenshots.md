@@ -155,7 +155,7 @@ Committed version bump for weekly-review
 
 ## Documentation Sync
 
-The **Documentation Sync** workflow runs daily. When it detects that `index.md` or a template README is out of date with recent changes, it opens a pull request automatically:
+The **Documentation Sync** workflow runs daily from the compiled `.github/workflows/doc-sync.lock.yml` workflow generated from `.github/workflows/doc-sync.md`. When it detects that `index.md` or a template README is out of date with recent changes, it opens a pull request automatically:
 
 ```
 Branch:  doc-sync/automated-updates
