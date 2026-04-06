@@ -137,9 +137,18 @@ When adding a new template or prompt template, update the following:
 
 - `index.md` — add a row to the appropriate section of the catalogue table
 - `.github/workflows/create-todoist-project.yml`:
-  - For CSV templates: add the slug to the `options` list under `inputs.template`
+  - For CSV templates: add the slug to the `options` list under `inputs.template` if it should be selectable in the standard workflow
+- `.github/workflows/create-todoist-project-via-mcp.yml`:
+  - For CSV templates: add the slug if it should also be selectable in the MCP workflow
+- `.github/workflows/create-todoist-project-from-prompt.yml`:
   - For prompt templates: add the slug to the `options` list under `inputs.prompt_template`
 - `README.md` — update any references if the new template changes usage instructions
+
+Repository-maintenance documentation also needs to stay aligned with the automation layer:
+
+- `.github/workflows/doc-sync.md` is the authoring source for the documentation-maintenance agent
+- `.github/workflows/doc-sync.lock.yml` is the compiled GitHub Actions workflow that actually runs on schedule
+- Update `README.md`, `index.md`, and affected wiki pages when workflow names, triggers, schedules, or repo structure change
 
 ---
 

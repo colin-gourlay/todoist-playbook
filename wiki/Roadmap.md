@@ -8,7 +8,7 @@ This page outlines the current state of the project and where it is headed. The 
 
 The Playbook is a functioning system with:
 
-- ✅ 20+ curated task templates across productivity, engineering, media, and personal domains
+- ✅ 30+ curated task templates across productivity, engineering, media, and personal domains
 - ✅ Starter-kit bundles for common life scenarios
 - ✅ AI prompt templates for enriched task generation
 - ✅ GitHub Actions workflows for one-click Todoist project creation
@@ -103,7 +103,7 @@ The Playbook is a functioning system with:
 | Sync Todoist project list workflow (parent project dropdown) | 2025 |
 | Template gallery on GitHub Pages | 2025 |
 | Issue and pull request templates | 2025 |
-| Scheduled weekly-review project creation | 2025 |
+| Scheduled weekly-close and weekly-plan project creation | 2025 |
 
 ---
 

@@ -25,6 +25,7 @@ Not sure where to begin? Pick the path that fits you:
 | **Import a template into Todoist** | [Browse the catalogue](index.md) → pick a template → download and import the CSV |
 | **Create a Todoist project automatically** | Go to **Actions → Create Todoist Project from Template** → select a template → Run workflow |
 | **Use AI to generate enriched task content** | Go to **Actions → Create Todoist Project from Prompt Template** → select a prompt → Run workflow |
+| **Create a Todoist project via MCP** | Go to **Actions → Create Todoist Project via MCP** → select a template → Run workflow |
 | **Contribute a new template** | Read [CONTRIBUTING](CONTRIBUTING) → follow the template structure → open a PR |
 
 > **New to the repo?** Start with the [weekly-review](csv-templates/weekly-review/) template — it is the fastest way to see how the Playbook works.
@@ -217,7 +218,7 @@ The goal of this repository is to:
 
 ## 📈 GitHub Trending to Todoist
 
-The **GitHub Trending to Todoist** workflow runs daily at 08:00 UTC. It fetches the repositories currently trending on GitHub (today, this week, and this month) and pushes them into a dated Todoist project as `read-later` tasks, grouped by period.
+The **GitHub Trending to Todoist** workflow runs daily at 05:30 UTC. It fetches the repositories currently trending on GitHub (today, this week, and this month) and pushes them into a dated Todoist project as `read-later` tasks, grouped by period.
 
 ### What it does
 
@@ -242,7 +243,9 @@ The **GitHub Trending to Todoist** workflow runs daily at 08:00 UTC. It fetches 
 ## 🤖 Automated Documentation Sync
 
 The **Documentation Sync** workflow runs daily to keep this repository's documentation
-accurate and up to date.
+accurate and up to date. It is compiled from
+`.github/workflows/doc-sync.md` into `.github/workflows/doc-sync.lock.yml`,
+which is the executable workflow file checked by GitHub Actions.
 
 ### What it does
 

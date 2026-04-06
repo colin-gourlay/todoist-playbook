@@ -161,8 +161,28 @@ New here? Try one of these two paths to get a Todoist project running in under a
 
 ---
 
+## ⚡ Project Creation Workflows
+
+| Workflow | Description | Trigger |
+| ---------- | ------------- | --------- |
+| [Create Todoist Project from Template](.github/workflows/create-todoist-project.yml) | Create a Todoist project directly from a CSV template; scheduled runs create `weekly-close` on Fridays and `weekly-plan` on Sundays, and successful trending sync runs create `github-trending-tracker` automatically | `workflow_dispatch` + schedule + `workflow_run` |
+| [Create Todoist Project from Prompt Template](.github/workflows/create-todoist-project-from-prompt.yml) | Generate enriched task content from a prompt template with GitHub Copilot, then create the resulting Todoist project automatically | `workflow_dispatch` |
+| [Create Todoist Project via MCP](.github/workflows/create-todoist-project-via-mcp.yml) | Create a Todoist project from any CSV template by routing all API calls through the [Todoist MCP server](https://ai.todoist.net/mcp) | `workflow_dispatch` |
+
+---
+
 ## 🤖 Automation Workflows
 
 | Workflow | Description | Trigger |
 | ---------- | ------------- | --------- |
-| [GitHub Trending to Todoist](.github/workflows/github-trending-to-todoist.yml) | Fetches today's, this week's, and this month's trending GitHub repositories and pushes them into a Todoist project as `read-later` tasks, grouped by period | Daily schedule (08:00 UTC) + workflow_dispatch |
+| [GitHub Trending to Todoist](.github/workflows/sync-github-trending-to-todoist.yml) | Fetches today's, this week's, and this month's trending GitHub repositories and pushes them into a Todoist project as `read-later` tasks, grouped by period | Daily schedule (05:30 UTC) + `workflow_dispatch` |
+| [Sync Todoist Project List](.github/workflows/sync-todoist-projects.yml) | Refreshes the `parent_project` dropdown options in `create-todoist-project.yml` from the current Todoist project list | Daily schedule (06:00 UTC) + `workflow_dispatch` |
+| [Sync Template Review Issues](.github/workflows/sync-template-review-issues.yml) | Opens or closes GitHub review issues based on whether template versions are still at `0.0.0` | Push to `main` + daily schedule + `workflow_dispatch` |
+| [Documentation Sync](.github/workflows/doc-sync.lock.yml) | Runs the compiled documentation-maintenance workflow generated from `doc-sync.md` and opens or updates a PR when docs drift from the implementation | Daily schedule (08:22 UTC) + `workflow_dispatch` |
+| [Deploy Template Gallery to GitHub Pages](.github/workflows/deploy-gallery.yml) | Deploys the generated gallery to GitHub Pages after validation succeeds, or on manual request | `workflow_run` + `workflow_dispatch` |
+| [Publish Release](.github/workflows/release.yml) | Publishes release assets after validation succeeds on `main`, or on manual request | `workflow_run` + `workflow_dispatch` |
+| [Validate templates](.github/workflows/validate-templates.yml) | Validates CSV templates, prompt templates, and related release-generation inputs via the reusable validator | Push to `main` + pull request + merge queue + `workflow_dispatch` |
+| [Bump template versions](.github/workflows/bump-template-versions.yml) | Applies patch bumps to reviewed templates and prompt templates changed in pull requests | Pull request targeting `main` |
+| [Triage New Issues](.github/workflows/triage-new-issues.yml) | Labels newly opened issues and adds them to the Todoist Playbook Roadmap project backlog | Issue opened |
+| [Dependabot auto-merge](.github/workflows/dependabot-auto-merge.yml) | Approves Dependabot PRs and enables squash auto-merge for eligible patch, minor, and security updates | `pull_request_target` on `main` |
+| [Copilot Setup Steps](.github/workflows/copilot-setup-steps.yml) | Verifies the repository Python automation scripts still compile when the workflow file changes | Push or pull request affecting the workflow file + `workflow_dispatch` |

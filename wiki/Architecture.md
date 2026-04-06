@@ -53,9 +53,10 @@ todoist-playbook/
 │
 ├── bundles/                      # Multi-template starter kits
 │   └── {slug}/
-│       ├── meta.yml              # Bundle metadata
+│       ├── bundle.yml            # Bundle metadata
 │       └── README.md             # Bundle description
 │
+├── docs/                         # Generated GitHub Pages gallery output
 ├── wiki/                         # This project wiki
 │
 ├── index.md                      # Template catalogue (Markdown table)
@@ -63,27 +64,42 @@ todoist-playbook/
 ├── CONTRIBUTING                  # Contribution guidelines
 │
 └── .github/
-    ├── scripts/                  # Python automation scripts
-    │   ├── create_todoist_project.py
-    │   ├── create_via_mcp.py
-    │   ├── run_prompt_template.py
-    │   ├── generate_gallery.py
-    │   ├── bump_template_versions.py
-    │   ├── sync_project_options.py
-    │   ├── generate_release_assets.py
-    │   └── project_colors.txt
-    ├── workflows/                # GitHub Actions
-    │   ├── create-todoist-project.yml
-    │   ├── create-todoist-project-from-prompt.yml
-    │   ├── create-todoist-project-via-mcp.yml
-    │   ├── validate-templates.yml
-    │   ├── bump-template-versions.yml
-    │   ├── deploy-gallery.yml
-    │   ├── doc-sync.md
-    │   ├── sync-todoist-projects.yml
-    │   └── release.yml
-    ├── ISSUE_TEMPLATE/
-    └── assets/
+  ├── actions/                  # Reusable composite actions
+  ├── copilot-spaces/           # Copilot Space configuration
+  ├── prompts/                  # Reusable GitHub prompt files
+  ├── scripts/                  # Python automation scripts
+  │   ├── create_todoist_project.py
+  │   ├── create_via_mcp.py
+  │   ├── run_prompt_template.py
+  │   ├── fetch_github_trending.py
+  │   ├── sync_template_review_issues.py
+  │   ├── generate_gallery.py
+  │   ├── bump_template_versions.py
+  │   ├── sync_project_options.py
+  │   ├── generate_release_assets.py
+  │   └── project_colors.txt
+  ├── workflows/                # GitHub Actions
+  │   ├── copilot-setup-steps.yml
+  │   ├── create-todoist-project.yml
+  │   ├── create-todoist-project-from-prompt.yml
+  │   ├── create-todoist-project-via-mcp.yml
+  │   ├── bump-template-versions.yml
+  │   ├── dependabot-auto-merge.yml
+  │   ├── deploy-gallery.yml
+  │   ├── doc-sync.md
+  │   ├── doc-sync.lock.yml
+  │   ├── release.yml
+  │   ├── reusable-deploy-pages-gallery.yml
+  │   ├── reusable-release-assets.yml
+  │   ├── reusable-validate-templates.yml
+  │   ├── sync-github-trending-to-todoist.yml
+  │   ├── sync-template-review-issues.yml
+  │   ├── sync-todoist-projects.yml
+  │   ├── triage-new-issues.yml
+  │   └── validate-templates.yml
+  ├── REUSABLE_WORKFLOWS.md
+  ├── ISSUE_TEMPLATE/
+  └── assets/
 ```
 
 ---
@@ -144,11 +160,15 @@ author: Name
 ### Create Todoist Project from Template
 
 ```
-User triggers workflow_dispatch
+User triggers workflow_dispatch, schedule, or workflow_run
          │
          ▼
   Select template slug
   (+ optional project name, colour, favourite, parent)
+  or let automation choose a default:
+    - Friday schedule   -> weekly-close
+    - Sunday schedule   -> weekly-plan
+    - Successful trending sync -> github-trending-tracker
          │
          ▼
   create_todoist_project.py runs:
@@ -203,7 +223,7 @@ User triggers workflow_dispatch
 
 ### Validate Templates (CI)
 
-Runs on every push to `main` and every pull request:
+Runs on pushes to `main`, pull requests targeting `main`, merge queue runs, and manual dispatch:
 
 ```
 For each csv-templates/{slug}/:
@@ -232,7 +252,7 @@ Runs on every pull request targeting `main`:
 
 ### Documentation Sync
 
-Runs daily (and on demand):
+Runs daily (and on demand) through the compiled workflow `doc-sync.lock.yml`, which is generated from `doc-sync.md`:
 
 - Scans for changes to CSV templates, prompt templates, bundles, and scripts in the last 24 hours
 - Compares changes against `index.md`, `CHANGELOG.md`, `README.md`, and template READMEs
@@ -241,18 +261,35 @@ Runs daily (and on demand):
 
 ### Deploy Template Gallery
 
-Runs on every push to `main` affecting templates or the gallery script:
+Runs after `Validate templates` succeeds on pushes to `main`, or on manual dispatch:
 
 - `generate_gallery.py` builds a static HTML site from all templates and prompt templates
 - Deployed to GitHub Pages via `actions/deploy-pages`
 
 ### Sync Todoist Project List
 
-Runs daily (and on demand):
+Runs daily at 06:00 UTC (and on demand):
 
 - Fetches all project names from the Todoist API
 - Rewrites the `parent_project` dropdown options in `create-todoist-project.yml`
 - Commits the updated workflow file back to the repository
+
+### GitHub Trending to Todoist
+
+Runs daily at 05:30 UTC (and on demand):
+
+- Fetches trending repositories for today, this week, and this month
+- Creates a Todoist project populated with `read-later` tasks and metadata-rich descriptions
+- Can be filtered to one or more languages via the `languages` input
+- On success, triggers `create-todoist-project.yml` through `workflow_run` so the `github-trending-tracker` template can be created automatically
+
+### Other Maintenance Workflows
+
+- `sync-template-review-issues.yml` keeps GitHub review issues aligned with templates still at `version: 0.0.0`
+- `triage-new-issues.yml` labels newly opened issues and adds them to the Todoist Playbook Roadmap project backlog
+- `dependabot-auto-merge.yml` approves Dependabot pull requests and enables auto-merge for eligible patch, minor, and security updates
+- `copilot-setup-steps.yml` compiles the Python automation scripts when its own workflow changes
+- `release.yml` publishes release assets after validation succeeds or on manual dispatch
 
 ---
 

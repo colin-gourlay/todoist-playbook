@@ -81,7 +81,7 @@ The Playbook includes a template gallery that deploys to GitHub Pages automatica
    - **Parent project**: optional — nest this project under an existing Todoist project
 5. Click **Run workflow**
 
-Within a few seconds the project will appear in your Todoist inbox.
+Within a few seconds the project will appear in Todoist.
 
 ### Using the Manual Import
 
@@ -151,10 +151,10 @@ Some workflows run on a schedule in addition to on-demand:
 
 | Workflow | Schedule | Default behaviour |
 |----------|----------|-------------------|
-| **Create Todoist Project from Template** | Fridays at 15:00 UTC, Sundays at 05:00 UTC | Creates a `weekly-review` project |
-| **GitHub Trending to Todoist** | Daily at 08:00 UTC | Creates a dated project with trending repos as `read-later` tasks |
-| **Sync Todoist Project List** | Daily | Updates the parent project dropdown |
-| **Documentation Sync** | Daily | Keeps `index.md`, `CHANGELOG.md`, and READMEs up to date |
+| **Create Todoist Project from Template** | Fridays at 15:00 UTC, Sundays at 18:00 UTC | Creates `weekly-close` on Fridays and `weekly-plan` on Sundays |
+| **GitHub Trending to Todoist** | Daily at 05:30 UTC | Creates a dated project with trending repos as `read-later` tasks |
+| **Sync Todoist Project List** | Daily at 06:00 UTC | Updates the parent project dropdown |
+| **Documentation Sync** | Daily at 08:22 UTC | Runs the compiled docs-maintenance workflow generated from `doc-sync.md` |
 
 ---
 

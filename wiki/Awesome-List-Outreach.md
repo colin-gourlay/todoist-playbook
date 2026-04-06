@@ -49,7 +49,7 @@ Hi — I'd like to add **Todoist Playbook** to the [LIST NAME] list.
 
 ### Why it fits
 - Directly addresses productivity and task management — the core theme of this list
-- 20+ structured templates covering weekly review, onboarding, sprint ceremonies, SaaS management, and more
+- 30+ structured templates covering weekly review, onboarding, sprint ceremonies, SaaS management, and more
 - GitHub Actions workflows let users create Todoist projects in one click
 - AI prompt templates for generating enriched task content
 - Open source under Creative Commons Attribution-ShareAlike 4.0
