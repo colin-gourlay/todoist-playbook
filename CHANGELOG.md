@@ -13,6 +13,7 @@
 ### Changed
 
 - Script: `fetch_github_trending.py` — already-processed repositories (both active and completed `read-later` tasks in Todoist) are now excluded from each import run, preventing duplicate tasks; repositories that appear in multiple trending periods within the same run are also de-duplicated
+- Workflow: `create-todoist-project.yml` — now automatically triggers after the `Sync GitHub Trending to Todoist` workflow completes successfully, creating the `github-trending-tracker` review project as a follow-on step
 - Bundle: `radio-show-week-kit` — `artist-interview-invite-workflow` added as an optional template
 - Template: `weekly-review` — "Empty inbox to zero" task duration changed from `@duration-15m` to `@duration-10m`
 - Workflow: `sync-github-trending-to-todoist.yml` — added optional multi-language filtering (`languages` input); project names are now lowercase kebab-case by default; task descriptions now include language, stars, forks, and star-velocity metrics; language-aware project naming appended when filters are active
