@@ -6,10 +6,10 @@ on:
   workflow_dispatch:
     inputs:
       project_name:
-        description: >
-          Project name (leave blank to use "GitHub Trending — YYYY-MM-DD")
+        description: Project name
         required: false
         type: string
+        default: "github-trending-{date}"
       languages:
         description: >
           Optional comma-separated language filters from GitHub Trending
