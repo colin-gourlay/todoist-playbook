@@ -16,6 +16,57 @@ This repository is a system, not just a storage location:
 
 ---
 
+## ❓ Why This Exists
+
+**The problem:** Every sprint, code review, job change, or house-admin cycle forces you to rebuild the same task structure from scratch. Best practices live in people's heads. Task managers give you containers but not content — you always start with a blank canvas, under time pressure, with gaps in what you remember.
+
+**The solution:**
+
+- **CSV templates** encode proven task structures and decision points, ready to import in seconds
+- **Bundles** group related templates into starter kits for bigger life events
+- **AI prompt templates** generate contextually enriched task content from a short description
+- **GitHub Actions automation** creates fully structured Todoist projects with one click — no local downloads required
+- Templates are plain-text CSV and YAML — version-controlled, portable, and not locked to any platform
+
+---
+
+## 🏗️ Architecture Overview
+
+The Playbook is built in four layers:
+
+| Layer | What it contains |
+|-------|-----------------|
+| **Content assets** | `csv-templates/`, `prompt-templates/`, `bundles/` — the plain-text source of truth |
+| **Automation** | `.github/workflows/` — GitHub Actions for project creation, validation, sync, and publishing |
+| **Execution** | `.github/scripts/` — Python entry points called by the workflows |
+| **Discovery & publishing** | `index.md`, `wiki/`, `docs/` — catalogue, documentation, and the GitHub Pages gallery |
+
+**Flow:** author a template → push to `main` → CI validates structure → workflows create Todoist projects on demand or on schedule → gallery auto-deploys to GitHub Pages.
+
+For the full architecture diagram and component detail, see [wiki/Architecture.md](wiki/Architecture.md).
+
+---
+
+## ⚙️ Setup
+
+**Minimum setup (for automation workflows):**
+
+1. **Fork this repository** — [github.com/colin-gourlay/todoist-playbook](https://github.com/colin-gourlay/todoist-playbook)
+2. **Add your Todoist API token** as a repository secret named `TODOIST_API_TOKEN`
+   Retrieve it from [Todoist → Settings → Integrations → Developer](https://app.todoist.com/app/settings/integrations/developer)
+3. **Enable GitHub Actions** in your fork (Actions tab → enable workflows if prompted)
+4. **Run your first workflow** — Actions → Create Todoist Project from Template → Run workflow
+
+**Optional extras:**
+
+- **GitHub Pages gallery** — Settings → Pages → Source: GitHub Actions, then trigger the **Deploy Template Gallery** workflow
+- **AI prompt templates** — require GitHub Copilot to be enabled on the repository (Team, Enterprise, or individual Copilot plan)
+- **Parent project nesting** — run the **Sync Todoist Project List** workflow to populate the parent project dropdown
+
+> For the full walkthrough and troubleshooting guide, see [wiki/Setup.md](wiki/Setup.md).
+
+---
+
 ## 🧭 Start Here
 
 Not sure where to begin? Pick the path that fits you:
@@ -61,6 +112,8 @@ Use the **Create Todoist Project from Template** GitHub Actions workflow to crea
 4. Optionally provide a custom project name
 5. Click **Run workflow** — the project is created in Todoist automatically
 
+![GitHub Actions Run Workflow form](.github/assets/screenshots/github-actions-run-workflow.svg)
+
 ### 🤖 Automated via AI Prompt Template
 
 Use the **Create Todoist Project from Prompt Template** GitHub Actions workflow to generate enriched task content via GitHub Copilot and create a project automatically.
@@ -68,9 +121,23 @@ Use the **Create Todoist Project from Prompt Template** GitHub Actions workflow 
 1. Go to **Actions → Create Todoist Project from Prompt Template**
 2. Click **Run workflow**
 3. Select a prompt template from the dropdown
-4. Enter a task title and optional context
-5. Optionally select a priority and provide a custom project name
+4. Enter a **task title** (required) and optionally additional **context**
+5. Optionally set a **priority** (`normal`, `medium`, `high`, or `urgent`) and a custom project name
 6. Click **Run workflow** — Copilot generates the task content and the project is created in Todoist automatically
+
+### 🌐 Via MCP (Todoist MCP server)
+
+Use the **Create Todoist Project via MCP** workflow to route project creation through the Todoist MCP server.
+
+> **Note:** This workflow supports a subset of templates. Leaving the template field blank defaults to `weekly-review`.
+
+**Available templates:** `code-review`, `daily-review`, `ef-code-review`, `exam-certification-workflow`, `house-admin`, `iteration-0`, `onboarding-checklist`, `one-on-one`, `radio-show-system`, `saas-spin-up`, `saas-wind-down`, `socials-health-and-optimization-checklist`, `weekly-review`
+
+1. Go to **Actions → Create Todoist Project via MCP**
+2. Click **Run workflow**
+3. Select a template (or leave blank for `weekly-review`)
+4. Optionally provide a project name
+5. Click **Run workflow**
 
 ### 📥 Manual
 
@@ -106,15 +173,6 @@ Each prompt template folder includes:
 
 ---
 
-## 🧭 Which type should I use?
-
-| I want to… | Use this | Example |
-|------------|----------|---------|
-| Set up a structured project for a single recurring workflow | **[Template](csv-templates/)** | [Weekly Review](csv-templates/weekly-review/) — a GTD-style end-of-week reset with sections for capture, review, and planning |
-| Hit the ground running on a big life event or scenario | **[Bundle](bundles/)** | [New Job](bundles/new-job/) — combines the Onboarding Checklist, Weekly Review, and One-on-One templates in one starter kit |
-| Generate rich, AI-powered task content tailored to my input | **[Prompt Template](prompt-templates/)** | [Task Enrichment](prompt-templates/task-enrichment/) — paste a short description into your AI assistant and get a fully structured task back |
-
----
 
 ## 💡 Usage Examples
 
@@ -146,9 +204,11 @@ The Actions log confirms each section and task as it is created:
 🎉 Done! Project 'Weekly Review' is ready in Todoist.
 ```
 
+![GitHub Actions log output](.github/assets/screenshots/github-actions-log-output.svg)
+
 The project appears in Todoist immediately, with all sections and priority flags already applied — ready to work through.
 
-See the [Screenshots wiki page](wiki/Screenshots.md) for a visual walkthrough of this workflow.
+![Todoist project result — Weekly Review](.github/assets/screenshots/todoist-project-result.svg)
 
 ---
 
@@ -170,13 +230,7 @@ Todoist imports all five sections (Day 1, Week 1, Weeks 2–4, Month 1–3, Ongo
 
 ## 🖼 Screenshots
 
-Visual walkthroughs of the key workflows are available in the [Screenshots wiki page](wiki/Screenshots.md):
-
-| Screenshot | Description |
-|-----------|-------------|
-| [Run workflow form](wiki/Screenshots.md#workflow-inputs) | GitHub Actions input form for creating a project from a template |
-| [Actions log output](wiki/Screenshots.md#actions-log-output) | Live creation progress shown in the Actions log |
-| [Todoist project result](wiki/Screenshots.md#todoist--project-result) | The resulting project in Todoist with sections and tasks pre-populated |
+Screenshots are embedded inline throughout this document alongside the relevant workflow steps. For a complete visual walkthrough — including the validation CI run, template catalogue structure, and version bump behaviour — see the [Screenshots wiki page](wiki/Screenshots.md).
 
 ---
 
@@ -308,6 +362,34 @@ The **Bump template versions** workflow runs on every pull request targeting `ma
 - If the version is `0.0.0` it is left untouched (preserving the "unreviewed" signal).
 - Otherwise it increments the **patch** component and commits the change back to the PR branch.
 - The workflow is idempotent: re-running it on a PR that has already been bumped will not produce an additional bump.
+
+---
+
+## 🗺️ Roadmap
+
+**Current state:**
+
+- ✅ 30+ curated templates across productivity, engineering, media, and personal domains
+- ✅ Starter-kit bundles for common life scenarios
+- ✅ GitHub Actions workflows for one-click project creation (standard, AI-powered, and MCP-based)
+- ✅ Automated CI validation, template version bumping, documentation sync, and gallery deployment
+
+**Near-term priorities:**
+
+- [ ] Bump all unreviewed templates (`0.0.0`) to `0.1.0` after manual review
+- [ ] Additional engineering templates: incident response, post-mortem, architecture decision record
+- [ ] Scheduled workflow to auto-create `daily-review` project each morning
+- [ ] Template preview in the GitHub Pages gallery (rendered task tree view)
+
+→ See the full [Roadmap wiki page](wiki/Roadmap.md) for near-term, medium-term, and longer-term plans.
+
+---
+
+## 🔁 Reusable Workflows
+
+The validation, gallery deployment, and release workflows in this repository can be consumed from external repositories. Pin to a release tag (e.g. `@v2026.3.22`) for a stable reference.
+
+→ See [.github/REUSABLE_WORKFLOWS.md](.github/REUSABLE_WORKFLOWS.md) for available workflows, inputs, and usage examples.
 
 ---
 
