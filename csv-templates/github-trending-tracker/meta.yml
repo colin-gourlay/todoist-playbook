@@ -1,6 +1,6 @@
 name: GitHub Trending Tracker
 slug: github-trending-tracker
-description: Review system for discovering, evaluating, and acting on trending GitHub repositories — using stars as signal and structured habits to convert insights into value
+description: Review system for discovering, evaluating, and acting on trending GitHub repositories - using stars as signal and structured habits to convert insights into value
 category: github
 tags:
   - github
@@ -11,7 +11,7 @@ tags:
   - productivity
   - learning
 estimated_duration: 45m
-recurrence_suggestion: weekly
+recurrence_suggestion: daily
 project_color: grape
 version: 0.1.0
 author: Colin Gourlay
