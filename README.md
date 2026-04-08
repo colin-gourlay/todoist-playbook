@@ -222,11 +222,13 @@ The **GitHub Trending to Todoist** workflow runs daily at 05:30 UTC. It fetches 
 
 ### What it does
 
-- Creates a Todoist project named `github-trending-YYYY-MM-DD` (or a custom name you supply)
-- Adds one task per trending repository, with stars, forks, star velocity, and language in the task description
+- Creates a Todoist project using either a generated dated name such as `github-trending-YYYY-MM-DD`, a generated language-specific variant such as `github-trending-python-YYYY-MM-DD`, or a custom name you supply
+- Adds one task per trending repository, with the repo slug and available metrics in the task title
+- Stores the repository description and source URL in the task description
 - Groups tasks into three sections: **Trending (Today)**, **Trending (This Week)**, **Trending (This Month)**
 - Optionally filters by one or more programming languages (e.g. `Python` or `Python,TypeScript`)
 - Applies a `read-later` label to every task for easy filtering in Todoist
+- Adds a kebab-case language label when GitHub exposes a primary language for the repository
 - Skips repositories that are already present as active or completed `read-later` tasks in Todoist, preventing duplicates across runs
 - Automatically triggers the **Create Todoist Project from Template** workflow after a successful run, creating a fresh **GitHub Trending Tracker** review project alongside the trending tasks
 
