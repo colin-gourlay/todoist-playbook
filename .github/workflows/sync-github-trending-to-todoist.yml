@@ -9,12 +9,8 @@ on:
         description: Project name
         required: false
         type: string
-        default: "github-trending-{date}"
       languages:
-        description: >
-          Optional comma-separated language filters from GitHub Trending
-          (for example: "Bicep" or "Python,TypeScript"). Leave blank or use
-          "Any" for no language filter.
+        description: Language filter. Enter comma-separated values such as Bicep or Python,TypeScript
         required: false
         type: string
 
@@ -25,8 +21,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@5ef0c079ce82195b2a36a210272d6b661572d83e # v2.14.2
+        with:
+          egress-policy: audit
       - uses: actions/checkout@v6
 
       - name: Fetch trending repos and push to Todoist
