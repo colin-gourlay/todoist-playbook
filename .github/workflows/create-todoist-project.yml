@@ -18,6 +18,7 @@ on:
         required: false
         type: choice
         options:
+          # BEGIN_CSV_TEMPLATES_CREATE (auto-updated by the sync-todoist-projects workflow)
           - ''
           - awesome-list-outreach-shortlist
           - awesome-list-submission
@@ -50,6 +51,7 @@ on:
           - weekly-commitment-reset
           - weekly-plan
           - weekly-review
+          # END_CSV_TEMPLATES_CREATE
       project_name:
         description: Project name (leave blank to use the CSV template's default name)
         required: false

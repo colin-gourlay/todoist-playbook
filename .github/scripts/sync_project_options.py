@@ -1,24 +1,42 @@
 #!/usr/bin/env python3
-"""Fetch Todoist projects and sync the parent_project options in create-todoist-project.yml.
+"""Sync workflow dropdown options used by project-creation workflows.
 
-Reads all projects from the Todoist API v1 and rewrites the options list
-between the BEGIN_TODOIST_PROJECTS / END_TODOIST_PROJECTS sentinel comments in
-the workflow file.  Run the "Sync Todoist Project List" GitHub Actions workflow
-to keep the dropdown current.
+This script performs two kinds of synchronization:
+1) Fetch Todoist projects and update the parent_project options in
+    create-todoist-project.yml.
+2) Discover local CSV/prompt template slugs and update workflow_dispatch choice
+    options in project-creation workflows.
+
+The workflow files are edited only between sentinel comments, preserving all
+other user-authored YAML.
 """
 
 import json
 import os
 import sys
+from pathlib import Path
 import urllib.error
 import urllib.request
 
 TODOIST_API_BASE = "https://api.todoist.com/api/v1"
-WORKFLOW_PATH = ".github/workflows/create-todoist-project.yml"
+CREATE_PROJECT_WORKFLOW_PATH = ".github/workflows/create-todoist-project.yml"
+CREATE_VIA_MCP_WORKFLOW_PATH = ".github/workflows/create-todoist-project-via-mcp.yml"
+CREATE_FROM_PROMPT_WORKFLOW_PATH = ".github/workflows/create-todoist-project-from-prompt.yml"
+CSV_TEMPLATES_DIR = "csv-templates"
+PROMPT_TEMPLATES_DIR = "prompt-templates"
 
 # These markers delimit the auto-generated options block inside the YAML file.
-BEGIN_MARKER = "          # BEGIN_TODOIST_PROJECTS (auto-updated by the sync-todoist-projects workflow)"
-END_MARKER = "          # END_TODOIST_PROJECTS"
+BEGIN_TODOIST_PROJECTS = "          # BEGIN_TODOIST_PROJECTS (auto-updated by the sync-todoist-projects workflow)"
+END_TODOIST_PROJECTS = "          # END_TODOIST_PROJECTS"
+
+BEGIN_CSV_TEMPLATES_CREATE = "          # BEGIN_CSV_TEMPLATES_CREATE (auto-updated by the sync-todoist-projects workflow)"
+END_CSV_TEMPLATES_CREATE = "          # END_CSV_TEMPLATES_CREATE"
+
+BEGIN_CSV_TEMPLATES_MCP = "          # BEGIN_CSV_TEMPLATES_MCP (auto-updated by the sync-todoist-projects workflow)"
+END_CSV_TEMPLATES_MCP = "          # END_CSV_TEMPLATES_MCP"
+
+BEGIN_PROMPT_TEMPLATES = "          # BEGIN_PROMPT_TEMPLATES (auto-updated by the sync-todoist-projects workflow)"
+END_PROMPT_TEMPLATES = "          # END_PROMPT_TEMPLATES"
 
 
 def fetch_projects(token):
@@ -37,6 +55,65 @@ def fetch_projects(token):
 def yaml_single_quote(value):
     """Wrap *value* in YAML single quotes, escaping any embedded single quotes."""
     return "'" + value.replace("'", "''") + "'"
+
+
+def discover_template_slugs(base_dir):
+    """Return sorted template slugs for directories that contain a metadata file."""
+    root = Path(base_dir)
+    if not root.is_dir():
+        print(f"❌ Template directory not found: {base_dir}", file=sys.stderr)
+        sys.exit(1)
+
+    slugs = []
+    for child in root.iterdir():
+        if child.is_dir() and (child / "meta.yml").is_file():
+            slugs.append(child.name)
+
+    return sorted(slugs)
+
+
+def replace_block(lines, begin_marker, end_marker, new_items, include_empty_choice):
+    """Replace the lines between marker comments with an auto-generated options block."""
+    begin_idx = end_idx = None
+    for i, line in enumerate(lines):
+        if line.rstrip("\n") == begin_marker:
+            begin_idx = i
+        elif line.rstrip("\n") == end_marker:
+            end_idx = i
+            break
+
+    if begin_idx is None or end_idx is None:
+        print(
+            "❌ Could not find sentinel markers in workflow file.\n"
+            "Expected lines:\n"
+            f"  {begin_marker}\n"
+            f"  {end_marker}",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    new_block = [begin_marker + "\n"]
+    if include_empty_choice:
+        new_block.append("          - ''\n")
+    for item in new_items:
+        new_block.append(f"          - {yaml_single_quote(item)}\n")
+    new_block.append(end_marker + "\n")
+
+    return lines[:begin_idx] + new_block + lines[end_idx + 1 :]
+
+
+def update_workflow(workflow_path, block_specs):
+    """Update one workflow file by replacing each marker-delimited options block."""
+    with open(workflow_path, encoding="utf-8") as f:
+        lines = f.readlines()
+
+    for begin_marker, end_marker, items, include_empty_choice in block_specs:
+        lines = replace_block(lines, begin_marker, end_marker, items, include_empty_choice)
+
+    with open(workflow_path, "w", encoding="utf-8") as f:
+        f.writelines(lines)
+
+    print(f"✅ Updated {workflow_path}")
 
 
 def main():
@@ -70,41 +147,33 @@ def main():
     for name in project_names:
         print(f"  - {name}")
 
-    with open(WORKFLOW_PATH, encoding="utf-8") as f:
-        lines = f.readlines()
+    csv_template_slugs = discover_template_slugs(CSV_TEMPLATES_DIR)
+    prompt_template_slugs = discover_template_slugs(PROMPT_TEMPLATES_DIR)
 
-    # Locate the sentinel markers.
-    begin_idx = end_idx = None
-    for i, line in enumerate(lines):
-        if line.rstrip("\n") == BEGIN_MARKER:
-            begin_idx = i
-        elif line.rstrip("\n") == END_MARKER:
-            end_idx = i
-            break
+    print(f"🧩 Found {len(csv_template_slugs)} CSV template slug(s)")
+    print(f"🧠 Found {len(prompt_template_slugs)} prompt template slug(s)")
 
-    if begin_idx is None or end_idx is None:
-        print(
-            f"❌ Could not find sentinel markers in {WORKFLOW_PATH}.\n"
-            "Expected lines:\n"
-            f"  {BEGIN_MARKER}\n"
-            f"  {END_MARKER}",
-            file=sys.stderr,
-        )
-        sys.exit(1)
+    update_workflow(
+        CREATE_PROJECT_WORKFLOW_PATH,
+        [
+            (BEGIN_CSV_TEMPLATES_CREATE, END_CSV_TEMPLATES_CREATE, csv_template_slugs, True),
+            (BEGIN_TODOIST_PROJECTS, END_TODOIST_PROJECTS, project_names, True),
+        ],
+    )
 
-    # Build the replacement block (inclusive of the sentinel lines).
-    new_block = [BEGIN_MARKER + "\n", "          - ''\n"]
-    for name in project_names:
-        new_block.append(f"          - {yaml_single_quote(name)}\n")
-    new_block.append(END_MARKER + "\n")
+    update_workflow(
+        CREATE_VIA_MCP_WORKFLOW_PATH,
+        [
+            (BEGIN_CSV_TEMPLATES_MCP, END_CSV_TEMPLATES_MCP, csv_template_slugs, True),
+        ],
+    )
 
-    # Splice the new block into the file content.
-    new_lines = lines[:begin_idx] + new_block + lines[end_idx + 1 :]
-
-    with open(WORKFLOW_PATH, "w", encoding="utf-8") as f:
-        f.writelines(new_lines)
-
-    print(f"✅ Updated {WORKFLOW_PATH}")
+    update_workflow(
+        CREATE_FROM_PROMPT_WORKFLOW_PATH,
+        [
+            (BEGIN_PROMPT_TEMPLATES, END_PROMPT_TEMPLATES, prompt_template_slugs, False),
+        ],
+    )
 
 
 if __name__ == "__main__":
