@@ -8,6 +8,7 @@ on:
         required: false
         type: choice
         options:
+          # BEGIN_CSV_TEMPLATES_MCP (auto-updated by the sync-todoist-projects workflow)
           - ''
           - code-review
           - daily-review
@@ -22,6 +23,7 @@ on:
           - saas-wind-down
           - socials-health-and-optimization-checklist
           - weekly-review
+          # END_CSV_TEMPLATES_MCP
       project_name:
         description: Project name (leave blank to use the template's default name)
         required: false

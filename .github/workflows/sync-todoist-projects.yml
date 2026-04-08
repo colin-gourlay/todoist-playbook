@@ -22,8 +22,8 @@ jobs:
           TODOIST_API_TOKEN: ${{ secrets.TODOIST_API_TOKEN }}
         run: python3 .github/scripts/sync_project_options.py
 
-      - name: Commit updated workflow if changed
+      - name: Commit updated workflows if changed
         uses: colin-gourlay/todoist-playbook/.github/actions/commit-and-push@main
         with:
-          commit_message: "chore: sync Todoist project list [skip ci]"
-          add: ".github/workflows/create-todoist-project.yml"
+          commit_message: "chore: sync Todoist project and template options [skip ci]"
+          add: ".github/workflows/create-todoist-project.yml .github/workflows/create-todoist-project-via-mcp.yml .github/workflows/create-todoist-project-from-prompt.yml"

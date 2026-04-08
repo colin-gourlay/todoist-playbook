@@ -8,8 +8,10 @@ on:
         required: true
         type: choice
         options:
+          # BEGIN_PROMPT_TEMPLATES (auto-updated by the sync-todoist-projects workflow)
           - artist-interview-invite-email
           - task-enrichment
+          # END_PROMPT_TEMPLATES
       task_title:
         description: 'Task title (required)'
         required: true
