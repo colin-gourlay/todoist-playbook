@@ -1,17 +1,17 @@
 # GitHub Trending Tracker
 
-A review system for discovering, evaluating, and acting on trending GitHub repositories. This template turns GitHub Stars into a structured personal knowledge system, helps you reverse engineer high-signal repos, and converts external ecosystem insights into concrete improvements to your own work.
+A review template for discovering, evaluating, and acting on trending GitHub repositories. Use it as a manual weekly review project, or as the companion review project that is automatically created after the GitHub Trending sync workflow runs successfully.
 
 ---
 
 ## Objective
 
-- Discover trending repositories relevant to your focus areas each week
+- Review trending repositories relevant to your focus areas each week
 - Evaluate candidates systematically using clear, repeatable criteria
 - Organise your GitHub Stars as a curated, actionable knowledge library
-- Reverse engineer high-star repos to extract patterns worth applying
-- Track star velocity signals — both for others' repos and your own
-- Convert insights into concrete follow-up tasks and backlog work
+- Reverse engineer high-signal repos to extract patterns worth applying
+- Convert external ecosystem signals into concrete follow-up tasks and backlog work
+- Close the loop between repository discovery and deliberate action in Todoist
 
 Estimated duration: 45 minutes.
 
@@ -20,6 +20,7 @@ Estimated duration: 45 minutes.
 ## When to Use
 
 - As a weekly recurring ritual to stay current with the GitHub ecosystem
+- After the `Sync GitHub Trending to Todoist` workflow creates a fresh trending project in Todoist
 - Before planning a new project or feature to validate demand and direction
 - When your starred repos feel noisy or misaligned with current priorities
 - Whenever you want to improve the discoverability or reach of your own repos
@@ -34,6 +35,17 @@ Estimated duration: 45 minutes.
 4. Extract Insights and Convert to Actions
 5. Track Star Velocity and Momentum
 6. Close the Review
+
+---
+
+## How This Fits the Repository
+
+This template now sits alongside two automation workflows:
+
+1. `Sync GitHub Trending to Todoist` creates a separate Todoist project containing trending repositories grouped into **Trending (Today)**, **Trending (This Week)**, and **Trending (This Month)**.
+2. `Create Todoist Project from Template` is triggered after a successful trending sync run and creates this **GitHub Trending Tracker** project from `template.csv`.
+
+In practice, the automation gathers the raw repository inputs and this template provides the structured review checklist you use to process them.
 
 ---
 
@@ -54,7 +66,7 @@ Use this as your primary filter when scanning trending repos.
 For each candidate, assign one of these action states:
 
 | Action | Meaning |
-|--------|---------|
+| ------ | ------- |
 | **Star** | Useful now or likely useful soon — add to a Stars list |
 | **Watch** | High signal but no immediate use — monitor for releases and changes |
 | **Reference Only** | Worth knowing about, no active tracking needed |
@@ -83,12 +95,16 @@ Each weekly cycle should produce at least three practical outputs:
 2. One extracted pattern or insight from a high-star repo
 3. One concrete follow-up task for your own backlog
 
+If you are using the automation path, the review inputs come from the separate trending-import project. That project contains one task per repository, labelled `read-later`, with the repository URL and summary in the task description.
+
 ---
 
 ## Related Resources
 
 - [GitHub Trending](https://github.com/trending)
 - [GitHub Stars](https://github.com/stars)
+- Automation workflow: [Sync GitHub Trending to Todoist](../../.github/workflows/sync-github-trending-to-todoist.yml)
+- Companion workflow: [Create Todoist Project from Template](../../.github/workflows/create-todoist-project.yml)
 - Companion template: [Repo Ecosystem Watch](../repo-ecosystem-watch/)
 - Companion template: [Repo Profile Audit](../repo-profile-audit/)
 - Companion template: [GitHub Repo Spin-Up](../github-repo-spin-up/)
@@ -97,8 +113,16 @@ Each weekly cycle should produce at least three practical outputs:
 
 ## Import Instructions
 
+### Manual CSV import
+
 1. Download `template.csv`
 2. Create a new project in Todoist
 3. Import from CSV
 4. Rename the project to: `GitHub Trending Tracker – [Week of Month Year]`
 5. Set this project to recur weekly
+
+### Automated workflow path
+
+1. Add the `TODOIST_API_TOKEN` repository secret
+2. Run `Sync GitHub Trending to Todoist` manually, or wait for its daily schedule
+3. After the sync succeeds on `main`, the `Create Todoist Project from Template` workflow creates this review project automatically using the `github-trending-tracker` CSV template
