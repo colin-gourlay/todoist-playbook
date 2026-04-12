@@ -13,7 +13,7 @@ inputs:
     default: '.'
   push_to:
     description: >
-      Branch ref to push to (e.g. `${{ github.head_ref }}`).
+      Branch ref to push to (e.g. `github.head_ref` from the calling workflow).
       Defaults to empty, which means `git push` without an explicit refspec.
     required: false
     default: ''
