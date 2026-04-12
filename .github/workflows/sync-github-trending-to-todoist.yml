@@ -16,11 +16,15 @@ on:
 
 permissions: {}
 
+concurrency:
+  group: sync-github-trending-to-todoist
+  cancel-in-progress: false
+
 jobs:
   trending-to-todoist:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@fe104658747b27e96e4f7e80cd0a94068e53901d # v2.16.1
@@ -36,3 +40,9 @@ jobs:
           PROJECT_NAME: ${{ inputs.project_name }}
           LANGUAGES: ${{ inputs.languages }}
         run: python3 .github/scripts/fetch_github_trending.py
+
+      - name: Commit processed slug state if changed
+        uses: colin-gourlay/todoist-playbook/.github/actions/commit-and-push@main
+        with:
+          commit_message: "chore: update github trending processed slug state [skip ci]"
+          add: ".github/data/github-trending-processed-slugs.json"

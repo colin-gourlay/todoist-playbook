@@ -13,6 +13,7 @@ import datetime
 import html as html_module
 import json
 import os
+from pathlib import Path
 import re
 import sys
 import urllib.error
@@ -31,6 +32,11 @@ _PERIODS = [
 ]
 
 _READ_LATER_LABEL = "read-later"
+
+_STATE_VERSION = 1
+_DEFAULT_PROCESSED_SLUGS_FILE = Path(
+    ".github/data/github-trending-processed-slugs.json"
+)
 
 # Todoist API priority for read-later discovery tasks: 2 = medium (p3 in Todoist UI).
 # Range: 1 (no priority / p4) → 4 (urgent / p1).
@@ -386,6 +392,119 @@ def _extract_slug_from_content(content: str) -> str | None:
     return None
 
 
+def _normalise_slug(slug: str) -> str:
+    """Return canonical slug format for dedup comparisons."""
+    return slug.strip().lower()
+
+
+def _is_valid_slug(slug: str) -> bool:
+    """Validate ``owner/repo`` structure used in persisted state."""
+    return bool(re.match(r"^[^/\s]+/[^/\s]+$", slug))
+
+
+def _load_processed_state(path: Path) -> dict:
+    """Load persisted processed slug state from disk.
+
+    Returns a normalised state object, falling back to an empty structure when
+    the file is missing or invalid.
+    """
+    empty_state = {"version": _STATE_VERSION, "updated_at": None, "slugs": {}}
+    if not path.exists():
+        return empty_state
+
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            data = json.load(handle)
+    except (OSError, json.JSONDecodeError) as exc:
+        print(
+            f"⚠️  Unable to read state file at {path}: {exc} — using empty state",
+            file=sys.stderr,
+        )
+        return empty_state
+
+    if not isinstance(data, dict):
+        print(
+            f"⚠️  Invalid state file format at {path} — using empty state",
+            file=sys.stderr,
+        )
+        return empty_state
+
+    raw_slugs = data.get("slugs", {})
+    if not isinstance(raw_slugs, dict):
+        print(
+            f"⚠️  Invalid slug map in state file at {path} — using empty state",
+            file=sys.stderr,
+        )
+        return empty_state
+
+    cleaned_slugs: dict[str, dict] = {}
+    for key, value in raw_slugs.items():
+        if not isinstance(key, str):
+            continue
+        slug = _normalise_slug(key)
+        if not _is_valid_slug(slug):
+            continue
+        if isinstance(value, dict):
+            cleaned_slugs[slug] = value
+        else:
+            cleaned_slugs[slug] = {}
+
+    return {
+        "version": _STATE_VERSION,
+        "updated_at": data.get("updated_at"),
+        "slugs": cleaned_slugs,
+    }
+
+
+def _processed_slugs_from_state(state: dict) -> set[str]:
+    """Extract processed slug set from in-memory state object."""
+    slugs = state.get("slugs", {})
+    if not isinstance(slugs, dict):
+        return set()
+    return set(slugs.keys())
+
+
+def _mark_slug_in_state(
+    state: dict,
+    slug: str,
+    created_at: str,
+    project_name: str,
+    section_label: str,
+    languages: list[str],
+) -> None:
+    """Upsert slug metadata in persisted state."""
+    slug_map = state.setdefault("slugs", {})
+    if not isinstance(slug_map, dict):
+        slug_map = {}
+        state["slugs"] = slug_map
+
+    entry = slug_map.get(slug)
+    if not isinstance(entry, dict):
+        entry = {}
+
+    if "first_seen" not in entry:
+        entry["first_seen"] = created_at
+        entry["first_project"] = project_name
+        entry["first_section"] = section_label
+        entry["first_languages"] = languages
+
+    entry["last_seen"] = created_at
+    slug_map[slug] = entry
+
+
+def _save_processed_state(path: Path, state: dict) -> None:
+    """Persist state atomically so cross-run dedup remains durable."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    state["version"] = _STATE_VERSION
+    state["updated_at"] = datetime.datetime.now(datetime.UTC).isoformat()
+
+    temp_path = path.with_suffix(f"{path.suffix}.tmp")
+    with temp_path.open("w", encoding="utf-8", newline="\n") as handle:
+        json.dump(state, handle, indent=2, sort_keys=True)
+        handle.write("\n")
+    temp_path.replace(path)
+
+
 def _fetch_processed_slugs(token: str) -> set[str]:
     """Return the set of ``owner/repo`` slugs already present in Todoist.
 
@@ -430,7 +549,7 @@ def _fetch_processed_slugs(token: str) -> set[str]:
         for task in tasks:
             slug = _extract_slug_from_content(task.get("content", ""))
             if slug:
-                processed.add(slug)
+                processed.add(_normalise_slug(slug))
                 active_count += 1
 
         if not next_cursor:
@@ -456,7 +575,7 @@ def _fetch_processed_slugs(token: str) -> set[str]:
         for task in items:
             slug = _extract_slug_from_content(task.get("content", ""))
             if slug:
-                processed.add(slug)
+                processed.add(_normalise_slug(slug))
                 completed_count += 1
         if len(items) < 200:
             break
@@ -544,18 +663,31 @@ def main() -> None:
     project_name = _build_project_name(project_name_input, today, languages)
 
     language_summary = ", ".join(languages) if languages else "Any"
+    state_file_env = os.environ.get("GITHUB_TRENDING_STATE_FILE", "").strip()
+    state_file = Path(state_file_env) if state_file_env else _DEFAULT_PROCESSED_SLUGS_FILE
+    run_timestamp = datetime.datetime.now(datetime.UTC).isoformat()
 
     print(f"📁 Project  : {project_name}")
     print(f"🧪 Languages: {language_summary}")
+    print(f"🧠 State    : {state_file}")
     print()
+
+    state = _load_processed_state(state_file)
+    persisted_slugs = _processed_slugs_from_state(state)
 
     project = _todoist_post("projects", token, {"name": project_name})
     project_id = project["id"]
     print(f"✅ Project created (id={project_id})")
 
     print("\n🔍 Checking for already-processed repositories...")
-    processed_slugs = _fetch_processed_slugs(token)
+    todoist_processed_slugs = _fetch_processed_slugs(token)
+    processed_slugs = persisted_slugs | todoist_processed_slugs
+    print(f"  ↳ {len(persisted_slugs)} slug(s) from persisted state")
+    print(f"  ↳ {len(todoist_processed_slugs)} slug(s) from Todoist")
     print(f"  ⏭️  {len(processed_slugs)} repository slug(s) will be skipped")
+
+    state_dirty = False
+    tasks_created = 0
 
     for since, section_label, due_string in _PERIODS:
         print(f"\n🔍 Fetching {section_label}...")
@@ -565,7 +697,11 @@ def main() -> None:
             continue
 
         before = len(repos)
-        repos = [r for r in repos if r["slug"] not in processed_slugs]
+        repos = [
+            r
+            for r in repos
+            if _normalise_slug(r.get("slug", "")) not in processed_slugs
+        ]
         skipped = before - len(repos)
         if skipped:
             print(
@@ -587,6 +723,7 @@ def main() -> None:
 
         for repo in repos:
             content = _build_task_content(repo)
+            slug = _normalise_slug(repo.get("slug", ""))
             labels = [_READ_LATER_LABEL]
             language_label = _to_kebab_label(repo.get("language", ""))
             if language_label and language_label not in labels:
@@ -604,10 +741,36 @@ def main() -> None:
             if due_string:
                 task_data["due_string"] = due_string
             _todoist_post("tasks", token, task_data)
+            tasks_created += 1
             # Track as processed so a repo appearing in multiple periods
             # (e.g. trending today AND this week) is only imported once.
-            processed_slugs.add(repo["slug"])
+            processed_slugs.add(slug)
+            _mark_slug_in_state(
+                state,
+                slug,
+                run_timestamp,
+                project_name,
+                section_label,
+                languages,
+            )
+            state_dirty = True
             print(f"    ✓ {content[:100]}")
+
+    if state_dirty:
+        print(f"\n💾 Persisting {tasks_created} new slug(s) to state file...")
+        try:
+            _save_processed_state(state_file, state)
+        except OSError as exc:
+            print(
+                "❌ Failed to persist processed slug state after creating tasks. "
+                "Stopping to avoid dedup drift.",
+                file=sys.stderr,
+            )
+            print(f"   Path: {state_file}", file=sys.stderr)
+            print(f"   Error: {exc}", file=sys.stderr)
+            sys.exit(1)
+    else:
+        print("\nℹ️  No new repositories were added; state file unchanged.")
 
     print()
     print(f"🎉 Done! Project '{project_name}' is ready in Todoist.")
