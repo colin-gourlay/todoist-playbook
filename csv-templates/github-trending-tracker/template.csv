@@ -1,9 +1,9 @@
 TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG
 section,1️⃣ Evaluate Trending Repos,,,,,,
-task,Verify README purpose and value are clear at a glance,2,1,,,,,
-task,Review README quality - clear structure, quick start guide, and usage examples present?,2,1,,,,,
+task,Check that the README opens with a clear one-line summary of purpose and value,2,1,,,,,
+task,Check README has a quick start guide and at least one usage example,2,1,,,,,
 task,Assess project health - recent commits, issue activity, maintainer responsiveness, roadmap visibility,2,1,,,,,
-task,Decide an action for each repo: Star, Watch, Reference Only, or Ignore,1,1,,,,,
+task,Decide an action for each repo: Star or Watch or Reference or Ignore,1,1,,,,,
 section,2️⃣ Organise Your Stars as a Knowledge System,,,,,,
 task,Star any newly selected repos and assign them to the appropriate GitHub Stars list,2,1,,,,,
 task,Review your existing starred repos and remove any that are now stale or misaligned,3,1,,,,,
