@@ -1,4 +1,4 @@
-name: Bump template versions
+name: Bump template version
 
 on:
   pull_request:
@@ -8,27 +8,32 @@ on:
 permissions: {}
 
 jobs:
-  bump:
+  bump-version:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
     steps:
-      - uses: actions/checkout@v6
+      - name: Harden Runner
+        uses: step-security/harden-runner@fe104658747b27e96e4f7e80cd0a94068e53901d # v2.16.1
+        with:
+          egress-policy: audit
+
+      - name: Checkout code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
           ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Bump template versions
+      - name: Bump template version
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: python3 .github/scripts/bump_template_versions.py
 
-      - name: Commit and push version bumps
-        uses: colin-gourlay/todoist-playbook/.github/actions/commit-and-push@main
+      - name: Commit and push version bump
+        uses: ./.github/actions/commit-and-push
         with:
           commit_message: "chore: bump template version(s)"
           add: "csv-templates/*/meta.yml prompt-templates/*/meta.yml"
