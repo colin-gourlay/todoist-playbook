@@ -83,7 +83,7 @@ todoist-playbook/
   │   ├── create-todoist-project.yml
   │   ├── create-todoist-project-from-prompt.yml
   │   ├── create-todoist-project-via-mcp.yml
-  │   ├── bump-template-versions.yml
+  │   ├── bump-template-version.yml
   │   ├── dependabot-auto-merge.yml
   │   ├── deploy-gallery.yml
   │   ├── doc-sync.md
@@ -336,4 +336,4 @@ Versions follow [Semantic Versioning](https://semver.org/):
 | `0.1.0` | Reviewed — manually verified and considered stable |
 | `0.1.x` | Iterating — reviewed template receiving incremental improvements |
 
-The `bump-template-versions` workflow automates patch increments on every PR for reviewed templates.
+The `bump-template-version` workflow automates patch increments on every PR for reviewed templates.

@@ -182,7 +182,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 | [Deploy Template Gallery to GitHub Pages](.github/workflows/deploy-gallery.yml) | Deploys the generated gallery to GitHub Pages after validation succeeds, or on manual request | `workflow_run` + `workflow_dispatch` |
 | [Publish Release](.github/workflows/release.yml) | Publishes release assets after validation succeeds on `main`, or on manual request | `workflow_run` + `workflow_dispatch` |
 | [Validate templates](.github/workflows/validate-templates.yml) | Validates CSV templates, prompt templates, and related release-generation inputs via the reusable validator | Push to `main` + pull request + merge queue + `workflow_dispatch` |
-| [Bump template versions](.github/workflows/bump-template-versions.yml) | Applies patch bumps to reviewed templates and prompt templates changed in pull requests | Pull request targeting `main` |
+| [Bump template versions](.github/workflows/bump-template-version.yml) | Applies patch bumps to reviewed templates and prompt templates changed in pull requests | Pull request targeting `main` |
 | [Triage New Issues](.github/workflows/triage-new-issues.yml) | Labels newly opened issues and adds them to the Todoist Playbook Roadmap project backlog | Issue opened |
 | [Dependabot auto-merge](.github/workflows/dependabot-auto-merge.yml) | Approves Dependabot PRs and enables squash auto-merge for eligible patch, minor, and security updates | `pull_request_target` on `main` |
 | [Copilot Setup Steps](.github/workflows/copilot-setup-steps.yml) | Verifies the repository Python automation scripts still compile when the workflow file changes | Push or pull request affecting the workflow file + `workflow_dispatch` |
