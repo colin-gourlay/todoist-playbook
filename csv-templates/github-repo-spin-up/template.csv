@@ -32,6 +32,8 @@ task,Add team section to README (if applicable),4,1,,,,,
 
 section,4️⃣ GitHub Features & Ecosystem,,,,,,
 task,Configure Issues,2,1,,,,,
+task,Add bug report issue form at .github/ISSUE_TEMPLATE/bug_report.yml,1,2,,,,,
+task,Add template request issue form at .github/ISSUE_TEMPLATE/template_request.yml,1,2,,,,,
 task,Configure Discussions (to show communication and design thinking),3,1,,,,,
 task,Set up Projects for planning and public visibility,2,1,,,,,
 task,Configure Releases and Tags strategy,2,1,,,,,
