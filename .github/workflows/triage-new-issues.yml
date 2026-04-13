@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Label issue and add to project Backlog
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           # A PAT with the 'project' scope is required if 'Todoist Playbook Roadmap'
           # is a user-level project rather than a repository-level project.
