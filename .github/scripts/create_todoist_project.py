@@ -224,6 +224,9 @@ def main():
                 }
                 if current_section_id:
                     task_data["section_id"] = current_section_id
+                description = row.get("DESCRIPTION", "").strip()
+                if description:
+                    task_data["description"] = description
                 if parent_id:
                     task_data["parent_id"] = parent_id
 
