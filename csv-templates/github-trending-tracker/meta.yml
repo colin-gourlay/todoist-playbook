@@ -13,7 +13,7 @@ tags:
 estimated_duration: 45m
 recurrence_suggestion: weekly
 project_color: grape
-version: 0.1.1
+version: 0.1.2
 author: Colin Gourlay
 deprecated: true
 deprecation_message: Legacy all-in-one template retained for compatibility; use github-trending-tracker-daily and github-trending-tracker-weekly.
