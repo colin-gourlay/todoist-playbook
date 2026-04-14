@@ -5,8 +5,8 @@ A review template for discovering, evaluating, and acting on trending GitHub rep
 Deprecated: this template is the legacy all-in-one option and is planned for removal after 2026-10-01.
 Backward compatibility note: this template remains available for existing users during the transition period.
 For split cadence usage, use:
-- [GitHub Trending Tracker Daily](../github-trending-tracker-daily/)
-- [GitHub Trending Tracker Weekly](../github-trending-tracker-weekly/)
+- [GitHub Trending Repos Daily Review](../github-trending-repos-daily-review/)
+- [GitHub Trending Repos Weekly Review](../github-trending-repos-weekly-review/)
 
 ---
 
@@ -49,7 +49,7 @@ Estimated duration: 45 minutes.
 This template now sits alongside two automation workflows:
 
 1. `Sync GitHub Trending to Todoist` creates a separate Todoist project containing trending repositories grouped into **Trending (Today)**, **Trending (This Week)**, and **Trending (This Month)**.
-2. `Create Todoist Project from Template` is triggered after a successful trending sync run and creates the **GitHub Trending Tracker Daily** project from `template.csv` in `github-trending-tracker-daily`.
+2. `Create Todoist Project from Template` is triggered after a successful trending sync run and creates the **GitHub Trending Repos Daily Review** project from `template.csv` in `github-trending-repos-daily-review`.
 
 In practice, the automation gathers the raw repository inputs and this template provides the structured review checklist you use to process them.
 
@@ -131,4 +131,4 @@ If you are using the automation path, the review inputs come from the separate t
 
 1. Add the `TODOIST_API_TOKEN` repository secret
 2. Run `Sync GitHub Trending to Todoist` manually, or wait for its daily schedule
-3. After the sync succeeds on `main`, the `Create Todoist Project from Template` workflow creates the daily review project automatically using the `github-trending-tracker-daily` CSV template
+3. After the sync succeeds on `main`, the `Create Todoist Project from Template` workflow creates the daily review project automatically using the `github-trending-repos-daily-review` CSV template

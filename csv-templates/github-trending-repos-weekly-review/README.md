@@ -1,4 +1,4 @@
-# GitHub Trending Tracker Weekly
+# GitHub Trending Repos Weekly Review
 
 A weekly consolidation template for organizing stars, reverse engineering high-signal repositories, and turning ecosystem signals into action.
 
@@ -35,7 +35,7 @@ Estimated duration: 35 minutes.
 
 ## How This Fits with Other Templates
 
-- Use [GitHub Trending Tracker Daily](../github-trending-tracker-daily/) for quick daily triage.
+- Use [GitHub Trending Repos Daily Review](../github-trending-repos-daily-review/) for quick daily triage.
 - Use this template for weekly deep review and consolidation.
 - The existing [GitHub Trending Tracker](../github-trending-tracker/) template remains available as the legacy all-in-one option for backward compatibility.
 
@@ -48,9 +48,9 @@ Estimated duration: 35 minutes.
 1. Download `template.csv`
 2. Create a new project in Todoist
 3. Import from CSV
-4. Rename the project to: `GitHub Trending Tracker Weekly - [Week of Month Year]`
+4. Rename the project to: `GitHub Trending Repos Weekly Review - [Week of Month Year]`
 5. Set this project to recur weekly
 
 ### Automated workflow path
 
-You can run `Create Todoist Project from Template` and select `github-trending-tracker-weekly`.
+You can run `Create Todoist Project from Template` and select `github-trending-repos-weekly-review`.

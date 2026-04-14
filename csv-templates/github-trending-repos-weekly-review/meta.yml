@@ -1,5 +1,5 @@
-name: GitHub Trending Tracker Weekly
-slug: github-trending-tracker-weekly
+name: GitHub Trending Repos Weekly Review
+slug: github-trending-repos-weekly-review
 description: Weekly deep-review checklist to organize stars, reverse engineer high-signal repos, and convert insights into actions
 category: github
 tags:
