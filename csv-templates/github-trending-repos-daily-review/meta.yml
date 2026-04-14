@@ -1,20 +1,17 @@
 name: GitHub Trending Repos Daily Review
-
-
-
 slug: github-trending-repos-daily-review
-description: Daily triage checklist for evaluating trending GitHub repositories and deciding the next action quickly
+description: Daily checklist for evaluating trending GitHub repos and deciding next actions
 category: github
 tags:
   - github
   - trending
   - open-source
   - discoverability
-  - stars
-  - productivity
+  - review
+  - triage
   - daily
-estimated_duration: 15m
+estimated_duration: 10m
 recurrence_suggestion: daily
-project_color: grape
-version: 0.0.0
+project_color: red
+version: 0.1.0
 author: Colin Gourlay

@@ -91,11 +91,44 @@ Optional meta.yml fields:
 
 - project_color: Todoist color name (berry_red, red, orange, yellow, olive_green, lime_green, green, mint_green, teal, sky_blue, light_blue, blue, grape, violet, lavender, magenta, salmon, charcoal, grey, taupe)
 
+### Deprecating a CSV Template
+
+When setting deprecation metadata in `meta.yml`, follow this strict contract:
+
+- If `deprecated` is truthy (`true`, `yes`, `1`, `on`, case-insensitive), these keys are required:
+  - `deprecation_message`
+  - `replacement_template`
+  - `sunset_date`
+- If `deprecated` is false or missing, these keys are forbidden:
+  - `deprecation_message`
+  - `replacement_template`
+  - `sunset_date`
+- `replacement_template` must be kebab-case and match an existing folder under `csv-templates/`.
+- `sunset_date` must be a valid future date in `YYYY-MM-DD` format.
+
+Copyable example:
+
+```yaml
+deprecated: true
+deprecation_message: Legacy template retained for compatibility; use newer split templates.
+replacement_template: github-trending-repos-daily-review
+sunset_date: 2026-10-01
+```
+
+Real repository example:
+
+- `csv-templates/github-trending-tracker/meta.yml`
+
+Automation note:
+
+- The **Sync Template Review Issues** workflow opens or re-opens `deprecation-sunset` issues when a deprecated template reaches `sunset_date`.
+
 Before adding a new template:
 
 - Open an issue describing the workflow
 - Define acceptance criteria
 - Clarify reuse potential
+- If touching `meta.yml`, validate deprecation metadata is present when `deprecated` is truthy and absent otherwise
 
 ---
 

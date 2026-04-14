@@ -103,31 +103,86 @@ jobs:
                 fi
               fi
 
-              # Optional deprecation/sunset checks
+              # Deprecation metadata contract
+              has_deprecation_message=0
+              has_replacement_template=0
+              has_sunset_date=0
+
+              if grep -q "^deprecation_message:" "${dir}meta.yml"; then
+                has_deprecation_message=1
+              fi
+              if grep -q "^replacement_template:" "${dir}meta.yml"; then
+                has_replacement_template=1
+              fi
+              if grep -q "^sunset_date:" "${dir}meta.yml"; then
+                has_sunset_date=1
+              fi
+
+              meta_deprecated=""
               if grep -q "^deprecated:" "${dir}meta.yml"; then
                 meta_deprecated=$(grep "^deprecated:" "${dir}meta.yml" | head -n1 | sed 's/deprecated:[[:space:]]*//')
-                meta_deprecated=$(echo "$meta_deprecated" | tr -d '"'\'' | tr '[:upper:]' '[:lower:]')
+                meta_deprecated=$(echo "$meta_deprecated" | tr -d '"'\''' | tr '[:upper:]' '[:lower:]')
+              fi
 
-                if [ "$meta_deprecated" = "true" ] || [ "$meta_deprecated" = "yes" ] || [ "$meta_deprecated" = "1" ] || [ "$meta_deprecated" = "on" ]; then
-                  if ! grep -q "^sunset_date:" "${dir}meta.yml"; then
-                    echo "❌ deprecated template missing sunset_date in ${dir}meta.yml"
+              is_deprecated_truthy=0
+              if [ "$meta_deprecated" = "true" ] || [ "$meta_deprecated" = "yes" ] || [ "$meta_deprecated" = "1" ] || [ "$meta_deprecated" = "on" ]; then
+                is_deprecated_truthy=1
+              fi
+
+              if [ "$is_deprecated_truthy" -eq 1 ]; then
+                if [ "$has_deprecation_message" -ne 1 ]; then
+                  echo "❌ deprecated template missing deprecation_message in ${dir}meta.yml"
+                  failed=1
+                fi
+
+                if [ "$has_replacement_template" -ne 1 ]; then
+                  echo "❌ deprecated template missing replacement_template in ${dir}meta.yml"
+                  failed=1
+                else
+                  meta_replacement_template=$(grep "^replacement_template:" "${dir}meta.yml" | head -n1 | sed 's/replacement_template:[[:space:]]*//')
+                  meta_replacement_template=$(echo "$meta_replacement_template" | tr -d '"'\''' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+
+                  if [ -z "$meta_replacement_template" ]; then
+                    echo "❌ replacement_template cannot be empty in ${dir}meta.yml"
+                    failed=1
+                  elif [[ ! "$meta_replacement_template" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+                    echo "❌ replacement_template must be kebab-case in ${dir}meta.yml"
+                    failed=1
+                  elif [ ! -d "${TEMPLATES_PATH}/${meta_replacement_template}" ]; then
+                    echo "❌ replacement_template '${meta_replacement_template}' does not exist under ${TEMPLATES_PATH}/"
+                    failed=1
+                  fi
+                fi
+
+                if [ "$has_sunset_date" -ne 1 ]; then
+                  echo "❌ deprecated template missing sunset_date in ${dir}meta.yml"
+                  failed=1
+                else
+                  meta_sunset_date=$(grep "^sunset_date:" "${dir}meta.yml" | head -n1 | sed 's/sunset_date:[[:space:]]*//')
+                  meta_sunset_date=$(echo "$meta_sunset_date" | tr -d '"'\''' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+
+                  if [ -z "$meta_sunset_date" ]; then
+                    echo "❌ sunset_date cannot be empty in ${dir}meta.yml"
+                    failed=1
+                  elif [[ ! "$meta_sunset_date" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+                    echo "❌ Invalid sunset_date '$meta_sunset_date' in ${dir}meta.yml (expected YYYY-MM-DD)"
+                    failed=1
+                  elif ! date -u -d "$meta_sunset_date" +%s >/dev/null 2>&1; then
+                    echo "❌ Invalid sunset_date '$meta_sunset_date' in ${dir}meta.yml (unparseable date)"
                     failed=1
                   else
-                    meta_sunset_date=$(grep "^sunset_date:" "${dir}meta.yml" | head -n1 | sed 's/sunset_date:[[:space:]]*//')
-                    meta_sunset_date=$(echo "$meta_sunset_date" | tr -d '"'\'')
-
-                    if ! date -u -d "$meta_sunset_date" +%s >/dev/null 2>&1; then
-                      echo "❌ Invalid sunset_date '$meta_sunset_date' in ${dir}meta.yml (expected YYYY-MM-DD)"
+                    now_epoch=$(date -u +%s)
+                    sunset_epoch=$(date -u -d "$meta_sunset_date 00:00:00Z" +%s)
+                    if [ "$now_epoch" -ge "$sunset_epoch" ]; then
+                      echo "❌ Deprecated template '$slug' reached sunset_date ($meta_sunset_date) and must be removed"
                       failed=1
-                    else
-                      now_epoch=$(date -u +%s)
-                      sunset_epoch=$(date -u -d "$meta_sunset_date 00:00:00Z" +%s)
-                      if [ "$now_epoch" -ge "$sunset_epoch" ]; then
-                        echo "❌ Deprecated template '$slug' reached sunset_date ($meta_sunset_date) and must be removed"
-                        failed=1
-                      fi
                     fi
                   fi
+                fi
+              else
+                if [ "$has_deprecation_message" -eq 1 ] || [ "$has_replacement_template" -eq 1 ] || [ "$has_sunset_date" -eq 1 ]; then
+                  echo "❌ deprecation_message/replacement_template/sunset_date are only allowed when deprecated is truthy in ${dir}meta.yml"
+                  failed=1
                 fi
               fi
             fi
