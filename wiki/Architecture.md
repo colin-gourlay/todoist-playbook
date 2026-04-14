@@ -168,7 +168,7 @@ User triggers workflow_dispatch, schedule, or workflow_run
   or let automation choose a default:
     - Friday schedule   -> weekly-close
     - Sunday schedule   -> weekly-plan
-    - Successful trending sync -> github-trending-tracker
+    - Successful trending sync -> github-trending-tracker-daily
          │
          ▼
   create_todoist_project.py runs:
@@ -281,7 +281,7 @@ Runs daily at 05:30 UTC (and on demand):
 - Fetches trending repositories for today, this week, and this month
 - Creates a Todoist project populated with `read-later` tasks and metadata-rich descriptions
 - Can be filtered to one or more languages via the `languages` input
-- On success, triggers `create-todoist-project.yml` through `workflow_run` so the `github-trending-tracker` template can be created automatically
+- On success, triggers `create-todoist-project.yml` through `workflow_run` so the `github-trending-tracker-daily` template can be created automatically
 
 ### Other Maintenance Workflows
 
