@@ -1,0 +1,18 @@
+name: GitHub Trending Tracker Weekly
+slug: github-trending-tracker-weekly
+description: Weekly deep-review checklist to organize stars, reverse engineer high-signal repos, and convert insights into actions
+category: github
+tags:
+  - github
+  - trending
+  - open-source
+  - discoverability
+  - stars
+  - productivity
+  - learning
+  - weekly
+estimated_duration: 35m
+recurrence_suggestion: weekly
+project_color: grape
+version: 0.0.0
+author: Colin Gourlay

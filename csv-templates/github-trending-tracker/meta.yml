@@ -15,3 +15,7 @@ recurrence_suggestion: weekly
 project_color: grape
 version: 0.1.1
 author: Colin Gourlay
+deprecated: true
+deprecation_message: Legacy all-in-one template retained for compatibility; use github-trending-tracker-daily and github-trending-tracker-weekly.
+replacement_template: github-trending-tracker-daily
+sunset_date: 2026-10-01

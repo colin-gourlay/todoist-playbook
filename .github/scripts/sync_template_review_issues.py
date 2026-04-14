@@ -18,21 +18,29 @@ import sys
 import urllib.error
 import urllib.parse
 import urllib.request
+from datetime import date
 from dataclasses import dataclass
 
 LABEL_NAME = "to-be-reviewed"
 LABEL_COLOR = "d4c5f9"
 LABEL_DESCRIPTION = "Template is pending feature-completeness review"
 
+SUNSET_LABEL_NAME = "deprecation-sunset"
+SUNSET_LABEL_COLOR = "b60205"
+SUNSET_LABEL_DESCRIPTION = "Deprecated template has reached sunset date and should be removed"
+
 TEMPLATE_ROOT = "csv-templates"
 TEMPLATE_MARKER_RE = re.compile(r"template-review-slug:\s*([a-z0-9-]+)")
 MISSING_META_MARKER = "template-review-maintenance: missing-meta-yml"
+SUNSET_MARKER_RE = re.compile(r"template-sunset-slug:\s*([a-z0-9-]+)")
 
 
 @dataclass
 class TemplateState:
     slug: str
     version: str | None
+    deprecated: bool
+    sunset_date: str | None
 
 
 class GitHubClient:
@@ -141,6 +149,13 @@ def parse_meta_value(text: str, key: str):
     return None
 
 
+def parse_meta_bool(text: str, key: str):
+    value = parse_meta_value(text, key)
+    if value is None:
+        return False
+    return value.strip().lower() in {"true", "yes", "1", "on"}
+
+
 def load_template_states(root: str):
     states = []
     missing_meta = []
@@ -162,7 +177,16 @@ def load_template_states(root: str):
             content = fh.read()
 
         version = parse_meta_value(content, "version")
-        states.append(TemplateState(slug=name, version=version))
+        deprecated = parse_meta_bool(content, "deprecated")
+        sunset_date = parse_meta_value(content, "sunset_date")
+        states.append(
+            TemplateState(
+                slug=name,
+                version=version,
+                deprecated=deprecated,
+                sunset_date=sunset_date,
+            )
+        )
 
     return states, missing_meta
 
@@ -199,6 +223,34 @@ def missing_meta_title():
     return "Fix template folders missing meta.yml"
 
 
+def sunset_marker_for_slug(slug: str):
+    return f"<!-- template-sunset-slug: {slug} -->"
+
+
+def sunset_issue_title(slug: str):
+    return f"Remove deprecated template: {slug}"
+
+
+def sunset_issue_body(slug: str, sunset_date_value: str):
+    return "\n".join(
+        [
+            sunset_marker_for_slug(slug),
+            "",
+            f"Template `{slug}` is marked `deprecated: true` and has reached its `sunset_date` ({sunset_date_value}).",
+            "",
+            "Action required:",
+            "- Remove the template folder and related references.",
+            "- Update index and documentation links if present.",
+            "- Record the removal in CHANGELOG.",
+            "",
+            "Completion criteria:",
+            "- [ ] Deprecated template removed from `csv-templates/`.",
+            "- [ ] Any references removed or redirected.",
+            "- [ ] Validation passes after cleanup.",
+        ]
+    )
+
+
 def missing_meta_body(slugs: list[str]):
     lines = [
         f"<!-- {MISSING_META_MARKER} -->",
@@ -220,6 +272,7 @@ def missing_meta_body(slugs: list[str]):
 
 def index_existing_issues(issues: list[dict]):
     by_slug = {}
+    sunset_by_slug = {}
     missing_meta_issue = None
 
     for issue in issues:
@@ -227,10 +280,13 @@ def index_existing_issues(issues: list[dict]):
         match = TEMPLATE_MARKER_RE.search(body)
         if match:
             by_slug[match.group(1)] = issue
+        sunset_match = SUNSET_MARKER_RE.search(body)
+        if sunset_match:
+            sunset_by_slug[sunset_match.group(1)] = issue
         if MISSING_META_MARKER in body:
             missing_meta_issue = issue
 
-    return by_slug, missing_meta_issue
+    return by_slug, missing_meta_issue, sunset_by_slug
 
 
 def sync_template_issues(client: GitHubClient, assignee: str, states: list[TemplateState], existing_by_slug: dict):
@@ -314,6 +370,60 @@ def sync_missing_meta_issue(
         print(f"✅ Closed missing-meta issue #{existing_issue['number']}")
 
 
+def has_reached_sunset(item: TemplateState):
+    if not item.deprecated or not item.sunset_date:
+        return False
+    try:
+        sunset = date.fromisoformat(item.sunset_date)
+    except ValueError:
+        print(f"⚠️ Invalid sunset_date for {item.slug}: {item.sunset_date}")
+        return False
+    return date.today() >= sunset
+
+
+def sync_sunset_issues(client: GitHubClient, assignee: str, states: list[TemplateState], existing_by_slug: dict):
+    overdue = {item.slug: item for item in states if has_reached_sunset(item)}
+
+    for slug, item in overdue.items():
+        issue = existing_by_slug.get(slug)
+        if issue is None:
+            client.create_issue(
+                title=sunset_issue_title(slug),
+                body=sunset_issue_body(slug, item.sunset_date or "unknown"),
+                labels=[SUNSET_LABEL_NAME],
+                assignee=assignee,
+            )
+            continue
+
+        if issue.get("state") != "open":
+            client.update_issue(
+                issue["number"],
+                {"state": "open"},
+                "reopen sunset issue",
+            )
+            print(f"✅ Reopened sunset issue #{issue['number']} for {slug}")
+
+        client.ensure_label_on_issue(issue["number"], SUNSET_LABEL_NAME)
+        client.ensure_assignee_on_issue(issue["number"], assignee)
+        client.update_issue(
+            issue["number"],
+            {"body": sunset_issue_body(slug, item.sunset_date or "unknown")},
+            "refresh sunset issue body",
+        )
+        print(f"✅ Updated sunset issue #{issue['number']} for {slug}")
+
+    for slug, issue in existing_by_slug.items():
+        if slug in overdue:
+            continue
+        if issue.get("state") == "open":
+            client.update_issue(
+                issue["number"],
+                {"state": "closed"},
+                "close sunset issue because template is no longer overdue",
+            )
+            print(f"✅ Closed sunset issue #{issue['number']} for {slug}")
+
+
 def main():
     repository = os.environ.get("GITHUB_REPOSITORY", "").strip()
     token = os.environ.get("GITHUB_TOKEN", "").strip()
@@ -332,6 +442,7 @@ def main():
 
     client = GitHubClient(repository=repository, token=token, dry_run=dry_run)
     client.ensure_label(LABEL_NAME, LABEL_COLOR, LABEL_DESCRIPTION)
+    client.ensure_label(SUNSET_LABEL_NAME, SUNSET_LABEL_COLOR, SUNSET_LABEL_DESCRIPTION)
 
     states, missing_meta = load_template_states(TEMPLATE_ROOT)
     print(f"📋 Found {len(states)} template(s) with meta.yml")
@@ -339,9 +450,10 @@ def main():
         print(f"⚠️ Missing meta.yml in {len(missing_meta)} template folder(s): {', '.join(missing_meta)}")
 
     issues = client.list_issues(state="all")
-    by_slug, missing_meta_issue = index_existing_issues(issues)
+    by_slug, missing_meta_issue, sunset_by_slug = index_existing_issues(issues)
 
     sync_template_issues(client, assignee=assignee, states=states, existing_by_slug=by_slug)
+    sync_sunset_issues(client, assignee=assignee, states=states, existing_by_slug=sunset_by_slug)
     sync_missing_meta_issue(
         client,
         assignee=assignee,

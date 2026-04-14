@@ -102,6 +102,34 @@ jobs:
                   failed=1
                 fi
               fi
+
+              # Optional deprecation/sunset checks
+              if grep -q "^deprecated:" "${dir}meta.yml"; then
+                meta_deprecated=$(grep "^deprecated:" "${dir}meta.yml" | head -n1 | sed 's/deprecated:[[:space:]]*//')
+                meta_deprecated=$(echo "$meta_deprecated" | tr -d '"'\'' | tr '[:upper:]' '[:lower:]')
+
+                if [ "$meta_deprecated" = "true" ] || [ "$meta_deprecated" = "yes" ] || [ "$meta_deprecated" = "1" ] || [ "$meta_deprecated" = "on" ]; then
+                  if ! grep -q "^sunset_date:" "${dir}meta.yml"; then
+                    echo "❌ deprecated template missing sunset_date in ${dir}meta.yml"
+                    failed=1
+                  else
+                    meta_sunset_date=$(grep "^sunset_date:" "${dir}meta.yml" | head -n1 | sed 's/sunset_date:[[:space:]]*//')
+                    meta_sunset_date=$(echo "$meta_sunset_date" | tr -d '"'\'')
+
+                    if ! date -u -d "$meta_sunset_date" +%s >/dev/null 2>&1; then
+                      echo "❌ Invalid sunset_date '$meta_sunset_date' in ${dir}meta.yml (expected YYYY-MM-DD)"
+                      failed=1
+                    else
+                      now_epoch=$(date -u +%s)
+                      sunset_epoch=$(date -u -d "$meta_sunset_date 00:00:00Z" +%s)
+                      if [ "$now_epoch" -ge "$sunset_epoch" ]; then
+                        echo "❌ Deprecated template '$slug' reached sunset_date ($meta_sunset_date) and must be removed"
+                        failed=1
+                      fi
+                    fi
+                  fi
+                fi
+              fi
             fi
 
             # -----------------------
