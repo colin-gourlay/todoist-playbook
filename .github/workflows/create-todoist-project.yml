@@ -29,8 +29,8 @@ on:
           - ef-code-review
           - exam-certification-workflow
           - github-repo-spin-up
-          - github-trending-tracker-daily
-          - github-trending-tracker-weekly
+          - github-trending-repos-daily-review
+          - github-trending-repos-weekly-review
           - house-admin
           - iteration-0
           - onboarding-checklist
@@ -122,7 +122,7 @@ jobs:
         # - 'weekly-close' on manual runs
         env:
           TODOIST_API_TOKEN: ${{ secrets.TODOIST_API_TOKEN }}
-          TEMPLATE: ${{ (github.event_name == 'workflow_run' && 'github-trending-tracker-daily') || inputs.template || (github.event_name == 'schedule' && (github.event.schedule == '0 15 * * 5' && 'weekly-close' || 'weekly-plan')) || 'weekly-close' }}
+          TEMPLATE: ${{ (github.event_name == 'workflow_run' && 'github-trending-repos-daily-review') || inputs.template || (github.event_name == 'schedule' && (github.event.schedule == '0 15 * * 5' && 'weekly-close' || 'weekly-plan')) || 'weekly-close' }}
           PROJECT_NAME: ${{ inputs.project_name }}
           PROJECT_COLOR: ${{ inputs.color }}
           IS_FAVORITE: ${{ inputs.is_favorite }}

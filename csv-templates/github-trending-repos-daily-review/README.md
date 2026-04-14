@@ -1,4 +1,4 @@
-# GitHub Trending Tracker Daily
+# GitHub Trending Repos Daily Review
 
 A lightweight daily triage template for evaluating trending GitHub repositories and deciding what to do next.
 
@@ -31,7 +31,7 @@ Estimated duration: 15 minutes.
 ## How This Fits with Other Templates
 
 - Use this template for daily triage and classification.
-- Use [GitHub Trending Tracker Weekly](../github-trending-tracker-weekly/) for deeper weekly analysis and consolidation.
+- Use [GitHub Trending Repos Weekly Review](../github-trending-repos-weekly-review/) for deeper weekly analysis and consolidation.
 - The existing [GitHub Trending Tracker](../github-trending-tracker/) template remains available as the legacy all-in-one option for backward compatibility.
 
 ---
@@ -43,9 +43,9 @@ Estimated duration: 15 minutes.
 1. Download `template.csv`
 2. Create a new project in Todoist
 3. Import from CSV
-4. Rename the project to: `GitHub Trending Tracker Daily - [Date]`
+4. Rename the project to: `GitHub Trending Repos Daily Review - [Date]`
 5. Set this project to recur daily
 
 ### Automated workflow path
 
-You can run `Create Todoist Project from Template` and select `github-trending-tracker-daily`.
+You can run `Create Todoist Project from Template` and select `github-trending-repos-daily-review`.

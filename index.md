@@ -128,8 +128,8 @@ New here? Try one of these two paths to get a Todoist project running in under a
 | Template | Description | Tags |
 | ---------- | ------------ | ------ |
 | [GitHub Repo Spin-Up](csv-templates/github-repo-spin-up/) | End-to-end checklist for spinning up a new GitHub repository — identity, ecosystem-watch setup, documentation, CI/CD, security, Copilot integration, and developer hygiene | github, setup, devops, open-source, ci-cd, copilot, security |
-| [GitHub Trending Tracker Daily](csv-templates/github-trending-tracker-daily/) | Daily triage checklist for evaluating trending GitHub repositories and deciding the next action quickly | github, trending, open-source, discoverability, stars, productivity, daily |
-| [GitHub Trending Tracker Weekly](csv-templates/github-trending-tracker-weekly/) | Weekly deep-review checklist to organize stars, reverse engineer high-signal repos, and convert insights into actions | github, trending, open-source, discoverability, stars, productivity, learning, weekly |
+| [GitHub Trending Repos Daily Review](csv-templates/github-trending-repos-daily-review/) | Daily triage checklist for evaluating trending GitHub repositories and deciding the next action quickly | github, trending, open-source, discoverability, stars, productivity, daily |
+| [GitHub Trending Repos Weekly Review](csv-templates/github-trending-repos-weekly-review/) | Weekly deep-review checklist to organize stars, reverse engineer high-signal repos, and convert insights into actions | github, trending, open-source, discoverability, stars, productivity, learning, weekly |
 | [GitHub Trending Tracker](csv-templates/github-trending-tracker/) | Deprecated legacy all-in-one review system for discovering, evaluating, and acting on trending GitHub repositories — retained temporarily for backward compatibility | github, trending, open-source, discoverability, stars, productivity, learning, deprecated |
 | [Repo Ecosystem Watch](csv-templates/repo-ecosystem-watch/) | Recurring 4-week review checklist for monitoring adjacent repositories, ecosystem signals, and reusable ideas for this repo | github, open-source, review, ecosystem, discoverability, productivity |
 
@@ -167,7 +167,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 
 | Workflow | Description | Trigger |
 | ---------- | ------------- | --------- |
-| [Create Todoist Project from Template](.github/workflows/create-todoist-project.yml) | Create a Todoist project directly from a CSV template; scheduled runs create `weekly-close` on Fridays and `weekly-plan` on Sundays, and successful trending sync runs create `github-trending-tracker-daily` automatically | `workflow_dispatch` + schedule + `workflow_run` |
+| [Create Todoist Project from Template](.github/workflows/create-todoist-project.yml) | Create a Todoist project directly from a CSV template; scheduled runs create `weekly-close` on Fridays and `weekly-plan` on Sundays, and successful trending sync runs create `github-trending-repos-daily-review` automatically | `workflow_dispatch` + schedule + `workflow_run` |
 | [Create Todoist Project from Prompt Template](.github/workflows/create-todoist-project-from-prompt.yml) | Generate enriched task content from a prompt template with GitHub Copilot, then create the resulting Todoist project automatically | `workflow_dispatch` |
 | [Create Todoist Project via MCP](.github/workflows/create-todoist-project-via-mcp.yml) | Create a Todoist project from any CSV template by routing all API calls through the [Todoist MCP server](https://ai.todoist.net/mcp) | `workflow_dispatch` |
 

@@ -1,5 +1,8 @@
-name: GitHub Trending Tracker Daily
-slug: github-trending-tracker-daily
+name: GitHub Trending Repos Daily Review
+
+
+
+slug: github-trending-repos-daily-review
 description: Daily triage checklist for evaluating trending GitHub repositories and deciding the next action quickly
 category: github
 tags:

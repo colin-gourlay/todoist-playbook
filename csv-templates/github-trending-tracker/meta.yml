@@ -16,6 +16,6 @@ project_color: grape
 version: 0.1.2
 author: Colin Gourlay
 deprecated: true
-deprecation_message: Legacy all-in-one template retained for compatibility; use github-trending-tracker-daily and github-trending-tracker-weekly.
-replacement_template: github-trending-tracker-daily
+deprecation_message: Legacy all-in-one template retained for compatibility; use github-trending-repos-daily-review and github-trending-repos-weekly-review.
+replacement_template: github-trending-repos-daily-review
 sunset_date: 2026-10-01
