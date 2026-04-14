@@ -1,6 +1,9 @@
-TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG
-section,1️⃣ Evaluate Trending Repos,,,,,,
-task,Check that the README opens with a clear one-line summary of purpose and value,2,1,,,,,
-task,Check README has a quick start guide and at least one usage example,2,1,,,,,
-task,Rate project health across commits issues maintainer responsiveness and roadmap,2,1,,,,,
-task,Decide an action for each repo: Star or Watch or Reference or Ignore,1,1,,,,,
+TYPE,CONTENT,DESCRIPTION,IS_COLLAPSED,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DATE,DATE_LANG,TIMEZONE,DURATION,DURATION_UNIT,DEADLINE,DEADLINE_LANG
+meta,view_style=list,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+task,Evaluate Trending Repos @duration-10m @people-self @place-anywhere @tools-github @when-sod-personal-pre-training,,,1,1,,,today at 05:30,en,Europe/London,10,minute,,
+task,Check that the README opens with a clear one-line summary of purpose and value,,,4,2,,,,,Europe/London,,,,
+task,Check README has a quick start guide and at least one usage example,,,4,2,,,,,Europe/London,,,,
+task,Rate project health across commits issues maintainer responsiveness and roadmap,,,4,2,,,,,Europe/London,,,,
+task,Decide an action for each repo: Star or Watch or Reference or Ignore,,,4,2,,,,,Europe/London,,,,
+,,,,,,,,,,,,,,
