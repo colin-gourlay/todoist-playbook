@@ -10,7 +10,7 @@ A lightweight daily triage template for evaluating trending GitHub repositories 
 - Apply a consistent quality filter before starring or tracking
 - Classify each candidate with a clear next action
 
-Estimated duration: 15 minutes.
+Estimated duration: 10 minutes.
 
 ---
 
