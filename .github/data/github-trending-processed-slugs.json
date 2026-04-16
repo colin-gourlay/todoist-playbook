@@ -21,6 +21,13 @@
       "first_seen": "2026-04-13T06:17:44.424742+00:00",
       "last_seen": "2026-04-13T06:17:44.424742+00:00"
     },
+    "anthropics/claude-cookbooks": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-14",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-14T06:10:34.353844+00:00",
+      "last_seen": "2026-04-14T06:10:34.353844+00:00"
+    },
     "bytedance/deer-flow": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-13",
@@ -28,12 +35,26 @@
       "first_seen": "2026-04-13T06:17:44.424742+00:00",
       "last_seen": "2026-04-13T06:17:44.424742+00:00"
     },
+    "chrislgarry/apollo-11": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-14",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-14T11:03:55.093918+00:00",
+      "last_seen": "2026-04-14T11:03:55.093918+00:00"
+    },
     "coleam00/archon": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-13",
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-13T06:17:44.424742+00:00",
       "last_seen": "2026-04-13T06:17:44.424742+00:00"
+    },
+    "crosstalk-solutions/project-nomad": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-14",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-14T06:10:34.353844+00:00",
+      "last_seen": "2026-04-14T06:10:34.353844+00:00"
     },
     "forrestchang/andrej-karpathy-skills": {
       "first_languages": [],
@@ -63,6 +84,20 @@
       "first_seen": "2026-04-13T06:17:44.424742+00:00",
       "last_seen": "2026-04-13T06:17:44.424742+00:00"
     },
+    "gsd-build/get-shit-done": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-14",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-14T06:10:34.353844+00:00",
+      "last_seen": "2026-04-14T06:10:34.353844+00:00"
+    },
+    "hacksider/deep-live-cam": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-14",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-14T06:10:34.353844+00:00",
+      "last_seen": "2026-04-14T06:10:34.353844+00:00"
+    },
     "hkuds/deeptutor": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-13",
@@ -70,12 +105,33 @@
       "first_seen": "2026-04-13T06:17:44.424742+00:00",
       "last_seen": "2026-04-13T06:17:44.424742+00:00"
     },
+    "jamiepine/voicebox": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-14",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-14T06:10:34.353844+00:00",
+      "last_seen": "2026-04-14T06:10:34.353844+00:00"
+    },
     "jarrodwatts/claude-hud": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-13",
       "first_section": "Trending (This Month)",
       "first_seen": "2026-04-13T06:17:44.424742+00:00",
       "last_seen": "2026-04-13T06:17:44.424742+00:00"
+    },
+    "jo-inc/camofox-browser": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-14",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-14T11:03:55.093918+00:00",
+      "last_seen": "2026-04-14T11:03:55.093918+00:00"
+    },
+    "langchain-ai/open-swe": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-14",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-14T11:03:55.093918+00:00",
+      "last_seen": "2026-04-14T11:03:55.093918+00:00"
     },
     "mattpocock/skills": {
       "first_languages": [],
@@ -153,6 +209,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-13T06:17:44.424742+00:00",
       "last_seen": "2026-04-13T06:17:44.424742+00:00"
+    },
+    "pascalorg/editor": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-14",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-14T11:03:55.093918+00:00",
+      "last_seen": "2026-04-14T11:03:55.093918+00:00"
     },
     "rustfs/rustfs": {
       "first_languages": [],
@@ -232,6 +295,6 @@
       "last_seen": "2026-04-13T06:17:44.424742+00:00"
     }
   },
-  "updated_at": "2026-04-13T06:18:08.142584+00:00",
+  "updated_at": "2026-04-14T11:04:10.980561+00:00",
   "version": 1
 }

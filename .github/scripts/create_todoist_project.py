@@ -92,6 +92,14 @@ def read_meta_value(template_dir, key):
     return None
 
 
+def read_meta_bool(template_dir, key):
+    """Return a top-level boolean meta.yml value for the provided key."""
+    value = read_meta_value(template_dir, key)
+    if value is None:
+        return False
+    return value.lower() in {"true", "yes", "1", "on"}
+
+
 def main():
     token = os.environ.get("TODOIST_API_TOKEN", "").strip()
     if not token:
@@ -136,6 +144,22 @@ def main():
 
     print(f"📋 Template : {template_slug}")
     print(f"📁 Project  : {project_name}")
+
+    if read_meta_bool(template_dir, "deprecated"):
+        deprecation_message = read_meta_value(template_dir, "deprecation_message")
+        replacement_slug = read_meta_value(template_dir, "replacement_template")
+        sunset_date = read_meta_value(template_dir, "sunset_date")
+
+        warning = "⚠️ This template is deprecated"
+        if sunset_date:
+            warning += f" and planned for removal after {sunset_date}"
+        warning += "."
+        print(warning)
+        if deprecation_message:
+            print(f"   {deprecation_message}")
+        if replacement_slug:
+            print(f"   Use replacement template: {replacement_slug}")
+
     if parent_project_name:
         print(f"🗂️  Parent   : {parent_project_name} (id={parent_project_id})")
     if project_color:
@@ -200,6 +224,9 @@ def main():
                 }
                 if current_section_id:
                     task_data["section_id"] = current_section_id
+                description = row.get("DESCRIPTION", "").strip()
+                if description:
+                    task_data["description"] = description
                 if parent_id:
                     task_data["parent_id"] = parent_id
 

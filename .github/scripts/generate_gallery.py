@@ -122,6 +122,7 @@ def load_templates():
                 "recurrence_suggestion": meta.get("recurrence_suggestion", ""),
                 "author": meta.get("author", ""),
                 "version": meta.get("version", ""),
+                "deprecated": meta.get("deprecated", ""),
                 "task_count": task_count,
                 "section_count": section_count,
                 "rows": rows,
@@ -177,6 +178,15 @@ def _semver_key(template):
         return (0, 0, 0)
 
 
+def _is_truthy(value):
+    """Return True when a metadata value represents boolean true."""
+    if isinstance(value, bool):
+        return value
+    if value is None:
+        return False
+    return str(value).strip().lower() in {"true", "yes", "1", "on"}
+
+
 def get_spotlight_template(templates):
     """Return the template with the highest semantic version, excluding 0.0.0.
 
@@ -185,7 +195,9 @@ def get_spotlight_template(templates):
     """
     candidates = [
         t for t in templates
-        if t.get("type") == "template" and _semver_key(t) > (0, 0, 0)
+        if t.get("type") == "template"
+        and _semver_key(t) > (0, 0, 0)
+        and not _is_truthy(t.get("deprecated"))
     ]
     if not candidates:
         return None

@@ -57,7 +57,25 @@ def yaml_single_quote(value):
     return "'" + value.replace("'", "''") + "'"
 
 
-def discover_template_slugs(base_dir):
+def _read_meta_bool(meta_path, key):
+    """Return a boolean top-level meta.yml value for *key*, defaulting to False."""
+    if not meta_path.is_file():
+        return False
+
+    truthy_values = {"true", "yes", "1", "on"}
+    with open(meta_path, encoding="utf-8") as f:
+        for line in f:
+            stripped = line.strip()
+            if not stripped or stripped.startswith("#"):
+                continue
+            if stripped.startswith(f"{key}:"):
+                raw = stripped.split(":", 1)[1].strip().strip('"\'').lower()
+                return raw in truthy_values
+
+    return False
+
+
+def discover_template_slugs(base_dir, include_deprecated=True):
     """Return sorted template slugs for directories that contain a metadata file."""
     root = Path(base_dir)
     if not root.is_dir():
@@ -65,9 +83,18 @@ def discover_template_slugs(base_dir):
         sys.exit(1)
 
     slugs = []
+    skipped_deprecated = []
     for child in root.iterdir():
         if child.is_dir() and (child / "meta.yml").is_file():
+            if not include_deprecated and _read_meta_bool(child / "meta.yml", "deprecated"):
+                skipped_deprecated.append(child.name)
+                continue
             slugs.append(child.name)
+
+    if skipped_deprecated:
+        print(f"⚠️ Skipping {len(skipped_deprecated)} deprecated template(s) from {base_dir} choices")
+        for slug in sorted(skipped_deprecated):
+            print(f"  - {slug}")
 
     return sorted(slugs)
 
@@ -147,7 +174,7 @@ def main():
     for name in project_names:
         print(f"  - {name}")
 
-    csv_template_slugs = discover_template_slugs(CSV_TEMPLATES_DIR)
+    csv_template_slugs = discover_template_slugs(CSV_TEMPLATES_DIR, include_deprecated=False)
     prompt_template_slugs = discover_template_slugs(PROMPT_TEMPLATES_DIR)
 
     print(f"🧩 Found {len(csv_template_slugs)} CSV template slug(s)")
