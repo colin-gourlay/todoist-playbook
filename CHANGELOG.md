@@ -12,7 +12,7 @@
 
 ### Changed
 
-- Script: `fetch_github_trending.py` — already-processed repositories (both active and completed `read-later` tasks in Todoist) are now excluded from each import run, preventing duplicate tasks; repositories that appear in multiple trending periods within the same run are also de-duplicated
+- Script: `fetch_github_trending.py` — processed repository slugs are now persisted to `.github/data/github-trending-processed-slugs.json`, ensuring each repository is imported only once across all runs even if the original Todoist task is later edited or deleted; already-active and already-completed `read-later` tasks are also checked to prevent duplicates within a run; repositories that appear in multiple trending periods within the same run are also de-duplicated
 - Workflow: `create-todoist-project.yml` — now automatically triggers after the `Sync GitHub Trending to Todoist` workflow completes successfully, creating the `github-trending-repos-daily-review` review project as a follow-on step
 - Template: `github-trending-tracker` — marked as deprecated in `meta.yml` with a planned sunset date and replacement guidance
 - Script: `sync_project_options.py` — now excludes CSV templates marked `deprecated: true` from workflow template dropdown auto-generation
