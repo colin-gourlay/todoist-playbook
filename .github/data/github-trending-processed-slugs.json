@@ -7,6 +7,13 @@
       "first_seen": "2026-04-13T06:17:44.424742+00:00",
       "last_seen": "2026-04-13T06:17:44.424742+00:00"
     },
+    "addyosmani/agent-skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-16",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-16T06:12:24.451211+00:00",
+      "last_seen": "2026-04-16T06:12:24.451211+00:00"
+    },
     "affaan-m/everything-claude-code": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-13",
@@ -56,6 +63,13 @@
       "first_seen": "2026-04-14T06:10:34.353844+00:00",
       "last_seen": "2026-04-14T06:10:34.353844+00:00"
     },
+    "donchitos/claude-code-game-studios": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-16",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-16T06:12:24.451211+00:00",
+      "last_seen": "2026-04-16T06:12:24.451211+00:00"
+    },
     "forrestchang/andrej-karpathy-skills": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-13",
@@ -83,6 +97,13 @@
       "first_section": "Trending (This Week)",
       "first_seen": "2026-04-13T06:17:44.424742+00:00",
       "last_seen": "2026-04-13T06:17:44.424742+00:00"
+    },
+    "google/magika": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-16",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-16T06:12:24.451211+00:00",
+      "last_seen": "2026-04-16T06:12:24.451211+00:00"
     },
     "gsd-build/get-shit-done": {
       "first_languages": [],
@@ -132,6 +153,20 @@
       "first_section": "Trending (This Month)",
       "first_seen": "2026-04-14T11:03:55.093918+00:00",
       "last_seen": "2026-04-14T11:03:55.093918+00:00"
+    },
+    "lordog/dive-into-llms": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-16",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-16T06:12:24.451211+00:00",
+      "last_seen": "2026-04-16T06:12:24.451211+00:00"
+    },
+    "lsdefine/genericagent": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-16",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-16T06:12:24.451211+00:00",
+      "last_seen": "2026-04-16T06:12:24.451211+00:00"
     },
     "mattpocock/skills": {
       "first_languages": [],
@@ -217,6 +252,13 @@
       "first_seen": "2026-04-14T11:03:55.093918+00:00",
       "last_seen": "2026-04-14T11:03:55.093918+00:00"
     },
+    "public-apis/public-apis": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-16",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-16T06:12:24.451211+00:00",
+      "last_seen": "2026-04-16T06:12:24.451211+00:00"
+    },
     "rustfs/rustfs": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-13",
@@ -287,6 +329,13 @@
       "first_seen": "2026-04-13T06:17:44.424742+00:00",
       "last_seen": "2026-04-13T06:17:44.424742+00:00"
     },
+    "vercel-labs/open-agents": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-16",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-16T06:12:24.451211+00:00",
+      "last_seen": "2026-04-16T06:12:24.451211+00:00"
+    },
     "virattt/ai-hedge-fund": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-13",
@@ -295,6 +344,6 @@
       "last_seen": "2026-04-13T06:17:44.424742+00:00"
     }
   },
-  "updated_at": "2026-04-14T11:04:10.980561+00:00",
+  "updated_at": "2026-04-16T06:12:36.939837+00:00",
   "version": 1
 }
