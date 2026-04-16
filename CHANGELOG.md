@@ -4,6 +4,7 @@
 
 ### Added
 
+- Dependabot: **Automated dependency management** — `.github/dependabot.yml` configured to monitor GitHub Actions on a weekly schedule; pull requests are grouped, labelled with `dependencies`, and auto-merged for patch, minor, and security updates via `dependabot-auto-merge.yml`
 - Workflow: **GitHub Trending to Todoist** — daily automation that fetches trending GitHub repositories (today, this week, this month) and pushes them into a Todoist project as `read-later` tasks, grouped by period; supports optional language filtering and language-aware project naming
 - Template: **GitHub Trending Tracker** — weekly review system for discovering, evaluating, and acting on trending GitHub repositories — using stars as signal and structured habits to convert insights into value
 - Template: **Artist Interview Invite Workflow** — checklist for inviting an artist or band for a live studio interview and managing follow-through

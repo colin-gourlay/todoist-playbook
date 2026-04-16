@@ -97,6 +97,7 @@ todoist-playbook/
   │   ├── sync-todoist-projects.yml
   │   ├── triage-new-issues.yml
   │   └── validate-templates.yml
+  ├── dependabot.yml
   ├── REUSABLE_WORKFLOWS.md
   ├── ISSUE_TEMPLATE/
   └── assets/
