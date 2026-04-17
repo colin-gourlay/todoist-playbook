@@ -35,6 +35,13 @@
       "first_seen": "2026-04-14T06:10:34.353844+00:00",
       "last_seen": "2026-04-14T06:10:34.353844+00:00"
     },
+    "basedhardware/omi": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-17",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-17T06:12:39.304648+00:00",
+      "last_seen": "2026-04-17T06:12:39.304648+00:00"
+    },
     "bytedance/deer-flow": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-13",
@@ -69,6 +76,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-16T06:12:24.451211+00:00",
       "last_seen": "2026-04-16T06:12:24.451211+00:00"
+    },
+    "evomap/evolver": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-17",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-17T06:12:39.304648+00:00",
+      "last_seen": "2026-04-17T06:12:39.304648+00:00"
     },
     "forrestchang/andrej-karpathy-skills": {
       "first_languages": [],
@@ -238,12 +252,33 @@
       "first_seen": "2026-04-13T06:17:44.424742+00:00",
       "last_seen": "2026-04-13T06:17:44.424742+00:00"
     },
+    "openai/openai-agents-python": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-17",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-17T06:12:39.304648+00:00",
+      "last_seen": "2026-04-17T06:12:39.304648+00:00"
+    },
+    "openai/parameter-golf": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-17",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-17T06:12:39.304648+00:00",
+      "last_seen": "2026-04-17T06:12:39.304648+00:00"
+    },
     "openbmb/voxcpm": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-13",
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-13T06:17:44.424742+00:00",
       "last_seen": "2026-04-13T06:17:44.424742+00:00"
+    },
+    "opendataloader-project/opendataloader-pdf": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-17",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-17T06:12:39.304648+00:00",
+      "last_seen": "2026-04-17T06:12:39.304648+00:00"
     },
     "pascalorg/editor": {
       "first_languages": [],
@@ -258,6 +293,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-16T06:12:24.451211+00:00",
       "last_seen": "2026-04-16T06:12:24.451211+00:00"
+    },
+    "rowboatlabs/rowboat": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-17",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-17T06:12:39.304648+00:00",
+      "last_seen": "2026-04-17T06:12:39.304648+00:00"
     },
     "rustfs/rustfs": {
       "first_languages": [],
@@ -294,12 +336,26 @@
       "first_seen": "2026-04-13T06:17:44.424742+00:00",
       "last_seen": "2026-04-13T06:17:44.424742+00:00"
     },
+    "simoneavogadro/android-reverse-engineering-skill": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-17",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-17T06:12:39.304648+00:00",
+      "last_seen": "2026-04-17T06:12:39.304648+00:00"
+    },
     "snarktank/ralph": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-13",
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-13T06:17:44.424742+00:00",
       "last_seen": "2026-04-13T06:17:44.424742+00:00"
+    },
+    "steipete/wacli": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-17",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-17T06:12:39.304648+00:00",
+      "last_seen": "2026-04-17T06:12:39.304648+00:00"
     },
     "tapxworld/chinatextbook": {
       "first_languages": [],
@@ -329,6 +385,13 @@
       "first_seen": "2026-04-13T06:17:44.424742+00:00",
       "last_seen": "2026-04-13T06:17:44.424742+00:00"
     },
+    "topoteretes/cognee": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-17",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-17T06:12:39.304648+00:00",
+      "last_seen": "2026-04-17T06:12:39.304648+00:00"
+    },
     "vercel-labs/open-agents": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-16",
@@ -342,8 +405,15 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-13T06:17:44.424742+00:00",
       "last_seen": "2026-04-13T06:17:44.424742+00:00"
+    },
+    "z-lab/dflash": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-17",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-17T06:12:39.304648+00:00",
+      "last_seen": "2026-04-17T06:12:39.304648+00:00"
     }
   },
-  "updated_at": "2026-04-16T06:12:36.939837+00:00",
+  "updated_at": "2026-04-17T06:12:55.217672+00:00",
   "version": 1
 }
