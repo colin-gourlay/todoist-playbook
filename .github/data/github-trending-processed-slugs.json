@@ -56,6 +56,13 @@
       "first_seen": "2026-04-14T11:03:55.093918+00:00",
       "last_seen": "2026-04-14T11:03:55.093918+00:00"
     },
+    "chromedevtools/chrome-devtools-mcp": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-18",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-18T05:59:48.670747+00:00",
+      "last_seen": "2026-04-18T05:59:48.670747+00:00"
+    },
     "coleam00/archon": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-13",
@@ -182,6 +189,13 @@
       "first_seen": "2026-04-16T06:12:24.451211+00:00",
       "last_seen": "2026-04-16T06:12:24.451211+00:00"
     },
+    "lukilabs/craft-agents-oss": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-18",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-18T05:59:48.670747+00:00",
+      "last_seen": "2026-04-18T05:59:48.670747+00:00"
+    },
     "mattpocock/skills": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-13",
@@ -286,6 +300,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-14T11:03:55.093918+00:00",
       "last_seen": "2026-04-14T11:03:55.093918+00:00"
+    },
+    "pingdotgg/t3code": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-18",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-18T05:59:48.670747+00:00",
+      "last_seen": "2026-04-18T05:59:48.670747+00:00"
     },
     "public-apis/public-apis": {
       "first_languages": [],
@@ -392,6 +413,13 @@
       "first_seen": "2026-04-17T06:12:39.304648+00:00",
       "last_seen": "2026-04-17T06:12:39.304648+00:00"
     },
+    "tracer-cloud/opensre": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-18",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-18T05:59:48.670747+00:00",
+      "last_seen": "2026-04-18T05:59:48.670747+00:00"
+    },
     "vercel-labs/open-agents": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-16",
@@ -414,6 +442,6 @@
       "last_seen": "2026-04-17T06:12:39.304648+00:00"
     }
   },
-  "updated_at": "2026-04-17T06:12:55.217672+00:00",
+  "updated_at": "2026-04-18T05:59:59.983513+00:00",
   "version": 1
 }
