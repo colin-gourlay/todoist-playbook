@@ -244,12 +244,12 @@ For each prompt-templates/{slug}/:
 
 ### Bump Template Versions
 
-Runs on every pull request targeting `main`:
+Runs when a pull request targeting `main` is merged:
 
 - Detects which template directories have changed (excluding `meta.yml` changes)
 - For each changed template, reads the current `version` in `meta.yml`
 - Skips templates at `0.0.0` (unreviewed signal preserved)
-- Increments the patch component (`x.y.z → x.y.(z+1)`) and commits back to the PR branch
+- Increments the patch component (`x.y.z → x.y.(z+1)`) and commits directly to `main`
 
 ### Documentation Sync
 
@@ -337,4 +337,4 @@ Versions follow [Semantic Versioning](https://semver.org/):
 | `0.1.0` | Reviewed — manually verified and considered stable |
 | `0.1.x` | Iterating — reviewed template receiving incremental improvements |
 
-The `bump-template-version` workflow automates patch increments on every PR for reviewed templates.
+The `bump-template-version` workflow automates patch increments when reviewed-template changes are merged into `main`.

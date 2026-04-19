@@ -162,9 +162,11 @@ tags:
 version: 1.0.0
 templates:
   - template-slug
+optional_templates:
+  - optional-template-slug
 ```
 
-Bundle `templates:` entries should reference existing template slugs.
+Bundle `templates:` entries should reference existing template slugs. If present, `optional_templates:` entries should also reference existing template slugs.
 
 ---
 
@@ -217,7 +219,7 @@ To validate locally, copy the shell commands from the `run:` blocks in `.github/
 - `sync-template-review-issues.yml` opens or closes review issues based on template version state
 - `sync-github-trending-to-todoist.yml` fetches GitHub Trending repositories and pushes them into Todoist as `read-later` tasks
 - `sync-todoist-projects.yml` refreshes the `parent_project` dropdown in `create-todoist-project.yml`
-- `bump-template-versions.yml` bumps reviewed template and prompt-template patch versions on pull requests
+- `bump-template-version.yml` bumps reviewed template and prompt-template patch versions when pull requests into `main` are merged
 - `triage-new-issues.yml` labels new issues and adds them to the Todoist Playbook Roadmap project backlog
 - `dependabot-auto-merge.yml` approves eligible Dependabot pull requests and enables auto-merge
 - `copilot-setup-steps.yml` verifies the repository Python automation scripts still compile when the workflow file changes

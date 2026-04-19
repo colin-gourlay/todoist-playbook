@@ -1,6 +1,6 @@
 # Setup
 
-This page covers everything you need to configure the Todoist Playbook and start creating Todoist projects from templates.
+This page covers what you need to configure the Todoist Playbook and start creating Todoist projects from templates.
 
 ---
 
@@ -62,13 +62,13 @@ The Playbook includes a template gallery that deploys to GitHub Pages automatica
 
 1. Go to **Settings → Pages**
 2. Under **Source**, select **GitHub Actions**
-3. Push any change to `main` (or manually trigger the **Deploy Template Gallery** workflow) to build and deploy the gallery
+3. Push any change to `main` (or manually trigger the **Deploy Template Gallery to GitHub Pages** workflow) to build and deploy the gallery
 
 ---
 
 ## 5. Create Your First Project
 
-### Using the Automated Workflow (recommended)
+### Using the Automated Workflow (Recommended)
 
 1. Go to the **Actions** tab
 2. Select **Create Todoist Project from Template**
@@ -81,7 +81,7 @@ The Playbook includes a template gallery that deploys to GitHub Pages automatica
    - **Parent project**: optional — nest this project under an existing Todoist project
 5. Click **Run workflow**
 
-Within a few seconds the project will appear in Todoist.
+Within a few seconds, the project appears in Todoist.
 
 ### Using the Manual Import
 
@@ -98,7 +98,7 @@ Within a few seconds the project will appear in Todoist.
 
 ## 6. Sync Your Todoist Project List (optional)
 
-The **Create Todoist Project from Template** workflow supports nesting new projects under existing Todoist projects. The parent project list is kept up to date by a sync workflow.
+The **Create Todoist Project from Template** workflow supports nesting new projects under existing Todoist projects. A sync workflow keeps the parent project list up to date.
 
 To refresh the parent project dropdown:
 
@@ -130,7 +130,7 @@ Prompt templates use GitHub Copilot to generate enriched task content before cre
    - **Project name**: optional custom project name
 4. Click **Run workflow**
 
-Copilot generates structured task content from the prompt template and the project is created in Todoist automatically.
+Copilot generates structured task content from the prompt template, and the project is then created in Todoist automatically.
 
 ---
 

@@ -1,6 +1,6 @@
 # Repo Ecosystem Watch
 
-This page persists the curated shortlist of repositories to monitor around the Todoist and productivity ecosystem. It is the reference source for the recurring [repo-ecosystem-watch](../csv-templates/repo-ecosystem-watch/) template.
+This page maintains the curated shortlist of repositories to monitor around the Todoist and productivity ecosystem. It is the reference source for the recurring [repo-ecosystem-watch](../csv-templates/repo-ecosystem-watch/) template.
 
 The process is intentionally manual: use this page to review, re-rank, and decide whether each repository should be `Watch`, `Star`, or `reference-only`.
 
@@ -9,7 +9,7 @@ The process is intentionally manual: use this page to review, re-rank, and decid
 ## Review Rhythm
 
 - Cadence: every 4 weeks
-- Goal: keep the shortlist relevant, high-signal, and low-noise
+- Goal: keep the shortlist relevant, high signal, and low noise
 - Output: updated action state per repo plus follow-up tasks for reusable ideas
 
 ---

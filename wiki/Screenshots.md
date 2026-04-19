@@ -12,7 +12,7 @@ This page provides a visual walkthrough of the key workflows and components in t
 
 ## GitHub Actions — Create Todoist Project from Template
 
-The primary entry point for the automated workflow. Navigate to **Actions → Create Todoist Project from Template → Run workflow** to see the input form.
+This is the primary entry point for the automated workflow. Navigate to **Actions → Create Todoist Project from Template → Run workflow** to open the input form.
 
 ### Workflow inputs
 
@@ -29,7 +29,7 @@ The `workflow_dispatch` form presents the following inputs:
 
 ![GitHub Actions log output](../.github/assets/screenshots/github-actions-log-output.svg)
 
-After clicking **Run workflow**, the Actions log shows live creation progress — each section and task as it is added to Todoist.
+After you click **Run workflow**, the Actions log shows live creation progress, including each section and task as it is added to Todoist.
 
 ---
 
@@ -92,7 +92,7 @@ The `index.md` file is the human-readable catalogue of all available templates, 
 
 ## Template Gallery (GitHub Pages)
 
-The **Deploy Template Gallery** workflow builds a searchable static HTML gallery from all templates and deploys it to GitHub Pages. The gallery presents each template with:
+The **Deploy Template Gallery to GitHub Pages** workflow builds a searchable static HTML gallery from all templates and deploys it to GitHub Pages. The gallery presents each template with:
 
 - Name and description
 - Category and tags
@@ -142,7 +142,7 @@ task,Review last week's completed tasks,2,1,,,,,
 
 ## Bump Template Versions
 
-When a pull request modifies a reviewed template (version ≥ `0.1.0`), the **Bump template versions** workflow automatically increments the patch version and commits back to the PR branch:
+When a pull request that modifies a reviewed template (version ≥ `0.1.0`) is merged into `main`, the **Bump template versions** workflow automatically increments the patch version and commits directly to `main`:
 
 ```
 Detected changes in: csv-templates/weekly-review

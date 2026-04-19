@@ -39,7 +39,7 @@ The Playbook is built in four layers:
 | **Content assets** | `csv-templates/`, `prompt-templates/`, `bundles/` — the plain-text source of truth |
 | **Automation** | `.github/workflows/` — GitHub Actions for project creation, validation, sync, and publishing |
 | **Execution** | `.github/scripts/` — Python entry points called by the workflows |
-| **Discovery & publishing** | `index.md`, `wiki/`, `docs/` — catalogue, documentation, and the GitHub Pages gallery |
+| **Discovery & publishing** | `index.md`, `wiki/` — catalogue and documentation; `docs/` is generated during gallery deployment to GitHub Pages |
 
 **Flow:** author a template → push to `main` → CI validates structure → workflows create Todoist projects on demand or on schedule → gallery auto-deploys to GitHub Pages.
 
@@ -59,7 +59,7 @@ For the full architecture diagram and component detail, see [wiki/Architecture.m
 
 **Optional extras:**
 
-- **GitHub Pages gallery** — Settings → Pages → Source: GitHub Actions, then trigger the **Deploy Template Gallery** workflow
+- **GitHub Pages gallery** — Settings → Pages → Source: GitHub Actions, then trigger the **Deploy Template Gallery to GitHub Pages** workflow
 - **AI prompt templates** — require GitHub Copilot to be enabled on the repository (Team, Enterprise, or individual Copilot plan)
 - **Parent project nesting** — run the **Sync Todoist Project List** workflow to populate the parent project dropdown
 
@@ -356,12 +356,12 @@ Run the workflow manually from **Actions → Sync Template Review Issues** to ba
 
 ### Auto-bump behaviour
 
-The **Bump template versions** workflow runs on every pull request targeting `main`:
+The **Bump template versions** workflow runs when a pull request targeting `main` is merged:
 
 - It detects which template directories have changed (based on non-`meta.yml` file changes).
 - For each changed template it reads the current `version` in `meta.yml`.
 - If the version is `0.0.0` it is left untouched (preserving the "unreviewed" signal).
-- Otherwise it increments the **patch** component and commits the change back to the PR branch.
+- Otherwise it increments the **patch** component and commits the change directly to `main`.
 - The workflow is idempotent: re-running it on a PR that has already been bumped will not produce an additional bump.
 
 ---

@@ -2,7 +2,7 @@
 
 ## The Problem
 
-Every time you start a new project — whether it is a sprint, a job change, a code review, or a quarterly house-admin cycle — you face the same invisible tax: rebuilding the same task structure from memory.
+Every time you start a new project, whether it is a sprint, a job change, a code review, or a quarterly house-admin cycle, you face the same invisible tax: rebuilding the same task structure from memory.
 
 This overhead is small per instance but accumulates into thousands of minutes of lost focus every year. It also introduces inconsistency: the checklist you build under pressure is not as thorough as the one you would build with time to think.
 
@@ -43,7 +43,7 @@ It provides:
 
 ## Design Principles
 
-The Playbook is built on a few key principles:
+The Playbook is built on a few core principles:
 
 - **Templates encode decisions, not just tasks.** A well-authored template captures the thinking behind a workflow, not just a list of things to do.
 - **Automation removes the last mile of friction.** Even a CSV import is one step too many. The GitHub Actions workflow removes it entirely.
