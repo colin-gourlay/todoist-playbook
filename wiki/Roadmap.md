@@ -14,7 +14,7 @@ The Playbook is a functioning system with:
 - ✅ GitHub Actions workflows for one-click Todoist project creation
 - ✅ MCP-based Todoist project creation (via Todoist MCP server)
 - ✅ Automated CI validation on every push and pull request
-- ✅ Automated template version bumping on every PR
+- ✅ Automated template version bumping on merged PRs to `main`
 - ✅ Daily documentation sync powered by GitHub Copilot
 - ✅ Template gallery deployed to GitHub Pages
 - ✅ Dependabot monitoring for GitHub Actions dependencies

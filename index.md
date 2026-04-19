@@ -38,7 +38,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 | -------- | ------------- | ----------- |
 | [New Job](bundles/new-job/) | Hit the ground running at a new job — onboarding, weekly close and planning rituals, and 1:1 meetings | onboarding-checklist, weekly-close, weekly-plan, one-on-one |
 | [Radio Show Week](bundles/radio-show-week/) | Full radio show week — prep, playlists, comms, upload, and socials | radio-show-system |
-| [Radio Show Week Kit](bundles/radio-show-week-kit/) | Complete system for producing a weekly radio show — core workflow, promotion, post production, guest features, and interview outreach | radio-show-core, radio-show-promotion, radio-show-post-production, radio-show-guest-feature, artist-interview-invite-workflow |
+| [Radio Show Week Kit](bundles/radio-show-week-kit/) | Complete system for producing a weekly radio show — core workflow, promotion, and post production, with optional guest features and interview outreach | radio-show-core, radio-show-promotion, radio-show-post-production (+ optional: radio-show-guest-feature, artist-interview-invite-workflow) |
 | [House Admin](bundles/house-admin/) | Annual household administration — bills, renewals, MOT, and property upkeep | house-admin |
 
 ---
@@ -184,7 +184,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 | [Deploy Template Gallery to GitHub Pages](.github/workflows/deploy-gallery.yml) | Deploys the generated gallery to GitHub Pages after validation succeeds, or on manual request | `workflow_run` + `workflow_dispatch` |
 | [Publish Release](.github/workflows/release.yml) | Publishes release assets after validation succeeds on `main`, or on manual request | `workflow_run` + `workflow_dispatch` |
 | [Validate templates](.github/workflows/validate-templates.yml) | Validates CSV templates, prompt templates, and related release-generation inputs via the reusable validator | Push to `main` + pull request + merge queue + `workflow_dispatch` |
-| [Bump template versions](.github/workflows/bump-template-version.yml) | Applies patch bumps to reviewed templates and prompt templates changed in pull requests | Pull request targeting `main` |
+| [Bump template versions](.github/workflows/bump-template-version.yml) | Applies patch bumps to reviewed templates and prompt templates changed in pull requests | Merged pull request targeting `main` (`pull_request` closed) |
 | [Triage New Issues](.github/workflows/triage-new-issues.yml) | Labels newly opened issues and adds them to the Todoist Playbook Roadmap project backlog | Issue opened |
 | [Dependabot auto-merge](.github/workflows/dependabot-auto-merge.yml) | Approves Dependabot PRs and enables squash auto-merge for eligible patch, minor, and security updates | `pull_request_target` on `main` |
 | [Copilot Setup Steps](.github/workflows/copilot-setup-steps.yml) | Verifies the repository Python automation scripts still compile when the workflow file changes | Push or pull request affecting the workflow file + `workflow_dispatch` |

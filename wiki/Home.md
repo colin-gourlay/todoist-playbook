@@ -1,6 +1,6 @@
 # Todoist Playbook — Wiki
 
-Welcome to the **Todoist Playbook** project wiki. This is the central reference for understanding what the project is, how it works, and how to get the most out of it.
+Welcome to the **Todoist Playbook** wiki. This is the central reference for what the project is, how it works, and how to get the most from it.
 
 ---
 
@@ -35,7 +35,7 @@ That is all it takes to turn a structured task template into a live Todoist proj
 
 The Todoist Playbook is a curated library of structured task templates, automation workflows, and AI prompt templates that make it easy to start any recurring project in [Todoist](https://www.todoist.com/) in seconds.
 
-Instead of rebuilding the same project structure from scratch each time you start a sprint, begin a new job, or kick off a house-admin cycle, the Playbook gives you a ready-made, proven skeleton — and a one-click GitHub Actions workflow to create it directly in your Todoist account.
+Instead of rebuilding the same project structure from scratch each time you start a sprint, begin a new job, or kick off a house-admin cycle, the Playbook gives you a ready-made structure and a one-click GitHub Actions workflow to create it directly in your Todoist account.
 
 ---
 

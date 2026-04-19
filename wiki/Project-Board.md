@@ -1,12 +1,12 @@
 # Project Board
 
-The [GitHub Project](https://github.com/users/colin-gourlay/projects/3) tracks all roadmap work for this repository. This page documents the configured views, custom fields, and working conventions.
+The [GitHub Project](https://github.com/users/colin-gourlay/projects/3) tracks roadmap work for this repository. This page documents the configured views, custom fields, and working conventions.
 
 ---
 
 ## Views
 
-Three saved views are set up on the board. Each serves a distinct purpose.
+Three saved views are configured on the board, each with a distinct purpose.
 
 ### Board by Status
 
@@ -76,7 +76,7 @@ When a discussion (in an issue, PR comment, or elsewhere) results in an agreed n
 3. Assign a **Target Month** if there is any urgency or expectation
 4. Promote the draft to an issue once it is scoped and ready to be worked on
 
-This keeps speculative ideas out of the issue tracker while ensuring nothing agreed is lost.
+This keeps speculative ideas out of the issue tracker while ensuring agreed next steps are not lost.
 
 ---
 
