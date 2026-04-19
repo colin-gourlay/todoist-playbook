@@ -13,6 +13,13 @@ TODOIST_API_BASE = "https://api.todoist.com/api/v1"
 # CSV priority 1 = urgent (p1) → API priority 4; CSV 4 = normal → API 1
 _PRIORITY_MAP = {"1": 4, "2": 3, "3": 2, "4": 1}
 
+
+def _extract_due_fields(row):
+    """Return (due_string, due_lang) from canonical or legacy CSV due columns."""
+    due_string = (row.get("DUE_DATE", "") or row.get("DATE", "")).strip()
+    due_lang = (row.get("DUE_DATE_LANG", "") or row.get("DATE_LANG", "")).strip()
+    return due_string, due_lang
+
 def _load_supported_project_colors():
     """Load supported Todoist color names from the shared project_colors.txt file."""
     colors_file = os.path.join(os.path.dirname(__file__), "project_colors.txt")
@@ -229,6 +236,11 @@ def main():
                     task_data["description"] = description
                 if parent_id:
                     task_data["parent_id"] = parent_id
+                due_string, due_lang = _extract_due_fields(row)
+                if due_string:
+                    task_data["due_string"] = due_string
+                    if due_lang:
+                        task_data["due_lang"] = due_lang
 
                 task = api_post("tasks", token, task_data)
                 indent_stack.append((indent, task["id"]))

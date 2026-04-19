@@ -32,6 +32,13 @@ MCP_PROTOCOL_VERSION = "2024-11-05"
 _PRIORITY_MAP = {"1": 4, "2": 3, "3": 2, "4": 1}
 
 
+def _extract_due_fields(row: Dict[str, str]) -> Tuple[str, str]:
+    """Return (due_string, due_lang) from canonical or legacy CSV due columns."""
+    due_string = (row.get("DUE_DATE", "") or row.get("DATE", "")).strip()
+    due_lang = (row.get("DUE_DATE_LANG", "") or row.get("DATE_LANG", "")).strip()
+    return due_string, due_lang
+
+
 def _load_supported_project_colors():
     """Load supported Todoist color names from the shared project_colors.txt file."""
     colors_file = os.path.join(os.path.dirname(__file__), "project_colors.txt")
@@ -355,6 +362,11 @@ def main() -> None:
                     task_args["section_id"] = current_section_id
                 if parent_id:
                     task_args["parent_id"] = parent_id
+                due_string, due_lang = _extract_due_fields(row)
+                if due_string:
+                    task_args["due_string"] = due_string
+                    if due_lang:
+                        task_args["due_lang"] = due_lang
 
                 task_result = client.call_tool(tool_create_task, task_args)
                 task_id = _extract_id(task_result, "task")
