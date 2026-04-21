@@ -28,6 +28,13 @@
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
     },
+    "chrislgarry/apollo-11": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-21",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-21T06:12:05.900402+00:00",
+      "last_seen": "2026-04-21T06:12:05.900402+00:00"
+    },
     "coleam00/archon": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-20",
@@ -41,6 +48,13 @@
       "first_section": "Trending (This Month)",
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
+    },
+    "deepseek-ai/deepgemm": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-21T06:12:05.900402+00:00",
+      "last_seen": "2026-04-21T06:12:05.900402+00:00"
     },
     "donchitos/claude-code-game-studios": {
       "first_languages": [],
@@ -91,6 +105,13 @@
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
     },
+    "hacksider/deep-live-cam": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-21",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-21T06:12:05.900402+00:00",
+      "last_seen": "2026-04-21T06:12:05.900402+00:00"
+    },
     "hkuds/deeptutor": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-20",
@@ -104,6 +125,13 @@
       "first_section": "Trending (This Week)",
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
+    },
+    "koala73/worldmonitor": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-21T06:12:05.900402+00:00",
+      "last_seen": "2026-04-21T06:12:05.900402+00:00"
     },
     "lordog/dive-into-llms": {
       "first_languages": [],
@@ -189,6 +217,20 @@
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
     },
+    "pascalorg/editor": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-21",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-21T06:12:05.900402+00:00",
+      "last_seen": "2026-04-21T06:12:05.900402+00:00"
+    },
+    "pi-hole/pi-hole": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-21T06:12:05.900402+00:00",
+      "last_seen": "2026-04-21T06:12:05.900402+00:00"
+    },
     "pingdotgg/t3code": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-20",
@@ -251,8 +293,22 @@
       "first_section": "Trending (This Week)",
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
+    },
+    "warproxxx/poly_data": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-21",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-21T06:12:05.900402+00:00",
+      "last_seen": "2026-04-21T06:12:05.900402+00:00"
+    },
+    "xtls/xray-core": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-21T06:12:05.900402+00:00",
+      "last_seen": "2026-04-21T06:12:05.900402+00:00"
     }
   },
-  "updated_at": "2026-04-20T06:18:19.262406+00:00",
+  "updated_at": "2026-04-21T06:12:21.518785+00:00",
   "version": 1
 }
