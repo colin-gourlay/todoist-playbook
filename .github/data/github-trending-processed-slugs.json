@@ -49,6 +49,13 @@
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
     },
+    "dayanch96/ytlite": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-22",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-22T06:10:51.256150+00:00",
+      "last_seen": "2026-04-22T06:10:51.256150+00:00"
+    },
     "deepseek-ai/deepgemm": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-21",
@@ -119,6 +126,13 @@
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
     },
+    "hkuds/rag-anything": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-22",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-22T06:10:51.256150+00:00",
+      "last_seen": "2026-04-22T06:10:51.256150+00:00"
+    },
     "jamiepine/voicebox": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-20",
@@ -146,6 +160,13 @@
       "first_section": "Trending (This Week)",
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
+    },
+    "microsoft/ai-agents-for-beginners": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-22",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-22T06:10:51.256150+00:00",
+      "last_seen": "2026-04-22T06:10:51.256150+00:00"
     },
     "microsoft/markitdown": {
       "first_languages": [],
@@ -245,6 +266,13 @@
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
     },
+    "sansan0/trendradar": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-22",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-22T06:10:51.256150+00:00",
+      "last_seen": "2026-04-22T06:10:51.256150+00:00"
+    },
     "shiyu-coder/kronos": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-20",
@@ -280,6 +308,13 @@
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
     },
+    "tracer-cloud/opensre": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-22",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-22T06:10:51.256150+00:00",
+      "last_seen": "2026-04-22T06:10:51.256150+00:00"
+    },
     "tractorjuice/arc-kit": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-20",
@@ -294,6 +329,13 @@
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
     },
+    "voltagent/awesome-agent-skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-22",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-22T06:10:51.256150+00:00",
+      "last_seen": "2026-04-22T06:10:51.256150+00:00"
+    },
     "warproxxx/poly_data": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-21",
@@ -307,8 +349,22 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-21T06:12:05.900402+00:00",
       "last_seen": "2026-04-21T06:12:05.900402+00:00"
+    },
+    "z-lab/dflash": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-22",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-22T06:10:51.256150+00:00",
+      "last_seen": "2026-04-22T06:10:51.256150+00:00"
+    },
+    "zilliztech/claude-context": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-22",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-22T06:10:51.256150+00:00",
+      "last_seen": "2026-04-22T06:10:51.256150+00:00"
     }
   },
-  "updated_at": "2026-04-21T06:12:21.518785+00:00",
+  "updated_at": "2026-04-22T06:11:09.315025+00:00",
   "version": 1
 }
