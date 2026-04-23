@@ -14,6 +14,13 @@
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
     },
+    "aidc-ai/pixelle-video": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-23",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-23T06:14:47.752425+00:00",
+      "last_seen": "2026-04-23T06:14:47.752425+00:00"
+    },
     "basedhardware/omi": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-20",
@@ -140,12 +147,26 @@
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
     },
+    "keygraphhq/shannon": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-23",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-23T06:14:47.752425+00:00",
+      "last_seen": "2026-04-23T06:14:47.752425+00:00"
+    },
     "koala73/worldmonitor": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-21",
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-21T06:12:05.900402+00:00",
       "last_seen": "2026-04-21T06:12:05.900402+00:00"
+    },
+    "langfuse/langfuse": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-23",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-23T06:14:47.752425+00:00",
+      "last_seen": "2026-04-23T06:14:47.752425+00:00"
     },
     "lordog/dive-into-llms": {
       "first_languages": [],
@@ -216,6 +237,13 @@
       "first_section": "Trending (This Month)",
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
+    },
+    "open-metadata/openmetadata": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-23",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-23T06:14:47.752425+00:00",
+      "last_seen": "2026-04-23T06:14:47.752425+00:00"
     },
     "openai/openai-agents-python": {
       "first_languages": [],
@@ -294,6 +322,13 @@
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
     },
+    "steipete/wacli": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-23",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-23T06:14:47.752425+00:00",
+      "last_seen": "2026-04-23T06:14:47.752425+00:00"
+    },
     "thedotmack/claude-mem": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-20",
@@ -321,6 +356,20 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
+    },
+    "vercel-labs/open-agents": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-23",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-23T06:14:47.752425+00:00",
+      "last_seen": "2026-04-23T06:14:47.752425+00:00"
+    },
+    "vercel-labs/skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-23",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-23T06:14:47.752425+00:00",
+      "last_seen": "2026-04-23T06:14:47.752425+00:00"
     },
     "virattt/ai-hedge-fund": {
       "first_languages": [],
@@ -357,6 +406,13 @@
       "first_seen": "2026-04-22T06:10:51.256150+00:00",
       "last_seen": "2026-04-22T06:10:51.256150+00:00"
     },
+    "z4nzu/hackingtool": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-23",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-23T06:14:47.752425+00:00",
+      "last_seen": "2026-04-23T06:14:47.752425+00:00"
+    },
     "zilliztech/claude-context": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-22",
@@ -365,6 +421,6 @@
       "last_seen": "2026-04-22T06:10:51.256150+00:00"
     }
   },
-  "updated_at": "2026-04-22T06:11:09.315025+00:00",
+  "updated_at": "2026-04-23T06:15:08.997650+00:00",
   "version": 1
 }
