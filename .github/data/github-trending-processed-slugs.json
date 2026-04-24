@@ -21,6 +21,20 @@
       "first_seen": "2026-04-23T06:14:47.752425+00:00",
       "last_seen": "2026-04-23T06:14:47.752425+00:00"
     },
+    "alishahryar1/free-claude-code": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-24",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-24T06:16:21.771238+00:00",
+      "last_seen": "2026-04-24T06:16:21.771238+00:00"
+    },
+    "anil-matcha/open-generative-ai": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-24",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-24T06:16:21.771238+00:00",
+      "last_seen": "2026-04-24T06:16:21.771238+00:00"
+    },
     "basedhardware/omi": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-20",
@@ -35,6 +49,13 @@
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
     },
+    "chiphuyen/aie-book": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-24",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-24T06:16:21.771238+00:00",
+      "last_seen": "2026-04-24T06:16:21.771238+00:00"
+    },
     "chrislgarry/apollo-11": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-21",
@@ -42,12 +63,26 @@
       "first_seen": "2026-04-21T06:12:05.900402+00:00",
       "last_seen": "2026-04-21T06:12:05.900402+00:00"
     },
+    "cline/cline": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-24",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-24T06:16:21.771238+00:00",
+      "last_seen": "2026-04-24T06:16:21.771238+00:00"
+    },
     "coleam00/archon": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-20",
       "first_section": "Trending (This Month)",
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
+    },
+    "coreyhaines31/marketingskills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-24",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-24T06:16:21.771238+00:00",
+      "last_seen": "2026-04-24T06:16:21.771238+00:00"
     },
     "crosstalk-solutions/project-nomad": {
       "first_languages": [],
@@ -119,6 +154,13 @@
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
     },
+    "google-research/timesfm": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-24",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-24T06:16:21.771238+00:00",
+      "last_seen": "2026-04-24T06:16:21.771238+00:00"
+    },
     "hacksider/deep-live-cam": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-21",
@@ -139,6 +181,20 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-22T06:10:51.256150+00:00",
       "last_seen": "2026-04-22T06:10:51.256150+00:00"
+    },
+    "huggingface/ml-intern": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-24",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-24T06:16:21.771238+00:00",
+      "last_seen": "2026-04-24T06:16:21.771238+00:00"
+    },
+    "hugohe3/ppt-master": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-24",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-24T06:16:21.771238+00:00",
+      "last_seen": "2026-04-24T06:16:21.771238+00:00"
     },
     "jamiepine/voicebox": {
       "first_languages": [],
@@ -196,12 +252,26 @@
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
     },
+    "microsoft/onnxruntime": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-24",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-24T06:16:21.771238+00:00",
+      "last_seen": "2026-04-24T06:16:21.771238+00:00"
+    },
     "microsoft/vibevoice": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-20",
       "first_section": "Trending (This Month)",
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
+    },
+    "mksglu/context-mode": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-24",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-24T06:16:21.771238+00:00",
+      "last_seen": "2026-04-24T06:16:21.771238+00:00"
     },
     "multica-ai/multica": {
       "first_languages": [],
@@ -286,6 +356,20 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
+    },
+    "powershell/powershell": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-24",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-24T06:16:21.771238+00:00",
+      "last_seen": "2026-04-24T06:16:21.771238+00:00"
+    },
+    "rtk-ai/rtk": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-24",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-24T06:16:21.771238+00:00",
+      "last_seen": "2026-04-24T06:16:21.771238+00:00"
     },
     "ruvnet/ruview": {
       "first_languages": [],
@@ -421,6 +505,6 @@
       "last_seen": "2026-04-22T06:10:51.256150+00:00"
     }
   },
-  "updated_at": "2026-04-23T06:15:08.997650+00:00",
+  "updated_at": "2026-04-24T06:16:39.830235+00:00",
   "version": 1
 }
