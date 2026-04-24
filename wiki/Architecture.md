@@ -117,7 +117,7 @@ TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG
 
 | Column | Values | Notes |
 |--------|--------|-------|
-| `TYPE` | `section`, `task` | No other values are valid |
+| `TYPE` | `section`, `task`, `meta` | `meta` rows set project-level view options (e.g. `view_style=list`) |
 | `CONTENT` | Any string | Rows with empty content are skipped |
 | `PRIORITY` | `1`–`4` | `1` = urgent (p1), `4` = normal (p4) |
 | `INDENT` | Integer ≥ 1 | `1` = top-level, `2` = subtask, etc. |
@@ -235,7 +235,7 @@ For each csv-templates/{slug}/:
   5. meta.yml project_color (if present) must be a valid Todoist colour
   6. README.md must contain import instructions
   7. template.csv must start with TYPE header
-  8. TYPE column values must be section or task only
+  8. TYPE column values must be section, task, or meta only
 
 For each prompt-templates/{slug}/:
   1–4. Same as above (plus inputs: key in meta.yml)

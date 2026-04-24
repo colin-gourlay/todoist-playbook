@@ -19,7 +19,7 @@
 - [ ] Folder name is kebab-case and matches `slug:` in `meta.yml`
 - [ ] All three required files are present: `template.csv`, `meta.yml`, `README.md`
 - [ ] `meta.yml` includes all required keys (`name`, `slug`, `description`, `category`, `tags`, `version`)
-- [ ] `template.csv` header starts with `TYPE`; only `section` and `task` values used in TYPE column
+- [ ] `template.csv` header starts with `TYPE`; only `section`, `task`, and `meta` values used in TYPE column
 - [ ] No hardcoded due dates in `template.csv`
 - [ ] Slug added to `options` list in `.github/workflows/create-todoist-project.yml`
 - [ ] Row added to the catalogue table in `index.md`

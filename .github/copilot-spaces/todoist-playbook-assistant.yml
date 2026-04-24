@@ -65,7 +65,7 @@ instructions: |
 
   **`template.csv` rules**:
   - First line: `TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG`
-  - `TYPE` must be `section` or `task` (nothing else)
+  - `TYPE` must be `section`, `task`, or `meta`
   - `PRIORITY`: 1 (urgent) → 4 (normal)
   - `DUE_DATE` must always be empty — no hardcoded dates
 

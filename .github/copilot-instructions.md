@@ -104,7 +104,7 @@ project_color: blue
 `template.csv` rules:
 
 - First line must be `TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG`
-- `TYPE` must be `section` or `task`
+- `TYPE` must be `section`, `task`, or `meta`
 - `PRIORITY` values are `1` to `4`, with the import script mapping CSV `1` to Todoist API priority `4` and CSV `4` to API priority `1`
 - `INDENT` is an integer nesting level
 - Do not hardcode due dates in `DUE_DATE`
@@ -185,7 +185,7 @@ The validator checks:
 5. Optional `project_color` is valid against `.github/scripts/project_colors.txt`
 6. `README.md` contains import instructions or mentions CSV import
 7. `template.csv` starts with the `TYPE` header
-8. `TYPE` column values are only `section` or `task`
+8. `TYPE` column values are only `section`, `task`, or `meta`
 
 ### Prompt Template Validation
 
@@ -284,7 +284,7 @@ When proposing or making changes in this repository:
 2. Add `meta.yml`, `template.csv`, and `README.md`
 3. Ensure `meta.yml` includes all required keys and `slug:` matches the folder
 4. Use `version: 0.0.0` for new unreviewed templates
-5. Keep `DUE_DATE` empty and use only `section` or `task` in the CSV `TYPE` column
+5. Keep `DUE_DATE` empty and use only `section`, `task`, or `meta` in the CSV `TYPE` column
 6. Include import instructions in `README.md`
 7. Update `index.md`
 8. Update `README.md` if user-facing guidance should mention the new asset

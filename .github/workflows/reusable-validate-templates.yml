@@ -211,7 +211,7 @@ jobs:
 
               # Validate TYPE column values
               while read -r type; do
-                if [ "$type" != "section" ] && [ "$type" != "task" ] && [ -n "$type" ]; then
+                if [ "$type" != "section" ] && [ "$type" != "task" ] && [ "$type" != "meta" ] && [ -n "$type" ]; then
                   echo "❌ Invalid TYPE '$type' in ${dir}template.csv"
                   failed=1
                 fi
