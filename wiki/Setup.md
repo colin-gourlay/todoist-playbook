@@ -177,7 +177,7 @@ See [CONTRIBUTING](../CONTRIBUTING) for the full guide. In brief:
 | Problem | Solution |
 |---------|---------|
 | Workflow fails with `TODOIST_API_TOKEN secret is not set` | Add the `TODOIST_API_TOKEN` secret under **Settings → Secrets and variables → Actions** |
-| Project is created but has no tasks | Check that `template.csv` starts with the `TYPE` header and uses only `section`/`task` row types |
+| Project is created but has no tasks | Check that `template.csv` starts with the `TYPE` header and uses only `section`, `task`, or `meta` row types |
 | `meta.yml` slug mismatch error in CI | Ensure the `slug:` value in `meta.yml` exactly matches the folder name (case-sensitive, no quotes) |
 | Parent project dropdown is empty or stale | Run the **Sync Todoist Project List** workflow to refresh it |
 | Gallery is not updating on GitHub Pages | Ensure GitHub Pages is configured to use **GitHub Actions** as the source |
