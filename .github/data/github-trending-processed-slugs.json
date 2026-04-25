@@ -70,6 +70,13 @@
       "first_seen": "2026-04-24T06:16:21.771238+00:00",
       "last_seen": "2026-04-24T06:16:21.771238+00:00"
     },
+    "codecrafters-io/build-your-own-x": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-25",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-25T06:04:02.868006+00:00",
+      "last_seen": "2026-04-25T06:04:02.868006+00:00"
+    },
     "coleam00/archon": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-20",
@@ -91,12 +98,26 @@
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
     },
+    "dani-garcia/vaultwarden": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-25",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-25T06:04:02.868006+00:00",
+      "last_seen": "2026-04-25T06:04:02.868006+00:00"
+    },
     "dayanch96/ytlite": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-22",
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-22T06:10:51.256150+00:00",
       "last_seen": "2026-04-22T06:10:51.256150+00:00"
+    },
+    "deepseek-ai/deepep": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-25",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-25T06:04:02.868006+00:00",
+      "last_seen": "2026-04-25T06:04:02.868006+00:00"
     },
     "deepseek-ai/deepgemm": {
       "first_languages": [],
@@ -160,6 +181,13 @@
       "first_section": "Trending (This Month)",
       "first_seen": "2026-04-24T06:16:21.771238+00:00",
       "last_seen": "2026-04-24T06:16:21.771238+00:00"
+    },
+    "google/osv-scanner": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-25",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-25T06:04:02.868006+00:00",
+      "last_seen": "2026-04-25T06:04:02.868006+00:00"
     },
     "hacksider/deep-live-cam": {
       "first_languages": [],
@@ -238,6 +266,13 @@
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
     },
+    "luongnv89/claude-howto": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-25",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-25T06:04:02.868006+00:00",
+      "last_seen": "2026-04-25T06:04:02.868006+00:00"
+    },
     "microsoft/ai-agents-for-beginners": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-22",
@@ -258,6 +293,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-24T06:16:21.771238+00:00",
       "last_seen": "2026-04-24T06:16:21.771238+00:00"
+    },
+    "microsoft/typescript-go": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-25",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-25T06:04:02.868006+00:00",
+      "last_seen": "2026-04-25T06:04:02.868006+00:00"
     },
     "microsoft/vibevoice": {
       "first_languages": [],
@@ -356,6 +398,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
+    },
+    "posthog/posthog": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-25",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-25T06:04:02.868006+00:00",
+      "last_seen": "2026-04-25T06:04:02.868006+00:00"
     },
     "powershell/powershell": {
       "first_languages": [],
@@ -483,6 +532,13 @@
       "first_seen": "2026-04-21T06:12:05.900402+00:00",
       "last_seen": "2026-04-21T06:12:05.900402+00:00"
     },
+    "yeachan-heo/oh-my-codex": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-25",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-25T06:04:02.868006+00:00",
+      "last_seen": "2026-04-25T06:04:02.868006+00:00"
+    },
     "z-lab/dflash": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-22",
@@ -505,6 +561,6 @@
       "last_seen": "2026-04-22T06:10:51.256150+00:00"
     }
   },
-  "updated_at": "2026-04-24T06:16:39.830235+00:00",
+  "updated_at": "2026-04-25T06:04:16.365262+00:00",
   "version": 1
 }
