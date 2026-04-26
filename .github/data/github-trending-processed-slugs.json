@@ -63,6 +63,13 @@
       "first_seen": "2026-04-21T06:12:05.900402+00:00",
       "last_seen": "2026-04-21T06:12:05.900402+00:00"
     },
+    "cjackhwang/ds2api": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-26",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-26T06:16:03.187539+00:00",
+      "last_seen": "2026-04-26T06:16:03.187539+00:00"
+    },
     "cline/cline": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-24",
@@ -84,6 +91,13 @@
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
     },
+    "composiohq/awesome-codex-skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-26",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-26T06:16:03.187539+00:00",
+      "last_seen": "2026-04-26T06:16:03.187539+00:00"
+    },
     "coreyhaines31/marketingskills": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-24",
@@ -104,6 +118,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-25T06:04:02.868006+00:00",
       "last_seen": "2026-04-25T06:04:02.868006+00:00"
+    },
+    "davila7/claude-code-templates": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-26",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-26T06:16:03.187539+00:00",
+      "last_seen": "2026-04-26T06:16:03.187539+00:00"
     },
     "dayanch96/ytlite": {
       "first_languages": [],
@@ -273,6 +294,13 @@
       "first_seen": "2026-04-25T06:04:02.868006+00:00",
       "last_seen": "2026-04-25T06:04:02.868006+00:00"
     },
+    "mattpocock/skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-26",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-26T06:16:03.187539+00:00",
+      "last_seen": "2026-04-26T06:16:03.187539+00:00"
+    },
     "microsoft/ai-agents-for-beginners": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-22",
@@ -413,6 +441,13 @@
       "first_seen": "2026-04-24T06:16:21.771238+00:00",
       "last_seen": "2026-04-24T06:16:21.771238+00:00"
     },
+    "roocodeinc/roo-code": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-26",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-26T06:16:03.187539+00:00",
+      "last_seen": "2026-04-26T06:16:03.187539+00:00"
+    },
     "rtk-ai/rtk": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-24",
@@ -490,6 +525,13 @@
       "first_seen": "2026-04-20T06:17:39.848225+00:00",
       "last_seen": "2026-04-20T06:17:39.848225+00:00"
     },
+    "universal-commerce-protocol/ucp": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-26",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-26T06:16:03.187539+00:00",
+      "last_seen": "2026-04-26T06:16:03.187539+00:00"
+    },
     "vercel-labs/open-agents": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-23",
@@ -561,6 +603,6 @@
       "last_seen": "2026-04-22T06:10:51.256150+00:00"
     }
   },
-  "updated_at": "2026-04-25T06:04:16.365262+00:00",
+  "updated_at": "2026-04-26T06:16:14.556676+00:00",
   "version": 1
 }
