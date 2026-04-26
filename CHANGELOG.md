@@ -13,6 +13,8 @@
 
 ### Changed
 
+- Scripts: `create_todoist_project.py`, `create_via_mcp.py` — both project creation scripts now map `DUE_DATE` / `DUE_DATE_LANG` CSV columns (and legacy `DATE` / `DATE_LANG` aliases) to Todoist task due fields, so due dates defined in template CSVs are applied on import
+- Template: `github-trending-repos-daily-review` — primary task renamed from "Evaluate Trending Repos today" to "Evaluate Trending Repos" for cleaner recurrence wording
 - Script: `fetch_github_trending.py` — processed repository slugs are now persisted to `.github/data/github-trending-processed-slugs.json`, ensuring each repository is imported only once across all runs even if the original Todoist task is later edited or deleted; already-active and already-completed `read-later` tasks are also checked to prevent duplicates within a run; repositories that appear in multiple trending periods within the same run are also de-duplicated
 - Workflow: `create-todoist-project.yml` — now automatically triggers after the `Sync GitHub Trending to Todoist` workflow completes successfully, creating the `github-trending-repos-daily-review` review project as a follow-on step
 - Template: `github-trending-tracker` — marked as deprecated in `meta.yml` with a planned sunset date and replacement guidance
