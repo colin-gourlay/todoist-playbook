@@ -227,7 +227,7 @@ User triggers workflow_dispatch
 Runs on pushes to `main`, pull requests targeting `main`, merge queue runs, and manual dispatch:
 
 ```
-For each csv-templates/{slug}/:
+For each csv-templates/{slug}/ (or csv-templates/{group}/{slug}/):
   1. Slug must be kebab-case
   2. template.csv, meta.yml, README.md must all exist
   3. meta.yml must have: name, slug, description, category, tags, version

@@ -41,7 +41,8 @@ instructions: |
   ## Repository Context
 
   **todoist-playbook** is a curated collection of structured Todoist templates
-  and automation tooling. Every CSV template lives at `csv-templates/{slug}/` and
+  and automation tooling. Every CSV template lives at `csv-templates/{slug}/` (or
+  `csv-templates/{group}/{slug}/` when grouped under a category) and
   contains exactly three files:
 
   - `template.csv` — importable task list in Todoist CSV format

@@ -21,6 +21,8 @@ import urllib.request
 from datetime import date
 from dataclasses import dataclass
 
+from template_discovery import iter_template_locations
+
 LABEL_NAME = "to-be-reviewed"
 LABEL_COLOR = "d4c5f9"
 LABEL_DESCRIPTION = "Template is pending feature-completeness review"
@@ -163,17 +165,11 @@ def load_template_states(root: str):
     if not os.path.isdir(root):
         return states, missing_meta
 
-    for name in sorted(os.listdir(root)):
-        path = os.path.join(root, name)
-        if not os.path.isdir(path):
-            continue
+    seen_dirs: set[str] = set()
+    for location in iter_template_locations(root):
+        seen_dirs.add(os.path.normpath(location.template_dir))
 
-        meta_path = os.path.join(path, "meta.yml")
-        if not os.path.exists(meta_path):
-            missing_meta.append(name)
-            continue
-
-        with open(meta_path, encoding="utf-8") as fh:
+        with open(location.meta_path, encoding="utf-8") as fh:
             content = fh.read()
 
         version = parse_meta_value(content, "version")
@@ -181,12 +177,30 @@ def load_template_states(root: str):
         sunset_date = parse_meta_value(content, "sunset_date")
         states.append(
             TemplateState(
-                slug=name,
+                slug=location.slug,
                 version=version,
                 deprecated=deprecated,
                 sunset_date=sunset_date,
             )
         )
+
+    # Surface direct children that look like template folders but lack meta.yml.
+    # Grouping folders (no meta.yml, but contain template subfolders that do)
+    # are intentionally ignored so they don't generate maintenance issues.
+    for name in sorted(os.listdir(root)):
+        path = os.path.join(root, name)
+        if not os.path.isdir(path):
+            continue
+        if os.path.normpath(path) in seen_dirs:
+            continue
+        if any(
+            os.path.normpath(loc.template_dir).startswith(os.path.normpath(path) + os.sep)
+            for loc in iter_template_locations(root)
+        ):
+            # Acts as a grouping folder; skip.
+            continue
+        if not os.path.exists(os.path.join(path, "meta.yml")):
+            missing_meta.append(name)
 
     return states, missing_meta
 

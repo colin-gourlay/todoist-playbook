@@ -72,7 +72,7 @@ Use **Squash and merge** when merging PRs into `main`. This keeps the `main` his
 
 ## Templates must:
 
-- Live under `csv-templates/{slug}/`
+- Live under `csv-templates/{slug}/` (or `csv-templates/{group}/{slug}/` when grouped under a category folder)
 - Include:
   - template.csv
   - meta.yml
@@ -103,7 +103,7 @@ When setting deprecation metadata in `meta.yml`, follow this strict contract:
   - `deprecation_message`
   - `replacement_template`
   - `sunset_date`
-- `replacement_template` must be kebab-case and match an existing folder under `csv-templates/`.
+- `replacement_template` must be kebab-case and match an existing template slug under `csv-templates/` (resolved at any supported nesting depth).
 - `sunset_date` must be a valid future date in `YYYY-MM-DD` format.
 
 Copyable example:

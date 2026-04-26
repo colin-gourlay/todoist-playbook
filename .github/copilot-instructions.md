@@ -72,7 +72,7 @@ If this file conflicts with the files above, follow the implementation and updat
 
 ### CSV Templates
 
-Every CSV template lives at `csv-templates/{slug}/` and must contain exactly three files:
+Every CSV template lives at `csv-templates/{slug}/` (or `csv-templates/{group}/{slug}/` when grouped under a category folder) and must contain exactly three files:
 
 - `template.csv`
 - `meta.yml`
@@ -280,7 +280,7 @@ When proposing or making changes in this repository:
 
 ## Adding a New CSV Template
 
-1. Create `csv-templates/{slug}/` using kebab-case
+1. Create `csv-templates/{slug}/` (or `csv-templates/{group}/{slug}/` when adding to a category group) using kebab-case
 2. Add `meta.yml`, `template.csv`, and `README.md`
 3. Ensure `meta.yml` includes all required keys and `slug:` matches the folder
 4. Use `version: 0.0.0` for new unreviewed templates

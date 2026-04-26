@@ -17,6 +17,8 @@ import re
 import shutil
 import sys
 
+from template_discovery import iter_template_locations
+
 TEMPLATES_DIR = os.environ.get("TEMPLATES_DIR", "csv-templates")
 PROMPT_TEMPLATES_DIR = os.environ.get("PROMPT_TEMPLATES_DIR", "prompt-templates")
 OUTPUT_DIR = os.environ.get("OUTPUT_DIR", "docs")
@@ -98,14 +100,12 @@ def parse_csv_rows(path):
 def load_templates():
     templates = []
 
-    # Load CSV templates
+    # Load CSV templates (supports nested csv-templates/{group}/{slug}/ layout)
     if os.path.isdir(TEMPLATES_DIR):
-        for slug in sorted(os.listdir(TEMPLATES_DIR)):
-            template_dir = os.path.join(TEMPLATES_DIR, slug)
-            if not os.path.isdir(template_dir):
-                continue
-            meta_path = os.path.join(template_dir, "meta.yml")
-            csv_path = os.path.join(template_dir, "template.csv")
+        for location in iter_template_locations(TEMPLATES_DIR):
+            template_dir = location.template_dir
+            meta_path = location.meta_path
+            csv_path = location.csv_path
             if not os.path.exists(meta_path):
                 continue
             meta = parse_meta(meta_path)
@@ -113,8 +113,8 @@ def load_templates():
             task_count = sum(1 for r in rows if r["type"] == "task")
             section_count = sum(1 for r in rows if r["type"] == "section")
             templates.append({
-                "slug": slug,
-                "name": meta.get("name", slug),
+                "slug": location.slug,
+                "name": meta.get("name", location.slug),
                 "description": meta.get("description", ""),
                 "category": meta.get("category", ""),
                 "tags": meta.get("tags", []),
@@ -126,7 +126,7 @@ def load_templates():
                 "task_count": task_count,
                 "section_count": section_count,
                 "rows": rows,
-                "csv_url": f"csv-templates/{slug}/template.csv",
+                "csv_url": f"csv-templates/{location.relative_path}/template.csv",
                 "prompt_url": "",
                 "inputs": [],
                 "type": "template",
