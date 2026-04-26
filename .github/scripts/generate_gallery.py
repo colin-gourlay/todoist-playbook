@@ -97,6 +97,18 @@ def parse_csv_rows(path):
 # Template loading
 # ---------------------------------------------------------------------------
 
+def read_readme(path):
+    """Return README markdown contents, or empty string if missing/unreadable."""
+    if not path or not os.path.exists(path):
+        return ""
+    try:
+        with open(path, encoding="utf-8") as f:
+            return f.read()
+    except Exception as exc:
+        print(f"Warning: could not read {path}: {exc}", file=sys.stderr)
+        return ""
+
+
 def load_templates():
     templates = []
 
@@ -130,6 +142,7 @@ def load_templates():
                 "prompt_url": "",
                 "inputs": [],
                 "type": "template",
+                "readme": read_readme(location.readme_path),
             })
 
     # Load prompt templates
@@ -142,6 +155,7 @@ def load_templates():
             if not os.path.exists(meta_path):
                 continue
             meta = parse_meta(meta_path)
+            readme_path = os.path.join(template_dir, "README.md")
             templates.append({
                 "slug": slug,
                 "name": meta.get("name", slug),
@@ -159,6 +173,7 @@ def load_templates():
                 "prompt_url": f"prompt-templates/{slug}/prompt.md",
                 "inputs": meta.get("inputs", []),
                 "type": "prompt",
+                "readme": read_readme(readme_path),
             })
 
     return templates
@@ -778,6 +793,172 @@ def generate_html(templates, spotlight=None):
       .template-grid {{ grid-template-columns: repeat(auto-fill, minmax(calc(50% - 0.75rem), 1fr)); }}
     }}
 
+    /* ── README modal ── */
+    .modal-backdrop {{
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(2px);
+      z-index: 1000;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2.5rem 1rem;
+      overflow-y: auto;
+      animation: modalFade 0.18s ease-out;
+    }}
+    .modal-backdrop.open {{ display: flex; }}
+    @keyframes modalFade {{
+      from {{ opacity: 0; }} to {{ opacity: 1; }}
+    }}
+    .modal-dialog {{
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-hover);
+      max-width: 860px;
+      width: 100%;
+      max-height: calc(100vh - 5rem);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: modalRise 0.22s cubic-bezier(0.4,0,0.2,1);
+    }}
+    @keyframes modalRise {{
+      from {{ transform: translateY(12px); opacity: 0; }}
+      to   {{ transform: translateY(0); opacity: 1; }}
+    }}
+    .modal-header {{
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-secondary);
+      flex-wrap: wrap;
+    }}
+    .modal-title-block {{ flex: 1 1 240px; min-width: 0; }}
+    .modal-title {{
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-secondary);
+      line-height: 1.25;
+    }}
+    .modal-subtitle {{
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+      font-weight: 500;
+    }}
+    .modal-actions {{
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }}
+    .modal-close {{
+      background: none;
+      border: 1px solid var(--border);
+      width: 2rem;
+      height: 2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1;
+      transition: background var(--transition), color var(--transition);
+    }}
+    .modal-close:hover {{ background: var(--bg-secondary); color: var(--text); }}
+    .modal-body {{
+      padding: 1.5rem 1.75rem 2rem;
+      overflow-y: auto;
+      flex: 1 1 auto;
+      color: var(--text);
+      line-height: 1.65;
+    }}
+    .modal-body.empty {{
+      text-align: center;
+      color: var(--muted);
+      font-style: italic;
+      padding: 3rem 1.5rem;
+    }}
+    .modal-body h1, .modal-body h2, .modal-body h3,
+    .modal-body h4, .modal-body h5, .modal-body h6 {{
+      color: var(--text-secondary);
+      font-weight: 800;
+      line-height: 1.25;
+      margin: 1.5rem 0 0.6rem;
+      letter-spacing: -0.01em;
+    }}
+    .modal-body h1 {{ font-size: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }}
+    .modal-body h2 {{ font-size: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 0.3rem; }}
+    .modal-body h3 {{ font-size: 1.05rem; }}
+    .modal-body h4 {{ font-size: 0.95rem; }}
+    .modal-body p, .modal-body ul, .modal-body ol, .modal-body blockquote, .modal-body pre, .modal-body table {{
+      margin: 0.75rem 0;
+    }}
+    .modal-body ul, .modal-body ol {{ padding-left: 1.4rem; }}
+    .modal-body li {{ margin: 0.2rem 0; }}
+    .modal-body a {{ color: var(--red); text-decoration: none; font-weight: 600; }}
+    .modal-body a:hover {{ text-decoration: underline; color: var(--red-dark); }}
+    .modal-body code {{
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.1rem 0.35rem;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+      font-size: 0.85em;
+    }}
+    .modal-body pre {{
+      background: #1a202c;
+      color: #f7fafc;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }}
+    .modal-body pre code {{
+      background: none;
+      border: none;
+      padding: 0;
+      color: inherit;
+      font-size: inherit;
+    }}
+    .modal-body blockquote {{
+      border-left: 3px solid var(--red);
+      padding: 0.25rem 0 0.25rem 1rem;
+      color: var(--muted);
+      background: var(--red-lighter);
+      border-radius: 0 6px 6px 0;
+    }}
+    .modal-body table {{
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.9rem;
+    }}
+    .modal-body th, .modal-body td {{
+      border: 1px solid var(--border);
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+    }}
+    .modal-body th {{ background: var(--bg-secondary); font-weight: 700; }}
+    .modal-body img {{ max-width: 100%; border-radius: 6px; }}
+    .modal-body hr {{ border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }}
+
+    /* Make the body of a template card behave as a clickable surface */
+    .tpl-card-clickable {{ cursor: pointer; }}
+    .tpl-card-clickable:focus-visible {{
+      outline: 2px solid var(--red);
+      outline-offset: 3px;
+    }}
+
+    @media (max-width: 640px) {{
+      .modal-backdrop {{ padding: 0.75rem; }}
+      .modal-dialog {{ max-height: calc(100vh - 1.5rem); }}
+      .modal-header {{ padding: 1rem 1.1rem; }}
+      .modal-body {{ padding: 1.1rem 1.1rem 1.5rem; }}
+    }}
+
     /* ── Footer ── */
     .site-footer {{
       margin-top: 5rem;
@@ -830,6 +1011,21 @@ def generate_html(templates, spotlight=None):
   <!-- Populated by JavaScript -->
 </div>
 
+<div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true"
+     aria-labelledby="modal-title" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-header">
+      <div class="modal-title-block">
+        <div class="modal-title" id="modal-title"></div>
+        <div class="modal-subtitle" id="modal-subtitle"></div>
+      </div>
+      <div class="modal-actions" id="modal-actions"></div>
+      <button type="button" class="modal-close" id="modal-close" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
 <footer class="site-footer">
   <div class="footer-links">
     <a href="https://github.com/colin-gourlay/todoist-playbook/issues/new?template=template-request.yml">
@@ -845,10 +1041,16 @@ def generate_html(templates, spotlight=None):
   <div>Built with ❤️ · <a href="https://github.com/colin-gourlay/todoist-playbook/blob/main/CONTRIBUTING">Contributing Guide</a></div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"
+        crossorigin="anonymous"></script>
 <script>
 const TEMPLATES = {templates_json};
 const CATEGORY_META = {category_meta_json};
 const SPOTLIGHT = {spotlight_json};
+
+// Lookup map keyed by "{{type}}:{{slug}}" so cards can resolve back to data.
+const TEMPLATE_LOOKUP = {{}};
+TEMPLATES.forEach(t => {{ TEMPLATE_LOOKUP[t.type + ':' + t.slug] = t; }});
 
 // Preprocessed lowercase search index — built once at load time
 const SEARCH_INDEX = TEMPLATES.map(t => ({{
@@ -1031,7 +1233,8 @@ function buildTemplateCard(t) {{
 
   const badgeLabel = t.type === 'prompt' ? 'AI Prompt' : 'Template';
 
-  return `<div class="tpl-card">
+  return `<div class="tpl-card tpl-card-clickable" data-slug="${{esc(t.slug)}}" data-type="${{esc(t.type)}}"
+     role="button" tabindex="0" aria-label="View details for ${{esc(t.name)}}">
   <div class="tpl-card-header">
     <span class="tpl-type-badge">${{badgeLabel}}</span>
     <div class="tpl-title">${{esc(t.name)}}</div>
@@ -1170,6 +1373,109 @@ window.addEventListener('hashchange', () => {{
   handleRoute();
 }});
 handleRoute();
+
+// ── Template detail modal ─────────────────────────────────────────────────
+const modalBackdrop = document.getElementById('modal-backdrop');
+const modalTitleEl  = document.getElementById('modal-title');
+const modalSubtitle = document.getElementById('modal-subtitle');
+const modalBody     = document.getElementById('modal-body');
+const modalActions  = document.getElementById('modal-actions');
+const modalCloseBtn = document.getElementById('modal-close');
+
+let lastFocusedElement = null;
+
+function renderMarkdown(md) {{
+  if (!md) return '';
+  if (typeof marked !== 'undefined' && marked.parse) {{
+    try {{
+      return marked.parse(md, {{ mangle: false, headerIds: false, breaks: false }});
+    }} catch (e) {{ /* fall through to escaped fallback */ }}
+  }}
+  return '<pre>' + esc(md) + '</pre>';
+}}
+
+function openModal(template) {{
+  if (!template) return;
+  modalTitleEl.textContent = template.name;
+
+  const subParts = [];
+  if (template.category) subParts.push(catLabel(template.category));
+  if (template.version) subParts.push('v' + template.version);
+  if (template.author)  subParts.push('by ' + template.author);
+  modalSubtitle.textContent = subParts.join(' · ');
+
+  // Action buttons — keep download/view available without leaving the modal
+  let actionsHtml = '';
+  if (template.type === 'template' && template.csv_url) {{
+    actionsHtml += `<a class="btn-primary" href="${{esc(template.csv_url)}}" download>⬇️ Download CSV</a>`;
+  }} else if (template.type === 'prompt' && template.prompt_url) {{
+    actionsHtml += `<a class="btn-primary" href="${{esc(template.prompt_url)}}" target="_blank" rel="noopener">View Prompt</a>`;
+  }}
+  modalActions.innerHTML = actionsHtml;
+
+  if (template.readme && template.readme.trim()) {{
+    modalBody.classList.remove('empty');
+    modalBody.innerHTML = renderMarkdown(template.readme);
+  }} else {{
+    modalBody.classList.add('empty');
+    modalBody.innerHTML = '<p>No README is available for this template yet.</p>';
+  }}
+
+  // Make any links to repo-relative paths still resolve against the docs site
+  modalBody.querySelectorAll('a[href]').forEach(a => {{
+    const href = a.getAttribute('href');
+    if (/^https?:|^mailto:|^#/.test(href)) {{
+      a.setAttribute('target', '_blank');
+      a.setAttribute('rel', 'noopener');
+    }}
+  }});
+
+  lastFocusedElement = document.activeElement;
+  modalBackdrop.classList.add('open');
+  modalBackdrop.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  modalBody.scrollTop = 0;
+  modalCloseBtn.focus();
+}}
+
+function closeModal() {{
+  if (!modalBackdrop.classList.contains('open')) return;
+  modalBackdrop.classList.remove('open');
+  modalBackdrop.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+  if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {{
+    lastFocusedElement.focus();
+  }}
+}}
+
+modalCloseBtn.addEventListener('click', closeModal);
+modalBackdrop.addEventListener('click', e => {{
+  if (e.target === modalBackdrop) closeModal();
+}});
+document.addEventListener('keydown', e => {{
+  if (e.key === 'Escape') closeModal();
+}});
+
+// Delegated click + keyboard handlers for template cards. Clicks on links or
+// buttons inside the card are left to bubble to their own handlers, so the
+// existing primary action (download / view prompt) keeps working without
+// opening the modal.
+document.addEventListener('click', e => {{
+  const card = e.target.closest('.tpl-card-clickable');
+  if (!card) return;
+  if (e.target.closest('a, button')) return;
+  const template = TEMPLATE_LOOKUP[card.dataset.type + ':' + card.dataset.slug];
+  openModal(template);
+}});
+
+document.addEventListener('keydown', e => {{
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const card = e.target.closest && e.target.closest('.tpl-card-clickable');
+  if (!card || e.target !== card) return;
+  e.preventDefault();
+  const template = TEMPLATE_LOOKUP[card.dataset.type + ':' + card.dataset.slug];
+  openModal(template);
+}});
 </script>
 </body>
 </html>
@@ -1191,24 +1497,31 @@ def main():
     with open(os.path.join(OUTPUT_DIR, ".nojekyll"), "w"):
         pass
 
-    # Copy each template's CSV into the output directory so download links work
-    for slug in os.listdir(TEMPLATES_DIR):
-        template_dir = os.path.join(TEMPLATES_DIR, slug)
-        csv_src = os.path.join(template_dir, "template.csv")
-        if os.path.isdir(template_dir) and os.path.exists(csv_src):
-            dest_dir = os.path.join(OUTPUT_DIR, "csv-templates", slug)
-            os.makedirs(dest_dir, exist_ok=True)
-            shutil.copy2(csv_src, os.path.join(dest_dir, "template.csv"))
+    # Copy each CSV template's template.csv and README.md into the output
+    # directory so download links and modal sources work. Supports the
+    # nested csv-templates/{group}/{slug}/ layout.
+    for location in iter_template_locations(TEMPLATES_DIR):
+        dest_dir = os.path.join(OUTPUT_DIR, "csv-templates", location.relative_path)
+        os.makedirs(dest_dir, exist_ok=True)
+        if os.path.exists(location.csv_path):
+            shutil.copy2(location.csv_path, os.path.join(dest_dir, "template.csv"))
+        if os.path.exists(location.readme_path):
+            shutil.copy2(location.readme_path, os.path.join(dest_dir, "README.md"))
 
-    # Copy each prompt template's prompt.md into the output directory
+    # Copy each prompt template's prompt.md and README.md into the output directory
     if os.path.isdir(PROMPT_TEMPLATES_DIR):
         for slug in os.listdir(PROMPT_TEMPLATES_DIR):
             template_dir = os.path.join(PROMPT_TEMPLATES_DIR, slug)
+            if not os.path.isdir(template_dir):
+                continue
+            dest_dir = os.path.join(OUTPUT_DIR, "prompt-templates", slug)
+            os.makedirs(dest_dir, exist_ok=True)
             prompt_src = os.path.join(template_dir, "prompt.md")
-            if os.path.isdir(template_dir) and os.path.exists(prompt_src):
-                dest_dir = os.path.join(OUTPUT_DIR, "prompt-templates", slug)
-                os.makedirs(dest_dir, exist_ok=True)
+            if os.path.exists(prompt_src):
                 shutil.copy2(prompt_src, os.path.join(dest_dir, "prompt.md"))
+            readme_src = os.path.join(template_dir, "README.md")
+            if os.path.exists(readme_src):
+                shutil.copy2(readme_src, os.path.join(dest_dir, "README.md"))
 
     templates = load_templates()
     spotlight = get_spotlight_template(templates)
