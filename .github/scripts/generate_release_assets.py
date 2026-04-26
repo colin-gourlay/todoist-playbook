@@ -18,6 +18,8 @@ import sys
 import zipfile
 from datetime import datetime, timezone
 
+from template_discovery import iter_template_locations
+
 TEMPLATES_DIR = os.environ.get("TEMPLATES_DIR", "csv-templates")
 PROMPT_TEMPLATES_DIR = os.environ.get("PROMPT_TEMPLATES_DIR", "prompt-templates")
 OUTPUT_DIR = os.environ.get("OUTPUT_DIR", "dist")
@@ -81,12 +83,10 @@ def parse_csv_rows(path):
 
 def load_templates():
     templates = []
-    for slug in sorted(os.listdir(TEMPLATES_DIR)):
-        template_dir = os.path.join(TEMPLATES_DIR, slug)
-        if not os.path.isdir(template_dir):
-            continue
-        meta_path = os.path.join(template_dir, "meta.yml")
-        csv_path = os.path.join(template_dir, "template.csv")
+    for location in iter_template_locations(TEMPLATES_DIR):
+        template_dir = location.template_dir
+        meta_path = location.meta_path
+        csv_path = location.csv_path
         if not os.path.exists(meta_path):
             continue
         meta = parse_meta(meta_path)
@@ -94,8 +94,8 @@ def load_templates():
         task_count = sum(1 for r in rows if r["type"] == "task")
         section_count = sum(1 for r in rows if r["type"] == "section")
         templates.append({
-            "slug": slug,
-            "name": meta.get("name", slug),
+            "slug": location.slug,
+            "name": meta.get("name", location.slug),
             "description": meta.get("description", ""),
             "category": meta.get("category", ""),
             "tags": meta.get("tags", []),
@@ -158,14 +158,12 @@ def generate_index_json(templates, prompt_templates):
 def generate_templates_zip(output_path):
     """Create a zip archive of all template folders."""
     with zipfile.ZipFile(output_path, "w", zipfile.ZIP_DEFLATED) as zf:
-        for slug in sorted(os.listdir(TEMPLATES_DIR)):
-            template_dir = os.path.join(TEMPLATES_DIR, slug)
-            if not os.path.isdir(template_dir):
-                continue
+        for location in iter_template_locations(TEMPLATES_DIR):
+            template_dir = location.template_dir
             for filename in sorted(os.listdir(template_dir)):
                 file_path = os.path.join(template_dir, filename)
                 if os.path.isfile(file_path):
-                    arcname = os.path.join("csv-templates", slug, filename)
+                    arcname = os.path.join("csv-templates", location.relative_path, filename)
                     zf.write(file_path, arcname)
 
 

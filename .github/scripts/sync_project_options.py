@@ -18,6 +18,8 @@ from pathlib import Path
 import urllib.error
 import urllib.request
 
+from template_discovery import iter_template_locations
+
 TODOIST_API_BASE = "https://api.todoist.com/api/v1"
 CREATE_PROJECT_WORKFLOW_PATH = ".github/workflows/create-todoist-project.yml"
 CREATE_VIA_MCP_WORKFLOW_PATH = ".github/workflows/create-todoist-project-via-mcp.yml"
@@ -76,7 +78,12 @@ def _read_meta_bool(meta_path, key):
 
 
 def discover_template_slugs(base_dir, include_deprecated=True):
-    """Return sorted template slugs for directories that contain a metadata file."""
+    """Return sorted prompt-template slugs for directories that contain meta.yml.
+
+    Used for the flat ``prompt-templates/{slug}/`` layout. CSV templates use
+    :func:`discover_csv_template_slugs` instead so nested category folders are
+    supported.
+    """
     root = Path(base_dir)
     if not root.is_dir():
         print(f"❌ Template directory not found: {base_dir}", file=sys.stderr)
@@ -90,6 +97,33 @@ def discover_template_slugs(base_dir, include_deprecated=True):
                 skipped_deprecated.append(child.name)
                 continue
             slugs.append(child.name)
+
+    if skipped_deprecated:
+        print(f"⚠️ Skipping {len(skipped_deprecated)} deprecated template(s) from {base_dir} choices")
+        for slug in sorted(skipped_deprecated):
+            print(f"  - {slug}")
+
+    return sorted(slugs)
+
+
+def discover_csv_template_slugs(base_dir, include_deprecated=True):
+    """Return sorted CSV template slugs, supporting nested category folders.
+
+    Walks ``base_dir`` via the shared template-discovery helper so templates
+    located at either ``csv-templates/{slug}/`` or
+    ``csv-templates/{group}/{slug}/`` are returned by their canonical slug.
+    """
+    if not Path(base_dir).is_dir():
+        print(f"❌ Template directory not found: {base_dir}", file=sys.stderr)
+        sys.exit(1)
+
+    slugs = []
+    skipped_deprecated = []
+    for location in iter_template_locations(base_dir):
+        if not include_deprecated and _read_meta_bool(Path(location.meta_path), "deprecated"):
+            skipped_deprecated.append(location.slug)
+            continue
+        slugs.append(location.slug)
 
     if skipped_deprecated:
         print(f"⚠️ Skipping {len(skipped_deprecated)} deprecated template(s) from {base_dir} choices")
@@ -174,7 +208,7 @@ def main():
     for name in project_names:
         print(f"  - {name}")
 
-    csv_template_slugs = discover_template_slugs(CSV_TEMPLATES_DIR, include_deprecated=False)
+    csv_template_slugs = discover_csv_template_slugs(CSV_TEMPLATES_DIR, include_deprecated=False)
     prompt_template_slugs = discover_template_slugs(PROMPT_TEMPLATES_DIR)
 
     print(f"🧩 Found {len(csv_template_slugs)} CSV template slug(s)")

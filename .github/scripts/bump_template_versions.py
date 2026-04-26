@@ -25,6 +25,8 @@ import re
 import subprocess
 import sys
 
+from template_discovery import iter_template_locations
+
 TEMPLATE_DIRS = ["csv-templates", "prompt-templates"]
 
 
@@ -90,24 +92,54 @@ def write_version(meta_path, old_version, new_version):
     return True
 
 
+def _build_csv_path_index():
+    """Map relative CSV-template directory paths (with trailing /) to their slug.
+
+    Supports flat ``csv-templates/{slug}/`` and grouped
+    ``csv-templates/{group}/{slug}/`` layouts.
+    """
+    index = {}
+    for location in iter_template_locations("csv-templates"):
+        prefix = f"csv-templates/{location.relative_path}/"
+        index[prefix] = location.slug
+    return index
+
+
 def collect_changed_templates(changed_files):
-    """Map changed files to (template_dir, slug) → has_non_meta_change."""
+    """Map changed files to (template_dir, slug) -> has_non_meta_change."""
+    csv_index = _build_csv_path_index()
     templates = {}
     for filepath in changed_files:
-        for tdir in TEMPLATE_DIRS:
-            prefix = f"{tdir}/"
-            if not filepath.startswith(prefix):
-                continue
-            rest = filepath[len(prefix):]
+        # CSV templates: match against the full discovered prefix so nested
+        # category folders resolve to the correct slug.
+        matched = False
+        for prefix, slug in csv_index.items():
+            if filepath.startswith(prefix):
+                rest = filepath[len(prefix):]
+                if not rest:
+                    continue
+                key = ("csv-templates", slug)
+                is_meta = rest == "meta.yml"
+                templates.setdefault(key, False)
+                if not is_meta:
+                    templates[key] = True
+                matched = True
+                break
+        if matched:
+            continue
+
+        # Prompt templates remain flat: csv-templates is handled above.
+        prompt_prefix = "prompt-templates/"
+        if filepath.startswith(prompt_prefix):
+            rest = filepath[len(prompt_prefix):]
             parts = rest.split("/", 1)
-            if not parts:
+            if not parts or not parts[0]:
                 continue
             slug = parts[0]
             filename = parts[1] if len(parts) > 1 else parts[0]
-            key = (tdir, slug)
+            key = ("prompt-templates", slug)
             is_meta = filename == "meta.yml"
-            if key not in templates:
-                templates[key] = False
+            templates.setdefault(key, False)
             if not is_meta:
                 templates[key] = True
     return templates
@@ -142,6 +174,8 @@ def main():
 
     bumped = []
 
+    csv_path_by_slug = {slug: prefix for prefix, slug in _build_csv_path_index().items()}
+
     for (tdir, slug), has_non_meta in templates.items():
         label = f"{tdir}/{slug}"
 
@@ -152,7 +186,14 @@ def main():
             )
             continue
 
-        meta_path = os.path.join(tdir, slug, "meta.yml")
+        if tdir == "csv-templates":
+            prefix = csv_path_by_slug.get(slug)
+            if not prefix:
+                print(f"⚠️  {label}: cannot resolve template directory — skipping")
+                continue
+            meta_path = os.path.join(prefix, "meta.yml")
+        else:
+            meta_path = os.path.join(tdir, slug, "meta.yml")
 
         if not os.path.exists(meta_path):
             print(f"⚠️  {label}: meta.yml not found — skipping")

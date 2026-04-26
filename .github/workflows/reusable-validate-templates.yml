@@ -38,8 +38,25 @@ jobs:
 
           failed=0
 
-          for dir in "$TEMPLATES_PATH"/*/; do
-            [ -d "$dir" ] || continue
+          # Discover template directories one or two levels deep so both
+          # csv-templates/{slug}/ and csv-templates/{group}/{slug}/ layouts are
+          # validated. Each "template" is identified by containing a meta.yml.
+          mapfile -t meta_files < <(find "$TEMPLATES_PATH" -mindepth 2 -maxdepth 3 -type f -name meta.yml | sort)
+
+          # Validate that intermediate (group) folders are kebab-case.
+          for first in "$TEMPLATES_PATH"/*/; do
+            [ -d "$first" ] || continue
+            first_name=$(basename "$first")
+            if [ ! -f "${first}meta.yml" ]; then
+              if [[ ! "$first_name" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+                echo "❌ Group folder name must be kebab-case: $first_name"
+                failed=1
+              fi
+            fi
+          done
+
+          for meta_file in "${meta_files[@]}"; do
+            dir=$(dirname "$meta_file")/
             slug=$(basename "$dir")
 
             echo "🔎 Checking $slug"
@@ -148,9 +165,22 @@ jobs:
                   elif [[ ! "$meta_replacement_template" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
                     echo "❌ replacement_template must be kebab-case in ${dir}meta.yml"
                     failed=1
-                  elif [ ! -d "${TEMPLATES_PATH}/${meta_replacement_template}" ]; then
-                    echo "❌ replacement_template '${meta_replacement_template}' does not exist under ${TEMPLATES_PATH}/"
-                    failed=1
+                  else
+                    # Resolve replacement_template by slug under TEMPLATES_PATH,
+                    # supporting both flat and grouped (nested) layouts.
+                    replacement_dir=""
+                    while IFS= read -r candidate; do
+                      candidate_slug=$(basename "$candidate")
+                      if [ "$candidate_slug" = "$meta_replacement_template" ] && [ -f "$candidate/meta.yml" ]; then
+                        replacement_dir="$candidate"
+                        break
+                      fi
+                    done < <(find "$TEMPLATES_PATH" -mindepth 1 -maxdepth 2 -type d)
+
+                    if [ -z "$replacement_dir" ]; then
+                      echo "❌ replacement_template '${meta_replacement_template}' does not exist under ${TEMPLATES_PATH}/"
+                      failed=1
+                    fi
                   fi
                 fi
 

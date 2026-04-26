@@ -25,6 +25,8 @@ import urllib.error
 import urllib.request
 from typing import Any, Dict, List, Optional, Tuple
 
+from template_discovery import resolve_template_dir
+
 MCP_ENDPOINT = "https://ai.todoist.net/mcp"
 MCP_PROTOCOL_VERSION = "2024-11-05"
 
@@ -238,7 +240,13 @@ def main() -> None:
         print("❌ TEMPLATE input is not set.", file=sys.stderr)
         sys.exit(1)
 
-    template_dir = os.path.join("csv-templates", template_slug)
+    template_dir = resolve_template_dir(template_slug)
+    if not template_dir:
+        print(
+            f"❌ Template '{template_slug}' not found under csv-templates/",
+            file=sys.stderr,
+        )
+        sys.exit(1)
     csv_path = os.path.join(template_dir, "template.csv")
 
     if not os.path.exists(csv_path):

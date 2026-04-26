@@ -102,7 +102,7 @@ The **Deploy Template Gallery to GitHub Pages** workflow builds a searchable sta
 
 ## Template Folder Structure
 
-Each CSV template lives in a `csv-templates/{slug}/` folder:
+Each CSV template lives in a `csv-templates/{slug}/` folder, optionally grouped under `csv-templates/{group}/{slug}/`:
 
 ```
 csv-templates/weekly-review/

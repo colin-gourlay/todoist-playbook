@@ -162,7 +162,7 @@ Some workflows run on a schedule in addition to on-demand:
 
 See [CONTRIBUTING](../CONTRIBUTING) for the full guide. In brief:
 
-1. Create a folder `csv-templates/{slug}/` using kebab-case naming
+1. Create a folder `csv-templates/{slug}/` (or `csv-templates/{group}/{slug}/` when grouping under a category) using kebab-case naming
 2. Add `meta.yml` with the required keys (`name`, `slug`, `description`, `category`, `tags`, `version`)
 3. Add `template.csv` starting with the `TYPE` header
 4. Add `README.md` with usage guidance and import instructions

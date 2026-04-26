@@ -1,4 +1,4 @@
-name: GitHub Trending Repos Daily Review
+name: GitHub Trending Repos (Daily Review)
 slug: github-trending-repos-daily-review
 description: Daily checklist for evaluating trending GitHub repos and deciding next actions
 category: github
@@ -7,8 +7,8 @@ tags:
   - trending
   - open-source
   - discoverability
-  - review
   - triage
+  - stars
   - daily
 estimated_duration: 10m
 recurrence_suggestion: daily

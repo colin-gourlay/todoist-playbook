@@ -4,6 +4,8 @@
 
 ### Added
 
+- Repository: **Nested CSV template layout supported** — CSV templates may now live under `csv-templates/{slug}/` or `csv-templates/{group}/{slug}/`; validator, Python automation scripts, gallery, and release-asset generation all resolve templates by slug regardless of grouping
+- Script: `.github/scripts/template_discovery.py` — shared helper providing canonical CSV template discovery (slug → on-disk directory) used by runtime, sync, validation, and generation scripts
 - Dependabot: **Automated dependency management** — `.github/dependabot.yml` configured to monitor GitHub Actions on a weekly schedule; pull requests are grouped, labelled with `dependencies`, and auto-merged for patch, minor, and security updates via `dependabot-auto-merge.yml`
 - Workflow: **GitHub Trending to Todoist** — daily automation that fetches trending GitHub repositories (today, this week, this month) and pushes them into a Todoist project as `read-later` tasks, grouped by period; supports optional language filtering and language-aware project naming
 - Template: **GitHub Trending Tracker** — weekly review system for discovering, evaluating, and acting on trending GitHub repositories — using stars as signal and structured habits to convert insights into value
@@ -12,6 +14,9 @@
 - Gallery: live search bar added to the GitHub Pages template gallery — filters cards in real time as you type
 
 ### Changed
+
+- Template: `github-trending-repos-daily-review` — moved to `csv-templates/github/github-trending-repos-daily-review/`, display name changed to **GitHub Trending Repos (Daily Review)**, and tag list aligned to `github, trending, open-source, discoverability, triage, stars, daily`; slug is unchanged so workflow inputs and the trending-sync follow-on continue to work
+- Workflow: `reusable-validate-templates.yml` — now discovers CSV templates one or two folder levels under `csv-templates/`, validates intermediate group folder names as kebab-case, and resolves `replacement_template` by slug regardless of nesting
 
 - Scripts: `create_todoist_project.py`, `create_via_mcp.py` — both project creation scripts now map `DUE_DATE` / `DUE_DATE_LANG` CSV columns (and legacy `DATE` / `DATE_LANG` aliases) to Todoist task due fields, so due dates defined in template CSVs are applied on import
 - Template: `github-trending-repos-daily-review` — primary task renamed from "Evaluate Trending Repos today" to "Evaluate Trending Repos" for cleaner recurrence wording

@@ -248,7 +248,7 @@ The repository previously used `/templates` for CSV template folders. This has b
 
 If you consume repository paths directly, update any references from:
 
-- `templates/{slug}/...` → `csv-templates/{slug}/...`
+- `templates/{slug}/...` → `csv-templates/{slug}/...` (or `csv-templates/{group}/{slug}/...` when the template is grouped under a category folder)
 
 If you consume release assets, the ZIP filename is now:
 
@@ -285,7 +285,7 @@ The **GitHub Trending to Todoist** workflow runs daily at 05:30 UTC. It fetches 
 - Adds a kebab-case language label when GitHub exposes a primary language for the repository
 - Persists imported repository slugs in `.github/data/github-trending-processed-slugs.json` so a repository is imported only once, even if the original Todoist task is later edited or deleted
 - Also skips repositories that are already present as active or completed `read-later` tasks in Todoist
-- Automatically triggers the **Create Todoist Project from Template** workflow after a successful run, creating a fresh **GitHub Trending Repos Daily Review** project alongside the trending tasks
+- Automatically triggers the **Create Todoist Project from Template** workflow after a successful run, creating a fresh **GitHub Trending Repos (Daily Review)** project alongside the trending tasks
 
 ### How to trigger manually
 
