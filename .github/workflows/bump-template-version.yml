@@ -36,5 +36,5 @@ jobs:
         uses: ./.github/actions/commit-and-push
         with:
           commit_message: "chore: bump template version(s)"
-          add: "csv-templates/*/meta.yml prompt-templates/*/meta.yml"
+          add: "csv-templates prompt-templates"
           push_to: main
