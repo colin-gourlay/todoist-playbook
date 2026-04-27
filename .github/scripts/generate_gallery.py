@@ -1124,7 +1124,10 @@ function buildSpotlight(t) {{
   return `
 <div class="spotlight-section">
   <div class="spotlight-heading">\u2b50 Template Spotlight</div>
-  <div class="spotlight-card">
+  <div class="spotlight-card tpl-card-clickable"
+       data-slug="${{esc(t.slug)}}" data-type="${{esc(t.type || 'template')}}"
+       role="button" tabindex="0"
+       aria-label="View details for ${{esc(t.name)}}">
     <div class="spotlight-body">
       <div class="spotlight-badge">Featured Template</div>
       <div class="spotlight-name">${{esc(t.name)}}</div>
