@@ -65,10 +65,12 @@ instructions: |
   ```
 
   **`template.csv` rules**:
-  - First line: `TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG`
+  - First line starts with `TYPE,` and uses one of two supported headers:
+    - **Extended (canonical):** `TYPE,CONTENT,DESCRIPTION,IS_COLLAPSED,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DATE,DATE_LANG,TIMEZONE,DURATION,DURATION_UNIT,DEADLINE,DEADLINE_LANG`
+    - **Legacy (still accepted):** `TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG`
   - `TYPE` must be `section`, `task`, or `meta`
   - `PRIORITY`: 1 (urgent) → 4 (normal)
-  - `DUE_DATE` must always be empty — no hardcoded dates
+  - `DATE` / `DUE_DATE` / `DEADLINE` accept only natural-language relative strings (e.g. `today at 05:30`, `every monday`) — no absolute calendar dates
 
   ### CI validation
 

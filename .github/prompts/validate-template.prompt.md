@@ -21,11 +21,14 @@ For the full local validation pipeline (the same checks CI runs), prefer the `va
 ### CSV templates — see [csv-templates.instructions.md](../instructions/csv-templates.instructions.md)
 
 - Folder contains exactly `template.csv`, `meta.yml`, `README.md`
-- First CSV line is exactly: `TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG`
+- First CSV line starts with `TYPE,` and matches one of:
+  - **Extended (canonical):** `TYPE,CONTENT,DESCRIPTION,IS_COLLAPSED,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DATE,DATE_LANG,TIMEZONE,DURATION,DURATION_UNIT,DEADLINE,DEADLINE_LANG`
+  - **Legacy (still accepted):** `TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG`
 - `TYPE` ∈ {`section`, `task`, `meta`}
 - `PRIORITY` ∈ `1`–`4`
 - `INDENT` is a non-negative integer
-- `DUE_DATE` and `DUE_DATE_LANG` are empty (no hardcoded dates)
+- `DATE` / `DUE_DATE` / `DEADLINE` contain only natural-language relative strings (e.g. `today at 05:30`, `every monday`); never absolute calendar dates like `2024-12-25`
+- `DURATION` (integer) and `DURATION_UNIT` (`minute` or `day`) are set together when used
 - Tasks start with action verbs; no vague entries
 - `project_color` (if set) matches a value in [.github/scripts/project_colors.txt](../scripts/project_colors.txt)
 - `README.md` includes import instructions
@@ -54,6 +57,3 @@ For the full local validation pipeline (the same checks CI runs), prefer the `va
 ### Suggestions
 - <suggestion 1>
 ```
-
-Suggestions:
-- Replace with “Review outstanding tasks”

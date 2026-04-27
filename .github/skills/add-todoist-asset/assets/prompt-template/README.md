@@ -23,7 +23,7 @@ CSV matching the Todoist importer header. One or more sections, each containing 
 **Output (truncated)**
 
 ```
-TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG
-section,Example Section,,,,,,
-task,Example task,4,1,,,,en
+TYPE,CONTENT,DESCRIPTION,IS_COLLAPSED,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DATE,DATE_LANG,TIMEZONE,DURATION,DURATION_UNIT,DEADLINE,DEADLINE_LANG
+section,Example Section,,,,1,,,,,,,,,
+task,Example task,,,4,1,,,,en,,,,,
 ```
