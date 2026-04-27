@@ -44,6 +44,12 @@ jobs:
           SERVER_PID=$!
           echo "SERVER_PID=$SERVER_PID" >> $GITHUB_ENV
 
+          sleep 1
+          if ! kill -0 "$SERVER_PID" 2>/dev/null; then
+            echo "❌ Static server process failed to start"
+            exit 1
+          fi
+
           echo "Waiting for server to be ready…"
           for i in $(seq 1 30); do
             if curl -sf http://127.0.0.1:8080 > /dev/null 2>&1; then
@@ -62,9 +68,9 @@ jobs:
       - name: Run pa11y-ci
         run: |
           mkdir -p .github/quality/pa11y-results
+          set -o pipefail
           npx --prefix .github/quality pa11y-ci --config .github/quality/.pa11yci.json \
-            --json > .github/quality/pa11y-results/report.json \
-            || { echo "❌ pa11y-ci found accessibility issues:"; cat .github/quality/pa11y-results/report.json; exit 1; }
+            --json | tee .github/quality/pa11y-results/report.json
 
       - name: Upload Lighthouse report
         if: always()
