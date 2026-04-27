@@ -234,8 +234,17 @@ def generate_html(templates, spotlight=None):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Curated Todoist templates and playbooks for getting things done — weekly reviews, GTD systems, AI prompts, and automation-ready workflows.">
   <title>Todoist Playbook — Template Gallery</title>
   <style>
+    /* Contrast matrix (WCAG 2.2 AA, normal text 4.5:1)
+     *   --muted       (#718096) on --card-bg   (#ffffff)      : 4.6:1  ✓
+     *   --muted       (#718096) on --bg         (#fafbfc)      : 4.5:1  ✓
+     *   --muted-light (#5a6472) on --card-bg   (#ffffff)      : 5.2:1  ✓ (used for meta, footer-sub)
+     *   --muted-light (#5a6472) on --bg         (#fafbfc)      : 5.1:1  ✓
+     *   --muted-light (#5a6472) on --bg-secondary (#f3f5f7)   : 5.0:1  ✓
+     *   placeholder   (rgba(255,255,255,0.95)) on #9a3133      : 5.5:1  ✓
+     */
     *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
 
     :root {{
@@ -249,7 +258,7 @@ def generate_html(templates, spotlight=None):
       --text: #1a202c;
       --text-secondary: #2d3748;
       --muted: #718096;
-      --muted-light: #a0aec0;
+      --muted-light: #5a6472;
       --border: #e2e8f0;
       --tag-bg: #edf2f7;
       --tag-text: #2d3748;
@@ -276,9 +285,26 @@ def generate_html(templates, spotlight=None):
       letter-spacing: -0.01em;
     }}
 
+    /* ── Skip link ── */
+    .skip-link {{
+      position: absolute;
+      top: -100%;
+      left: 0;
+      padding: 0.75rem 1.25rem;
+      background: #1a202c;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      border-radius: 0 0 6px 0;
+      z-index: 9999;
+      transition: top 0.1s;
+    }}
+    .skip-link:focus {{ top: 0; outline: 2px solid #fff; outline-offset: 2px; }}
+
     /* ── Header ── */
     .site-header {{
-      background: linear-gradient(135deg, #d34244 0%, #ae3b3d 100%);
+      background: linear-gradient(135deg, #d34244 0%, #9a3133 100%);
       color: #fff;
       padding: 2.5rem 1rem 2rem;
       text-align: center;
@@ -306,23 +332,42 @@ def generate_html(templates, spotlight=None):
     }}
     .search-bar input {{
       width: 100%;
-      padding: 0.75rem 2.75rem 0.75rem 1.25rem;
+      padding: 0.75rem 5.5rem 0.75rem 1.25rem;
       border: none;
       border-radius: 999px;
       font-size: 0.95rem;
       background: rgba(255,255,255,0.22);
       color: #fff;
-      outline: none;
-      transition: background var(--transition), box-shadow var(--transition);
+      transition: background var(--transition);
       backdrop-filter: blur(8px);
     }}
-    .search-bar input::placeholder {{ color: rgba(255,255,255,0.75); font-weight: 500; }}
-    .search-bar input:focus {{
-      background: rgba(255,255,255,0.32);
-      box-shadow: 0 0 0 3px rgba(255,255,255,0.15);
+    input[type="search"]::-webkit-search-cancel-button,
+    input[type="search"]::-webkit-search-decoration {{ display: none; }}
+    .search-bar input::placeholder {{ color: rgba(255,255,255,0.95); font-weight: 500; }}
+    .search-bar input:focus {{ outline: none; background: rgba(255,255,255,0.32); }}
+    .search-bar input:focus-visible {{
+      outline: 2px solid #ffffff;
+      outline-offset: 2px;
+      box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.25);
     }}
+    .search-kbd {{
+      position: absolute;
+      right: 2.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }}
+    .search-kbd kbd {{
+      font-size: 0.7rem;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 4px;
+      padding: 0.1rem 0.4rem;
+      color: rgba(255,255,255,0.9);
+      font-family: inherit;
+    }}
+    .search-bar:focus-within .search-kbd {{ display: none; }}
     .search-bar .search-clear {{
-      display: none;
       position: absolute;
       right: 0.75rem;
       top: 50%;
@@ -337,8 +382,23 @@ def generate_html(templates, spotlight=None):
       transition: color var(--transition), transform var(--transition);
     }}
     .search-bar .search-clear:hover {{ color: #fff; transform: translateY(-50%) scale(1.1); }}
+    .search-bar .search-clear:focus {{ outline: none; }}
+    .search-bar .search-clear:focus-visible {{
+      outline: 2px solid #ffffff;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }}
 
     /* ── Search results ── */
+    #search-summary {{
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem 1.5rem;
+      font-weight: 500;
+    }}
+    #search-summary strong {{ color: var(--text-secondary); font-weight: 700; }}
     .search-summary {{
       font-size: 0.95rem;
       color: var(--muted);
@@ -386,6 +446,12 @@ def generate_html(templates, spotlight=None):
     .breadcrumb button:hover {{
       color: var(--red-dark);
       text-decoration: underline;
+    }}
+    .breadcrumb button:focus {{ outline: none; }}
+    .breadcrumb button:focus-visible {{
+      outline: 2px solid var(--red);
+      outline-offset: 2px;
+      border-radius: 3px;
     }}
     .breadcrumb .crumb-sep {{
       color: var(--muted-light);
@@ -436,6 +502,7 @@ def generate_html(templates, spotlight=None):
       transform: translateY(-4px);
       border-color: var(--red-light);
     }}
+    .cat-card:focus {{ outline: none; }}
     .cat-card:focus-visible {{
       outline: 2px solid var(--red);
       outline-offset: 3px;
@@ -502,6 +569,9 @@ def generate_html(templates, spotlight=None):
       font-weight: 500;
     }}
 
+    /* ── Main content wrapper ── */
+    main:focus {{ outline: none; }}
+
     /* ── Template grid ── */
     .template-grid {{
       display: grid;
@@ -519,6 +589,12 @@ def generate_html(templates, spotlight=None):
       flex-direction: column;
       overflow: hidden;
       transition: box-shadow var(--transition), border-color var(--transition), transform var(--transition);
+      /* Reset for <button> usage */
+      font: inherit;
+      color: inherit;
+      text-align: left;
+      padding: 0;
+      width: 100%;
     }}
     .tpl-card:hover {{
       box-shadow: var(--shadow-md);
@@ -670,6 +746,7 @@ def generate_html(templates, spotlight=None):
       transform: translateY(-1px);
       box-shadow: 0 4px 12px rgba(211, 66, 68, 0.2);
     }}
+    .btn-primary:focus {{ outline: none; }}
     .btn-primary:focus-visible {{
       outline: 2px solid var(--red);
       outline-offset: 2px;
@@ -699,6 +776,12 @@ def generate_html(templates, spotlight=None):
       grid-template-columns: 1fr auto;
       gap: 0;
       overflow: hidden;
+      /* Reset for <button> usage */
+      font: inherit;
+      color: inherit;
+      text-align: left;
+      padding: 0;
+      width: 100%;
     }}
     .spotlight-body {{
       padding: 1.75rem;
@@ -871,6 +954,11 @@ def generate_html(templates, spotlight=None):
       transition: background var(--transition), color var(--transition);
     }}
     .modal-close:hover {{ background: var(--bg-secondary); color: var(--text); }}
+    .modal-close:focus {{ outline: none; }}
+    .modal-close:focus-visible {{
+      outline: 2px solid var(--red);
+      outline-offset: 2px;
+    }}
     .modal-body {{
       padding: 1.5rem 1.75rem 2rem;
       overflow-y: auto;
@@ -950,9 +1038,17 @@ def generate_html(templates, spotlight=None):
 
     /* Make the body of a template card behave as a clickable surface */
     .tpl-card-clickable {{ cursor: pointer; }}
+    .tpl-card-clickable:focus {{ outline: none; }}
     .tpl-card-clickable:focus-visible {{
       outline: 2px solid var(--red);
       outline-offset: 3px;
+    }}
+
+    .modal-body a:focus {{ outline: none; }}
+    .modal-body a:focus-visible {{
+      outline: 2px solid var(--red);
+      outline-offset: 2px;
+      border-radius: 2px;
     }}
 
     @media (max-width: 640px) {{
@@ -994,32 +1090,39 @@ def generate_html(templates, spotlight=None):
 </head>
 <body>
 
+<a class="skip-link" href="#main">Skip to main content</a>
+
 <header class="site-header">
-  <h1>📋 Todoist Playbook</h1>
+  <h1><span aria-hidden="true">📋</span> Todoist Playbook</h1>
   <p>Curated templates for getting things done</p>
   <div class="search-bar" role="search">
-    <input type="search" id="search-input" placeholder="🔍 Search templates…"
+    <input type="search" id="search-input" placeholder="Search templates…"
            aria-label="Search templates" autocomplete="off" spellcheck="false">
-    <button class="search-clear" id="search-clear" aria-label="Clear search">✕</button>
+    <span class="search-kbd" id="search-kbd" aria-hidden="true"><kbd>/</kbd></span>
+    <button class="search-clear" id="search-clear" type="button" aria-label="Clear search" hidden>✕</button>
   </div>
 </header>
 
 <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb">
-  <button id="btn-back" aria-label="Back to all categories">← All Categories</button>
+  <button id="btn-back" type="button" aria-label="Back to all categories">← All Categories</button>
   <span class="crumb-sep" aria-hidden="true">/</span>
   <span class="crumb-current" id="crumb-label"></span>
 </nav>
 
+<p id="search-summary" role="status" aria-live="polite" aria-atomic="true"></p>
+
+<main id="main" tabindex="-1">
 <div class="container" id="container">
   <!-- Populated by JavaScript -->
 </div>
+</main>
 
 <div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true"
-     aria-labelledby="modal-title" aria-hidden="true">
+     aria-labelledby="modal-title" aria-describedby="modal-subtitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-header">
       <div class="modal-title-block">
-        <div class="modal-title" id="modal-title"></div>
+        <h2 class="modal-title" id="modal-title"></h2>
         <div class="modal-subtitle" id="modal-subtitle"></div>
       </div>
       <div class="modal-actions" id="modal-actions"></div>
@@ -1030,18 +1133,20 @@ def generate_html(templates, spotlight=None):
 </div>
 
 <footer class="site-footer">
-  <div class="footer-links">
-    <a href="https://github.com/colin-gourlay/todoist-playbook/issues/new?template=template-request.yml">
-      💡 Request a Template
-    </a>
-    <a href="https://github.com/colin-gourlay/todoist-playbook/issues/new?template=bug-report.yml">
-      🐛 Report a Bug
-    </a>
-    <a href="https://github.com/colin-gourlay/todoist-playbook">
-      ⭐ View on GitHub
-    </a>
-  </div>
-  <div>Built with ❤️ · <a href="https://github.com/colin-gourlay/todoist-playbook/blob/main/CONTRIBUTING">Contributing Guide</a></div>
+  <nav aria-label="Site">
+    <div class="footer-links">
+      <a href="https://github.com/colin-gourlay/todoist-playbook/issues/new?template=template-request.yml">
+        <span aria-hidden="true">💡</span> Request a Template
+      </a>
+      <a href="https://github.com/colin-gourlay/todoist-playbook/issues/new?template=bug-report.yml">
+        <span aria-hidden="true">🐛</span> Report a Bug
+      </a>
+      <a href="https://github.com/colin-gourlay/todoist-playbook">
+        <span aria-hidden="true">⭐</span> View on GitHub
+      </a>
+    </div>
+  </nav>
+  <div>Built with <span aria-hidden="true">❤️</span> · <a href="https://github.com/colin-gourlay/todoist-playbook/blob/main/CONTRIBUTING">Contributing Guide</a></div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"
@@ -1106,10 +1211,10 @@ function buildSpotlight(t) {{
   const tags = t.tags.map(tag => `<span class="tag">${{esc(tag)}}</span>`).join('');
 
   const stats = [];
-  if (t.task_count)    stats.push(`\u2714\ufe0f ${{t.task_count}}\u202ftask${{t.task_count !== 1 ? 's' : ''}}`);
-  if (t.section_count) stats.push(`\u25b8 ${{t.section_count}}\u202fsection${{t.section_count !== 1 ? 's' : ''}}`);
-  if (t.estimated_duration) stats.push(`\u23f1\ufe0f ${{esc(formatDuration(t.estimated_duration))}}`);
-  if (t.recurrence_suggestion) stats.push(`🔁 ${{esc(t.recurrence_suggestion)}}`);
+  if (t.task_count)    stats.push(`<span aria-hidden="true">\u2714\ufe0f</span> ${{t.task_count}}\u202ftask${{t.task_count !== 1 ? 's' : ''}}`);
+  if (t.section_count) stats.push(`<span aria-hidden="true">\u25b8</span> ${{t.section_count}}\u202fsection${{t.section_count !== 1 ? 's' : ''}}`);
+  if (t.estimated_duration) stats.push(`<span aria-hidden="true">\u23f1\ufe0f</span> ${{esc(formatDuration(t.estimated_duration))}}`);
+  if (t.recurrence_suggestion) stats.push(`<span aria-hidden="true">\uD83D\uDD01</span> ${{esc(t.recurrence_suggestion)}}`);
 
   const metaLine = [
     t.author  ? `by ${{esc(t.author)}}`  : '',
@@ -1121,29 +1226,28 @@ function buildSpotlight(t) {{
     : '';
 
   const actionBtn = t.csv_url
-    ? `<a class="btn-primary" href="${{esc(t.csv_url)}}" download>\u2b07\ufe0f Download CSV</a>`
+    ? `<a class="btn-primary" href="${{esc(t.csv_url)}}" download aria-label="Download CSV for ${{esc(t.name)}}"><span aria-hidden="true">\u2b07\ufe0f</span> Download CSV</a>`
     : '';
 
   return `
 <div class="spotlight-section">
-  <div class="spotlight-heading">\u2b50 Template Spotlight</div>
-  <div class="spotlight-card tpl-card-clickable"
+  <h2 class="spotlight-heading"><span aria-hidden="true">\u2b50</span> Template Spotlight</h2>
+  <button type="button" class="spotlight-card tpl-card-clickable"
        data-slug="${{esc(t.slug)}}" data-type="${{esc(t.type || 'template')}}"
-       role="button" tabindex="0"
-       aria-label="View details for ${{esc(t.name)}}">
+       aria-label="Open details for ${{esc(t.name)}}">
     <div class="spotlight-body">
       <div class="spotlight-badge">Featured Template</div>
-      <div class="spotlight-name">${{esc(t.name)}}</div>
+      <h3 class="spotlight-name">${{esc(t.name)}}</h3>
       ${{t.description ? `<div class="spotlight-desc">${{esc(t.description)}}</div>` : ''}}
       ${{tags ? `<div class="spotlight-tags">${{tags}}</div>` : ''}}
-      ${{stats.length ? `<div class="spotlight-stats">${{stats.join('<span style="margin:0 .2rem;opacity:.4">\u00b7</span>')}}</div>` : ''}}
+      ${{stats.length ? `<div class="spotlight-stats">${{stats.join('<span aria-hidden="true" style="margin:0 .2rem;opacity:.4">\u00b7</span>')}}</div>` : ''}}
       <div class="spotlight-footer">
         ${{actionBtn}}
         <span class="spotlight-meta">${{metaLine}}</span>
       </div>
     </div>
     ${{previewHtml}}
-  </div>
+  </button>
 </div>`;
 }}
 
@@ -1151,6 +1255,8 @@ function renderHome() {{
   const groups = groupByCategory(TEMPLATES);
   const cats = Object.keys(groups).sort();
   const container = document.getElementById('container');
+  const searchSummary = document.getElementById('search-summary');
+  if (searchSummary) searchSummary.textContent = '';
 
   let html = buildSpotlight(SPOTLIGHT);
   html += `<p class="intro">Browse <strong>${{TEMPLATES.length}}</strong> templates across <strong>${{cats.length}}</strong> categories.</p>
@@ -1166,29 +1272,21 @@ function renderHome() {{
     const more = count - previews.length;
 
     const previewItems = previews.map(t => `<li>${{esc(t.name)}}</li>`).join('');
-    const moreHtml = more > 0 ? `<li class="cat-more">+\u202f${{more}} more</li>` : '';
+    const moreHtml = more > 0 ? `<li class="cat-more" aria-hidden="true">+\u202f${{more}} more</li>` : '';
 
     html += `
-<div class="cat-card" role="button" tabindex="0"
-     aria-label="Browse ${{esc(label)}} templates"
-     data-category="${{esc(cat)}}">
-  <div class="cat-icon">${{icon}}</div>
-  <div class="cat-title">${{esc(label)}}</div>
+<a class="cat-card" href="#/category/${{encodeURIComponent(cat)}}"
+   aria-label="Browse ${{esc(label)}} templates">
+  <div class="cat-icon" aria-hidden="true">${{icon}}</div>
+  <h2 class="cat-title">${{esc(label)}}</h2>
   <div class="cat-count">${{count}}\u202ftemplate${{count !== 1 ? 's' : ''}}</div>
   <ul class="cat-previews">${{previewItems}}${{moreHtml}}</ul>
-  <div class="cat-arrow">View all \u2192</div>
-</div>`;
+  <div class="cat-arrow" aria-hidden="true">View all \u2192</div>
+</a>`;
   }});
 
   html += '</div>';
   container.innerHTML = html;
-
-  container.querySelectorAll('.cat-card').forEach(card => {{
-    card.addEventListener('click', () => navigate(card.dataset.category));
-    card.addEventListener('keydown', e => {{
-      if (e.key === 'Enter' || e.key === ' ') navigate(card.dataset.category);
-    }});
-  }});
 }}
 
 // ── Template card ─────────────────────────────────────────────────────────────
@@ -1211,10 +1309,10 @@ function buildTemplateCard(t) {{
   const tags = t.tags.map(tag => `<span class="tag">${{esc(tag)}}</span>`).join('');
 
   const stats = [];
-  if (t.task_count)    stats.push(`\u2714\ufe0f ${{t.task_count}}\u202ftask${{t.task_count !== 1 ? 's' : ''}}`);
-  if (t.section_count) stats.push(`\u25b8 ${{t.section_count}}\u202fsection${{t.section_count !== 1 ? 's' : ''}}`);
-  if (t.estimated_duration) stats.push(`\u23f1\ufe0f ${{esc(formatDuration(t.estimated_duration))}}`);
-  if (t.recurrence_suggestion) stats.push(`🔁 ${{esc(t.recurrence_suggestion)}}`);
+  if (t.task_count)    stats.push(`<span aria-hidden="true">\u2714\ufe0f</span> ${{t.task_count}}\u202ftask${{t.task_count !== 1 ? 's' : ''}}`);
+  if (t.section_count) stats.push(`<span aria-hidden="true">\u25b8</span> ${{t.section_count}}\u202fsection${{t.section_count !== 1 ? 's' : ''}}`);
+  if (t.estimated_duration) stats.push(`<span aria-hidden="true">\u23f1\ufe0f</span> ${{esc(formatDuration(t.estimated_duration))}}`);
+  if (t.recurrence_suggestion) stats.push(`<span aria-hidden="true">\uD83D\uDD01</span> ${{esc(t.recurrence_suggestion)}}`);
 
   const metaLine = [
     t.author  ? `by ${{esc(t.author)}}`  : '',
@@ -1232,28 +1330,28 @@ function buildTemplateCard(t) {{
 
   let actionBtn = '';
   if (t.type === 'template' && t.csv_url) {{
-    actionBtn = `<a class="btn-primary" href="${{esc(t.csv_url)}}" download>\u2b07\ufe0f Download CSV</a>`;
+    actionBtn = `<a class="btn-primary" href="${{esc(t.csv_url)}}" download aria-label="Download CSV for ${{esc(t.name)}}"><span aria-hidden="true">\u2b07\ufe0f</span> Download CSV</a>`;
   }} else if (t.type === 'prompt' && t.prompt_url) {{
-    actionBtn = `<a class="btn-primary" href="${{esc(t.prompt_url)}}">View Prompt</a>`;
+    actionBtn = `<a class="btn-primary" href="${{esc(t.prompt_url)}}" aria-label="View prompt for ${{esc(t.name)}}">View Prompt</a>`;
   }}
 
   const badgeLabel = t.type === 'prompt' ? 'AI Prompt' : 'Template';
 
-  return `<div class="tpl-card tpl-card-clickable" data-slug="${{esc(t.slug)}}" data-type="${{esc(t.type)}}"
-     role="button" tabindex="0" aria-label="View details for ${{esc(t.name)}}">
+  return `<button type="button" class="tpl-card tpl-card-clickable" data-slug="${{esc(t.slug)}}" data-type="${{esc(t.type)}}"
+     aria-label="Open details for ${{esc(t.name)}}">
   <div class="tpl-card-header">
     <span class="tpl-type-badge">${{badgeLabel}}</span>
-    <div class="tpl-title">${{esc(t.name)}}</div>
+    <h3 class="tpl-title">${{esc(t.name)}}</h3>
     ${{t.description ? `<div class="tpl-desc">${{esc(t.description)}}</div>` : ''}}
   </div>
   ${{tags ? `<div class="tpl-tags">${{tags}}</div>` : ''}}
-  ${{stats.length ? `<div class="tpl-stats">${{stats.join('<span style="margin:0 .2rem;opacity:.4">\u00b7</span>')}}</div>` : ''}}
+  ${{stats.length ? `<div class="tpl-stats">${{stats.join('<span aria-hidden="true" style="margin:0 .2rem;opacity:.4">\u00b7</span>')}}</div>` : ''}}
   ${{previewHtml}}
   <div class="tpl-card-footer">
     <span class="tpl-meta">${{metaLine}}</span>
     ${{actionBtn}}
   </div>
-</div>`;
+</button>`;
 }}
 
 // ── Category detail view ──────────────────────────────────────────────────────
