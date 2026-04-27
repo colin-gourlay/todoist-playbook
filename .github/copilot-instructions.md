@@ -44,6 +44,13 @@ When this file conflicts with the implementation, follow the implementation and 
 | `.github/scripts/**` | [.github/instructions/scripts.instructions.md](instructions/scripts.instructions.md) |
 | `wiki/**` | [.github/instructions/wiki.instructions.md](instructions/wiki.instructions.md) |
 
+## Skills and custom agents
+
+On-demand workflows live under `.github/skills/`; specialist personas live under `.github/agents/`. Prefer them over re-deriving procedures:
+
+- Skills: `add-todoist-asset`, `validate-templates-locally`, `review-unreviewed-asset`, `open-pr`
+- Agents: `template-reviewer` (read-only), `csv-doctor`, `prompt-template-author`, `asset-cataloguer` (read-only)
+
 ## Local environment notes
 
 - Primary development OS is Windows. Workflow `run:` blocks are bash; to validate locally, run them in Git Bash or WSL.

@@ -1,0 +1,12 @@
+name: REPLACE WITH HUMAN READABLE NAME
+slug: replace-with-folder-slug
+description: One-line description of what this template does.
+category: replace-with-kebab-case-category
+tags:
+  - tag-one
+version: 0.0.0
+# Optional:
+# estimated_duration: 30m
+# recurrence_suggestion: weekly
+# author: Your Name
+# project_color: blue
