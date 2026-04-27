@@ -1424,12 +1424,31 @@ function openModal(template) {{
     modalBody.innerHTML = '<p>No README is available for this template yet.</p>';
   }}
 
-  // Make any links to repo-relative paths still resolve against the docs site
+  // Make any links to repo-relative paths still resolve sensibly. README files
+  // often link to other templates with relative paths like
+  // `../other-template/` or `../../group/other-template/`. On the deployed
+  // gallery (a single-page site rooted at /) those resolve to URLs that 404,
+  // so intercept them: if the final path segment matches a known template or
+  // prompt slug, open that template's modal instead of navigating away.
   modalBody.querySelectorAll('a[href]').forEach(a => {{
     const href = a.getAttribute('href');
+    if (!href) return;
     if (/^https?:|^mailto:|^#/.test(href)) {{
       a.setAttribute('target', '_blank');
       a.setAttribute('rel', 'noopener');
+      return;
+    }}
+    const cleaned = href.split('#')[0].split('?')[0].replace(/\\/+$/, '');
+    if (!cleaned) return;
+    const segments = cleaned.split('/').filter(s => s && s !== '.' && s !== '..');
+    if (!segments.length) return;
+    const lastSeg = segments[segments.length - 1].replace(/\\.(md|csv)$/i, '');
+    const target = TEMPLATE_LOOKUP['template:' + lastSeg] || TEMPLATE_LOOKUP['prompt:' + lastSeg];
+    if (target) {{
+      a.addEventListener('click', e => {{
+        e.preventDefault();
+        openModal(target);
+      }});
     }}
   }});
 
