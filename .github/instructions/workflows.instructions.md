@@ -34,6 +34,7 @@ description: Inventory and behaviour of GitHub Actions workflows in this repo.
 
 ## Reusable building blocks
 
+- `reusable-gallery-quality.yml` — generates the gallery, audits it with Lighthouse CI and pa11y-ci, uploads reports as artifacts
 - `.github/REUSABLE_WORKFLOWS.md` documents reusable workflows and the `commit-and-push` composite action
 
 ## When editing workflows

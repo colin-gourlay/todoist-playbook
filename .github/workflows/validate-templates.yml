@@ -13,7 +13,10 @@ on:
       - .github/workflows/reusable-release-assets.yml
       - .github/workflows/validate-templates.yml
       - .github/workflows/reusable-validate-templates.yml
+      - .github/workflows/reusable-gallery-quality.yml
       - .github/scripts/project_colors.txt
+      - .github/scripts/generate_gallery.py
+      - .github/quality/**
   pull_request:
     branches: [ main ]
     paths:
@@ -26,7 +29,10 @@ on:
       - .github/workflows/reusable-release-assets.yml
       - .github/workflows/validate-templates.yml
       - .github/workflows/reusable-validate-templates.yml
+      - .github/workflows/reusable-gallery-quality.yml
       - .github/scripts/project_colors.txt
+      - .github/scripts/generate_gallery.py
+      - .github/quality/**
   workflow_dispatch:
   merge_group:
 
@@ -41,3 +47,11 @@ jobs:
     permissions:
       contents: read
     uses: ./.github/workflows/reusable-validate-templates.yml
+
+  gallery-quality:
+    needs: validate
+    if: ${{ success() }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/reusable-gallery-quality.yml
+

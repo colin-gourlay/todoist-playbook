@@ -1,0 +1,86 @@
+name: Reusable — Gallery Quality
+
+on:
+  workflow_call:
+    inputs:
+      gallery_dir:
+        description: Directory containing the generated gallery.
+        type: string
+        default: docs
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8d3c67de8e2fe68ef647c8db1e6a09f647780f40 # v2.19.0
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Generate gallery
+        run: python3 .github/scripts/generate_gallery.py
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+          cache-dependency-path: '.github/quality/package-lock.json'
+
+      - name: Install quality tools
+        run: npm ci --prefix .github/quality
+
+      - name: Start static server
+        run: |
+          npx --prefix .github/quality http-server ${{ inputs.gallery_dir }} -p 8080 --silent &
+          SERVER_PID=$!
+          echo "SERVER_PID=$SERVER_PID" >> $GITHUB_ENV
+
+          echo "Waiting for server to be ready…"
+          for i in $(seq 1 30); do
+            if curl -sf http://127.0.0.1:8080 > /dev/null 2>&1; then
+              echo "Server is ready after ${i}s"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "❌ Server did not respond within 30 seconds"
+          exit 1
+
+      - name: Run Lighthouse CI
+        run: |
+          npx --prefix .github/quality lhci autorun --config=.github/quality/lighthouserc.json
+
+      - name: Run pa11y-ci
+        run: |
+          mkdir -p .github/quality/pa11y-results
+          npx --prefix .github/quality pa11y-ci --config .github/quality/.pa11yci.json \
+            --json > .github/quality/pa11y-results/report.json \
+            || { echo "❌ pa11y-ci found accessibility issues:"; cat .github/quality/pa11y-results/report.json; exit 1; }
+
+      - name: Upload Lighthouse report
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: lighthouse-report
+          path: .lighthouseci/
+
+      - name: Upload pa11y report
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: pa11y-report
+          path: .github/quality/pa11y-results/
+          if-no-files-found: warn
+
+      - name: Stop static server
+        if: always()
+        run: kill $SERVER_PID || true
