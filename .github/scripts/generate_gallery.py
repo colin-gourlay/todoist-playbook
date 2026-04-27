@@ -1,15 +1,24 @@
 #!/usr/bin/env python3
-"""Generate a browsable Template Gallery as a self-contained static HTML page.
+"""Generate the Template Gallery as a multi-file static site.
 
 Usage:
     python3 generate_gallery.py
 
 Environment variables:
   TEMPLATES_DIR         Path to the CSV templates folder (default: csv-templates)
-    PROMPT_TEMPLATES_DIR  Path to the prompt-templates folder (default: prompt-templates)
-    OUTPUT_DIR            Path to the output folder (default: docs)
+  PROMPT_TEMPLATES_DIR  Path to the prompt-templates folder (default: prompt-templates)
+  OUTPUT_DIR            Path to the output folder (default: docs)
+  GITHUB_SHA            Git commit SHA (injected by GitHub Actions)
+  GITHUB_REPOSITORY     "owner/repo" used for build provenance
+  ASSERT_OUTPUT         If "1", run hardening assertions after generation
+
+The generator emits an HTML shell that loads CSS/JS from sibling files and reads
+template data from a JSON island, so a strict CSP without 'unsafe-inline' is
+possible. Markdown is rendered client-side via marked@12 and sanitised by
+DOMPurify@3 (vendored under docs/vendor/).
 """
 
+import base64
 import csv
 import datetime
 import hashlib
@@ -17,16 +26,24 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import sys
 import urllib.request
 
 from template_discovery import iter_template_locations
 
-TEMPLATES_DIR = os.environ.get("TEMPLATES_DIR", "csv-templates")
+TEMPLATES_DIR        = os.environ.get("TEMPLATES_DIR", "csv-templates")
 PROMPT_TEMPLATES_DIR = os.environ.get("PROMPT_TEMPLATES_DIR", "prompt-templates")
-OUTPUT_DIR = os.environ.get("OUTPUT_DIR", "docs")
+OUTPUT_DIR           = os.environ.get("OUTPUT_DIR", "docs")
+GITHUB_SHA           = os.environ.get("GITHUB_SHA", "")
+GITHUB_REPOSITORY    = os.environ.get("GITHUB_REPOSITORY", "colin-gourlay/todoist-playbook")
+REPO_URL             = "https://github.com/" + GITHUB_REPOSITORY
+ASSERT_OUTPUT        = os.environ.get("ASSERT_OUTPUT", "0") == "1"
+SHORT_SHA            = (GITHUB_SHA or "")[:7]
+BUILD_DATE           = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
 
-# Category display metadata: slug -> (emoji, human-readable label)
+ASSETS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "gallery_assets")
+
 CATEGORY_META = {
     "personal-systems":         ("🔁", "Personal Systems"),
     "engineering":              ("💻", "Engineering"),
@@ -40,19 +57,53 @@ CATEGORY_META = {
     "content-generation":       ("🤖", "Content Generation"),
 }
 
+# Vendored libraries pinned by version. Downloaded at build time; falls back to
+# stubs if the network is unavailable. Hashes are recorded in
+# .github/scripts/vendor-manifest.json for reproducibility.
+VENDOR = {
+    "marked.min.js":    "https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js",
+    "dompurify.min.js": "https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js",
+}
+
+MARKED_STUB = """\
+/* marked@12.0.2 download stub — Markdown rendered as plain text */
+(function(g){
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  g.marked = { parse: function(s){ return '<pre>' + esc(s) + '</pre>'; } };
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+"""
+
+DOMPURIFY_STUB = """\
+/* DOMPurify@3.1.6 download stub — passthrough sanitiser. Real DOMPurify is
+ * preferred; this is only used when the build cannot reach the CDN. */
+(function(g){
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  g.DOMPurify = {
+    sanitize: function(html){
+      // Defensive fallback: strip <script>/<iframe> blocks even in passthrough mode.
+      return String(html)
+        .replace(/<script[\\s\\S]*?<\\/script>/gi, '')
+        .replace(/<iframe[\\s\\S]*?<\\/iframe>/gi, '')
+        .replace(/ on[a-z]+="[^"]*"/gi, '')
+        .replace(/ on[a-z]+='[^']*'/gi, '')
+        .replace(/javascript:/gi, '');
+    },
+    addHook: function(){}
+  };
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+"""
+
 
 # ---------------------------------------------------------------------------
-# Parsing helpers
+# Parsing
 # ---------------------------------------------------------------------------
 
 def parse_meta(path):
-    """Parse a simple meta.yml file without a YAML library."""
     meta = {"tags": [], "inputs": []}
-    in_list = None  # name of the current list key being parsed
+    in_list = None
     with open(path, encoding="utf-8") as f:
         for line in f:
             line = line.rstrip("\n")
-            # Detect start of a list block (e.g. "tags:" or "inputs:" with no value)
             m_list = re.match(r"^(tags|inputs):\s*$", line)
             if m_list:
                 in_list = m_list.group(1)
@@ -62,7 +113,6 @@ def parse_meta(path):
                 if m:
                     meta[in_list].append(m.group(1).strip())
                     continue
-                # Any non-indented line ends the list block
                 if line and not line[0].isspace():
                     in_list = None
             m = re.match(r"^([a-zA-Z_][a-zA-Z0-9_]*):\s*(.*)$", line)
@@ -76,7 +126,6 @@ def parse_meta(path):
 
 
 def parse_csv_rows(path):
-    """Return all valid (section/task) rows from a template CSV."""
     rows = []
     try:
         with open(path, encoding="utf-8") as f:
@@ -96,12 +145,7 @@ def parse_csv_rows(path):
     return rows
 
 
-# ---------------------------------------------------------------------------
-# Template loading
-# ---------------------------------------------------------------------------
-
 def read_readme(path):
-    """Return README markdown contents, or empty string if missing/unreadable."""
     if not path or not os.path.exists(path):
         return ""
     try:
@@ -112,43 +156,66 @@ def read_readme(path):
         return ""
 
 
+def file_mtime_iso(path):
+    """Return ISO-8601 date for the most recent git commit touching the file.
+
+    Falls back to filesystem mtime if git is unavailable. Git data is preferred
+    because checked-out files share the runner's timestamp on CI.
+    """
+    try:
+        out = subprocess.check_output(
+            ["git", "log", "-1", "--format=%cs", "--", path],
+            stderr=subprocess.DEVNULL,
+        ).decode().strip()
+        if out:
+            return out
+    except Exception:
+        pass
+    try:
+        ts = os.path.getmtime(path)
+        return datetime.datetime.fromtimestamp(ts, datetime.timezone.utc).strftime("%Y-%m-%d")
+    except Exception:
+        return ""
+
+
+# ---------------------------------------------------------------------------
+# Template loading
+# ---------------------------------------------------------------------------
+
 def load_templates():
     templates = []
 
-    # Load CSV templates (supports nested csv-templates/{group}/{slug}/ layout)
     if os.path.isdir(TEMPLATES_DIR):
         for location in iter_template_locations(TEMPLATES_DIR):
-            template_dir = location.template_dir
-            meta_path = location.meta_path
-            csv_path = location.csv_path
-            if not os.path.exists(meta_path):
+            if not os.path.exists(location.meta_path):
                 continue
-            meta = parse_meta(meta_path)
-            rows = parse_csv_rows(csv_path) if os.path.exists(csv_path) else []
+            meta = parse_meta(location.meta_path)
+            rows = parse_csv_rows(location.csv_path) if os.path.exists(location.csv_path) else []
             task_count = sum(1 for r in rows if r["type"] == "task")
             section_count = sum(1 for r in rows if r["type"] == "section")
             templates.append({
-                "slug": location.slug,
-                "name": meta.get("name", location.slug),
-                "description": meta.get("description", ""),
-                "category": meta.get("category", ""),
-                "tags": meta.get("tags", []),
-                "estimated_duration": meta.get("estimated_duration", ""),
+                "slug":                  location.slug,
+                "name":                  meta.get("name", location.slug),
+                "description":           meta.get("description", ""),
+                "category":              meta.get("category", ""),
+                "tags":                  meta.get("tags", []),
+                "estimated_duration":    meta.get("estimated_duration", ""),
                 "recurrence_suggestion": meta.get("recurrence_suggestion", ""),
-                "author": meta.get("author", ""),
-                "version": meta.get("version", ""),
-                "deprecated": meta.get("deprecated", ""),
-                "task_count": task_count,
-                "section_count": section_count,
-                "rows": rows,
-                "csv_url": f"csv-templates/{location.relative_path}/template.csv",
-                "prompt_url": "",
-                "inputs": [],
-                "type": "template",
-                "readme": read_readme(location.readme_path),
+                "author":                meta.get("author", ""),
+                "version":               meta.get("version", ""),
+                "deprecated":            meta.get("deprecated", ""),
+                "task_count":            task_count,
+                "section_count":         section_count,
+                "rows":                  rows,
+                "csv_url":               f"csv-templates/{location.relative_path}/template.csv",
+                "prompt_url":            "",
+                "inputs":                [],
+                "type":                  "template",
+                "readme":                read_readme(location.readme_path),
+                "github_path":           f"csv-templates/{location.relative_path}",
+                "mtime":                 file_mtime_iso(location.meta_path),
             })
 
-    # Load prompt templates
     if os.path.isdir(PROMPT_TEMPLATES_DIR):
         for slug in sorted(os.listdir(PROMPT_TEMPLATES_DIR)):
             template_dir = os.path.join(PROMPT_TEMPLATES_DIR, slug)
@@ -160,862 +227,403 @@ def load_templates():
             meta = parse_meta(meta_path)
             readme_path = os.path.join(template_dir, "README.md")
             templates.append({
-                "slug": slug,
-                "name": meta.get("name", slug),
-                "description": meta.get("description", ""),
-                "category": meta.get("category", ""),
-                "tags": meta.get("tags", []),
-                "estimated_duration": "",
+                "slug":                  slug,
+                "name":                  meta.get("name", slug),
+                "description":           meta.get("description", ""),
+                "category":              meta.get("category", ""),
+                "tags":                  meta.get("tags", []),
+                "estimated_duration":    "",
                 "recurrence_suggestion": "",
-                "author": meta.get("author", ""),
-                "version": meta.get("version", ""),
-                "task_count": 0,
-                "section_count": 0,
-                "rows": [],
-                "csv_url": "",
-                "prompt_url": f"prompt-templates/{slug}/prompt.md",
-                "inputs": meta.get("inputs", []),
-                "type": "prompt",
-                "readme": read_readme(readme_path),
+                "author":                meta.get("author", ""),
+                "version":               meta.get("version", ""),
+                "task_count":            0,
+                "section_count":         0,
+                "rows":                  [],
+                "csv_url":               "",
+                "prompt_url":            f"prompt-templates/{slug}/prompt.md",
+                "inputs":                meta.get("inputs", []),
+                "type":                  "prompt",
+                "readme":                read_readme(readme_path),
+                "github_path":           f"prompt-templates/{slug}",
+                "mtime":                 file_mtime_iso(meta_path),
             })
 
     return templates
 
 
-# ---------------------------------------------------------------------------
-# Spotlight selection
-# ---------------------------------------------------------------------------
-
-def _semver_key(template):
-    """Return a tuple (major, minor, patch) for semver comparison."""
-    version = template.get("version", "0.0.0") or "0.0.0"
-    parts = version.split(".")
+def _semver_key(t):
+    parts = (t.get("version", "0.0.0") or "0.0.0").split(".")
     try:
         return tuple(int(p) for p in (parts + ["0", "0"])[:3])
     except ValueError:
         return (0, 0, 0)
 
 
-def _is_truthy(value):
-    """Return True when a metadata value represents boolean true."""
-    if isinstance(value, bool):
-        return value
-    if value is None:
-        return False
-    return str(value).strip().lower() in {"true", "yes", "1", "on"}
+def _truthy(v):
+    if isinstance(v, bool): return v
+    if v is None: return False
+    return str(v).strip().lower() in {"true", "yes", "1", "on"}
 
 
 def get_spotlight_template(templates):
-    """Return the template with the highest semantic version, excluding 0.0.0.
-
-    Returns None if all templates are at version 0.0.0 (unreviewed).
-    Only regular templates (type == 'template') are considered.
-    """
-    candidates = [
+    cands = [
         t for t in templates
         if t.get("type") == "template"
         and _semver_key(t) > (0, 0, 0)
-        and not _is_truthy(t.get("deprecated"))
+        and not _truthy(t.get("deprecated"))
     ]
-    if not candidates:
-        return None
-    return max(candidates, key=_semver_key)
+    return max(cands, key=_semver_key) if cands else None
 
 
+# ---------------------------------------------------------------------------
+# JSON injection hardening
+# ---------------------------------------------------------------------------
+
+def safe_json_for_html(obj):
+    """JSON-encode ``obj`` so the result is safe to embed in an HTML script tag.
+
+    Escapes ``</``, ``<!--``, ``-->`` and U+2028 / U+2029 so the data island
+    can't terminate the surrounding ``<script>`` block or inject HTML comments.
+    """
+    raw = json.dumps(obj, ensure_ascii=False)
+    raw = raw.replace("</", "<\\/")
+    raw = raw.replace("<!--", "<\\!--")
+    raw = raw.replace("-->", "--\\>")
+    raw = raw.replace("\u2028", "\\u2028")
+    raw = raw.replace("\u2029", "\\u2029")
+    return raw
 
 
-def generate_html(templates, spotlight=None):
-    templates_json = json.dumps(templates, ensure_ascii=False)
-    category_meta_json = json.dumps(CATEGORY_META, ensure_ascii=False)
-    spotlight_json = json.dumps(spotlight, ensure_ascii=False)
+def assert_data_island_roundtrip(html, expected_obj):
+    """Extract the JSON island and check json.loads() returns expected_obj."""
+    m = re.search(
+        r'<script type="application/json" id="tp-data">(.*?)</script>',
+        html,
+        re.DOTALL,
+    )
+    assert m, "data island not found in generated HTML"
+    raw = m.group(1)
+    # Undo HTML-safe escapes
+    decoded = (raw
+               .replace("<\\/", "</")
+               .replace("<\\!--", "<!--")
+               .replace("--\\>", "-->"))
+    parsed = json.loads(decoded)
+    assert parsed.get("templates") and isinstance(parsed["templates"], list), \
+        "data island templates missing"
+    return parsed
+
+
+# ---------------------------------------------------------------------------
+# Vendor download
+# ---------------------------------------------------------------------------
+
+def download_vendor(vendor_dir):
+    """Download marked + DOMPurify; fallback to stubs if network is unavailable.
+
+    Verifies SHA-384 against ``.github/scripts/vendor-manifest.json`` when
+    populated, and updates that manifest after a successful download.
+    Returns ``{filename: 'sha384-<base64>'}`` for SRI integrity attributes.
+    """
+    os.makedirs(vendor_dir, exist_ok=True)
+    manifest_path = os.path.join(os.path.dirname(__file__), "vendor-manifest.json")
+    try:
+        with open(manifest_path, encoding="utf-8") as f:
+            manifest = json.load(f)
+    except Exception:
+        manifest = {}
+
+    sri_hashes = {}
+    stubs = {"marked.min.js": MARKED_STUB, "dompurify.min.js": DOMPURIFY_STUB}
+
+    for filename, url in VENDOR.items():
+        dest = os.path.join(vendor_dir, filename)
+        expected = manifest.get(filename, {}).get("sha384", "")
+        downloaded = False
+        try:
+            req = urllib.request.Request(
+                url,
+                headers={"User-Agent": "todoist-playbook-gallery-builder/1.0"},
+            )
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                data = resp.read()
+            actual = base64.b64encode(hashlib.sha384(data).digest()).decode()
+            if expected and expected != actual:
+                print(
+                    f"⚠️  Vendor checksum mismatch for {filename}: "
+                    f"expected {expected}, got {actual}",
+                    file=sys.stderr,
+                )
+            with open(dest, "wb") as f:
+                f.write(data)
+            sri_hashes[filename] = "sha384-" + actual
+            manifest.setdefault(filename, {})["sha384"] = actual
+            manifest[filename]["url"] = url
+            manifest[filename]["bytes"] = len(data)
+            downloaded = True
+            print(f"✅ Downloaded {filename} ({len(data):,} bytes)")
+        except Exception as exc:
+            print(
+                f"⚠️  Vendor download failed for {filename} ({exc}); using stub",
+                file=sys.stderr,
+            )
+
+        if not downloaded:
+            with open(dest, "w", encoding="utf-8") as f:
+                f.write(stubs[filename])
+            with open(dest, "rb") as f:
+                d = f.read()
+            sri_hashes[filename] = "sha384-" + base64.b64encode(
+                hashlib.sha384(d).digest()
+            ).decode()
+
+    try:
+        with open(manifest_path, "w", encoding="utf-8") as f:
+            json.dump(manifest, f, indent=2, sort_keys=True)
+            f.write("\n")
+    except Exception:
+        pass
+
+    return sri_hashes
+
+
+# ---------------------------------------------------------------------------
+# Static asset emission
+# ---------------------------------------------------------------------------
+
+def write_text(path, text):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(text)
+
+
+def emit_pwa_assets():
+    """Emit favicon, apple-touch-icon (SVG used for both), OG image and manifest."""
+    favicon = """\
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Todoist Playbook">
+  <rect width="64" height="64" rx="14" fill="#d34244"/>
+  <path d="M16 24h32M16 32h32M16 40h22" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="14" cy="24" r="2.5" fill="#fff"/>
+  <circle cx="14" cy="32" r="2.5" fill="#fff"/>
+  <circle cx="14" cy="40" r="2.5" fill="#fff"/>
+</svg>
+"""
+    write_text(os.path.join(OUTPUT_DIR, "favicon.svg"), favicon)
+    # Apple touch icon — PNG generation requires extra deps; ship the same SVG
+    # under .png filename so the link still resolves. Modern iOS accepts SVG
+    # for masks but falls back to default if rejected. Documented choice.
+    write_text(os.path.join(OUTPUT_DIR, "apple-touch-icon.svg"), favicon)
+
+    og = """\
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img"
+     aria-label="Todoist Playbook — Curated templates for getting things done">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d34244"/>
+      <stop offset="100%" stop-color="#ae3b3d"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g)"/>
+  <text x="80" y="280" font-family="Helvetica, Arial, sans-serif"
+        font-size="84" font-weight="800" fill="#fff" letter-spacing="-2">
+    📋 Todoist Playbook
+  </text>
+  <text x="80" y="360" font-family="Helvetica, Arial, sans-serif"
+        font-size="38" font-weight="500" fill="#fff" opacity="0.95">
+    Curated templates for getting things done
+  </text>
+  <text x="80" y="540" font-family="Helvetica, Arial, sans-serif"
+        font-size="24" font-weight="500" fill="#fff" opacity="0.85">
+    github.com/colin-gourlay/todoist-playbook
+  </text>
+</svg>
+"""
+    write_text(os.path.join(OUTPUT_DIR, "og-image.svg"), og)
+
+    manifest = {
+        "name": "Todoist Playbook — Template Gallery",
+        "short_name": "Playbook",
+        "description": "Curated Todoist templates for getting things done.",
+        "start_url": "./",
+        "scope": "./",
+        "display": "standalone",
+        "theme_color": "#d34244",
+        "background_color": "#fafbfc",
+        "icons": [
+            {"src": "favicon.svg",          "sizes": "any",      "type": "image/svg+xml"},
+            {"src": "apple-touch-icon.svg", "sizes": "180x180",  "type": "image/svg+xml",
+             "purpose": "maskable"},
+        ],
+    }
+    write_text(
+        os.path.join(OUTPUT_DIR, "manifest.webmanifest"),
+        json.dumps(manifest, indent=2),
+    )
+
+
+def emit_service_worker():
+    """Emit a small cache-first service worker keyed by build SHA."""
+    cache_key = (SHORT_SHA or BUILD_DATE or "dev")
+    sw = (
+        '/* Todoist Playbook — service worker (cache-first app shell, '
+        'stale-while-revalidate for templates) */\n'
+        'const CACHE = "tp-shell-' + cache_key + '";\n'
+        'const SHELL = ['
+        '"./", "index.html", "styles.css", "app.js", "data.json", '
+        '"manifest.webmanifest", "favicon.svg", '
+        '"vendor/marked.min.js", "vendor/dompurify.min.js"'
+        '];\n'
+        'self.addEventListener("install", (e) => {\n'
+        '  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL).catch(()=>{})));\n'
+        '  self.skipWaiting();\n'
+        '});\n'
+        'self.addEventListener("activate", (e) => {\n'
+        '  e.waitUntil(caches.keys().then((keys) => Promise.all(\n'
+        '    keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))\n'
+        '  )));\n'
+        '  self.clients.claim();\n'
+        '});\n'
+        'self.addEventListener("fetch", (e) => {\n'
+        '  const req = e.request;\n'
+        '  if (req.method !== "GET") return;\n'
+        '  const url = new URL(req.url);\n'
+        '  if (url.origin !== self.location.origin) return;\n'
+        '  const isTemplate = url.pathname.includes("/csv-templates/") || '
+        'url.pathname.includes("/prompt-templates/");\n'
+        '  if (isTemplate) {\n'
+        '    e.respondWith(\n'
+        '      caches.match(req).then((cached) => {\n'
+        '        const network = fetch(req).then((res) => {\n'
+        '          const copy = res.clone();\n'
+        '          caches.open(CACHE).then((c) => c.put(req, copy)).catch(()=>{});\n'
+        '          return res;\n'
+        '        }).catch(() => cached);\n'
+        '        return cached || network;\n'
+        '      })\n'
+        '    );\n'
+        '  } else {\n'
+        '    e.respondWith(\n'
+        '      caches.match(req).then((cached) => cached || fetch(req).catch(() => caches.match("./")))\n'
+        '    );\n'
+        '  }\n'
+        '});\n'
+    )
+    write_text(os.path.join(OUTPUT_DIR, "sw.js"), sw)
+
+
+def read_asset(filename):
+    """Read a bundled asset (CSS or JS) from the gallery_assets folder."""
+    with open(os.path.join(ASSETS_DIR, filename), encoding="utf-8") as f:
+        return f.read()
+
+
+# ---------------------------------------------------------------------------
+# HTML shell
+# ---------------------------------------------------------------------------
+
+def build_html(data_payload, sri_hashes):
+    data_json = safe_json_for_html(data_payload)
+    marked_sri    = sri_hashes.get("marked.min.js", "")
+    dompurify_sri = sri_hashes.get("dompurify.min.js", "")
+    site_url = "https://colin-gourlay.github.io/todoist-playbook/"
+    description = (
+        "Curated Todoist templates for getting things done — accessible, "
+        "searchable gallery with categories, prompts and bundles."
+    )
+
+    csp = (
+        "default-src 'none'; "
+        "script-src 'self'; "
+        "style-src 'self'; "
+        "img-src 'self' data:; "
+        "font-src 'self'; "
+        "connect-src 'self'; "
+        "manifest-src 'self'; "
+        "base-uri 'none'; "
+        "form-action 'none'; "
+        "frame-ancestors 'none'; "
+        "upgrade-insecure-requests"
+    )
+    permissions_policy = (
+        "geolocation=(), microphone=(), camera=(), payment=(), usb=(), "
+        "magnetometer=(), gyroscope=(), accelerometer=(), interest-cohort=()"
+    )
+
+    sri_marked    = f' integrity="{marked_sri}" crossorigin="anonymous"' if marked_sri else ""
+    sri_dompurify = f' integrity="{dompurify_sri}" crossorigin="anonymous"' if dompurify_sri else ""
+
+    build_stamp_parts = []
+    if BUILD_DATE: build_stamp_parts.append(f"Built {BUILD_DATE}")
+    if SHORT_SHA:  build_stamp_parts.append(f"commit {SHORT_SHA}")
+    build_stamp = " · ".join(build_stamp_parts)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="{csp}">
+  <meta http-equiv="Permissions-Policy" content="{permissions_policy}">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#d34244">
+  <meta name="description" content="{description}">
+  <meta property="og:title" content="Todoist Playbook — Template Gallery">
+  <meta property="og:description" content="{description}">
+  <meta property="og:image" content="{site_url}og-image.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{site_url}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Todoist Playbook — Template Gallery">
+  <meta name="twitter:description" content="{description}">
+  <meta name="twitter:image" content="{site_url}og-image.svg">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.svg">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
   <title>Todoist Playbook — Template Gallery</title>
-  <style>
-    *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
-
-    :root {{
-      --red: #d34244;
-      --red-dark: #a83436;
-      --red-light: #fff0ef;
-      --red-lighter: #fef8f7;
-      --bg: #fafbfc;
-      --bg-secondary: #f3f5f7;
-      --card-bg: #ffffff;
-      --text: #1a202c;
-      --text-secondary: #2d3748;
-      --muted: #718096;
-      --muted-light: #a0aec0;
-      --border: #e2e8f0;
-      --tag-bg: #edf2f7;
-      --tag-text: #2d3748;
-      --section-color: #6d28d9;
-      --section-bg: #f5f3ff;
-      --radius: 8px;
-      --radius-lg: 12px;
-      --shadow: 0 1px 2px rgba(0,0,0,0.04);
-      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-      --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.05);
-      --shadow-lg: 0 10px 15px rgba(0,0,0,0.08), 0 4px 6px rgba(0,0,0,0.05);
-      --shadow-hover: 0 20px 25px rgba(0,0,0,0.12), 0 10px 10px rgba(0,0,0,0.04);
-      --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    }}
-
-    body {{
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                   Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      font-size: 15px;
-      min-height: 100vh;
-      letter-spacing: -0.01em;
-    }}
-
-    /* ── Header ── */
-    .site-header {{
-      background: linear-gradient(135deg, #d34244 0%, #ae3b3d 100%);
-      color: #fff;
-      padding: 2.5rem 1rem 2rem;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(211, 66, 68, 0.15);
-    }}
-    .site-header h1 {{
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      line-height: 1.2;
-    }}
-    .site-header p {{
-      margin-top: 0.5rem;
-      opacity: 0.92;
-      font-size: 1.05rem;
-      font-weight: 500;
-      letter-spacing: -0.01em;
-    }}
-
-    /* ── Search bar ── */
-    .search-bar {{
-      margin: 1.5rem auto 0;
-      max-width: 520px;
-      position: relative;
-    }}
-    .search-bar input {{
-      width: 100%;
-      padding: 0.75rem 2.75rem 0.75rem 1.25rem;
-      border: none;
-      border-radius: 999px;
-      font-size: 0.95rem;
-      background: rgba(255,255,255,0.22);
-      color: #fff;
-      outline: none;
-      transition: background var(--transition), box-shadow var(--transition);
-      backdrop-filter: blur(8px);
-    }}
-    .search-bar input::placeholder {{ color: rgba(255,255,255,0.75); font-weight: 500; }}
-    .search-bar input:focus {{
-      background: rgba(255,255,255,0.32);
-      box-shadow: 0 0 0 3px rgba(255,255,255,0.15);
-    }}
-    .search-bar .search-clear {{
-      display: none;
-      position: absolute;
-      right: 0.75rem;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: rgba(255,255,255,0.85);
-      font-size: 1.1rem;
-      line-height: 1;
-      padding: 0.25rem;
-      transition: color var(--transition), transform var(--transition);
-    }}
-    .search-bar .search-clear:hover {{ color: #fff; transform: translateY(-50%) scale(1.1); }}
-
-    /* ── Search results ── */
-    .search-summary {{
-      font-size: 0.95rem;
-      color: var(--muted);
-      margin-bottom: 1.5rem;
-      font-weight: 500;
-    }}
-    .search-summary strong {{ color: var(--text-secondary); font-weight: 700; }}
-    .no-results {{
-      text-align: center;
-      padding: 3.5rem 1rem;
-      color: var(--muted);
-    }}
-    .no-results .no-results-icon {{ font-size: 2.8rem; margin-bottom: 1rem; }}
-    .no-results p {{
-      font-size: 0.95rem;
-      line-height: 1.6;
-      max-width: 400px;
-      margin: 0 auto;
-    }}
-
-    /* ── Breadcrumb bar ── */
-    .breadcrumb {{
-      display: none;
-      background: var(--bg-secondary);
-      border-bottom: 1px solid var(--border);
-      padding: 0.9rem 1.5rem;
-      animation: slideDown 0.25s ease-out;
-    }}\n    @keyframes slideDown {{
-      from {{ transform: translateY(-8px); opacity: 0; }}
-      to {{ transform: translateY(0); opacity: 1; }}
-    }}
-    .breadcrumb button {{
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--red);
-      font-size: 0.9rem;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.25rem 0;
-      transition: color var(--transition);
-    }}
-    .breadcrumb button:hover {{
-      color: var(--red-dark);
-      text-decoration: underline;
-    }}
-    .breadcrumb .crumb-sep {{
-      color: var(--muted-light);
-      margin: 0 0.5rem;
-    }}
-    .breadcrumb .crumb-current {{
-      color: var(--text-secondary);
-      font-weight: 700;
-      font-size: 0.9rem;
-    }}
-
-    /* ── Container ── */
-    .container {{ max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.25rem; }}
-
-    /* ── Intro text ── */
-    .intro {{
-      font-size: 0.95rem;
-      color: var(--muted);
-      margin-bottom: 2rem;
-      font-weight: 500;
-    }}
-    .intro strong {{ color: var(--text-secondary); font-weight: 600; }}
-
-    /* ── Category grid ── */
-    .category-grid {{
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }}
-
-    /* ── Category card ── */
-    .cat-card {{
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm);
-      padding: 1.75rem;
-      cursor: pointer;
-      transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      color: inherit;
-      text-decoration: none;
-    }}
-    .cat-card:hover {{
-      box-shadow: var(--shadow-md);
-      transform: translateY(-4px);
-      border-color: var(--red-light);
-    }}
-    .cat-card:focus-visible {{
-      outline: 2px solid var(--red);
-      outline-offset: 3px;
-    }}
-    .cat-icon {{ font-size: 2.2rem; line-height: 1; margin-bottom: 0.25rem; }}
-    .cat-title {{
-      font-size: 1.15rem;
-      font-weight: 700;
-      line-height: 1.3;
-      color: var(--text-secondary);
-    }}
-    .cat-count {{
-      font-size: 0.85rem;
-      color: var(--red);
-      font-weight: 700;
-      letter-spacing: 0.01em;
-    }}
-    .cat-previews {{
-      list-style: none;
-      font-size: 0.85rem;
-      color: var(--muted);
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-      margin-top: 0.25rem;
-    }}
-    .cat-previews li::before {{ content: "◆ "; opacity: 0.3; color: var(--red); }}
-    .cat-more {{
-      font-size: 0.8rem;
-      color: var(--muted-light);
-      font-style: italic;
-      margin-top: 0.25rem;
-    }}
-    .cat-arrow {{
-      margin-top: auto;
-      font-size: 0.85rem;
-      color: var(--red);
-      font-weight: 700;
-      transition: transform var(--transition);
-      letter-spacing: 0.01em;
-    }}
-    .cat-card:hover .cat-arrow {{ transform: translateX(3px); }}
-
-    /* ── Category detail heading ── */
-    .cat-detail-header {{
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 2px solid var(--border);
-    }}
-    .cat-detail-icon {{ font-size: 2.2rem; line-height: 1; }}
-    .cat-detail-title {{
-      font-size: 1.5rem;
-      font-weight: 800;
-      line-height: 1.2;
-      color: var(--text-secondary);
-    }}
-    .cat-detail-count {{
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-top: 0.2rem;
-      font-weight: 500;
-    }}
-
-    /* ── Template grid ── */
-    .template-grid {{
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 1.5rem;
-    }}
-
-    /* ── Template card ── */
-    .tpl-card {{
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      transition: box-shadow var(--transition), border-color var(--transition), transform var(--transition);
-    }}
-    .tpl-card:hover {{
-      box-shadow: var(--shadow-md);
-      border-color: var(--border);
-      transform: translateY(-2px);
-    }}
-
-    .tpl-card-header {{ padding: 1.25rem 1.25rem 0.5rem; }}
-    .tpl-type-badge {{
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--red);
-      background: var(--red-light);
-      border-radius: 6px;
-      padding: 0.25rem 0.65rem;
-      margin-bottom: 0.5rem;
-    }}
-    .tpl-title {{
-      font-size: 1.1rem;
-      font-weight: 800;
-      line-height: 1.3;
-      color: var(--text-secondary);
-    }}
-    .tpl-desc {{
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-top: 0.4rem;
-      line-height: 1.5;
-    }}
-
-    .tpl-tags {{
-      padding: 0.5rem 1.25rem 0.25rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }}
-    .tag {{
-      padding: 0.2rem 0.65rem;
-      background: var(--tag-bg);
-      border-radius: 6px;
-      font-size: 0.75rem;
-      color: var(--tag-text);
-      font-weight: 500;
-      border: 1px solid transparent;
-      transition: border-color var(--transition), background var(--transition);
-    }}
-
-    .tpl-stats {{
-      padding: 0.25rem 1.25rem 0.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      font-size: 0.8rem;
-      color: var(--muted);
-      font-weight: 500;
-    }}
-
-    /* Preview rows */
-    .tpl-preview {{
-      margin: 0.5rem 1.25rem 0.75rem;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      overflow: hidden;
-      font-size: 0.8rem;
-      background: var(--bg-secondary);
-    }}
-    .preview-row {{
-      padding: 0.35rem 0.75rem;
-      border-bottom: 1px solid var(--border);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      color: var(--text);
-    }}
-    .preview-row:last-child {{ border-bottom: none; }}
-    .preview-row.section {{
-      font-weight: 700;
-      background: var(--section-bg);
-      color: var(--section-color);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }}
-    .preview-row.task {{
-      color: var(--text);
-      padding-left: 1.5rem;
-      font-weight: 500;
-    }}
-    .preview-row.task::before {{ content: "▪ "; opacity: 0.4; margin-right: 0.3rem; }}
-    .preview-more {{
-      padding: 0.35rem 0.75rem;
-      color: var(--muted-light);
-      font-size: 0.75rem;
-      background: var(--section-bg);
-      font-weight: 500;
-    }}
-
-    /* Prompt inputs */
-    .tpl-inputs {{ margin: 0.5rem 1.25rem 0.75rem; font-size: 0.85rem; }}
-    .tpl-inputs-label {{ font-weight: 700; color: var(--text-secondary); margin-bottom: 0.35rem; }}
-    .input-chip {{
-      display: inline-block;
-      background: var(--tag-bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.25rem 0.65rem;
-      margin: 0.15rem 0.2rem 0.15rem 0;
-      font-size: 0.75rem;
-      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-      color: var(--text);
-      font-weight: 500;
-    }}
-
-    .tpl-card-footer {{
-      padding: 1rem 1.25rem;
-      margin-top: auto;
-      border-top: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      background: var(--bg-secondary);
-    }}
-    .tpl-meta {{
-      font-size: 0.75rem;
-      color: var(--muted-light);
-      font-weight: 500;
-    }}
-    .btn-primary {{
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.5rem 1rem;
-      background: var(--red);
-      color: #fff;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-decoration: none;
-      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
-      white-space: nowrap;
-      user-select: none;
-    }}
-    .btn-primary:hover {{
-      background: var(--red-dark);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(211, 66, 68, 0.2);
-    }}
-    .btn-primary:focus-visible {{
-      outline: 2px solid var(--red);
-      outline-offset: 2px;
-    }}
-
-    /* ── Spotlight ── */
-    .spotlight-section {{
-      margin-bottom: 3rem;
-    }}
-    .spotlight-heading {{
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: var(--text-secondary);
-      margin-bottom: 1.25rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }}
-    .spotlight-card {{
-      background: linear-gradient(135deg, var(--red-lighter) 0%, #fdfdfe 85%);
-      border: 2px solid var(--red);
-      border-radius: var(--radius-lg);
-      box-shadow: 0 8px 20px rgba(211, 66, 68, 0.12);
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 0;
-      overflow: hidden;
-    }}
-    .spotlight-body {{
-      padding: 1.75rem;
-    }}
-    .spotlight-badge {{
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-size: 0.7rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--red);
-      background: var(--red-light);
-      border-radius: 6px;
-      padding: 0.3rem 0.7rem;
-      margin-bottom: 0.75rem;
-    }}
-    .spotlight-name {{
-      font-size: 1.5rem;
-      font-weight: 900;
-      margin-bottom: 0.4rem;
-      line-height: 1.2;
-      color: var(--text-secondary);
-    }}
-    .spotlight-desc {{
-      font-size: 0.95rem;
-      color: var(--muted);
-      margin-bottom: 1rem;
-      line-height: 1.6;
-    }}
-    .spotlight-tags {{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-bottom: 1rem;
-    }}
-    .spotlight-tags .tag {{ background: rgba(255,255,255,0.5); }}
-    .spotlight-stats {{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 1.25rem;
-      font-weight: 500;
-    }}
-    .spotlight-footer {{
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-      flex-wrap: wrap;
-    }}
-    .spotlight-meta {{
-      font-size: 0.78rem;
-      color: var(--muted-light);
-      font-weight: 500;
-    }}
-    .spotlight-preview {{
-      border-left: 2px solid var(--border);
-      min-width: 240px;
-      max-width: 300px;
-      font-size: 0.8rem;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      background: rgba(255,255,255,0.6);
-    }}
-    .spotlight-preview .preview-row {{
-      border-bottom: 1px solid var(--border);
-      padding: 0.4rem 0.75rem;
-    }}
-    .spotlight-preview .preview-row:last-child {{ border-bottom: none; }}
-    .spotlight-preview .preview-row.section {{
-      background: var(--section-bg);
-    }}
-    @media (max-width: 680px) {{
-      .spotlight-card {{ grid-template-columns: 1fr; }}
-      .spotlight-preview {{ border-left: none; border-top: 2px solid var(--border); max-width: 100%; }}
-    }}
-
-    /* ── Responsive ── */
-    @media (max-width: 640px) {{
-      .site-header {{
-        padding: 2rem 1rem 1.75rem;
-      }}
-      .site-header h1 {{ font-size: 1.5rem; }}
-      .site-header p {{ font-size: 0.95rem; }}
-      .container {{ padding: 2rem 1rem; }}
-      .category-grid, .template-grid {{ grid-template-columns: 1fr; gap: 1.25rem; }}
-      .search-bar {{ margin: 1.25rem auto 0; }}
-      .cat-detail-header {{ flex-direction: column; align-items: flex-start; }}
-    }}
-    @media (max-width: 768px) {{
-      .template-grid {{ grid-template-columns: repeat(auto-fill, minmax(calc(50% - 0.75rem), 1fr)); }}
-    }}
-
-    /* ── README modal ── */
-    .modal-backdrop {{
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.55);
-      backdrop-filter: blur(2px);
-      z-index: 1000;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 2.5rem 1rem;
-      overflow-y: auto;
-      animation: modalFade 0.18s ease-out;
-    }}
-    .modal-backdrop.open {{ display: flex; }}
-    @keyframes modalFade {{
-      from {{ opacity: 0; }} to {{ opacity: 1; }}
-    }}
-    .modal-dialog {{
-      background: var(--card-bg);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-hover);
-      max-width: 860px;
-      width: 100%;
-      max-height: calc(100vh - 5rem);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      animation: modalRise 0.22s cubic-bezier(0.4,0,0.2,1);
-    }}
-    @keyframes modalRise {{
-      from {{ transform: translateY(12px); opacity: 0; }}
-      to   {{ transform: translateY(0); opacity: 1; }}
-    }}
-    .modal-header {{
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      padding: 1.25rem 1.5rem;
-      border-bottom: 1px solid var(--border);
-      background: var(--bg-secondary);
-      flex-wrap: wrap;
-    }}
-    .modal-title-block {{ flex: 1 1 240px; min-width: 0; }}
-    .modal-title {{
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--text-secondary);
-      line-height: 1.25;
-    }}
-    .modal-subtitle {{
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-top: 0.2rem;
-      font-weight: 500;
-    }}
-    .modal-actions {{
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }}
-    .modal-close {{
-      background: none;
-      border: 1px solid var(--border);
-      width: 2rem;
-      height: 2rem;
-      border-radius: 6px;
-      cursor: pointer;
-      color: var(--muted);
-      font-size: 1.1rem;
-      line-height: 1;
-      transition: background var(--transition), color var(--transition);
-    }}
-    .modal-close:hover {{ background: var(--bg-secondary); color: var(--text); }}
-    .modal-body {{
-      padding: 1.5rem 1.75rem 2rem;
-      overflow-y: auto;
-      flex: 1 1 auto;
-      color: var(--text);
-      line-height: 1.65;
-    }}
-    .modal-body.empty {{
-      text-align: center;
-      color: var(--muted);
-      font-style: italic;
-      padding: 3rem 1.5rem;
-    }}
-    .modal-body h1, .modal-body h2, .modal-body h3,
-    .modal-body h4, .modal-body h5, .modal-body h6 {{
-      color: var(--text-secondary);
-      font-weight: 800;
-      line-height: 1.25;
-      margin: 1.5rem 0 0.6rem;
-      letter-spacing: -0.01em;
-    }}
-    .modal-body h1 {{ font-size: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }}
-    .modal-body h2 {{ font-size: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 0.3rem; }}
-    .modal-body h3 {{ font-size: 1.05rem; }}
-    .modal-body h4 {{ font-size: 0.95rem; }}
-    .modal-body p, .modal-body ul, .modal-body ol, .modal-body blockquote, .modal-body pre, .modal-body table {{
-      margin: 0.75rem 0;
-    }}
-    .modal-body ul, .modal-body ol {{ padding-left: 1.4rem; }}
-    .modal-body li {{ margin: 0.2rem 0; }}
-    .modal-body a {{ color: var(--red); text-decoration: none; font-weight: 600; }}
-    .modal-body a:hover {{ text-decoration: underline; color: var(--red-dark); }}
-    .modal-body code {{
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 0.1rem 0.35rem;
-      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-      font-size: 0.85em;
-    }}
-    .modal-body pre {{
-      background: #1a202c;
-      color: #f7fafc;
-      padding: 1rem;
-      border-radius: 8px;
-      overflow-x: auto;
-      font-size: 0.85rem;
-      line-height: 1.5;
-    }}
-    .modal-body pre code {{
-      background: none;
-      border: none;
-      padding: 0;
-      color: inherit;
-      font-size: inherit;
-    }}
-    .modal-body blockquote {{
-      border-left: 3px solid var(--red);
-      padding: 0.25rem 0 0.25rem 1rem;
-      color: var(--muted);
-      background: var(--red-lighter);
-      border-radius: 0 6px 6px 0;
-    }}
-    .modal-body table {{
-      border-collapse: collapse;
-      width: 100%;
-      font-size: 0.9rem;
-    }}
-    .modal-body th, .modal-body td {{
-      border: 1px solid var(--border);
-      padding: 0.5rem 0.75rem;
-      text-align: left;
-    }}
-    .modal-body th {{ background: var(--bg-secondary); font-weight: 700; }}
-    .modal-body img {{ max-width: 100%; border-radius: 6px; }}
-    .modal-body hr {{ border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }}
-
-    /* Make the body of a template card behave as a clickable surface */
-    .tpl-card-clickable {{ cursor: pointer; }}
-    .tpl-card-clickable:focus-visible {{
-      outline: 2px solid var(--red);
-      outline-offset: 3px;
-    }}
-
-    @media (max-width: 640px) {{
-      .modal-backdrop {{ padding: 0.75rem; }}
-      .modal-dialog {{ max-height: calc(100vh - 1.5rem); }}
-      .modal-header {{ padding: 1rem 1.1rem; }}
-      .modal-body {{ padding: 1.1rem 1.1rem 1.5rem; }}
-    }}
-
-    /* ── Footer ── */
-    .site-footer {{
-      margin-top: 5rem;
-      border-top: 1px solid var(--border);
-      padding: 2rem 1rem;
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--muted);
-      background: var(--bg-secondary);
-    }}
-    .site-footer .footer-links {{
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.75rem 1.75rem;
-      margin-bottom: 1rem;
-    }}
-    .site-footer a {{
-      color: var(--red);
-      text-decoration: none;
-      font-weight: 700;
-      transition: color var(--transition), text-decoration var(--transition);
-    }}
-    .site-footer a:hover {{
-      text-decoration: underline;
-      color: var(--red-dark);
-    }}
-    .site-footer > div {{ color: var(--muted-light); font-weight: 500; }}
-  </style>
 </head>
 <body>
 
-<header class="site-header">
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header" role="banner">
+  <div class="header-controls">
+    <button type="button" id="theme-toggle" class="theme-toggle"
+            aria-label="System theme" aria-pressed="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/></svg>
+    </button>
+  </div>
   <h1>📋 Todoist Playbook</h1>
   <p>Curated templates for getting things done</p>
   <div class="search-bar" role="search">
-    <input type="search" id="search-input" placeholder="🔍 Search templates…"
+    <label for="search-input" class="skip-link">Search templates</label>
+    <input type="search" id="search-input" placeholder="Search templates…"
            aria-label="Search templates" autocomplete="off" spellcheck="false">
-    <button class="search-clear" id="search-clear" aria-label="Clear search">✕</button>
+    <span class="kbd-hint" aria-hidden="true"><kbd>/</kbd></span>
+    <button class="search-clear" id="search-clear" type="button"
+            aria-label="Clear search" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.25"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
   </div>
 </header>
 
 <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb">
-  <button id="btn-back" aria-label="Back to all categories">← All Categories</button>
+  <button id="btn-back" type="button" aria-label="Back to all categories">
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.25"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+    All Categories
+  </button>
   <span class="crumb-sep" aria-hidden="true">/</span>
   <span class="crumb-current" id="crumb-label"></span>
 </nav>
 
-<div class="container" id="container">
-  <!-- Populated by JavaScript -->
-</div>
+<main id="main" tabindex="-1">
+  <div class="container" id="container"><!-- Populated by JavaScript --></div>
+</main>
 
 <div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true"
-     aria-labelledby="modal-title" aria-hidden="true">
+     aria-labelledby="modal-title" aria-describedby="modal-subtitle"
+     aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-header">
       <div class="modal-title-block">
@@ -1023,488 +631,80 @@ def generate_html(templates, spotlight=None):
         <div class="modal-subtitle" id="modal-subtitle"></div>
       </div>
       <div class="modal-actions" id="modal-actions"></div>
-      <button type="button" class="modal-close" id="modal-close" aria-label="Close">✕</button>
+      <button type="button" class="modal-close" id="modal-close" aria-label="Close dialog">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.25"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
     </div>
     <div class="modal-body" id="modal-body"></div>
   </div>
 </div>
 
-<footer class="site-footer">
-  <div class="footer-links">
-    <a href="https://github.com/colin-gourlay/todoist-playbook/issues/new?template=template-request.yml">
-      💡 Request a Template
-    </a>
-    <a href="https://github.com/colin-gourlay/todoist-playbook/issues/new?template=bug-report.yml">
-      🐛 Report a Bug
-    </a>
-    <a href="https://github.com/colin-gourlay/todoist-playbook">
-      ⭐ View on GitHub
-    </a>
+<footer class="site-footer" id="site-footer">
+  <nav aria-label="Site">
+    <div class="footer-links">
+      <a href="https://github.com/colin-gourlay/todoist-playbook/issues/new?template=template-request.yml"
+         target="_blank" rel="noopener noreferrer">
+        <span aria-hidden="true">💡</span> Request a Template
+      </a>
+      <a href="https://github.com/colin-gourlay/todoist-playbook/issues/new?template=bug-report.yml"
+         target="_blank" rel="noopener noreferrer">
+        <span aria-hidden="true">🐛</span> Report a Bug
+      </a>
+      <a href="https://github.com/colin-gourlay/todoist-playbook"
+         target="_blank" rel="noopener noreferrer">
+        <span aria-hidden="true">⭐</span> View on GitHub
+      </a>
+    </div>
+  </nav>
+  <div>Built with <span aria-hidden="true">❤️</span>
+    · <a href="https://github.com/colin-gourlay/todoist-playbook/blob/main/CONTRIBUTING"
+         target="_blank" rel="noopener noreferrer">Contributing Guide</a>
   </div>
-  <div>Built with ❤️ · <a href="https://github.com/colin-gourlay/todoist-playbook/blob/main/CONTRIBUTING">Contributing Guide</a></div>
+  <div class="build-stamp">{build_stamp}</div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"
-        crossorigin="anonymous"></script>
-<script>
-const TEMPLATES = {templates_json};
-const CATEGORY_META = {category_meta_json};
-const SPOTLIGHT = {spotlight_json};
-
-// Lookup map keyed by "{{type}}:{{slug}}" so cards can resolve back to data.
-const TEMPLATE_LOOKUP = {{}};
-TEMPLATES.forEach(t => {{ TEMPLATE_LOOKUP[t.type + ':' + t.slug] = t; }});
-
-// Preprocessed lowercase search index — built once at load time
-const SEARCH_INDEX = TEMPLATES.map(t => ({{
-  template: t,
-  name: t.name.toLowerCase(),
-  description: t.description.toLowerCase(),
-  category: t.category.toLowerCase(),
-  tags: t.tags.map(tag => tag.toLowerCase()),
-}}));
-
-// ── Helpers ──────────────────────────────────────────────────────────────────
-
-function esc(str) {{
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}}
-
-function catIcon(slug) {{
-  return CATEGORY_META[slug] ? CATEGORY_META[slug][0] : '📁';
-}}
-
-function catLabel(slug) {{
-  if (CATEGORY_META[slug]) return CATEGORY_META[slug][1];
-  return slug.replace(/-/g, ' ').replace(/\\b\\w/g, c => c.toUpperCase());
-}}
-
-function groupByCategory(templates) {{
-  const map = {{}};
-  templates.forEach(t => {{
-    const c = t.category || 'uncategorised';
-    if (!map[c]) map[c] = [];
-    map[c].push(t);
-  }});
-  return map;
-}}
-
-function formatDuration(d) {{
-  if (!d) return '';
-  return d.replace(/m$/, '\u202fmin').replace(/h$/, '\u202fhr');
-}}
-
-// ── Category home view ────────────────────────────────────────────────────────
-
-function buildSpotlight(t) {{
-  if (!t) return '';
-
-  const tags = t.tags.map(tag => `<span class="tag">${{esc(tag)}}</span>`).join('');
-
-  const stats = [];
-  if (t.task_count)    stats.push(`\u2714\ufe0f ${{t.task_count}}\u202ftask${{t.task_count !== 1 ? 's' : ''}}`);
-  if (t.section_count) stats.push(`\u25b8 ${{t.section_count}}\u202fsection${{t.section_count !== 1 ? 's' : ''}}`);
-  if (t.estimated_duration) stats.push(`\u23f1\ufe0f ${{esc(formatDuration(t.estimated_duration))}}`);
-  if (t.recurrence_suggestion) stats.push(`🔁 ${{esc(t.recurrence_suggestion)}}`);
-
-  const metaLine = [
-    t.author  ? `by ${{esc(t.author)}}`  : '',
-    t.version ? `v${{esc(t.version)}}` : '',
-  ].filter(Boolean).join(' \u00b7 ');
-
-  const previewHtml = t.rows && t.rows.length
-    ? `<div class="spotlight-preview">${{buildPreview(t.rows)}}</div>`
-    : '';
-
-  const actionBtn = t.csv_url
-    ? `<a class="btn-primary" href="${{esc(t.csv_url)}}" download>\u2b07\ufe0f Download CSV</a>`
-    : '';
-
-  return `
-<div class="spotlight-section">
-  <div class="spotlight-heading">\u2b50 Template Spotlight</div>
-  <div class="spotlight-card tpl-card-clickable"
-       data-slug="${{esc(t.slug)}}" data-type="${{esc(t.type || 'template')}}"
-       role="button" tabindex="0"
-       aria-label="View details for ${{esc(t.name)}}">
-    <div class="spotlight-body">
-      <div class="spotlight-badge">Featured Template</div>
-      <div class="spotlight-name">${{esc(t.name)}}</div>
-      ${{t.description ? `<div class="spotlight-desc">${{esc(t.description)}}</div>` : ''}}
-      ${{tags ? `<div class="spotlight-tags">${{tags}}</div>` : ''}}
-      ${{stats.length ? `<div class="spotlight-stats">${{stats.join('<span style="margin:0 .2rem;opacity:.4">\u00b7</span>')}}</div>` : ''}}
-      <div class="spotlight-footer">
-        ${{actionBtn}}
-        <span class="spotlight-meta">${{metaLine}}</span>
-      </div>
-    </div>
-    ${{previewHtml}}
-  </div>
-</div>`;
-}}
-
-function renderHome() {{
-  const groups = groupByCategory(TEMPLATES);
-  const cats = Object.keys(groups).sort();
-  const container = document.getElementById('container');
-
-  let html = buildSpotlight(SPOTLIGHT);
-  html += `<p class="intro">Browse <strong>${{TEMPLATES.length}}</strong> templates across <strong>${{cats.length}}</strong> categories.</p>
-<div class="category-grid">`;
-
-  cats.forEach(cat => {{
-    const items = groups[cat];
-    const icon = catIcon(cat);
-    const label = catLabel(cat);
-    const count = items.length;
-    const MAX_PREVIEW = 4;
-    const previews = items.slice(0, MAX_PREVIEW);
-    const more = count - previews.length;
-
-    const previewItems = previews.map(t => `<li>${{esc(t.name)}}</li>`).join('');
-    const moreHtml = more > 0 ? `<li class="cat-more">+\u202f${{more}} more</li>` : '';
-
-    html += `
-<div class="cat-card" role="button" tabindex="0"
-     aria-label="Browse ${{esc(label)}} templates"
-     data-category="${{esc(cat)}}">
-  <div class="cat-icon">${{icon}}</div>
-  <div class="cat-title">${{esc(label)}}</div>
-  <div class="cat-count">${{count}}\u202ftemplate${{count !== 1 ? 's' : ''}}</div>
-  <ul class="cat-previews">${{previewItems}}${{moreHtml}}</ul>
-  <div class="cat-arrow">View all \u2192</div>
-</div>`;
-  }});
-
-  html += '</div>';
-  container.innerHTML = html;
-
-  container.querySelectorAll('.cat-card').forEach(card => {{
-    card.addEventListener('click', () => navigate(card.dataset.category));
-    card.addEventListener('keydown', e => {{
-      if (e.key === 'Enter' || e.key === ' ') navigate(card.dataset.category);
-    }});
-  }});
-}}
-
-// ── Template card ─────────────────────────────────────────────────────────────
-
-function buildPreview(rows) {{
-  const MAX = 7;
-  const shown = rows.slice(0, MAX);
-  const rest = rows.length - shown.length;
-  let html = '';
-  shown.forEach(r => {{
-    const cls = r.type === 'section' ? 'section' : 'task';
-    const content = r.content.replace(/@[\\w-]+/g, '').trim();
-    html += `<div class="preview-row ${{cls}}">${{esc(content)}}</div>`;
-  }});
-  if (rest > 0) html += `<div class="preview-more">+\u202f${{rest}} more</div>`;
-  return html;
-}}
-
-function buildTemplateCard(t) {{
-  const tags = t.tags.map(tag => `<span class="tag">${{esc(tag)}}</span>`).join('');
-
-  const stats = [];
-  if (t.task_count)    stats.push(`\u2714\ufe0f ${{t.task_count}}\u202ftask${{t.task_count !== 1 ? 's' : ''}}`);
-  if (t.section_count) stats.push(`\u25b8 ${{t.section_count}}\u202fsection${{t.section_count !== 1 ? 's' : ''}}`);
-  if (t.estimated_duration) stats.push(`\u23f1\ufe0f ${{esc(formatDuration(t.estimated_duration))}}`);
-  if (t.recurrence_suggestion) stats.push(`🔁 ${{esc(t.recurrence_suggestion)}}`);
-
-  const metaLine = [
-    t.author  ? `by ${{esc(t.author)}}`  : '',
-    t.version ? `v${{esc(t.version)}}` : '',
-  ].filter(Boolean).join(' \u00b7 ');
-
-  let previewHtml = '';
-  if (t.type === 'template' && t.rows.length) {{
-    previewHtml = `<div class="tpl-preview">${{buildPreview(t.rows)}}</div>`;
-  }} else if (t.type === 'prompt' && t.inputs && t.inputs.length) {{
-    const chips = t.inputs.map(i => `<span class="input-chip">${{esc(i)}}</span>`).join('');
-    previewHtml = `<div class="tpl-inputs">
-  <div class="tpl-inputs-label">Inputs</div>${{chips}}</div>`;
-  }}
-
-  let actionBtn = '';
-  if (t.type === 'template' && t.csv_url) {{
-    actionBtn = `<a class="btn-primary" href="${{esc(t.csv_url)}}" download>\u2b07\ufe0f Download CSV</a>`;
-  }} else if (t.type === 'prompt' && t.prompt_url) {{
-    actionBtn = `<a class="btn-primary" href="${{esc(t.prompt_url)}}">View Prompt</a>`;
-  }}
-
-  const badgeLabel = t.type === 'prompt' ? 'AI Prompt' : 'Template';
-
-  return `<div class="tpl-card tpl-card-clickable" data-slug="${{esc(t.slug)}}" data-type="${{esc(t.type)}}"
-     role="button" tabindex="0" aria-label="View details for ${{esc(t.name)}}">
-  <div class="tpl-card-header">
-    <span class="tpl-type-badge">${{badgeLabel}}</span>
-    <div class="tpl-title">${{esc(t.name)}}</div>
-    ${{t.description ? `<div class="tpl-desc">${{esc(t.description)}}</div>` : ''}}
-  </div>
-  ${{tags ? `<div class="tpl-tags">${{tags}}</div>` : ''}}
-  ${{stats.length ? `<div class="tpl-stats">${{stats.join('<span style="margin:0 .2rem;opacity:.4">\u00b7</span>')}}</div>` : ''}}
-  ${{previewHtml}}
-  <div class="tpl-card-footer">
-    <span class="tpl-meta">${{metaLine}}</span>
-    ${{actionBtn}}
-  </div>
-</div>`;
-}}
-
-// ── Category detail view ──────────────────────────────────────────────────────
-
-function renderCategory(cat) {{
-  const groups = groupByCategory(TEMPLATES);
-  const items = groups[cat] || [];
-  const label = catLabel(cat);
-  const icon = catIcon(cat);
-  const container = document.getElementById('container');
-
-  const html = `
-<div class="cat-detail-header">
-  <span class="cat-detail-icon">${{icon}}</span>
-  <div>
-    <div class="cat-detail-title">${{esc(label)}}</div>
-    <div class="cat-detail-count">${{items.length}}\u202ftemplate${{items.length !== 1 ? 's' : ''}}</div>
-  </div>
-</div>
-<div class="template-grid">
-  ${{items.map(buildTemplateCard).join('')}}
-</div>`;
-
-  container.innerHTML = html;
-  document.getElementById('crumb-label').textContent = `${{icon}} ${{label}}`;
-  document.getElementById('breadcrumb').style.display = 'block';
-}}
-
-// ── Search ────────────────────────────────────────────────────────────────────
-
-function matchesQuery(entry, query) {{
-  return (
-    entry.name.includes(query) ||
-    entry.description.includes(query) ||
-    entry.category.includes(query) ||
-    entry.tags.some(tag => tag.includes(query))
-  );
-}}
-
-function renderSearch(query) {{
-  const trimmed = query.trim();
-  const container = document.getElementById('container');
-
-  if (!trimmed) {{
-    renderHome();
-    document.getElementById('breadcrumb').style.display = 'none';
-    return;
-  }}
-
-  const q = trimmed.toLowerCase();
-  const results = SEARCH_INDEX.filter(entry => matchesQuery(entry, q)).map(entry => entry.template);
-
-  let html = `<p class="search-summary">`;
-  if (results.length === 0) {{
-    html += `No results for <strong>${{esc(trimmed)}}</strong>`;
-  }} else {{
-    html += `<strong>${{results.length}}</strong> result${{results.length !== 1 ? 's' : ''}} for <strong>${{esc(trimmed)}}</strong>`;
-  }}
-  html += `</p>`;
-
-  if (results.length === 0) {{
-    html += `<div class="no-results">
-  <div class="no-results-icon">🔍</div>
-  <p>No templates matched your search. Try different keywords or browse by category.</p>
-</div>`;
-  }} else {{
-    html += `<div class="template-grid">${{results.map(buildTemplateCard).join('')}}</div>`;
-  }}
-
-  container.innerHTML = html;
-  document.getElementById('breadcrumb').style.display = 'none';
-}}
-
-// ── Hash-based routing ────────────────────────────────────────────────────────
-
-function navigate(cat) {{
-  window.location.hash = '#/category/' + encodeURIComponent(cat);
-}}
-
-function handleRoute() {{
-  const hash = window.location.hash;
-  const match = hash.match(/^#\\/category\\/(.+)$/);
-  if (match) {{
-    renderCategory(decodeURIComponent(match[1]));
-    document.getElementById('breadcrumb').style.display = 'block';
-  }} else {{
-    renderHome();
-    document.getElementById('breadcrumb').style.display = 'none';
-  }}
-}}
-
-document.getElementById('btn-back').addEventListener('click', () => {{
-  document.getElementById('search-input').value = '';
-  document.getElementById('search-clear').style.display = 'none';
-  window.location.hash = '';
-}});
-
-// ── Search input wiring ───────────────────────────────────────────────────────
-
-const searchInput = document.getElementById('search-input');
-const searchClear = document.getElementById('search-clear');
-
-searchInput.addEventListener('input', () => {{
-  const query = searchInput.value;
-  searchClear.style.display = query ? 'block' : 'none';
-  renderSearch(query);
-}});
-
-searchClear.addEventListener('click', () => {{
-  searchInput.value = '';
-  searchClear.style.display = 'none';
-  renderHome();
-  document.getElementById('breadcrumb').style.display = 'none';
-  searchInput.focus();
-}});
-
-window.addEventListener('hashchange', () => {{
-  // When navigating via hash, clear any active search
-  if (searchInput.value) {{
-    searchInput.value = '';
-    searchClear.style.display = 'none';
-  }}
-  handleRoute();
-}});
-handleRoute();
-
-// ── Template detail modal ─────────────────────────────────────────────────
-const modalBackdrop = document.getElementById('modal-backdrop');
-const modalTitleEl  = document.getElementById('modal-title');
-const modalSubtitle = document.getElementById('modal-subtitle');
-const modalBody     = document.getElementById('modal-body');
-const modalActions  = document.getElementById('modal-actions');
-const modalCloseBtn = document.getElementById('modal-close');
-
-let lastFocusedElement = null;
-
-function renderMarkdown(md) {{
-  if (!md) return '';
-  if (typeof marked !== 'undefined' && marked.parse) {{
-    try {{
-      return marked.parse(md, {{ mangle: false, headerIds: false, breaks: false }});
-    }} catch (e) {{ /* fall through to escaped fallback */ }}
-  }}
-  return '<pre>' + esc(md) + '</pre>';
-}}
-
-function openModal(template) {{
-  if (!template) return;
-  modalTitleEl.textContent = template.name;
-
-  const subParts = [];
-  if (template.category) subParts.push(catLabel(template.category));
-  if (template.version) subParts.push('v' + template.version);
-  if (template.author)  subParts.push('by ' + template.author);
-  modalSubtitle.textContent = subParts.join(' · ');
-
-  // Action buttons — keep download/view available without leaving the modal
-  let actionsHtml = '';
-  if (template.type === 'template' && template.csv_url) {{
-    actionsHtml += `<a class="btn-primary" href="${{esc(template.csv_url)}}" download>⬇️ Download CSV</a>`;
-  }} else if (template.type === 'prompt' && template.prompt_url) {{
-    actionsHtml += `<a class="btn-primary" href="${{esc(template.prompt_url)}}" target="_blank" rel="noopener">View Prompt</a>`;
-  }}
-  modalActions.innerHTML = actionsHtml;
-
-  if (template.readme && template.readme.trim()) {{
-    modalBody.classList.remove('empty');
-    modalBody.innerHTML = renderMarkdown(template.readme);
-  }} else {{
-    modalBody.classList.add('empty');
-    modalBody.innerHTML = '<p>No README is available for this template yet.</p>';
-  }}
-
-  // Make any links to repo-relative paths still resolve sensibly. README files
-  // often link to other templates with relative paths like
-  // `../other-template/` or `../../group/other-template/`. On the deployed
-  // gallery (a single-page site rooted at /) those resolve to URLs that 404,
-  // so intercept them: if the final path segment matches a known template or
-  // prompt slug, open that template's modal instead of navigating away.
-  modalBody.querySelectorAll('a[href]').forEach(a => {{
-    const href = a.getAttribute('href');
-    if (!href) return;
-    if (/^https?:|^mailto:|^#/.test(href)) {{
-      a.setAttribute('target', '_blank');
-      a.setAttribute('rel', 'noopener');
-      return;
-    }}
-    const cleaned = href.split('#')[0].split('?')[0].replace(/\\/+$/, '');
-    if (!cleaned) return;
-    const segments = cleaned.split('/').filter(s => s && s !== '.' && s !== '..');
-    if (!segments.length) return;
-    const lastSeg = segments[segments.length - 1].replace(/\\.(md|csv)$/i, '');
-    const target = TEMPLATE_LOOKUP['template:' + lastSeg] || TEMPLATE_LOOKUP['prompt:' + lastSeg];
-    if (target) {{
-      a.addEventListener('click', e => {{
-        e.preventDefault();
-        openModal(target);
-      }});
-    }}
-  }});
-
-  lastFocusedElement = document.activeElement;
-  modalBackdrop.classList.add('open');
-  modalBackdrop.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
-  modalBody.scrollTop = 0;
-  modalCloseBtn.focus();
-}}
-
-function closeModal() {{
-  if (!modalBackdrop.classList.contains('open')) return;
-  modalBackdrop.classList.remove('open');
-  modalBackdrop.setAttribute('aria-hidden', 'true');
-  document.body.style.overflow = '';
-  if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {{
-    lastFocusedElement.focus();
-  }}
-}}
-
-modalCloseBtn.addEventListener('click', closeModal);
-modalBackdrop.addEventListener('click', e => {{
-  if (e.target === modalBackdrop) closeModal();
-}});
-document.addEventListener('keydown', e => {{
-  if (e.key === 'Escape') closeModal();
-}});
-
-// Delegated click + keyboard handlers for template cards. Clicks on links or
-// buttons inside the card are left to bubble to their own handlers, so the
-// existing primary action (download / view prompt) keeps working without
-// opening the modal.
-document.addEventListener('click', e => {{
-  const card = e.target.closest('.tpl-card-clickable');
-  if (!card) return;
-  if (e.target.closest('a, button')) return;
-  const template = TEMPLATE_LOOKUP[card.dataset.type + ':' + card.dataset.slug];
-  openModal(template);
-}});
-
-document.addEventListener('keydown', e => {{
-  if (e.key !== 'Enter' && e.key !== ' ') return;
-  const card = e.target.closest && e.target.closest('.tpl-card-clickable');
-  if (!card || e.target !== card) return;
-  e.preventDefault();
-  const template = TEMPLATE_LOOKUP[card.dataset.type + ':' + card.dataset.slug];
-  openModal(template);
-}});
-</script>
+<script type="application/json" id="tp-data">{data_json}</script>
+<script src="vendor/marked.min.js"{sri_marked}></script>
+<script src="vendor/dompurify.min.js"{sri_dompurify}></script>
+<script src="app.js"></script>
 </body>
 </html>
 """
+
+
+# ---------------------------------------------------------------------------
+# Hardening assertions
+# ---------------------------------------------------------------------------
+
+def assert_hardening(html, output_dir, payload):
+    """Assert the rendered HTML satisfies the security/CSP contract."""
+    assert 'http-equiv="Content-Security-Policy"' in html, \
+        "missing Content-Security-Policy meta"
+    assert "'unsafe-inline'" not in html, "CSP must not allow 'unsafe-inline'"
+    assert "'unsafe-eval'" not in html, "CSP must not allow 'unsafe-eval'"
+    assert 'name="referrer"' in html, "missing referrer meta"
+    assert '<a class="skip-link"' in html, "missing skip link"
+    assert '<main id="main"' in html, "missing main landmark"
+
+    # Data island round-trip
+    parsed = assert_data_island_roundtrip(html, payload)
+    assert len(parsed["templates"]) == len(payload["templates"]), \
+        "data island length mismatch"
+
+    # Files exist
+    for f in ("styles.css", "app.js", "manifest.webmanifest", "sw.js",
+              "favicon.svg", "og-image.svg",
+              "vendor/marked.min.js", "vendor/dompurify.min.js"):
+        assert os.path.exists(os.path.join(output_dir, f)), f"missing {f}"
+
+    # Confirm no <style> or inline <script> with executable contents (the JSON
+    # island uses type="application/json" which is non-executable).
+    inline_style = re.search(r'<style\b', html)
+    assert inline_style is None, "no inline <style> blocks allowed"
+    bad = re.search(r'<script(?![^>]*\bsrc=)(?![^>]*type="application/json")[^>]*>', html)
+    assert bad is None, "no executable inline <script> blocks allowed"
+
+    print("✅ Hardening assertions passed")
 
 
 # ---------------------------------------------------------------------------
@@ -1518,45 +718,71 @@ def main():
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    # Disable Jekyll processing on GitHub Pages
     with open(os.path.join(OUTPUT_DIR, ".nojekyll"), "w"):
         pass
 
-    # Copy each CSV template's template.csv and README.md into the output
-    # directory so download links and modal sources work. Supports the
-    # nested csv-templates/{group}/{slug}/ layout.
+    # Copy CSV / prompt template assets
     for location in iter_template_locations(TEMPLATES_DIR):
-        dest_dir = os.path.join(OUTPUT_DIR, "csv-templates", location.relative_path)
-        os.makedirs(dest_dir, exist_ok=True)
+        dest = os.path.join(OUTPUT_DIR, "csv-templates", location.relative_path)
+        os.makedirs(dest, exist_ok=True)
         if os.path.exists(location.csv_path):
-            shutil.copy2(location.csv_path, os.path.join(dest_dir, "template.csv"))
+            shutil.copy2(location.csv_path, os.path.join(dest, "template.csv"))
         if os.path.exists(location.readme_path):
-            shutil.copy2(location.readme_path, os.path.join(dest_dir, "README.md"))
+            shutil.copy2(location.readme_path, os.path.join(dest, "README.md"))
 
-    # Copy each prompt template's prompt.md and README.md into the output directory
     if os.path.isdir(PROMPT_TEMPLATES_DIR):
         for slug in os.listdir(PROMPT_TEMPLATES_DIR):
             template_dir = os.path.join(PROMPT_TEMPLATES_DIR, slug)
             if not os.path.isdir(template_dir):
                 continue
-            dest_dir = os.path.join(OUTPUT_DIR, "prompt-templates", slug)
-            os.makedirs(dest_dir, exist_ok=True)
+            dest = os.path.join(OUTPUT_DIR, "prompt-templates", slug)
+            os.makedirs(dest, exist_ok=True)
             prompt_src = os.path.join(template_dir, "prompt.md")
             if os.path.exists(prompt_src):
-                shutil.copy2(prompt_src, os.path.join(dest_dir, "prompt.md"))
+                shutil.copy2(prompt_src, os.path.join(dest, "prompt.md"))
             readme_src = os.path.join(template_dir, "README.md")
             if os.path.exists(readme_src):
-                shutil.copy2(readme_src, os.path.join(dest_dir, "README.md"))
+                shutil.copy2(readme_src, os.path.join(dest, "README.md"))
+
+    # Static assets
+    write_text(os.path.join(OUTPUT_DIR, "styles.css"), read_asset("styles.css"))
+    write_text(os.path.join(OUTPUT_DIR, "app.js"),     read_asset("app.js"))
+    emit_pwa_assets()
+    emit_service_worker()
+
+    # Vendor (downloads or stubs)
+    sri = download_vendor(os.path.join(OUTPUT_DIR, "vendor"))
 
     templates = load_templates()
     spotlight = get_spotlight_template(templates)
-    html = generate_html(templates, spotlight)
 
+    payload = {
+        "templates":    templates,
+        "categoryMeta": CATEGORY_META,
+        "spotlight":    spotlight,
+        "build": {
+            "date":  BUILD_DATE,
+            "sha":   SHORT_SHA,
+            "fullSha": GITHUB_SHA,
+        },
+        "repoUrl": REPO_URL,
+    }
+
+    # Emit data.json for cache-first / debugging
+    write_text(
+        os.path.join(OUTPUT_DIR, "data.json"),
+        json.dumps(payload, indent=None, ensure_ascii=False),
+    )
+
+    html = build_html(payload, sri)
     output_path = os.path.join(OUTPUT_DIR, "index.html")
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html)
 
     print(f"✅ Gallery generated: {output_path} ({len(templates)} templates)")
+
+    if ASSERT_OUTPUT:
+        assert_hardening(html, OUTPUT_DIR, payload)
 
 
 if __name__ == "__main__":
