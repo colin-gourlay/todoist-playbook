@@ -1,20 +1,43 @@
 name: Template Request
-description: Request a new Todoist playbook template
-title: "[Template Request] "
+description: Request a new CSV template, prompt template, or bundle for the Todoist Playbook
+title: "[template-request] "
 labels: ["template-request"]
 body:
   - type: markdown
     attributes:
       value: |
-        Use this form to request a new template for the Todoist Playbook.
-        Please be as specific as possible so the template can be built to meet your needs.
+        Use this form to request a new asset for the Todoist Playbook.
+
+        Please review the [CONTRIBUTING](../blob/main/CONTRIBUTING) guide before submitting.
+        New assets start at `version: 0.0.0` (unreviewed) and graduate to `0.1.0` once reviewed.
+
+  - type: dropdown
+    id: asset-type
+    attributes:
+      label: Asset Type
+      description: Which kind of asset is being requested?
+      options:
+        - csv-template
+        - prompt-template
+        - bundle
+    validations:
+      required: true
 
   - type: input
-    id: template-name
+    id: asset-name
     attributes:
-      label: Template Name
-      description: What would you call this template? (e.g. "Weekly Review", "Podcast Production")
+      label: Name
+      description: Human-readable name for the asset (e.g. "Weekly Review", "Podcast Production").
       placeholder: e.g. Client Onboarding
+    validations:
+      required: true
+
+  - type: input
+    id: proposed-slug
+    attributes:
+      label: Proposed Slug
+      description: Kebab-case folder name (lowercase letters, digits, and hyphens only). Must match the `slug:` in `meta.yml` / `bundle.yml`.
+      placeholder: e.g. client-onboarding
     validations:
       required: true
 
@@ -22,28 +45,50 @@ body:
     id: use-case
     attributes:
       label: Use Case
-      description: Describe the workflow or process this template should support.
+      description: Describe the workflow, process, or outcome this asset should support.
       placeholder: e.g. I run a weekly review every Monday to process my inbox, review projects, and plan the week ahead.
     validations:
       required: true
 
-  - type: textarea
-    id: required-sections
+  - type: dropdown
+    id: category
     attributes:
-      label: Required Sections
-      description: List the sections (groups of tasks) that must exist in the template. One per line.
-      placeholder: |
-        Inbox Processing
-        Project Review
-        Weekly Planning
+      label: Category
+      description: Which category best fits this asset? Pick the closest match, or `other` if none apply.
+      options:
+        - agile
+        - brand-and-social
+        - career
+        - creative
+        - engineering
+        - github
+        - personal-systems
+        - professional-development
+        - other
     validations:
       required: true
 
   - type: textarea
-    id: required-tasks
+    id: tags
     attributes:
-      label: Required Tasks (Acceptance Criteria)
-      description: List the specific tasks that must be present for this template to be considered complete. One per line.
+      label: Tags
+      description: Optional list of kebab-case tags for discovery. One per line.
+      placeholder: |
+        weekly
+        review
+        gtd
+    validations:
+      required: false
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: |
+        What must be present for this asset to be considered complete? One per line.
+        - For **csv-template**: required sections and tasks.
+        - For **prompt-template**: required behaviour and content of the generated output.
+        - For **bundle**: the user-facing outcome the bundle delivers when imported.
       placeholder: |
         Process email inbox to zero
         Review all active projects
@@ -52,25 +97,74 @@ body:
     validations:
       required: true
 
-  - type: dropdown
-    id: category
+  - type: textarea
+    id: csv-sections
     attributes:
-      label: Category
-      description: Which category best fits this template?
-      options:
-        - personal-systems
-        - business-operations
-        - content-creation
-        - project-management
-        - other
+      label: CSV Sections (csv-template only)
+      description: List the section headings (groups of tasks) the CSV should contain. One per line. Leave blank for prompt templates and bundles.
+      placeholder: |
+        Inbox Processing
+        Project Review
+        Weekly Planning
     validations:
-      required: true
+      required: false
+
+  - type: input
+    id: estimated-duration
+    attributes:
+      label: Estimated Duration (csv-template only)
+      description: Optional. Rough time to complete one run of the workflow.
+      placeholder: e.g. 30m, 2h
+    validations:
+      required: false
+
+  - type: input
+    id: recurrence-suggestion
+    attributes:
+      label: Recurrence Suggestion (csv-template only)
+      description: Optional. How often this workflow is typically run.
+      placeholder: e.g. daily, weekly, monthly, ad-hoc
+    validations:
+      required: false
+
+  - type: textarea
+    id: prompt-inputs
+    attributes:
+      label: Prompt Inputs (prompt-template only)
+      description: List the `{{placeholder}}` variables the prompt should accept. One per line.
+      placeholder: |
+        topic
+        audience
+        tone
+    validations:
+      required: false
+
+  - type: textarea
+    id: prompt-output
+    attributes:
+      label: Expected Output Shape (prompt-template only)
+      description: Describe the format and structure the prompt should produce (e.g. CSV matching the importer schema, JSON, markdown checklist).
+      placeholder: e.g. CSV rows matching the Todoist importer header, with one section followed by 5–10 tasks.
+    validations:
+      required: false
+
+  - type: textarea
+    id: bundle-contents
+    attributes:
+      label: Bundle Contents (bundle only)
+      description: List the existing template slugs this bundle should include. One per line. Mark optional templates with `(optional)`.
+      placeholder: |
+        weekly-review
+        daily-review
+        weekly-plan (optional)
+    validations:
+      required: false
 
   - type: textarea
     id: additional-context
     attributes:
       label: Additional Context
-      description: Any other details, inspiration, or references that would help build this template.
+      description: Any other details, inspiration, or references that would help build this asset.
       placeholder: e.g. Based on the GTD weekly review methodology by David Allen.
     validations:
       required: false

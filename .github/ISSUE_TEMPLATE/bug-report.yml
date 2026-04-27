@@ -1,12 +1,89 @@
 name: Bug Report
 description: Report a bug or unexpected behaviour in the Todoist Playbook
-title: "[Bug] "
+title: "[bug] "
 labels: ["bug"]
 body:
   - type: markdown
     attributes:
       value: |
         Use this form to report a bug or unexpected behaviour. Please include as much detail as possible so the issue can be reproduced and fixed.
+
+        See [CONTRIBUTING](../blob/main/CONTRIBUTING) for repository conventions.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight
+      options:
+        - label: I have searched existing issues and confirmed this is not a duplicate.
+          required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected Area
+      description: Which part of the repository is affected?
+      options:
+        - validation (validate-templates)
+        - create-todoist-project workflow
+        - create-todoist-project-from-prompt workflow
+        - create-todoist-project-via-mcp workflow
+        - sync workflows (review issues / trending / projects)
+        - bump-template-version workflow
+        - gallery / GitHub Pages deploy
+        - release workflow
+        - python scripts (.github/scripts)
+        - csv template content
+        - prompt template content
+        - bundle content
+        - documentation (README / wiki / index)
+        - other
+    validations:
+      required: true
+
+  - type: input
+    id: affected-asset
+    attributes:
+      label: Affected Asset or Workflow File
+      description: If applicable, the slug of the affected template / bundle, or the workflow filename.
+      placeholder: e.g. weekly-review, create-todoist-project.yml
+    validations:
+      required: false
+
+  - type: input
+    id: workflow-run-url
+    attributes:
+      label: Workflow Run URL
+      description: For Actions failures, paste a link to the failing run.
+      placeholder: https://github.com/<owner>/<repo>/actions/runs/<id>
+    validations:
+      required: false
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How impactful is this bug?
+      options:
+        - blocker (asset/workflow unusable)
+        - major (significant functionality broken)
+        - minor (workaround available)
+        - cosmetic (typo / formatting / wording)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: reproducibility
+    attributes:
+      label: Reproducibility
+      description: How often does this occur?
+      options:
+        - always
+        - sometimes
+        - once
+        - unknown
+    validations:
+      required: true
 
   - type: textarea
     id: description
@@ -43,17 +120,41 @@ body:
     id: actual
     attributes:
       label: Actual Behaviour
-      description: What actually happened? Paste any relevant error messages or logs.
-      placeholder: e.g. The workflow run failed with exit code 1 and the message "403 Forbidden".
+      description: |
+        What actually happened? Paste any relevant error messages or logs in a fenced code block, e.g.:
+
+        ```text
+        Run python .github/scripts/create_todoist_project.py
+        Traceback (most recent call last):
+          ...
+        ```
+      placeholder: |
+        ```text
+        Error: 403 Forbidden
+        Process completed with exit code 1.
+        ```
+    validations:
+      required: true
+
+  - type: dropdown
+    id: where-run
+    attributes:
+      label: Where Was It Run?
+      description: Where did the bug occur?
+      options:
+        - github-actions
+        - local
+        - both
+        - n/a
     validations:
       required: true
 
   - type: input
     id: environment
     attributes:
-      label: Environment
-      description: Any relevant environment details (e.g. browser, OS, GitHub Actions runner).
-      placeholder: e.g. GitHub Actions / ubuntu-latest / Python 3.11
+      label: Environment Details
+      description: Optional. Runner, OS, Python version, browser, etc.
+      placeholder: e.g. ubuntu-latest / Python 3.11 / Firefox 124
     validations:
       required: false
 
