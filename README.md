@@ -394,6 +394,22 @@ The validation, gallery deployment, and release workflows in this repository can
 
 ---
 
+## 🤝 Contributors
+
+Thanks to everyone who has contributed to the Todoist Playbook!
+
+[![Contributors](https://img.shields.io/github/contributors/colin-gourlay/todoist-playbook)](https://github.com/colin-gourlay/todoist-playbook/graphs/contributors)
+
+<a href="https://github.com/colin-gourlay/todoist-playbook/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=colin-gourlay/todoist-playbook" alt="Contributors to colin-gourlay/todoist-playbook" />
+</a>
+
+This list is generated dynamically from GitHub's [contributors API](https://docs.github.com/en/rest/repos/repos#list-repository-contributors) via [contrib.rocks](https://contrib.rocks/) and updates automatically as new contributors are added — no manual maintenance required. The badge and avatar grid both link to the full [contributors graph](https://github.com/colin-gourlay/todoist-playbook/graphs/contributors).
+
+Want to be on the list? See [CONTRIBUTING](CONTRIBUTING) to get started.
+
+---
+
 ## 📜 License
 
 [Creative Commons Attribution-ShareAlike 4.0 International](LICENSE)
