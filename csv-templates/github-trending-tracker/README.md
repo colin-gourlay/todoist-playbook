@@ -113,7 +113,7 @@ If you are using the automation path, the review inputs come from the separate t
 - Companion workflow: [Create Todoist Project from Template](../../.github/workflows/create-todoist-project.yml)
 - Companion template: [Repo Ecosystem Watch](../repo-ecosystem-watch/)
 - Companion template: [Repo Profile Audit](../repo-profile-audit/)
-- Companion template: [GitHub Repo Spin-Up](../github-repo-spin-up/)
+- Companion template: [GitHub Repo Spin-Up](../github/github-repo-spin-up/)
 
 ---
 
