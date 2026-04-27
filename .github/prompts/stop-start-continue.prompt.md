@@ -1,28 +1,32 @@
-# 🎯 Purpose
-Generate a Stop / Start / Continue reflection framework.
+---
+description: "Facilitate a Stop / Start / Continue reflection for a given context."
+argument-hint: "Context (work, personal, a specific project)"
+agent: "ask"
+---
 
-# 🧠 Context
-This is used in reviews to drive continuous improvement.
+Facilitate a Stop / Start / Continue retrospective for the context the user provides. Ask one or two clarifying questions if the context is too thin, then produce a structured reflection.
 
-# 📥 Inputs
-- Context (work, personal, project)
+## Inputs
 
-# 📤 Output Requirements
-- Three clear sections
-- Prompts that encourage reflection
+- **Context** (required) — work, personal, a specific project, the past week, etc.
+- **Recent observations** (optional) — anything the user already wants to capture
 
-# ⚙️ Instructions
-- Stop: Identify inefficiencies or distractions
-- Start: Suggest new behaviours or experiments
-- Continue: Reinforce what works well
-- Keep each item concise
+## Output
 
-# 🧪 Example
-Stop:
-- Overcommitting to tasks
+```
+## Stop
+- <inefficiency, distraction, or anti-pattern> — why it's costing you
 
-Start:
-- Blocking focused work time
+## Start
+- <new behaviour or experiment> — the smallest viable first step
 
-Continue:
-- Weekly planning habit
+## Continue
+- <what's working> — why to keep it and how to protect it
+```
+
+## Style
+
+- 3–5 items per section
+- Concrete and specific (not "work less" — instead "end work by 18:00 on Tuesdays")
+- Each item one line, optionally followed by a short rationale
+- Prefer reflection over advice; mirror the user's own language
