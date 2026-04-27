@@ -1,0 +1,33 @@
+{
+  "$schema": "https://aka.ms/vscode-mcp-schema",
+  "inputs": [
+    {
+      "id": "todoist-api-token",
+      "type": "promptString",
+      "description": "Todoist API token (Settings → Integrations → Developer). Same value as the TODOIST_API_TOKEN repo secret used by .github/workflows/create-todoist-project-via-mcp.yml",
+      "password": true
+    },
+    {
+      "id": "github-pat",
+      "type": "promptString",
+      "description": "GitHub Personal Access Token with repo + read:org scopes. Used by the GitHub MCP server.",
+      "password": true
+    }
+  ],
+  "servers": {
+    "todoist": {
+      "type": "http",
+      "url": "https://ai.todoist.net/mcp",
+      "headers": {
+        "Authorization": "Bearer ${input:todoist-api-token}"
+      }
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${input:github-pat}"
+      }
+    }
+  }
+}
