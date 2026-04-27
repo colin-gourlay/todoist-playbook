@@ -1,0 +1,10 @@
+name: REPLACE WITH HUMAN READABLE NAME
+slug: replace-with-folder-slug
+description: One-line description of what this prompt produces.
+category: replace-with-kebab-case-category
+tags:
+  - tag-one
+version: 0.0.0
+inputs:
+  - input_one
+  - input_two
