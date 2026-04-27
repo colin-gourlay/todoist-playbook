@@ -55,7 +55,7 @@ This template is intentionally manual. Use it to drive human review and better d
 ## Related
 
 - Wiki shortlist: [Repo Ecosystem Watch](../../wiki/Repo-Ecosystem-Watch.md)
-- Companion setup template: [GitHub Repo Spin-Up](../github-repo-spin-up/)
+- Companion setup template: [GitHub Repo Spin-Up](../github/github-repo-spin-up/)
 
 ---
 

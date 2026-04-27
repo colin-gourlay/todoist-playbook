@@ -16,6 +16,7 @@
 ### Changed
 
 - Template: `github-trending-repos-daily-review` — moved to `csv-templates/github/github-trending-repos-daily-review/`, display name changed to **GitHub Trending Repos (Daily Review)**, and tag list aligned to `github, trending, open-source, discoverability, triage, stars, daily`; slug is unchanged so workflow inputs and the trending-sync follow-on continue to work
+- Template: `github-repo-spin-up` — moved to `csv-templates/github/github-repo-spin-up/`; slug is unchanged so workflow inputs and template discovery continue to work
 - Workflow: `reusable-validate-templates.yml` — now discovers CSV templates one or two folder levels under `csv-templates/`, validates intermediate group folder names as kebab-case, and resolves `replacement_template` by slug regardless of nesting
 
 - Scripts: `create_todoist_project.py`, `create_via_mcp.py` — both project creation scripts now map `DUE_DATE` / `DUE_DATE_LANG` CSV columns (and legacy `DATE` / `DATE_LANG` aliases) to Todoist task due fields, so due dates defined in template CSVs are applied on import

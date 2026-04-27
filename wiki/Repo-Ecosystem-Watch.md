@@ -75,4 +75,4 @@ Track each review cycle in a compact format.
 ## Related
 
 - Template: [Repo Ecosystem Watch](../csv-templates/repo-ecosystem-watch/)
-- Companion: [GitHub Repo Spin-Up](../csv-templates/github-repo-spin-up/)
+- Companion: [GitHub Repo Spin-Up](../csv-templates/github/github-repo-spin-up/)
