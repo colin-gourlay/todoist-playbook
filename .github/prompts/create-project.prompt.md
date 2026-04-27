@@ -1,37 +1,41 @@
-# 🎯 Purpose
-Create a fully structured Todoist project based on a template.
+---
+description: "Adapt an existing CSV template into a dated, context-specific Todoist project plan."
+argument-hint: "Template slug + project name + timeframe"
+agent: "agent"
+---
 
-# 🧠 Context
-Projects are created from templates but may include:
-- Dates
-- Context-specific tweaks
-- Additional tasks
+Take an existing CSV template under `csv-templates/` and produce a one-off, dated project plan suitable for pasting into Todoist or feeding to the `create-todoist-project.yml` workflow. This does NOT modify the source template — it adapts it for a specific run.
 
-# 📥 Inputs
-- Template name
-- Project name
-- Timeframe (optional)
+## Inputs
 
-# 📤 Output Requirements
-- Structured task list
-- Sections preserved
-- Tasks adapted to timeframe
+- **Template slug** (required) — e.g. `weekly-review`
+- **Project name** (required) — e.g. "Weekly Review – Week 12"
+- **Timeframe** (optional) — start date, end date, or relative window ("next week")
+- **Context tweaks** (optional) — extra tasks or skipped sections specific to this run
 
-# ⚙️ Instructions
-- Maintain template integrity
-- Add due dates if timeframe provided
-- Ensure tasks are realistic and actionable
-- Avoid duplication
+## Steps
 
-# 🧪 Example
-Input:
-Template: Weekly Review
-Project Name: Weekly Review – Week 12
+1. Read the source `csv-templates/<slug>/template.csv`
+2. Preserve sections and structure
+3. Resolve due dates relative to the timeframe (use Todoist natural-language dates like `every monday`, `next sunday`, `2026-05-04`)
+4. Apply context tweaks (add/skip tasks) without renaming the underlying template
 
-Output:
-Planning
-- Review last week (Due: Sunday)
-Execution
-- Plan next week (Due: Sunday)
-Review
-- Identify improvements
+## Output
+
+A structured plan grouped by section, e.g.:
+
+```
+Reflect
+- Review last week's completed tasks (Due: Sunday)
+- Identify blockers and unfinished work
+
+Plan
+- Define top 3 priorities for next week (Due: Sunday)
+- Schedule deep-work blocks (Due: Monday)
+```
+
+## Constraints
+
+- Do not edit files under `csv-templates/`
+- Do not invent tasks that aren't in the source template unless explicitly asked
+- Keep priorities and indentation consistent with the source
