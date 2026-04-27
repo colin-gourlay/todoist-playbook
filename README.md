@@ -1,5 +1,11 @@
 # Todoist Playbook
 
+[![Validate Templates](https://img.shields.io/github/actions/workflow/status/colin-gourlay/todoist-playbook/validate-templates.yml?branch=main&label=validate&logo=github)](https://github.com/colin-gourlay/todoist-playbook/actions/workflows/validate-templates.yml)
+[![License](https://img.shields.io/github/license/colin-gourlay/todoist-playbook)](LICENSE)
+[![Contributors](https://img.shields.io/github/contributors/colin-gourlay/todoist-playbook)](https://github.com/colin-gourlay/todoist-playbook/graphs/contributors)
+[![Last Commit](https://img.shields.io/github/last-commit/colin-gourlay/todoist-playbook)](https://github.com/colin-gourlay/todoist-playbook/commits/main)
+[![Open Issues](https://img.shields.io/github/issues/colin-gourlay/todoist-playbook)](https://github.com/colin-gourlay/todoist-playbook/issues)
+
 ![Social Preview](.github/assets/social-preview.png)
 
 A curated collection of structured [Todoist](https://www.todoist.com/) templates, workflows, and tooling — designed to reduce friction, standardise recurring work, and get structured projects into Todoist in seconds.
