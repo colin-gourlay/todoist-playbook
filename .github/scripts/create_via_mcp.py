@@ -41,6 +41,33 @@ def _extract_due_fields(row: Dict[str, str]) -> Tuple[str, str]:
     return due_string, due_lang
 
 
+def _extract_extended_task_fields(row: Dict[str, str]) -> Dict[str, Any]:
+    """Return optional extended-format task fields as a dict, omitting empty values."""
+    extras: Dict[str, Any] = {}
+    timezone = row.get("TIMEZONE", "").strip()
+    if timezone:
+        extras["due_timezone"] = timezone
+
+    duration_raw = row.get("DURATION", "").strip()
+    duration_unit = row.get("DURATION_UNIT", "").strip().lower()
+    if duration_raw and duration_unit in {"minute", "day"}:
+        try:
+            extras["duration"] = int(duration_raw)
+            extras["duration_unit"] = duration_unit
+        except ValueError:
+            pass
+
+    deadline = row.get("DEADLINE", "").strip()
+    deadline_lang = row.get("DEADLINE_LANG", "").strip()
+    if deadline:
+        extras["deadline_date"] = deadline
+        if deadline_lang:
+            extras["deadline_lang"] = deadline_lang
+
+    return extras
+
+
+
 def _load_supported_project_colors():
     """Load supported Todoist color names from the shared project_colors.txt file."""
     colors_file = os.path.join(os.path.dirname(__file__), "project_colors.txt")
@@ -370,11 +397,15 @@ def main() -> None:
                     task_args["section_id"] = current_section_id
                 if parent_id:
                     task_args["parent_id"] = parent_id
+                description = row.get("DESCRIPTION", "").strip()
+                if description:
+                    task_args["description"] = description
                 due_string, due_lang = _extract_due_fields(row)
                 if due_string:
                     task_args["due_string"] = due_string
                     if due_lang:
                         task_args["due_lang"] = due_lang
+                task_args.update(_extract_extended_task_fields(row))
 
                 task_result = client.call_tool(tool_create_task, task_args)
                 task_id = _extract_id(task_result, "task")

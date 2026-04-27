@@ -22,6 +22,37 @@ def _extract_due_fields(row):
     due_lang = (row.get("DUE_DATE_LANG", "") or row.get("DATE_LANG", "")).strip()
     return due_string, due_lang
 
+
+def _extract_extended_task_fields(row):
+    """Return optional extended-format task fields as a dict, omitting empty values.
+
+    Pulls TIMEZONE, DURATION/DURATION_UNIT, and DEADLINE/DEADLINE_LANG from the
+    extended CSV header. Legacy 8-column templates simply have no such columns.
+    """
+    extras = {}
+    timezone = row.get("TIMEZONE", "").strip()
+    if timezone:
+        extras["due_timezone"] = timezone
+
+    duration_raw = row.get("DURATION", "").strip()
+    duration_unit = row.get("DURATION_UNIT", "").strip().lower()
+    if duration_raw and duration_unit in {"minute", "day"}:
+        try:
+            extras["duration"] = int(duration_raw)
+            extras["duration_unit"] = duration_unit
+        except ValueError:
+            pass
+
+    deadline = row.get("DEADLINE", "").strip()
+    deadline_lang = row.get("DEADLINE_LANG", "").strip()
+    if deadline:
+        extras["deadline_date"] = deadline
+        if deadline_lang:
+            extras["deadline_lang"] = deadline_lang
+
+    return extras
+
+
 def _load_supported_project_colors():
     """Load supported Todoist color names from the shared project_colors.txt file."""
     colors_file = os.path.join(os.path.dirname(__file__), "project_colors.txt")
@@ -249,6 +280,7 @@ def main():
                     task_data["due_string"] = due_string
                     if due_lang:
                         task_data["due_lang"] = due_lang
+                task_data.update(_extract_extended_task_fields(row))
 
                 task = api_post("tasks", token, task_data)
                 indent_stack.append((indent, task["id"]))

@@ -1,6 +1,6 @@
-TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG
-section,Section One,,,,,,
-task,First task in section one,4,1,,,,en
-task,Second task,3,1,,,,en
-section,Section Two,,,,,,
-task,First task in section two,4,1,,,,en
+TYPE,CONTENT,DESCRIPTION,IS_COLLAPSED,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DATE,DATE_LANG,TIMEZONE,DURATION,DURATION_UNIT,DEADLINE,DEADLINE_LANG
+section,Section One,,,,1,,,,,,,,,
+task,First task in section one,,,4,1,,,,en,,,,,
+task,Second task,,,3,1,,,,en,,,,,
+section,Section Two,,,,1,,,,,,,,,
+task,First task in section two,,,4,1,,,,en,,,,,

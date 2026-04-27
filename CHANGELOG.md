@@ -4,6 +4,8 @@
 
 ### Added
 
+- CSV template format: **Extended Todoist importer header** documented as the canonical schema for new templates: `TYPE,CONTENT,DESCRIPTION,IS_COLLAPSED,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DATE,DATE_LANG,TIMEZONE,DURATION,DURATION_UNIT,DEADLINE,DEADLINE_LANG`. The legacy 8-column header remains fully supported.
+- Scripts: `create_todoist_project.py`, `create_via_mcp.py` — now honour extended-format task fields (`TIMEZONE` → `due_timezone`, `DURATION` + `DURATION_UNIT`, `DEADLINE` + `DEADLINE_LANG` → `deadline_date` / `deadline_lang`). The MCP path additionally now passes `DESCRIPTION` to `create_task`.
 - Repository: **Nested CSV template layout supported** — CSV templates may now live under `csv-templates/{slug}/` or `csv-templates/{group}/{slug}/`; validator, Python automation scripts, gallery, and release-asset generation all resolve templates by slug regardless of grouping
 - Script: `.github/scripts/template_discovery.py` — shared helper providing canonical CSV template discovery (slug → on-disk directory) used by runtime, sync, validation, and generation scripts
 - Dependabot: **Automated dependency management** — `.github/dependabot.yml` configured to monitor GitHub Actions on a weekly schedule; pull requests are grouped, labelled with `dependencies`, and auto-merged for patch, minor, and security updates via `dependabot-auto-merge.yml`

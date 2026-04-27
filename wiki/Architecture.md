@@ -109,7 +109,15 @@ todoist-playbook/
 
 ### `template.csv`
 
-Todoist's native CSV import format. Every template CSV starts with the canonical header:
+Todoist's native CSV import format. Every template CSV starts with one of two supported headers.
+
+**Extended header** (canonical for new templates):
+
+```
+TYPE,CONTENT,DESCRIPTION,IS_COLLAPSED,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DATE,DATE_LANG,TIMEZONE,DURATION,DURATION_UNIT,DEADLINE,DEADLINE_LANG
+```
+
+**Legacy header** (still accepted):
 
 ```
 TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG
@@ -119,9 +127,15 @@ TYPE,CONTENT,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DUE_DATE,DUE_DATE_LANG
 |--------|--------|-------|
 | `TYPE` | `section`, `task`, `meta` | `meta` rows set project-level view options (e.g. `view_style=list`) |
 | `CONTENT` | Any string | Rows with empty content are skipped |
+| `DESCRIPTION` | Any string (optional) | Long-form description; CSV-quote when it contains commas or newlines |
+| `IS_COLLAPSED` | empty or `1` (optional) | Collapse the row in the Todoist UI |
 | `PRIORITY` | `1`–`4` | `1` = urgent (p1), `4` = normal (p4) |
 | `INDENT` | Integer ≥ 1 | `1` = top-level, `2` = subtask, etc. |
-| `DUE_DATE` | Always empty | Hardcoded dates are never used |
+| `DATE` / `DUE_DATE` | Natural-language relative string only (e.g. `today at 05:30`, `every monday`) | Absolute calendar dates MUST NOT be used |
+| `DATE_LANG` / `DUE_DATE_LANG` | Language code (e.g. `en`) | Set whenever the date column is set |
+| `TIMEZONE` | IANA zone (e.g. `Europe/London`) | Optional, only when a specific zone matters |
+| `DURATION` / `DURATION_UNIT` | Integer + `minute` or `day` | Set together |
+| `DEADLINE` / `DEADLINE_LANG` | Natural-language string + language code | Optional immovable deadline |
 
 ### Priority Mapping
 
