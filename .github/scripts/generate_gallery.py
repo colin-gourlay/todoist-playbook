@@ -11,11 +11,14 @@ Environment variables:
 """
 
 import csv
+import datetime
+import hashlib
 import json
 import os
 import re
 import shutil
 import sys
+import urllib.request
 
 from template_discovery import iter_template_locations
 
