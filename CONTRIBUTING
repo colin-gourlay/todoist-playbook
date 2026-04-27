@@ -193,3 +193,15 @@ Roadmap work is tracked on the [GitHub Project](https://github.com/users/colin-g
 - Definitions for the Area, Impact, and Target Month fields
 - Conventions for draft items vs issues
 - How to convert discussion outcomes into tracked work
+
+---
+
+## Releases and Tags
+
+The repository has three independent version axes. The full strategy lives in [wiki/Releases.md](wiki/Releases.md); the short version:
+
+- **Repository release tags** are CalVer: `vYYYY.M.D` (UTC), with `-2`, `-3`, … suffixes for same-day re-runs. They are computed and pushed by [.github/workflows/reusable-release-assets.yml](.github/workflows/reusable-release-assets.yml). Do not push tags by hand.
+- **Asset versions** in each `meta.yml` are SemVer. `0.0.0` = unreviewed, `0.1.0` = reviewed and stable, patch bumps are automatic via [.github/workflows/bump-template-version.yml](.github/workflows/bump-template-version.yml). Do not hand-bump patch versions.
+- **`CHANGELOG.md`** uses Keep-a-Changelog with an `[Unreleased]` accumulator. Add a bullet under the appropriate subsection (`Added`, `Changed`, `Removed`, `Deprecated`, `Fixed`) in any PR with user-visible behaviour change. Release notes themselves are generated from commit history by `gh release create --generate-notes`.
+
+Releases publish three assets to each GitHub Release: `csv-templates.zip`, `prompt-templates.zip`, and `index.json`. Releases fire after a successful `Validate templates` run on `main`, or via manual `workflow_dispatch` of `Publish Release`.
