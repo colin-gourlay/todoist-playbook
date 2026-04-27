@@ -1214,7 +1214,7 @@ function buildSpotlight(t) {{
   if (t.task_count)    stats.push(`<span aria-hidden="true">\u2714\ufe0f</span> ${{t.task_count}}\u202ftask${{t.task_count !== 1 ? 's' : ''}}`);
   if (t.section_count) stats.push(`<span aria-hidden="true">\u25b8</span> ${{t.section_count}}\u202fsection${{t.section_count !== 1 ? 's' : ''}}`);
   if (t.estimated_duration) stats.push(`<span aria-hidden="true">\u23f1\ufe0f</span> ${{esc(formatDuration(t.estimated_duration))}}`);
-  if (t.recurrence_suggestion) stats.push(`<span aria-hidden="true">\uD83D\uDD01</span> ${{esc(t.recurrence_suggestion)}}`);
+  if (t.recurrence_suggestion) stats.push(`<span aria-hidden="true">\U0001F501</span> ${{esc(t.recurrence_suggestion)}}`);
 
   const metaLine = [
     t.author  ? `by ${{esc(t.author)}}`  : '',
@@ -1312,7 +1312,7 @@ function buildTemplateCard(t) {{
   if (t.task_count)    stats.push(`<span aria-hidden="true">\u2714\ufe0f</span> ${{t.task_count}}\u202ftask${{t.task_count !== 1 ? 's' : ''}}`);
   if (t.section_count) stats.push(`<span aria-hidden="true">\u25b8</span> ${{t.section_count}}\u202fsection${{t.section_count !== 1 ? 's' : ''}}`);
   if (t.estimated_duration) stats.push(`<span aria-hidden="true">\u23f1\ufe0f</span> ${{esc(formatDuration(t.estimated_duration))}}`);
-  if (t.recurrence_suggestion) stats.push(`<span aria-hidden="true">\uD83D\uDD01</span> ${{esc(t.recurrence_suggestion)}}`);
+  if (t.recurrence_suggestion) stats.push(`<span aria-hidden="true">\U0001F501</span> ${{esc(t.recurrence_suggestion)}}`);
 
   const metaLine = [
     t.author  ? `by ${{esc(t.author)}}`  : '',
@@ -1362,12 +1362,14 @@ function renderCategory(cat) {{
   const label = catLabel(cat);
   const icon = catIcon(cat);
   const container = document.getElementById('container');
+  const searchSummary = document.getElementById('search-summary');
+  if (searchSummary) searchSummary.textContent = '';
 
   const html = `
 <div class="cat-detail-header">
-  <span class="cat-detail-icon">${{icon}}</span>
+  <span class="cat-detail-icon" aria-hidden="true">${{icon}}</span>
   <div>
-    <div class="cat-detail-title">${{esc(label)}}</div>
+    <h2 class="cat-detail-title">${{esc(label)}}</h2>
     <div class="cat-detail-count">${{items.length}}\u202ftemplate${{items.length !== 1 ? 's' : ''}}</div>
   </div>
 </div>
@@ -1394,8 +1396,10 @@ function matchesQuery(entry, query) {{
 function renderSearch(query) {{
   const trimmed = query.trim();
   const container = document.getElementById('container');
+  const searchSummary = document.getElementById('search-summary');
 
   if (!trimmed) {{
+    if (searchSummary) searchSummary.textContent = '';
     renderHome();
     document.getElementById('breadcrumb').style.display = 'none';
     return;
@@ -1404,17 +1408,18 @@ function renderSearch(query) {{
   const q = trimmed.toLowerCase();
   const results = SEARCH_INDEX.filter(entry => matchesQuery(entry, q)).map(entry => entry.template);
 
-  let html = `<p class="search-summary">`;
-  if (results.length === 0) {{
-    html += `No results for <strong>${{esc(trimmed)}}</strong>`;
-  }} else {{
-    html += `<strong>${{results.length}}</strong> result${{results.length !== 1 ? 's' : ''}} for <strong>${{esc(trimmed)}}</strong>`;
+  if (searchSummary) {{
+    if (results.length === 0) {{
+      searchSummary.textContent = `No results for "${{trimmed}}"`;
+    }} else {{
+      searchSummary.textContent = `${{results.length}} result${{results.length !== 1 ? 's' : ''}} for "${{trimmed}}"`;
+    }}
   }}
-  html += `</p>`;
 
+  let html = '';
   if (results.length === 0) {{
     html += `<div class="no-results">
-  <div class="no-results-icon">🔍</div>
+  <div class="no-results-icon" aria-hidden="true">\U0001F50D</div>
   <p>No templates matched your search. Try different keywords or browse by category.</p>
 </div>`;
   }} else {{
@@ -1445,7 +1450,9 @@ function handleRoute() {{
 
 document.getElementById('btn-back').addEventListener('click', () => {{
   document.getElementById('search-input').value = '';
-  document.getElementById('search-clear').style.display = 'none';
+  document.getElementById('search-clear').hidden = true;
+  const searchSummary = document.getElementById('search-summary');
+  if (searchSummary) searchSummary.textContent = '';
   window.location.hash = '';
 }});
 
@@ -1453,16 +1460,21 @@ document.getElementById('btn-back').addEventListener('click', () => {{
 
 const searchInput = document.getElementById('search-input');
 const searchClear = document.getElementById('search-clear');
+const searchKbd   = document.getElementById('search-kbd');
 
 searchInput.addEventListener('input', () => {{
   const query = searchInput.value;
-  searchClear.style.display = query ? 'block' : 'none';
+  searchClear.hidden = !query;
+  if (searchKbd) searchKbd.style.display = query ? 'none' : '';
   renderSearch(query);
 }});
 
 searchClear.addEventListener('click', () => {{
   searchInput.value = '';
-  searchClear.style.display = 'none';
+  searchClear.hidden = true;
+  if (searchKbd) searchKbd.style.display = '';
+  const searchSummary = document.getElementById('search-summary');
+  if (searchSummary) searchSummary.textContent = '';
   renderHome();
   document.getElementById('breadcrumb').style.display = 'none';
   searchInput.focus();
@@ -1472,7 +1484,10 @@ window.addEventListener('hashchange', () => {{
   // When navigating via hash, clear any active search
   if (searchInput.value) {{
     searchInput.value = '';
-    searchClear.style.display = 'none';
+    searchClear.hidden = true;
+    if (searchKbd) searchKbd.style.display = '';
+    const searchSummary = document.getElementById('search-summary');
+    if (searchSummary) searchSummary.textContent = '';
   }}
   handleRoute();
 }});
@@ -1486,16 +1501,34 @@ const modalBody     = document.getElementById('modal-body');
 const modalActions  = document.getElementById('modal-actions');
 const modalCloseBtn = document.getElementById('modal-close');
 
-let lastFocusedElement = null;
+// Focus stack — supports chained README → modal links. Cap at 20.
+const focusStack = [];
+
+// Landmark elements to mark inert while modal is open
+const INERT_LANDMARKS = ['#breadcrumb', 'header.site-header', 'main', 'footer.site-footer'];
 
 function renderMarkdown(md) {{
   if (!md) return '';
   if (typeof marked !== 'undefined' && marked.parse) {{
     try {{
+      // Down-shift README headings: h1→h2, h2→h3, … h5→h6 (h6 stays h6)
+      const downshift = {{
+        depth(token) {{
+          token.depth = Math.min(token.depth + 1, 6);
+          return false;
+        }}
+      }};
+      marked.use({{ walkTokens: downshift }});
       return marked.parse(md, {{ mangle: false, headerIds: false, breaks: false }});
-    }} catch (e) {{ /* fall through to escaped fallback */ }}
+    }} catch (e) {{ /* fall through */ }}
   }}
   return '<pre>' + esc(md) + '</pre>';
+}}
+
+function getFocusable(root) {{
+  return Array.from(root.querySelectorAll(
+    'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"]), input, select, textarea'
+  )).filter(el => !el.closest('[hidden]') && !el.closest('[inert]'));
 }}
 
 function openModal(template) {{
@@ -1506,14 +1539,14 @@ function openModal(template) {{
   if (template.category) subParts.push(catLabel(template.category));
   if (template.version) subParts.push('v' + template.version);
   if (template.author)  subParts.push('by ' + template.author);
-  modalSubtitle.textContent = subParts.join(' · ');
+  modalSubtitle.textContent = subParts.join(' \u00b7 ') || 'Template details';
 
   // Action buttons — keep download/view available without leaving the modal
   let actionsHtml = '';
   if (template.type === 'template' && template.csv_url) {{
-    actionsHtml += `<a class="btn-primary" href="${{esc(template.csv_url)}}" download>⬇️ Download CSV</a>`;
+    actionsHtml += `<a class="btn-primary" href="${{esc(template.csv_url)}}" download aria-label="Download CSV for ${{esc(template.name)}}"><span aria-hidden="true">\u2b07\ufe0f</span> Download CSV</a>`;
   }} else if (template.type === 'prompt' && template.prompt_url) {{
-    actionsHtml += `<a class="btn-primary" href="${{esc(template.prompt_url)}}" target="_blank" rel="noopener">View Prompt</a>`;
+    actionsHtml += `<a class="btn-primary" href="${{esc(template.prompt_url)}}" target="_blank" rel="noopener" aria-label="View prompt for ${{esc(template.name)}}">View Prompt</a>`;
   }}
   modalActions.innerHTML = actionsHtml;
 
@@ -1525,12 +1558,7 @@ function openModal(template) {{
     modalBody.innerHTML = '<p>No README is available for this template yet.</p>';
   }}
 
-  // Make any links to repo-relative paths still resolve sensibly. README files
-  // often link to other templates with relative paths like
-  // `../other-template/` or `../../group/other-template/`. On the deployed
-  // gallery (a single-page site rooted at /) those resolve to URLs that 404,
-  // so intercept them: if the final path segment matches a known template or
-  // prompt slug, open that template's modal instead of navigating away.
+  // Intercept relative links to known templates and open them in a nested modal
   modalBody.querySelectorAll('a[href]').forEach(a => {{
     const href = a.getAttribute('href');
     if (!href) return;
@@ -1553,7 +1581,16 @@ function openModal(template) {{
     }}
   }});
 
-  lastFocusedElement = document.activeElement;
+  // Push current focus onto the stack (cap at 20)
+  if (focusStack.length >= 20) focusStack.shift();
+  focusStack.push(document.activeElement);
+
+  // Apply inert to background landmarks
+  INERT_LANDMARKS.forEach(sel => {{
+    const el = document.querySelector(sel);
+    if (el) el.inert = true;
+  }});
+
   modalBackdrop.classList.add('open');
   modalBackdrop.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
@@ -1563,30 +1600,80 @@ function openModal(template) {{
 
 function closeModal() {{
   if (!modalBackdrop.classList.contains('open')) return;
+
+  // Remove inert from background landmarks
+  INERT_LANDMARKS.forEach(sel => {{
+    const el = document.querySelector(sel);
+    if (el) el.inert = false;
+  }});
+
   modalBackdrop.classList.remove('open');
   modalBackdrop.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
-  if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {{
-    lastFocusedElement.focus();
-  }}
+
+  const prev = focusStack.pop();
+  if (prev && typeof prev.focus === 'function') prev.focus();
 }}
+
+// Focus trap inside modal
+modalBackdrop.addEventListener('keydown', e => {{
+  if (!modalBackdrop.classList.contains('open')) return;
+  if (e.key !== 'Tab') return;
+  const focusable = getFocusable(modalBackdrop.querySelector('.modal-dialog'));
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last  = focusable[focusable.length - 1];
+  if (e.shiftKey) {{
+    if (document.activeElement === first) {{ e.preventDefault(); last.focus(); }}
+  }} else {{
+    if (document.activeElement === last)  {{ e.preventDefault(); first.focus(); }}
+  }}
+}});
 
 modalCloseBtn.addEventListener('click', closeModal);
 modalBackdrop.addEventListener('click', e => {{
   if (e.target === modalBackdrop) closeModal();
 }});
+
+// ── Global keyboard shortcuts ─────────────────────────────────────────────────
 document.addEventListener('keydown', e => {{
-  if (e.key === 'Escape') closeModal();
+  // Esc: close modal first; if no modal, clear search
+  if (e.key === 'Escape') {{
+    if (modalBackdrop.classList.contains('open')) {{
+      closeModal();
+      return;
+    }}
+    if (searchInput.value) {{
+      searchInput.value = '';
+      searchClear.hidden = true;
+      if (searchKbd) searchKbd.style.display = '';
+      const searchSummary = document.getElementById('search-summary');
+      if (searchSummary) searchSummary.textContent = '';
+      renderHome();
+      document.getElementById('breadcrumb').style.display = 'none';
+      searchInput.blur();
+    }}
+    return;
+  }}
+
+  // / : focus search (only when not in an input and modal is closed)
+  if (e.key === '/' && !modalBackdrop.classList.contains('open')) {{
+    const tag = document.activeElement && document.activeElement.tagName.toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || tag === 'select' ||
+        (document.activeElement && document.activeElement.isContentEditable)) return;
+    e.preventDefault();
+    searchInput.focus();
+    return;
+  }}
 }});
 
-// Delegated click + keyboard handlers for template cards. Clicks on links or
-// buttons inside the card are left to bubble to their own handlers, so the
-// existing primary action (download / view prompt) keeps working without
-// opening the modal.
+// Delegated click handler for template cards. Cards are now <button> elements.
+// Clicks on inner <a> or <button> children are passed through to their own handlers.
 document.addEventListener('click', e => {{
   const card = e.target.closest('.tpl-card-clickable');
   if (!card) return;
-  if (e.target.closest('a, button')) return;
+  // If the click was on an inner link/button (not the card itself), let it bubble
+  if (e.target !== card && e.target.closest('a, button')) return;
   const template = TEMPLATE_LOOKUP[card.dataset.type + ':' + card.dataset.slug];
   openModal(template);
 }});

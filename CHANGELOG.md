@@ -15,6 +15,7 @@
 - Template: **Artist Interview Invite Workflow** — checklist for inviting an artist or band for a live studio interview and managing follow-through
 - Prompt template: **Artist Interview Invite Email** — generate concise, high-impact studio interview invite emails for artists, bands, and representatives
 - Gallery: live search bar added to the GitHub Pages template gallery — filters cards in real time as you type
+- Gallery: **Accessibility (WCAG 2.2 AA)** — 15-item a11y overhaul of `generate_gallery.py`: contrast token `--muted-light` raised to `#5a6472` (5.1:1); gradient darkened to `#9a3133`; skip link; `<main>` landmark; footer `<nav aria-label="Site">`; category cards converted to native `<a href="#/category/…">` anchors; template/spotlight cards converted to `<button type="button">`; all card titles promoted to semantic headings (`h2`/`h3`); modal title promoted to `<h2>`; modal gains `inert` background, keyboard focus trap, and a stack-based focus-return (cap 20); live region `<p role="status" aria-live="polite">` for search count; search-clear uses `hidden` attribute; `/` shortcut focuses search; `Esc` closes modal then clears search; all decorative emoji wrapped in `<span aria-hidden="true">`; differentiated `aria-label` on cards and inner action buttons; README headings down-shifted by one level in the modal; `<meta name="description">` added; contrast matrix comment in CSS
 
 ### Changed
 
