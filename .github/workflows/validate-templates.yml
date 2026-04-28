@@ -18,7 +18,9 @@ on:
       - .github/workflows/reusable-release-assets.yml
       - .github/workflows/validate-templates.yml
       - .github/workflows/reusable-validate-templates.yml
+      - .github/workflows/reusable-gallery-quality.yml
       - .github/scripts/project_colors.txt
+      - .github/quality/**
   pull_request:
     branches: [ main ]
     paths:
@@ -36,7 +38,9 @@ on:
       - .github/workflows/reusable-release-assets.yml
       - .github/workflows/validate-templates.yml
       - .github/workflows/reusable-validate-templates.yml
+      - .github/workflows/reusable-gallery-quality.yml
       - .github/scripts/project_colors.txt
+      - .github/quality/**
   workflow_dispatch:
   merge_group:
 
@@ -77,3 +81,9 @@ jobs:
       - name: Assert gallery security properties
         run: python3 .github/scripts/assert_gallery_security.py docs/index.html
 
+  gallery-quality:
+    needs: validate
+    if: ${{ success() }}
+    permissions:
+      contents: read
+    uses: ./.github/workflows/reusable-gallery-quality.yml
