@@ -11,6 +11,9 @@ Environment variables:
   GITHUB_SHA            Git commit SHA (injected by GitHub Actions)
   GITHUB_REPOSITORY     "owner/repo" used for build provenance
   ASSERT_OUTPUT         If "1", run hardening assertions after generation
+  TP_ALLOW_VENDOR_TOFU  If "1", allow first-time TOFU bootstrap when vendor-manifest.json
+                        has empty sha384 fields (the manifest is updated in-place).
+                        Without this flag an empty sha384 is a hard build error.
 
 The generator emits an HTML shell that loads CSS/JS from sibling files and reads
 template data from a JSON island, so a strict CSP without 'unsafe-inline' is
@@ -39,6 +42,7 @@ GITHUB_SHA           = os.environ.get("GITHUB_SHA", "")
 GITHUB_REPOSITORY    = os.environ.get("GITHUB_REPOSITORY", "colin-gourlay/todoist-playbook")
 REPO_URL             = "https://github.com/" + GITHUB_REPOSITORY
 ASSERT_OUTPUT        = os.environ.get("ASSERT_OUTPUT", "0") == "1"
+ALLOW_VENDOR_TOFU    = os.environ.get("TP_ALLOW_VENDOR_TOFU", "0") == "1"
 SHORT_SHA            = (GITHUB_SHA or "")[:7]
 BUILD_DATE           = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
 
@@ -339,6 +343,12 @@ def download_vendor(vendor_dir):
     for filename, url in VENDOR.items():
         dest = os.path.join(vendor_dir, filename)
         expected = manifest.get(filename, {}).get("sha384", "")
+        if not expected and not ALLOW_VENDOR_TOFU:
+            raise SystemExit(
+                f"ERROR: vendor-manifest.json has no sha384 for {filename} and "
+                "TP_ALLOW_VENDOR_TOFU is not set. Set TP_ALLOW_VENDOR_TOFU=1 to "
+                "bootstrap the manifest on first run."
+            )
         downloaded = False
         try:
             req = urllib.request.Request(
