@@ -4,7 +4,7 @@ This page documents the outreach shortlist and submission playbook for getting *
 
 ---
 
-## 🎯 Suggested Entry Text
+## 🧩 Suggested Entry Text
 
 Use this as the basis for every submission. Adapt the description to match the tone and length of each target list.
 
@@ -20,7 +20,7 @@ Use this as the basis for every submission. Adapt the description to match the t
 
 ---
 
-## 📋 Target List Shortlist
+## 🧩 Target List Shortlist
 
 | # | List | GitHub URL | Rationale | Stars | Last Activity | Status |
 |---|------|-----------|-----------|-------|---------------|--------|
@@ -35,7 +35,7 @@ Use this as the basis for every submission. Adapt the description to match the t
 
 ---
 
-## 📝 Submission Message Template
+## 🧩 Submission Message Template
 
 Use this PR description as a starting point. Replace `[LIST NAME]` and adjust the rationale to fit the specific list.
 
@@ -64,7 +64,7 @@ Let me know if you'd like any changes to the entry or description. Happy to adju
 
 ---
 
-## 📊 Submission Tracking
+## 🧩 Submission Tracking
 
 Update this table after each submission.
 
@@ -81,7 +81,7 @@ Update this table after each submission.
 
 ---
 
-## 🔁 Repeatable Process
+## 🧩 Repeatable Process
 
 For each target list:
 

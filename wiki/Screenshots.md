@@ -73,14 +73,14 @@ A failing run produces targeted error messages:
 The `index.md` file is the human-readable catalogue of all available templates, organised by category:
 
 ```markdown
-## 🔁 Daily & Weekly Systems
+## 🧩 Daily & Weekly Systems
 
 | Template     | Description                                              | Tags                              |
 |-------------|----------------------------------------------------------|-----------------------------------|
 | Daily Review | GTD-aligned daily review to capture, clarify, close out  | review, planning, productivity... |
 | Weekly Review| Structured weekly reset to close loops and plan ahead    | review, planning, productivity... |
 
-## 💻 Work Projects
+## 🧩 Work Projects
 
 | Template               | Description                                        | Tags                       |
 |------------------------|----------------------------------------------------|----------------------------|

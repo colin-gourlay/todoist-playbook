@@ -22,7 +22,7 @@ This repository is a system, not just a storage location:
 
 ---
 
-## ❓ Why This Exists
+## 🧩 Why This Exists
 
 **The problem:** Every sprint, code review, job change, or house-admin cycle forces you to rebuild the same task structure from scratch. Best practices live in people's heads. Task managers give you containers but not content — you always start with a blank canvas, under time pressure, with gaps in what you remember.
 
@@ -36,7 +36,7 @@ This repository is a system, not just a storage location:
 
 ---
 
-## 🏗️ Architecture Overview
+## 🧩 Architecture Overview
 
 The Playbook is built in four layers:
 
@@ -53,7 +53,7 @@ For the full architecture diagram and component detail, see [wiki/Architecture.m
 
 ---
 
-## ⚙️ Setup
+## 🧩 Setup
 
 **Minimum setup (for automation workflows):**
 
@@ -73,7 +73,7 @@ For the full architecture diagram and component detail, see [wiki/Architecture.m
 
 ---
 
-## 🧭 Start Here
+## 🧩 Start Here
 
 Not sure where to begin? Pick the path that fits you:
 
@@ -89,7 +89,7 @@ Not sure where to begin? Pick the path that fits you:
 
 ---
 
-## 🔍 Templates vs Bundles vs Prompt Templates
+## 🧩 Templates vs Bundles vs Prompt Templates
 
 Not sure which type of asset to use? Here is a quick guide:
 
@@ -101,14 +101,14 @@ Not sure which type of asset to use? Here is a quick guide:
 
 ---
 
-## 🚀 How to Use
+## 🧩 How to Use
 
 <a name="prerequisite"></a>
 
 > **Prerequisite for automated workflows:** Add your Todoist API token as a repository secret named `TODOIST_API_TOKEN`.
 > Retrieve your token from [Todoist Integrations Settings](https://app.todoist.com/app/settings/integrations/developer).
 
-### ⚡ Automated (recommended)
+### 🧩 Automated (recommended)
 
 Use the **Create Todoist Project from Template** GitHub Actions workflow to create a project directly from the latest hosted template — no local downloads required.
 
@@ -120,7 +120,7 @@ Use the **Create Todoist Project from Template** GitHub Actions workflow to crea
 
 ![GitHub Actions Run Workflow form](.github/assets/screenshots/github-actions-run-workflow.svg)
 
-### 🤖 Automated via AI Prompt Template
+### 🧩 Automated via AI Prompt Template
 
 Use the **Create Todoist Project from Prompt Template** GitHub Actions workflow to generate enriched task content via GitHub Copilot and create a project automatically.
 
@@ -131,7 +131,7 @@ Use the **Create Todoist Project from Prompt Template** GitHub Actions workflow 
 5. Optionally set a **priority** (`normal`, `medium`, `high`, or `urgent`) and a custom project name
 6. Click **Run workflow** — Copilot generates the task content and the project is created in Todoist automatically
 
-### 🌐 Via MCP (Todoist MCP server)
+### 🧩 Via MCP (Todoist MCP server)
 
 Use the **Create Todoist Project via MCP** workflow to route project creation through the Todoist MCP server.
 
@@ -145,7 +145,7 @@ Use the **Create Todoist Project via MCP** workflow to route project creation th
 4. Optionally provide a project name
 5. Click **Run workflow**
 
-### 📥 Manual
+### 🧩 Manual
 
 1. Browse the template catalogue in `index.md`
 2. Navigate to a CSV template folder
@@ -161,7 +161,7 @@ Each template folder includes:
 - `meta.yml` → machine-readable metadata
 - `README.md` → explanation & usage guidance
 
-### 🤖 AI Prompt Templates
+### 🧩 AI Prompt Templates
 
 Use AI prompt templates to generate rich, structured task content before adding items to Todoist.
 
@@ -180,7 +180,7 @@ Each prompt template folder includes:
 ---
 
 
-## 💡 Usage Examples
+## 🧩 Usage Examples
 
 ### Example 1 — Automated: Weekly Review in 30 seconds
 
@@ -234,13 +234,13 @@ Todoist imports all five sections (Day 1, Week 1, Weeks 2–4, Month 1–3, Ongo
 
 ---
 
-## 🖼 Screenshots
+## 🧩 Screenshots
 
 Screenshots are embedded inline throughout this document alongside the relevant workflow steps. For a complete visual walkthrough — including the validation CI run, template catalogue structure, and version bump behaviour — see the [Screenshots wiki page](wiki/Screenshots.md).
 
 ---
 
-## 📂 Structure
+## 🧩 Structure
 
 - `/csv-templates` → Individual reusable CSV templates
 - `/prompt-templates` → AI prompt templates for generating enriched Todoist task content
@@ -262,7 +262,7 @@ If you consume release assets, the ZIP filename is now:
 
 ---
 
-## 🧠 Philosophy
+## 🧩 Philosophy
 
 Templates are not just task lists.
 They encode decisions, structure, and thinking patterns.
@@ -276,7 +276,7 @@ The goal of this repository is to:
 
 ---
 
-## 📈 GitHub Trending to Todoist
+## 🧩 GitHub Trending to Todoist
 
 The **GitHub Trending to Todoist** workflow runs daily at 05:30 UTC. It fetches the repositories currently trending on GitHub (today, this week, and this month) and pushes them into a dated Todoist project as `read-later` tasks, grouped by period.
 
@@ -304,7 +304,7 @@ The **GitHub Trending to Todoist** workflow runs daily at 05:30 UTC. It fetches 
 
 ---
 
-## 🤖 Automated Documentation Sync
+## 🧩 Automated Documentation Sync
 
 The **Documentation Sync** workflow runs daily to keep this repository's documentation
 accurate and up to date. It is compiled from
@@ -334,7 +334,7 @@ subsequent runs will update it rather than open a duplicate.
 
 ---
 
-## 🔢 Template Versioning
+## 🧩 Template Versioning
 
 Each template carries a `version` field in its `meta.yml` that follows [Semantic Versioning](https://semver.org/).
 
@@ -372,7 +372,7 @@ The **Bump template versions** workflow runs when a pull request targeting `main
 
 ---
 
-## 🗺️ Roadmap
+## 🧩 Roadmap
 
 **Current state:**
 
@@ -392,7 +392,7 @@ The **Bump template versions** workflow runs when a pull request targeting `main
 
 ---
 
-## 🔁 Reusable Workflows
+## 🧩 Reusable Workflows
 
 The validation, gallery deployment, and release workflows in this repository can be consumed from external repositories. Pin to a release tag (e.g. `@v2026.3.22`) for a stable reference.
 
@@ -400,7 +400,7 @@ The validation, gallery deployment, and release workflows in this repository can
 
 ---
 
-## 🤝 Contributors
+## 🧩 Contributors
 
 Thanks to everyone who has contributed to the Todoist Playbook!
 
@@ -416,6 +416,6 @@ Want to be on the list? See [CONTRIBUTING](CONTRIBUTING) to get started.
 
 ---
 
-## 📜 License
+## 🧩 License
 
 [Creative Commons Attribution-ShareAlike 4.0 International](LICENSE)

@@ -4,7 +4,7 @@ This page documents the baseline social and profile consistency audit for **Todo
 
 ---
 
-## 🏷 Canonical Identity
+## 🧩 Canonical Identity
 
 Use these values consistently across all public-facing profiles, directories, and references.
 
@@ -19,7 +19,7 @@ Use these values consistently across all public-facing profiles, directories, an
 
 ---
 
-## ✅ Repository Profile Audit
+## 🧩 Repository Profile Audit
 
 The table below records the baseline audit of the GitHub repository's public-facing profile.
 
@@ -38,7 +38,7 @@ The table below records the baseline audit of the GitHub repository's public-fac
 
 ---
 
-## 🔗 External Reference Audit
+## 🧩 External Reference Audit
 
 | Platform / Directory | Profile / Reference | Naming consistent? | Link resolves? | Notes |
 |---------------------|--------------------|--------------------|----------------|-------|
@@ -51,7 +51,7 @@ The table below records the baseline audit of the GitHub repository's public-fac
 
 ---
 
-## 📋 Baseline Audit Checklist
+## 🧩 Baseline Audit Checklist
 
 Derived from the [Socials Health & Optimisation Checklist](../csv-templates/socials-health-and-optimization-checklist/) template.
 
@@ -83,7 +83,7 @@ Derived from the [Socials Health & Optimisation Checklist](../csv-templates/soci
 
 ---
 
-## 🔄 Follow-Up Actions
+## 🧩 Follow-Up Actions
 
 Items that cannot be resolved in this repository and require external action:
 

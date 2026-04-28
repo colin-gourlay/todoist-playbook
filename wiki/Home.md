@@ -4,7 +4,7 @@ Welcome to the **Todoist Playbook** wiki. This is the central reference for what
 
 ---
 
-## 📖 Contents
+## 🧩 Contents
 
 | Page | What you will find |
 | ------ | -------------------- |
@@ -21,7 +21,7 @@ Welcome to the **Todoist Playbook** wiki. This is the central reference for what
 
 ---
 
-## 🚀 Quick Start
+## 🧩 Quick Start
 
 1. Add your Todoist API token as a repository secret named `TODOIST_API_TOKEN`
 2. Go to **Actions → Create Todoist Project from Template**
@@ -32,7 +32,7 @@ That is all it takes to turn a structured task template into a live Todoist proj
 
 ---
 
-## 🗂 What Is the Todoist Playbook?
+## 🧩 What Is the Todoist Playbook?
 
 The Todoist Playbook is a curated library of structured task templates, automation workflows, and AI prompt templates that make it easy to start any recurring project in [Todoist](https://www.todoist.com/) in seconds.
 
@@ -40,7 +40,7 @@ Instead of rebuilding the same project structure from scratch each time you star
 
 ---
 
-## 🧠 Core Concepts
+## 🧩 Core Concepts
 
 | Concept | Description |
 | --------- | ------------- |
@@ -51,6 +51,6 @@ Instead of rebuilding the same project structure from scratch each time you star
 
 ---
 
-## 📜 Licence
+## 🧩 Licence
 
 [Creative Commons Attribution-ShareAlike 4.0 International](../LICENSE)
