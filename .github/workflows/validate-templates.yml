@@ -7,6 +7,11 @@ on:
       - csv-templates/**
       - prompt-templates/**
       - .github/scripts/generate_release_assets.py
+      - .github/scripts/generate_gallery.py
+      - .github/scripts/assert_gallery_security.py
+      - .github/scripts/vendor-manifest.json
+      - .github/scripts/gallery.css
+      - .github/scripts/gallery.js
       - .github/workflows/deploy-gallery.yml
       - .github/workflows/reusable-deploy-pages-gallery.yml
       - .github/workflows/release.yml
@@ -15,7 +20,6 @@ on:
       - .github/workflows/reusable-validate-templates.yml
       - .github/workflows/reusable-gallery-quality.yml
       - .github/scripts/project_colors.txt
-      - .github/scripts/generate_gallery.py
       - .github/quality/**
   pull_request:
     branches: [ main ]
@@ -23,6 +27,11 @@ on:
       - csv-templates/**
       - prompt-templates/**
       - .github/scripts/generate_release_assets.py
+      - .github/scripts/generate_gallery.py
+      - .github/scripts/assert_gallery_security.py
+      - .github/scripts/vendor-manifest.json
+      - .github/scripts/gallery.css
+      - .github/scripts/gallery.js
       - .github/workflows/deploy-gallery.yml
       - .github/workflows/reusable-deploy-pages-gallery.yml
       - .github/workflows/release.yml
@@ -31,7 +40,6 @@ on:
       - .github/workflows/reusable-validate-templates.yml
       - .github/workflows/reusable-gallery-quality.yml
       - .github/scripts/project_colors.txt
-      - .github/scripts/generate_gallery.py
       - .github/quality/**
   workflow_dispatch:
   merge_group:
@@ -48,10 +56,34 @@ jobs:
       contents: read
     uses: ./.github/workflows/reusable-validate-templates.yml
 
+  security-checks:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@8d3c67de8e2fe68ef647c8db1e6a09f647780f40 # v2.19.0
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate gallery (TOFU vendor bootstrap)
+        env:
+          TP_ALLOW_VENDOR_TOFU: "1"
+        run: python3 .github/scripts/generate_gallery.py
+
+      - name: Assert gallery security properties
+        run: python3 .github/scripts/assert_gallery_security.py docs/index.html
+
   gallery-quality:
     needs: validate
     if: ${{ success() }}
     permissions:
       contents: read
     uses: ./.github/workflows/reusable-gallery-quality.yml
-
