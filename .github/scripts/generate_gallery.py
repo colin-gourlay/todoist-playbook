@@ -616,6 +616,15 @@ def build_html(data_payload, sri_hashes):
       <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.25"><path d="M18 6 6 18M6 6l12 12"/></svg>
     </button>
   </div>
+  <div class="search-controls" id="search-controls" role="group"
+       aria-label="Search refinements" hidden>
+    <div class="segmented" role="group" aria-label="Search mode">
+      <span class="segmented-label">Search mode:</span>
+      <button type="button" class="seg-btn" data-mode="all" aria-pressed="true">All</button>
+      <button type="button" class="seg-btn" data-mode="text" aria-pressed="false">Text</button>
+      <button type="button" class="seg-btn" data-mode="tags" aria-pressed="false">Tags</button>
+    </div>
+  </div>
 </header>
 
 <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb">

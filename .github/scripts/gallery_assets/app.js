@@ -252,7 +252,10 @@
 
   function buildTemplateCard(t) {
     var tags = (t.tags || []).map(function (tag) {
-      return '<span class="tag">' + esc(tag) + '</span>';
+      var active = state.tags.indexOf(tag) !== -1;
+      return '<button type="button" class="tag tag-toggle" data-tag="' + esc(tag) + '" ' +
+        'aria-pressed="' + (active ? 'true' : 'false') + '" ' +
+        'aria-label="Toggle filter ' + esc(tag) + '">' + esc(tag) + '</button>';
     }).join('');
     var stats = buildStats(t);
     var metaLine = [
@@ -337,17 +340,43 @@
     }
   };
 
-  function applySortAndFilter(items) {
-    var filtered = items;
-    if (state.tags.length) {
-      filtered = items.filter(function (t) {
-        return state.tags.every(function (tag) {
-          return (t.tags || []).indexOf(tag) !== -1;
-        });
+  function applyTagFilter(items, tags, match) {
+    if (!tags.length) return items;
+    if (match === 'or') {
+      return items.filter(function (t) {
+        var ts = t.tags || [];
+        for (var i = 0; i < tags.length; i++) {
+          if (ts.indexOf(tags[i]) !== -1) return true;
+        }
+        return false;
       });
     }
+    return items.filter(function (t) {
+      var ts = t.tags || [];
+      for (var i = 0; i < tags.length; i++) {
+        if (ts.indexOf(tags[i]) === -1) return false;
+      }
+      return true;
+    });
+  }
+
+  function applySortAndFilter(items, opts) {
+    opts = opts || {};
+    var useTags = opts.useTags !== false;
+    var filtered = useTags ? applyTagFilter(items, state.tags, state.match) : items;
     var fn = SORT_FNS[state.sort] || SORT_FNS['name-asc'];
     return filtered.slice().sort(fn);
+  }
+
+  function buildMatchControl() {
+    var opts = [['and', 'AND'], ['or', 'OR']];
+    var btns = opts.map(function (o) {
+      var active = state.match === o[0];
+      return '<button type="button" class="seg-btn" data-match="' + o[0] + '" ' +
+        'aria-pressed="' + (active ? 'true' : 'false') + '">' + o[1] + '</button>';
+    }).join('');
+    return '<div class="segmented" role="group" aria-label="Match tags">' +
+      '<span class="segmented-label">Match:</span>' + btns + '</div>';
   }
 
   function buildFilterBar(availableTags) {
@@ -358,12 +387,46 @@
         'aria-pressed="' + (active ? 'true' : 'false') + '" ' +
         'data-tag="' + esc(tag) + '">' + esc(tag) + '</button>';
     }).join('');
+    var matchControl = state.tags.length > 1 ? buildMatchControl() : '';
     var clearBtn = state.tags.length
       ? '<button type="button" class="btn-secondary" data-clear-filters>Clear filters</button>'
       : '';
+    var help = state.tags.length > 1
+      ? '<span class="filter-bar-help">' +
+          (state.match === 'or'
+            ? 'Showing templates with any selected tag.'
+            : 'Showing templates with all selected tags.') +
+        '</span>'
+      : '';
     return '<div class="filter-bar" role="group" aria-label="Tag filters">' +
       '<span class="filter-bar-label">Filter by tag:</span>' +
-      chips + clearBtn + '</div>';
+      chips + matchControl + clearBtn + help + '</div>';
+  }
+
+  function buildTagCloud(limit) {
+    var counts = {};
+    TEMPLATES.forEach(function (t) {
+      (t.tags || []).forEach(function (tag) {
+        counts[tag] = (counts[tag] || 0) + 1;
+      });
+    });
+    var allTags = Object.keys(counts);
+    if (!allTags.length) return '';
+    allTags.sort(function (a, b) {
+      return counts[b] - counts[a] || a.localeCompare(b);
+    });
+    if (typeof limit === 'number' && limit > 0) allTags = allTags.slice(0, limit);
+    var chips = allTags.map(function (tag) {
+      return '<button type="button" class="tag-cloud-chip" data-tag-cloud="' + esc(tag) + '" ' +
+        'aria-label="Browse templates tagged ' + esc(tag) + '">' +
+        '<span>' + esc(tag) + '</span>' +
+        '<span class="tag-cloud-count" aria-hidden="true">' + counts[tag] + '</span>' +
+        '</button>';
+    }).join('');
+    return '<section class="tag-cloud" aria-label="Browse by tag">' +
+      '<h2 class="tag-cloud-heading">Browse by tag</h2>' +
+      '<div class="tag-cloud-list">' + chips + '</div>' +
+      '</section>';
   }
 
   function buildSortRow() {
@@ -403,7 +466,7 @@
         '</section>';
     }
 
-    var html = buildSpotlight(SPOTLIGHT) + recentsHtml;
+    var html = buildSpotlight(SPOTLIGHT) + recentsHtml + buildTagCloud(20);
     html += '<p class="intro">Browse <strong>' + TEMPLATES.length +
       '</strong> templates across <strong>' + cats.length + '</strong> categories.</p>';
     html += '<div class="category-grid">';
@@ -474,61 +537,96 @@
   function renderSearch(query) {
     var trimmed = (query || '').trim();
     var container = document.getElementById('container');
-    if (!trimmed) {
+
+    if (!trimmed && !state.tags.length) {
       renderHome();
       return;
     }
-    var q = trimmed.toLowerCase();
-    var results = SEARCH_INDEX
-      .filter(function (e) {
-        return e.name.indexOf(q) !== -1 ||
-               e.description.indexOf(q) !== -1 ||
-               e.category.indexOf(q) !== -1 ||
-               e.tags.some(function (t) { return t.indexOf(q) !== -1; });
-      })
-      .map(function (e) { return e.template; });
+
+    var useText = state.mode !== 'tags' && !!trimmed;
+    var useTags = state.mode !== 'text';
+
+    var base;
+    if (useText) {
+      var q = trimmed.toLowerCase();
+      base = SEARCH_INDEX
+        .filter(function (e) {
+          return e.name.indexOf(q) !== -1 ||
+                 e.description.indexOf(q) !== -1 ||
+                 e.category.indexOf(q) !== -1 ||
+                 e.tags.some(function (t) { return t.indexOf(q) !== -1; });
+        })
+        .map(function (e) { return e.template; });
+    } else {
+      base = TEMPLATES.slice();
+    }
 
     var allTagsSet = {};
-    results.forEach(function (t) { (t.tags || []).forEach(function (x) { allTagsSet[x] = 1; }); });
+    base.forEach(function (t) { (t.tags || []).forEach(function (x) { allTagsSet[x] = 1; }); });
     var availableTags = Object.keys(allTagsSet).sort();
 
-    var visibleResults = applySortAndFilter(results);
+    var visible = applySortAndFilter(base, { useTags: useTags });
 
-    var summary = visibleResults.length === 0
-      ? 'No results for <strong>' + esc(trimmed) + '</strong>'
-      : '<strong>' + visibleResults.length + '</strong> result' +
-        (visibleResults.length !== 1 ? 's' : '') +
-        ' for <strong>' + esc(trimmed) + '</strong>';
+    var summary;
+    if (useText) {
+      summary = visible.length === 0
+        ? 'No results for <strong>' + esc(trimmed) + '</strong>'
+        : '<strong>' + visible.length + '</strong> result' +
+          (visible.length !== 1 ? 's' : '') +
+          ' for <strong>' + esc(trimmed) + '</strong>';
+    } else if (state.tags.length) {
+      summary = '<strong>' + visible.length + '</strong> template' +
+        (visible.length !== 1 ? 's' : '') +
+        ' tagged ' + (state.match === 'or' ? 'with any of' : 'with all of') + ' ' +
+        state.tags.map(function (t) { return '<em>' + esc(t) + '</em>'; }).join(', ');
+      if (state.mode === 'text' && trimmed) {
+        summary += ' <span class="search-summary-note">(text query ignored — Tags mode)</span>';
+      }
+    } else {
+      summary = 'Browse all <strong>' + visible.length + '</strong> templates';
+    }
+    if (state.mode === 'tags' && trimmed) {
+      summary += ' <span class="search-summary-note">(text query ignored — Tags mode)</span>';
+    } else if (state.mode === 'text' && state.tags.length && trimmed) {
+      summary += ' <span class="search-summary-note">(tag filters ignored — Text mode)</span>';
+    }
 
-    var body = visibleResults.length === 0
+    var body = visible.length === 0
       ? '<div class="no-results">' +
           '<div class="no-results-icon" aria-hidden="true">🔍</div>' +
-          '<p>No templates matched your search. Try different keywords or browse by category.</p>' +
+          '<p>No templates matched. Try different keywords, fewer tags, or switch the match mode.</p>' +
           '<div class="no-results-actions">' +
-            '<button type="button" class="btn-secondary" data-clear-search>Clear search</button>' +
+            (trimmed ? '<button type="button" class="btn-secondary" data-clear-search>Clear search</button>' : '') +
+            (state.tags.length ? '<button type="button" class="btn-secondary" data-clear-filters>Clear tag filters</button>' : '') +
             '<a class="btn-secondary" href="#/">Browse all categories</a>' +
           '</div>' +
         '</div>'
       : buildSortRow() +
         buildFilterBar(availableTags) +
-        '<div class="template-grid">' + visibleResults.map(buildTemplateCard).join('') + '</div>';
+        '<div class="template-grid">' + visible.map(buildTemplateCard).join('') + '</div>';
 
     container.innerHTML =
       '<p class="search-summary" role="status" aria-live="polite" aria-atomic="true">' +
       summary + '</p>' + body;
     document.getElementById('breadcrumb').style.display = 'none';
-    setHeadingTitle('Search: ' + trimmed + ' — Todoist Playbook');
+    setHeadingTitle((trimmed ? 'Search: ' + trimmed : 'Browse by tag') + ' — Todoist Playbook');
+  }
+
+  function renderBrowse() {
+    renderSearch('');
   }
 
   function setHeadingTitle(t) { document.title = t; }
 
-  // ── State (sort, tag filter, query) ──────────────────────────────────────
+  // ── State (sort, tag filter, query, search mode, match logic) ───────────
   var state = {
     sort: 'name-asc',
     tags: [],
     query: '',
     view: 'home',
-    cat: null
+    cat: null,
+    mode: 'all',   // 'all' | 'text' | 'tags'
+    match: 'and'   // 'and' | 'or'
   };
 
   // ── Hash routing ─────────────────────────────────────────────────────────
@@ -555,6 +653,36 @@
 
   function applyTagsFromParams(params) {
     state.tags = params.tags ? params.tags.split(',').filter(Boolean) : [];
+    state.mode = (params.mode === 'text' || params.mode === 'tags') ? params.mode : 'all';
+    state.match = (params.match === 'or') ? 'or' : 'and';
+  }
+
+  function buildRouteHash() {
+    var route = '';
+    if (state.view === 'category' && state.cat) {
+      route = 'category/' + encodeURIComponent(state.cat);
+    } else if (state.view === 'search' && state.query) {
+      route = 'search/' + encodeURIComponent(state.query);
+    } else if (state.view === 'browse') {
+      route = 'browse';
+    }
+    var params = [];
+    if (state.tags.length) params.push('tags=' + encodeURIComponent(state.tags.join(',')));
+    if (state.sort && state.sort !== 'name-asc') params.push('sort=' + encodeURIComponent(state.sort));
+    if (state.mode && state.mode !== 'all') params.push('mode=' + encodeURIComponent(state.mode));
+    if (state.match && state.match !== 'and') params.push('match=' + encodeURIComponent(state.match));
+    var qs = params.join('&');
+    if (!route && !qs) return '';
+    return '#/' + route + (qs ? '?' + qs : '');
+  }
+
+  function syncHashFromState() {
+    var newHash = buildRouteHash() || '';
+    var current = window.location.hash || '';
+    if (current !== newHash) {
+      var base = window.location.pathname + window.location.search;
+      history.replaceState(null, '', base + newHash);
+    }
   }
 
   function handleRoute() {
@@ -575,6 +703,11 @@
       state.query = decodeURIComponent(m[1]);
       syncSearchFromState();
       renderSearch(state.query);
+    } else if (route === 'browse') {
+      state.view = 'browse';
+      state.query = '';
+      syncSearchFromState();
+      renderBrowse();
     } else if ((m = route.match(/^template\/([^/]+)\/(.+)$/))) {
       var type = decodeURIComponent(m[1]);
       var slug = decodeURIComponent(m[2]);
@@ -595,6 +728,8 @@
       syncSearchFromState();
       renderHome();
     }
+    syncSearchControlsVisibility();
+    syncModeControl();
   }
 
   function navigate(hashWithoutLeadingHash) {
@@ -764,6 +899,56 @@
     });
   }
 
+  // ── State helpers ─────────────────────────────────────────────────────────
+  function rerenderCurrentView() {
+    if (state.view === 'category') renderCategory(state.cat);
+    else if (state.view === 'search') renderSearch(state.query);
+    else if (state.view === 'browse') renderBrowse();
+    else renderHome();
+    syncSearchControlsVisibility();
+    syncModeControl();
+    syncHashFromState();
+  }
+
+  function toggleTag(tag) {
+    if (!tag) return;
+    var ix = state.tags.indexOf(tag);
+    if (ix === -1) state.tags.push(tag);
+    else state.tags.splice(ix, 1);
+
+    if (state.view === 'home') {
+      if (state.tags.length) {
+        state.view = 'browse';
+        window.location.hash = buildRouteHash();
+        return;
+      }
+      renderHome();
+      syncHashFromState();
+      return;
+    }
+    if (state.view === 'browse' && !state.tags.length) {
+      state.view = 'home';
+      window.location.hash = '';
+      return;
+    }
+    rerenderCurrentView();
+  }
+
+  function syncSearchControlsVisibility() {
+    var el = document.getElementById('search-controls');
+    if (!el) return;
+    el.hidden = !(state.view === 'search' || state.view === 'browse');
+  }
+
+  function syncModeControl() {
+    var el = document.getElementById('search-controls');
+    if (!el) return;
+    var btns = el.querySelectorAll('.seg-btn[data-mode]');
+    Array.prototype.forEach.call(btns, function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-mode') === state.mode ? 'true' : 'false');
+    });
+  }
+
   // ── Search input wiring ──────────────────────────────────────────────────
   var searchDebounce;
   function setupSearch() {
@@ -777,8 +962,14 @@
       clearTimeout(searchDebounce);
       searchDebounce = setTimeout(function () {
         if (q) {
-          window.location.hash = '#/search/' + encodeURIComponent(q);
-        } else if (/^#\/search\//.test(window.location.hash)) {
+          state.view = 'search';
+          state.query = q;
+          window.location.hash = buildRouteHash();
+        } else if (state.tags.length) {
+          state.view = 'browse';
+          state.query = '';
+          window.location.hash = buildRouteHash();
+        } else if (/^#\/(?:search|browse)/.test(window.location.hash)) {
           window.location.hash = '';
         }
       }, 150);
@@ -787,7 +978,13 @@
     clear.addEventListener('click', function () {
       input.value = '';
       clear.hidden = true;
-      window.location.hash = '';
+      if (state.tags.length) {
+        state.view = 'browse';
+        state.query = '';
+        window.location.hash = buildRouteHash();
+      } else {
+        window.location.hash = '';
+      }
       input.focus();
     });
   }
@@ -808,18 +1005,50 @@
       }
       if (e.target.closest && e.target.closest('[data-clear-filters]')) {
         state.tags = [];
-        if (state.view === 'category') renderCategory(state.cat);
-        else if (state.view === 'search') renderSearch(state.query);
+        if (state.view === 'browse') {
+          state.view = 'home';
+          window.location.hash = '';
+          return;
+        }
+        rerenderCurrentView();
+        return;
+      }
+      var cloudChip = e.target.closest && e.target.closest('.tag-cloud-chip');
+      if (cloudChip) {
+        toggleTag(cloudChip.getAttribute('data-tag-cloud'));
+        return;
+      }
+      var cardTag = e.target.closest && e.target.closest('.tag-toggle');
+      if (cardTag) {
+        toggleTag(cardTag.getAttribute('data-tag'));
         return;
       }
       var tagBtn = e.target.closest && e.target.closest('.tag-filter');
       if (tagBtn) {
-        var tag = tagBtn.dataset.tag;
-        var ix = state.tags.indexOf(tag);
-        if (ix === -1) state.tags.push(tag);
-        else state.tags.splice(ix, 1);
-        if (state.view === 'category') renderCategory(state.cat);
-        else if (state.view === 'search') renderSearch(state.query);
+        toggleTag(tagBtn.getAttribute('data-tag'));
+        return;
+      }
+      var modeBtn = e.target.closest && e.target.closest('.seg-btn[data-mode]');
+      if (modeBtn) {
+        var newMode = modeBtn.getAttribute('data-mode');
+        if (newMode && state.mode !== newMode) {
+          state.mode = newMode;
+          if (state.view === 'home') {
+            // Mode control isn't shown on home, but be safe
+            syncModeControl();
+            return;
+          }
+          rerenderCurrentView();
+        }
+        return;
+      }
+      var matchBtn = e.target.closest && e.target.closest('.seg-btn[data-match]');
+      if (matchBtn) {
+        var newMatch = matchBtn.getAttribute('data-match');
+        if (newMatch && state.match !== newMatch) {
+          state.match = newMatch;
+          rerenderCurrentView();
+        }
         return;
       }
       // Card open
@@ -837,8 +1066,7 @@
     document.addEventListener('change', function (e) {
       if (e.target && e.target.id === 'sort-select') {
         state.sort = e.target.value;
-        if (state.view === 'category') renderCategory(state.cat);
-        else if (state.view === 'search') renderSearch(state.query);
+        rerenderCurrentView();
       }
     });
 
@@ -863,7 +1091,13 @@
           input.value = '';
           var clear = document.getElementById('search-clear');
           if (clear) clear.hidden = true;
-          window.location.hash = '';
+          if (state.tags.length) {
+            state.view = 'browse';
+            state.query = '';
+            window.location.hash = buildRouteHash();
+          } else {
+            window.location.hash = '';
+          }
           e.preventDefault();
         }
         return;
