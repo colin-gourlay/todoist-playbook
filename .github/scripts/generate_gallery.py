@@ -607,7 +607,7 @@ def build_html(data_payload, sri_hashes):
   <h1>📋 Todoist Playbook</h1>
   <p>Curated templates for getting things done</p>
   <div class="search-bar" role="search">
-    <label for="search-input" class="skip-link">Search templates</label>
+        <label for="search-input" class="visually-hidden">Search templates</label>
     <input type="search" id="search-input" placeholder="Search templates…"
            aria-label="Search templates" autocomplete="off" spellcheck="false">
     <span class="kbd-hint" aria-hidden="true"><kbd>/</kbd></span>
