@@ -26,6 +26,8 @@ TEMPLATES_DIR = os.environ.get("TEMPLATES_DIR", "csv-templates")
 PROMPT_TEMPLATES_DIR = os.environ.get("PROMPT_TEMPLATES_DIR", "prompt-templates")
 OUTPUT_DIR = os.environ.get("OUTPUT_DIR", "docs")
 
+REPO_BASE_URL = "https://github.com/colin-gourlay/todoist-playbook"
+
 # Category display metadata: slug -> (emoji, human-readable label)
 CATEGORY_META = {
     "personal-systems":         ("🔁", "Personal Systems"),
@@ -146,7 +148,7 @@ def load_templates():
                 "inputs": [],
                 "type": "template",
                 "readme": read_readme(location.readme_path),
-                "github_url": f"https://github.com/colin-gourlay/todoist-playbook/blob/main/csv-templates/{location.relative_path}/",
+                "github_url": f"{REPO_BASE_URL}/blob/main/csv-templates/{location.relative_path}/",
                 "last_updated": _get_mtime([meta_path, csv_path, location.readme_path]),
             })
 
@@ -180,7 +182,7 @@ def load_templates():
                 "inputs": meta.get("inputs", []),
                 "type": "prompt",
                 "readme": read_readme(readme_path),
-                "github_url": f"https://github.com/colin-gourlay/todoist-playbook/blob/main/prompt-templates/{slug}/",
+                "github_url": f"{REPO_BASE_URL}/blob/main/prompt-templates/{slug}/",
                 "last_updated": _get_mtime([meta_path, prompt_path, readme_path]),
             })
 
@@ -1173,20 +1175,20 @@ def generate_html(templates, spotlight=None, build_date="", short_sha="local"):
 
 <footer class="site-footer">
   <div class="footer-links">
-    <a href="https://github.com/colin-gourlay/todoist-playbook/issues/new?template=template-request.yml"
+    <a href="{REPO_BASE_URL}/issues/new?template=template-request.yml"
        target="_blank" rel="noopener noreferrer">
       💡 Request a Template
     </a>
-    <a href="https://github.com/colin-gourlay/todoist-playbook/issues/new?template=bug-report.yml"
+    <a href="{REPO_BASE_URL}/issues/new?template=bug-report.yml"
        target="_blank" rel="noopener noreferrer">
       🐛 Report a Bug
     </a>
-    <a href="https://github.com/colin-gourlay/todoist-playbook"
+    <a href="{REPO_BASE_URL}"
        target="_blank" rel="noopener noreferrer">
       ⭐ View on GitHub
     </a>
   </div>
-  <div>Built with ❤️ · <a href="https://github.com/colin-gourlay/todoist-playbook/blob/main/CONTRIBUTING"
+  <div>Built with ❤️ · <a href="{REPO_BASE_URL}/blob/main/CONTRIBUTING"
      target="_blank" rel="noopener noreferrer">Contributing Guide</a></div>
   <div class="build-stamp">Built {build_date} · {short_sha}</div>
 </footer>
