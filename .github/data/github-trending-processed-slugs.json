@@ -1,6 +1,272 @@
 {
   "slugs": {
+    "abhigyanpatwari/gitnexus": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "addyosmani/agent-skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "alishahryar1/free-claude-code": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "anil-matcha/open-generative-ai": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "cjackhwang/ds2api": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "coleam00/archon": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "composiohq/awesome-codex-skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "davila7/claude-code-templates": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "deepseek-ai/deepseek-v3": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "donnemartin/system-design-primer": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "fincept-corporation/finceptterminal": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "forrestchang/andrej-karpathy-skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "gastownhall/beads": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "google-ai-edge/gallery": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "google-ai-edge/litert-lm": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "google-research/timesfm": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "gyulyvgc/sniffnet": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "hkuds/deeptutor": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "hkuds/rag-anything": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "hugohe3/ppt-master": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "lsdefine/genericagent": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "luongnv89/claude-howto": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "mattpocock/skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "microsoft/markitdown": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "microsoft/vibevoice": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "mksglu/context-mode": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "nousresearch/hermes-agent": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "penpot/penpot": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "rtk-ai/rtk": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "shiyu-coder/kronos": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "siddharthvaddem/openscreen": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "tauricresearch/tradingagents": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "thedotmack/claude-mem": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "thunderbird/thunderbolt": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "tracer-cloud/opensre": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "yeachan-heo/oh-my-codex": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "z4nzu/hackingtool": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "zilliztech/claude-context": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-28",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-28T06:21:48.971908+00:00",
+      "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    }
   },
-  "updated_at": "2026-04-27T06:20:41.135387+00:00",
+  "updated_at": "2026-04-28T06:22:26.287594+00:00",
   "version": 1
 }
