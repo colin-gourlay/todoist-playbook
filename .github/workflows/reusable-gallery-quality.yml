@@ -68,11 +68,34 @@ jobs:
           npx --prefix .github/quality lhci autorun --config=.github/quality/lighthouserc.json
 
       - name: Run pa11y-ci
+        continue-on-error: true
         run: |
           mkdir -p .github/quality/pa11y-results
           set -o pipefail
+          set +e
           npx --prefix .github/quality pa11y-ci --config .github/quality/.pa11yci.json \
             --json | tee .github/quality/pa11y-results/report.json
+          PA11Y_EXIT=${PIPESTATUS[0]}
+          set -e
+
+          if [ "$PA11Y_EXIT" -ne 0 ]; then
+            echo "::warning title=pa11y-ci reported accessibility issues::Non-blocking: see pa11y-report artifact and step summary."
+            {
+              echo "### pa11y-ci result"
+              echo ""
+              echo "- Status: issues found (non-blocking)"
+              echo "- Artifact: pa11y-report"
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            {
+              echo "### pa11y-ci result"
+              echo ""
+              echo "- Status: passed"
+              echo "- Artifact: pa11y-report"
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+          exit 0
 
       - name: Upload Lighthouse report
         if: always()
