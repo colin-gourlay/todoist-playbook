@@ -15,6 +15,7 @@
 - Template: **Artist Interview Invite Workflow** — checklist for inviting an artist or band for a live studio interview and managing follow-through
 - Prompt template: **Artist Interview Invite Email** — generate concise, high-impact studio interview invite emails for artists, bands, and representatives
 - Gallery: live search bar added to the GitHub Pages template gallery — filters cards in real time as you type
+- Gallery: **16 usability improvements** to the GitHub Pages gallery (`generate_gallery.py` → `docs/index.html`): deep links to templates (`#/template/<type>/<slug>`), search query in URL (`#/search/<query>`), tag filter chips with `aria-pressed` and hash persistence, sort menu (Name / Tasks / Version / Recently updated) with session-storage persistence, "Recently updated" horizontal scroll-snap rail on the home page, empty-search recovery buttons ("Clear search" / "Browse all categories"), modal "Open on GitHub" action, download caption ("Open in Todoist → Import from CSV"), simplified responsive breakpoints (1 col → 2 col → auto-fill), build provenance footer stamp (`Built YYYY-MM-DD · <sha>`), README asset rewrite for relative links/images, card GitHub deep-link icon, debounced search with loop-safe hashchange handling, tag+search intersection filter, sort persists per session via `sessionStorage`, and history-safe modal navigation (`pushState`/`back()`)
 
 ### Changed
 

@@ -146,6 +146,8 @@ def load_templates():
                 "inputs": [],
                 "type": "template",
                 "readme": read_readme(location.readme_path),
+                "github_url": f"https://github.com/colin-gourlay/todoist-playbook/blob/main/csv-templates/{location.relative_path}/",
+                "last_updated": _get_mtime([meta_path, csv_path, location.readme_path]),
             })
 
     # Load prompt templates
@@ -159,6 +161,7 @@ def load_templates():
                 continue
             meta = parse_meta(meta_path)
             readme_path = os.path.join(template_dir, "README.md")
+            prompt_path = os.path.join(template_dir, "prompt.md")
             templates.append({
                 "slug": slug,
                 "name": meta.get("name", slug),
@@ -177,6 +180,8 @@ def load_templates():
                 "inputs": meta.get("inputs", []),
                 "type": "prompt",
                 "readme": read_readme(readme_path),
+                "github_url": f"https://github.com/colin-gourlay/todoist-playbook/blob/main/prompt-templates/{slug}/",
+                "last_updated": _get_mtime([meta_path, prompt_path, readme_path]),
             })
 
     return templates
@@ -205,6 +210,14 @@ def _is_truthy(value):
     return str(value).strip().lower() in {"true", "yes", "1", "on"}
 
 
+def _get_mtime(paths):
+    """Return ISO 8601 UTC mtime string for the most recently modified file."""
+    times = [os.path.getmtime(p) for p in paths if p and os.path.exists(p)]
+    if not times:
+        return ""
+    return datetime.datetime.fromtimestamp(max(times), tz=datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+
 def get_spotlight_template(templates):
     """Return the template with the highest semantic version, excluding 0.0.0.
 
@@ -224,7 +237,7 @@ def get_spotlight_template(templates):
 
 
 
-def generate_html(templates, spotlight=None):
+def generate_html(templates, spotlight=None, build_date="", short_sha="local"):
     templates_json = json.dumps(templates, ensure_ascii=False)
     category_meta_json = json.dumps(CATEGORY_META, ensure_ascii=False)
     spotlight_json = json.dumps(spotlight, ensure_ascii=False)
@@ -781,6 +794,12 @@ def generate_html(templates, spotlight=None):
     }}
 
     /* ── Responsive ── */
+    @media (max-width: 960px) {{
+      .category-grid, .template-grid {{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.25rem;
+      }}
+    }}
     @media (max-width: 640px) {{
       .site-header {{
         padding: 2rem 1rem 1.75rem;
@@ -788,12 +807,9 @@ def generate_html(templates, spotlight=None):
       .site-header h1 {{ font-size: 1.5rem; }}
       .site-header p {{ font-size: 0.95rem; }}
       .container {{ padding: 2rem 1rem; }}
-      .category-grid, .template-grid {{ grid-template-columns: 1fr; gap: 1.25rem; }}
+      .category-grid, .template-grid {{ grid-template-columns: 1fr; gap: 1rem; }}
       .search-bar {{ margin: 1.25rem auto 0; }}
       .cat-detail-header {{ flex-direction: column; align-items: flex-start; }}
-    }}
-    @media (max-width: 768px) {{
-      .template-grid {{ grid-template-columns: repeat(auto-fill, minmax(calc(50% - 0.75rem), 1fr)); }}
     }}
 
     /* ── README modal ── */
@@ -990,6 +1006,132 @@ def generate_html(templates, spotlight=None):
       color: var(--red-dark);
     }}
     .site-footer > div {{ color: var(--muted-light); font-weight: 500; }}
+
+    /* ── Secondary button ── */
+    .btn-secondary {{
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.5rem 1rem;
+      background: transparent;
+      color: var(--red);
+      border: 1.5px solid var(--red);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+      white-space: nowrap;
+      user-select: none;
+    }}
+    .btn-secondary:hover {{ background: var(--red-light); transform: translateY(-1px); }}
+    .btn-secondary:focus-visible {{ outline: 2px solid var(--red); outline-offset: 2px; }}
+
+    /* ── Tag filter chips (grid views only) ── */
+    .tag-filter {{
+      padding: 0.2rem 0.65rem;
+      background: var(--tag-bg);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      color: var(--tag-text);
+      font-weight: 500;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: border-color var(--transition), background var(--transition), color var(--transition);
+    }}
+    .tag-filter:hover {{ border-color: var(--red); }}
+    .tag-filter[aria-pressed="true"] {{
+      background: var(--red);
+      color: #fff;
+      border-color: var(--red);
+    }}
+    .tag-filter[aria-pressed="true"]:hover {{ background: var(--red-dark); border-color: var(--red-dark); }}
+    .tag-filter:focus-visible {{ outline: 2px solid var(--red); outline-offset: 2px; }}
+
+    /* ── Sort + filter bar ── */
+    .sort-filter-bar {{
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }}
+    .sort-bar {{ display: flex; align-items: center; gap: 0.5rem; margin-left: auto; }}
+    .sort-bar label {{ font-size: 0.85rem; color: var(--muted); font-weight: 600; white-space: nowrap; }}
+    .sort-bar select {{
+      padding: 0.35rem 0.65rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      background: var(--card-bg);
+      color: var(--text);
+      cursor: pointer;
+    }}
+    .sort-bar select:focus-visible {{ outline: 2px solid var(--red); outline-offset: 2px; }}
+    .clear-filters-btn {{ font-size: 0.82rem; padding: 0.3rem 0.75rem; }}
+
+    /* ── Recently-updated rail ── */
+    .recently-updated {{ margin-bottom: 2.5rem; }}
+    .rail-track {{
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 0.5rem;
+      scrollbar-width: thin;
+    }}
+    .rail-card {{
+      scroll-snap-align: start;
+      flex: 0 0 180px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      transition: box-shadow var(--transition), border-color var(--transition), transform var(--transition);
+    }}
+    .rail-card:hover {{ box-shadow: var(--shadow-md); border-color: var(--red-light); transform: translateY(-2px); }}
+    .rail-card:focus-visible {{ outline: 2px solid var(--red); outline-offset: 2px; }}
+    .rail-card-icon {{ font-size: 1.5rem; line-height: 1; }}
+    .rail-card-name {{ font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); line-height: 1.3; }}
+    .rail-card-meta {{ font-size: 0.72rem; color: var(--muted); font-weight: 500; }}
+
+    /* ── No-results action buttons ── */
+    .no-results-actions {{ display: flex; justify-content: center; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }}
+
+    /* ── Download caption (item 8) ── */
+    .btn-wrapper {{ display: flex; flex-direction: column; align-items: flex-end; }}
+    .download-caption {{ font-size: 0.75rem; color: var(--muted); margin-top: 0.4rem; }}
+
+    /* ── Card GitHub link (item 12) ── */
+    .card-gh-link {{
+      display: inline-flex;
+      align-items: center;
+      color: var(--muted-light);
+      flex-shrink: 0;
+      opacity: 0;
+      transition: opacity var(--transition), color var(--transition);
+    }}
+    .tpl-card:hover .card-gh-link,
+    .card-gh-link:focus-visible {{ opacity: 1; }}
+    .card-gh-link:hover {{ color: var(--text-secondary); }}
+    .card-gh-link:focus-visible {{ outline: 2px solid var(--red); outline-offset: 2px; opacity: 1; }}
+    @media (max-width: 640px) {{ .card-gh-link {{ opacity: 1; }} }}
+
+    /* ── Build stamp (item 10) ── */
+    .build-stamp {{ font-size: 0.75rem; color: var(--muted); opacity: 0.85; margin-top: 0.5rem; }}
+
+    /* ── Screen-reader only utility ── */
+    .sr-only {{
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }}
   </style>
 </head>
 <body>
@@ -1031,17 +1173,22 @@ def generate_html(templates, spotlight=None):
 
 <footer class="site-footer">
   <div class="footer-links">
-    <a href="https://github.com/colin-gourlay/todoist-playbook/issues/new?template=template-request.yml">
+    <a href="https://github.com/colin-gourlay/todoist-playbook/issues/new?template=template-request.yml"
+       target="_blank" rel="noopener noreferrer">
       💡 Request a Template
     </a>
-    <a href="https://github.com/colin-gourlay/todoist-playbook/issues/new?template=bug-report.yml">
+    <a href="https://github.com/colin-gourlay/todoist-playbook/issues/new?template=bug-report.yml"
+       target="_blank" rel="noopener noreferrer">
       🐛 Report a Bug
     </a>
-    <a href="https://github.com/colin-gourlay/todoist-playbook">
+    <a href="https://github.com/colin-gourlay/todoist-playbook"
+       target="_blank" rel="noopener noreferrer">
       ⭐ View on GitHub
     </a>
   </div>
-  <div>Built with ❤️ · <a href="https://github.com/colin-gourlay/todoist-playbook/blob/main/CONTRIBUTING">Contributing Guide</a></div>
+  <div>Built with ❤️ · <a href="https://github.com/colin-gourlay/todoist-playbook/blob/main/CONTRIBUTING"
+     target="_blank" rel="noopener noreferrer">Contributing Guide</a></div>
+  <div class="build-stamp">Built {build_date} · {short_sha}</div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"
@@ -1064,7 +1211,7 @@ const SEARCH_INDEX = TEMPLATES.map(t => ({{
   tags: t.tags.map(tag => tag.toLowerCase()),
 }}));
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
 function esc(str) {{
   return String(str)
@@ -1098,6 +1245,123 @@ function formatDuration(d) {{
   return d.replace(/m$/, '\u202fmin').replace(/h$/, '\u202fhr');
 }}
 
+// ── Sort (item 4) ─────────────────────────────────────────────────────────────
+
+function _semverParts(v) {{
+  const p = String(v || '0.0.0').split('.');
+  return p.concat(['0','0','0']).slice(0,3).map(x => parseInt(x,10)||0);
+}}
+
+// Sort a copy of items by mode. Modes: name-asc (default), name-desc,
+// tasks-desc, version-desc, mtime-desc.
+function sortTemplates(items, mode) {{
+  const s = [...items];
+  if (mode === 'name-desc') return s.sort((a,b) => b.name.localeCompare(a.name));
+  if (mode === 'tasks-desc') return s.sort((a,b) => (b.task_count||0)-(a.task_count||0));
+  if (mode === 'version-desc') return s.sort((a,b) => {{
+    const va = _semverParts(a.version), vb = _semverParts(b.version);
+    for (let i=0;i<3;i++) {{ if (vb[i]!==va[i]) return vb[i]-va[i]; }}
+    return 0;
+  }});
+  if (mode === 'mtime-desc') return s.sort((a,b) => (b.last_updated||'').localeCompare(a.last_updated||''));
+  return s.sort((a,b) => a.name.localeCompare(b.name)); // name-asc default
+}}
+
+function getCurrentSort() {{
+  return sessionStorage.getItem('tp-sort') || 'name-asc';
+}}
+
+function buildSortMenu() {{
+  const cur = getCurrentSort();
+  const opts = [
+    ['name-asc',     'Name (A\u2013Z)'],
+    ['name-desc',    'Name (Z\u2013A)'],
+    ['tasks-desc',   'Most tasks first'],
+    ['version-desc', 'Newest version first'],
+    ['mtime-desc',   'Recently updated'],
+  ].map(([v,l]) => `<option value="${{v}}"${{cur===v?' selected':''}}>${{l}}</option>`).join('');
+  return `<div class="sort-bar"><label for="sort-select">Sort by</label>
+    <select id="sort-select">${{opts}}</select></div>`;
+}}
+
+function _wireSortSelect() {{
+  const sel = document.getElementById('sort-select');
+  if (!sel) return;
+  sel.addEventListener('change', () => {{
+    sessionStorage.setItem('tp-sort', sel.value);
+    handleRoute();
+  }});
+}}
+
+// ── Tag filters (item 3) ─────────────────────────────────────────────────────
+
+// activeTags: Set of tag strings currently active as filters
+let activeTags = new Set();
+
+// Intersection filter: items must contain ALL active tags.
+// In category view: restrict to templates whose tag list contains every active tag.
+// In search view:   results matching the query AND containing every active tag.
+function applyTagFilter(items) {{
+  if (!activeTags.size) return items;
+  return items.filter(t =>
+    Array.from(activeTags).every(tag => (t.tags || []).includes(tag))
+  );
+}}
+
+function buildClearFiltersBtn() {{
+  if (!activeTags.size) return '';
+  return `<button type="button" class="btn-secondary clear-filters-btn" id="btn-clear-filters">
+    Clear filters (${{activeTags.size}})</button>`;
+}}
+
+function updateTagsInHash() {{
+  const base = window.location.hash.split('?')[0];
+  const suffix = activeTags.size
+    ? '?tags=' + Array.from(activeTags).map(encodeURIComponent).join(',')
+    : '';
+  history.replaceState(history.state, '', (base || '#') + suffix);
+}}
+
+function parseTagsFromHash(hash) {{
+  const m = hash.match(/\\?tags=([^&]+)/);
+  return m ? new Set(m[1].split(',').map(decodeURIComponent)) : new Set();
+}}
+
+// ── Recently-updated rail (item 5) ───────────────────────────────────────────
+
+function buildRecentlyUpdatedRail() {{
+  const withMtime = TEMPLATES.filter(t => t.last_updated && !t.deprecated);
+  if (withMtime.length < 3) return '';
+  const recent = [...withMtime]
+    .sort((a,b) => (b.last_updated||'').localeCompare(a.last_updated||''))
+    .slice(0, 6);
+  const cards = recent.map(t =>
+    `<button type="button" class="rail-card tpl-card-clickable"
+        data-slug="${{esc(t.slug)}}" data-type="${{esc(t.type)}}"
+        aria-label="View details for ${{esc(t.name)}}">
+      <div class="rail-card-icon">${{catIcon(t.category||'')}}</div>
+      <div class="rail-card-name">${{esc(t.name)}}</div>
+      <div class="rail-card-meta">${{(t.tags||[]).length}} tag${{(t.tags||[]).length!==1?'s':''}}</div>
+    </button>`).join('');
+  return `
+<section class="recently-updated" aria-labelledby="recent-heading"
+         aria-describedby="recent-keys-hint">
+  <h2 id="recent-heading" class="spotlight-heading">&#x1F550; Recently Updated</h2>
+  <span id="recent-keys-hint" class="sr-only">Use left and right arrow keys to scroll</span>
+  <div class="rail-track">${{cards}}</div>
+</section>`;
+}}
+
+// Arrow-key navigation for the recently-updated rail
+document.addEventListener('keydown', e => {{
+  const rail = document.querySelector('.rail-track');
+  if (!rail || !rail.contains(document.activeElement)) return;
+  const cards = Array.from(rail.querySelectorAll('.rail-card'));
+  const idx = cards.indexOf(document.activeElement);
+  if (e.key === 'ArrowRight' && idx < cards.length-1) {{ e.preventDefault(); cards[idx+1].focus(); }}
+  else if (e.key === 'ArrowLeft' && idx > 0) {{ e.preventDefault(); cards[idx-1].focus(); }}
+}});
+
 // ── Category home view ────────────────────────────────────────────────────────
 
 function buildSpotlight(t) {{
@@ -1112,7 +1376,7 @@ function buildSpotlight(t) {{
   if (t.recurrence_suggestion) stats.push(`🔁 ${{esc(t.recurrence_suggestion)}}`);
 
   const metaLine = [
-    t.author  ? `by ${{esc(t.author)}}`  : '',
+    t.author  ? `by ${{esc(t.author)}}` : '',
     t.version ? `v${{esc(t.version)}}` : '',
   ].filter(Boolean).join(' \u00b7 ');
 
@@ -1148,11 +1412,13 @@ function buildSpotlight(t) {{
 }}
 
 function renderHome() {{
+  activeTags = new Set();
   const groups = groupByCategory(TEMPLATES);
   const cats = Object.keys(groups).sort();
   const container = document.getElementById('container');
 
   let html = buildSpotlight(SPOTLIGHT);
+  html += buildRecentlyUpdatedRail();
   html += `<p class="intro">Browse <strong>${{TEMPLATES.length}}</strong> templates across <strong>${{cats.length}}</strong> categories.</p>
 <div class="category-grid">`;
 
@@ -1184,14 +1450,19 @@ function renderHome() {{
   container.innerHTML = html;
 
   container.querySelectorAll('.cat-card').forEach(card => {{
-    card.addEventListener('click', () => navigate(card.dataset.category));
+    card.addEventListener('click', () => {{
+      window.location.hash = '#/category/' + encodeURIComponent(card.dataset.category);
+    }});
     card.addEventListener('keydown', e => {{
-      if (e.key === 'Enter' || e.key === ' ') navigate(card.dataset.category);
+      if (e.key === 'Enter' || e.key === ' ') {{
+        e.preventDefault();
+        window.location.hash = '#/category/' + encodeURIComponent(card.dataset.category);
+      }}
     }});
   }});
 }}
 
-// ── Template card ─────────────────────────────────────────────────────────────
+// ── Template card (items 3, 8, 12) ───────────────────────────────────────────
 
 function buildPreview(rows) {{
   const MAX = 7;
@@ -1207,8 +1478,18 @@ function buildPreview(rows) {{
   return html;
 }}
 
-function buildTemplateCard(t) {{
-  const tags = t.tags.map(tag => `<span class="tag">${{esc(tag)}}</span>`).join('');
+// GitHub Octocat SVG (16×16) for card footer links
+const GH_ICON = '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>';
+
+// inGrid=true: tag chips become <button aria-pressed> filter buttons.
+// inGrid=false (modal/spotlight): chips stay as <span>.
+function buildTemplateCard(t, inGrid) {{
+  const tags = (t.tags || []).map(tag => inGrid
+    ? `<button type="button" class="tag tag-filter"
+         aria-pressed="${{activeTags.has(tag)}}"
+         data-tag="${{esc(tag)}}">${{esc(tag)}}</button>`
+    : `<span class="tag">${{esc(tag)}}</span>`
+  ).join('');
 
   const stats = [];
   if (t.task_count)    stats.push(`\u2714\ufe0f ${{t.task_count}}\u202ftask${{t.task_count !== 1 ? 's' : ''}}`);
@@ -1217,7 +1498,7 @@ function buildTemplateCard(t) {{
   if (t.recurrence_suggestion) stats.push(`🔁 ${{esc(t.recurrence_suggestion)}}`);
 
   const metaLine = [
-    t.author  ? `by ${{esc(t.author)}}`  : '',
+    t.author  ? `by ${{esc(t.author)}}` : '',
     t.version ? `v${{esc(t.version)}}` : '',
   ].filter(Boolean).join(' \u00b7 ');
 
@@ -1226,20 +1507,31 @@ function buildTemplateCard(t) {{
     previewHtml = `<div class="tpl-preview">${{buildPreview(t.rows)}}</div>`;
   }} else if (t.type === 'prompt' && t.inputs && t.inputs.length) {{
     const chips = t.inputs.map(i => `<span class="input-chip">${{esc(i)}}</span>`).join('');
-    previewHtml = `<div class="tpl-inputs">
-  <div class="tpl-inputs-label">Inputs</div>${{chips}}</div>`;
+    previewHtml = `<div class="tpl-inputs"><div class="tpl-inputs-label">Inputs</div>${{chips}}</div>`;
   }}
 
+  // Item 8: download caption for CSV templates
   let actionBtn = '';
   if (t.type === 'template' && t.csv_url) {{
-    actionBtn = `<a class="btn-primary" href="${{esc(t.csv_url)}}" download>\u2b07\ufe0f Download CSV</a>`;
+    actionBtn = `<div class="btn-wrapper">
+      <a class="btn-primary" href="${{esc(t.csv_url)}}" download>\u2b07\ufe0f Download CSV</a>
+      <div class="download-caption">Open in Todoist \u2192 Import from CSV</div>
+    </div>`;
   }} else if (t.type === 'prompt' && t.prompt_url) {{
     actionBtn = `<a class="btn-primary" href="${{esc(t.prompt_url)}}">View Prompt</a>`;
   }}
 
+  // Item 12: small GitHub icon link in card footer
+  const ghLink = t.github_url
+    ? `<a class="card-gh-link" href="${{esc(t.github_url)}}"
+          target="_blank" rel="noopener noreferrer"
+          aria-label="Open ${{esc(t.name)}} on GitHub">${{GH_ICON}}</a>`
+    : '';
+
   const badgeLabel = t.type === 'prompt' ? 'AI Prompt' : 'Template';
 
-  return `<div class="tpl-card tpl-card-clickable" data-slug="${{esc(t.slug)}}" data-type="${{esc(t.type)}}"
+  return `<div class="tpl-card tpl-card-clickable"
+     data-slug="${{esc(t.slug)}}" data-type="${{esc(t.type)}}"
      role="button" tabindex="0" aria-label="View details for ${{esc(t.name)}}">
   <div class="tpl-card-header">
     <span class="tpl-type-badge">${{badgeLabel}}</span>
@@ -1251,38 +1543,44 @@ function buildTemplateCard(t) {{
   ${{previewHtml}}
   <div class="tpl-card-footer">
     <span class="tpl-meta">${{metaLine}}</span>
+    ${{ghLink}}
     ${{actionBtn}}
   </div>
 </div>`;
 }}
 
-// ── Category detail view ──────────────────────────────────────────────────────
+// ── Category detail view (items 3, 4) ────────────────────────────────────────
 
 function renderCategory(cat) {{
   const groups = groupByCategory(TEMPLATES);
-  const items = groups[cat] || [];
+  const allItems = groups[cat] || [];
   const label = catLabel(cat);
   const icon = catIcon(cat);
   const container = document.getElementById('container');
+
+  // Sort then apply intersection tag filter
+  const items = applyTagFilter(sortTemplates(allItems, getCurrentSort()));
 
   const html = `
 <div class="cat-detail-header">
   <span class="cat-detail-icon">${{icon}}</span>
   <div>
     <div class="cat-detail-title">${{esc(label)}}</div>
-    <div class="cat-detail-count">${{items.length}}\u202ftemplate${{items.length !== 1 ? 's' : ''}}</div>
+    <div class="cat-detail-count">${{items.length}} of ${{allItems.length}}\u202ftemplate${{allItems.length !== 1 ? 's' : ''}}</div>
   </div>
 </div>
+<div class="sort-filter-bar">${{buildClearFiltersBtn()}}${{buildSortMenu()}}</div>
 <div class="template-grid">
-  ${{items.map(buildTemplateCard).join('')}}
+  ${{items.map(t => buildTemplateCard(t, true)).join('')}}
 </div>`;
 
   container.innerHTML = html;
   document.getElementById('crumb-label').textContent = `${{icon}} ${{label}}`;
   document.getElementById('breadcrumb').style.display = 'block';
+  _wireSortSelect();
 }}
 
-// ── Search ────────────────────────────────────────────────────────────────────
+// ── Search (items 2, 6, 13, 14) ──────────────────────────────────────────────
 
 function matchesQuery(entry, query) {{
   return (
@@ -1298,13 +1596,16 @@ function renderSearch(query) {{
   const container = document.getElementById('container');
 
   if (!trimmed) {{
+    activeTags = new Set();
     renderHome();
     document.getElementById('breadcrumb').style.display = 'none';
     return;
   }}
 
   const q = trimmed.toLowerCase();
-  const results = SEARCH_INDEX.filter(entry => matchesQuery(entry, q)).map(entry => entry.template);
+  // Intersection: results matching the query AND containing every active tag
+  const matched = SEARCH_INDEX.filter(e => matchesQuery(e, q)).map(e => e.template);
+  const results = sortTemplates(applyTagFilter(matched), getCurrentSort());
 
   let html = `<p class="search-summary">`;
   if (results.length === 0) {{
@@ -1312,75 +1613,211 @@ function renderSearch(query) {{
   }} else {{
     html += `<strong>${{results.length}}</strong> result${{results.length !== 1 ? 's' : ''}} for <strong>${{esc(trimmed)}}</strong>`;
   }}
-  html += `</p>`;
+  html += `</p><div class="sort-filter-bar">${{buildClearFiltersBtn()}}${{buildSortMenu()}}</div>`;
 
   if (results.length === 0) {{
+    // Item 6: recovery buttons
     html += `<div class="no-results">
   <div class="no-results-icon">🔍</div>
   <p>No templates matched your search. Try different keywords or browse by category.</p>
+  <div class="no-results-actions">
+    <button type="button" class="btn-secondary" id="btn-clear-search">Clear search</button>
+    <button type="button" class="btn-secondary" id="btn-browse-all">Browse all categories</button>
+  </div>
 </div>`;
   }} else {{
-    html += `<div class="template-grid">${{results.map(buildTemplateCard).join('')}}</div>`;
+    html += `<div class="template-grid">${{results.map(t => buildTemplateCard(t, true)).join('')}}</div>`;
   }}
 
   container.innerHTML = html;
   document.getElementById('breadcrumb').style.display = 'none';
+  _wireSortSelect();
 }}
 
-// ── Hash-based routing ────────────────────────────────────────────────────────
+// ── Hash routing (items 1, 2) ─────────────────────────────────────────────────
 
-function navigate(cat) {{
-  window.location.hash = '#/category/' + encodeURIComponent(cat);
+// navigate('template', type, slug) → push modal state + open modal
+// navigate(cat)                    → go to category
+function navigate(target, type, slug) {{
+  if (target === 'template') {{
+    const tpl = TEMPLATE_LOOKUP[type + ':' + slug];
+    if (!tpl) return;
+    // Guard: don't push duplicate entries
+    if (history.state && history.state.kind === 'modal' &&
+        history.state.slug === slug && history.state.type === type) return;
+    history.pushState(
+      {{kind: 'modal', type, slug}},
+      '',
+      '#/template/' + encodeURIComponent(type) + '/' + encodeURIComponent(slug)
+    );
+    openModal(tpl);
+  }} else {{
+    window.location.hash = '#/category/' + encodeURIComponent(target);
+  }}
 }}
 
 function handleRoute() {{
   const hash = window.location.hash;
-  const match = hash.match(/^#\\/category\\/(.+)$/);
-  if (match) {{
-    renderCategory(decodeURIComponent(match[1]));
-    document.getElementById('breadcrumb').style.display = 'block';
-  }} else {{
+
+  // Parse tag state from hash query string
+  activeTags = parseTagsFromHash(hash);
+
+  // ── #/template/<type>/<slug>  (item 1)
+  const tplMatch = hash.match(/^#\\/template\\/([^\\/]+)\\/([^?#]+)/);
+  if (tplMatch) {{
+    const type = decodeURIComponent(tplMatch[1]);
+    const slug = decodeURIComponent(tplMatch[2]);
+    const tpl = TEMPLATE_LOOKUP[type + ':' + slug];
+    if (tpl) {{
+      // Render sensible background before opening modal
+      if (tpl.category) {{
+        renderCategory(tpl.category);
+        document.getElementById('breadcrumb').style.display = 'block';
+      }} else {{
+        renderHome();
+        document.getElementById('breadcrumb').style.display = 'none';
+      }}
+      openModal(tpl);
+      return;
+    }}
+    // Not found: fall back to home
+    history.replaceState(null, '', location.pathname + location.search);
     renderHome();
     document.getElementById('breadcrumb').style.display = 'none';
+    return;
   }}
+
+  // ── #/search/<query>  (item 2)
+  const searchMatch = hash.match(/^#\\/search\\/([^?#]+)/);
+  if (searchMatch) {{
+    const query = decodeURIComponent(searchMatch[1]);
+    if (searchInput.value !== query) {{
+      searchInput.value = query;
+      searchClear.style.display = 'block';
+    }}
+    renderSearch(query);
+    document.getElementById('breadcrumb').style.display = 'none';
+    return;
+  }}
+
+  // ── #/category/<slug>
+  const catMatch = hash.match(/^#\\/category\\/([^?#]+)/);
+  if (catMatch) {{
+    renderCategory(decodeURIComponent(catMatch[1]));
+    document.getElementById('breadcrumb').style.display = 'block';
+    return;
+  }}
+
+  // ── Home (default)
+  if (searchInput.value) {{
+    searchInput.value = '';
+    searchClear.style.display = 'none';
+  }}
+  renderHome();
+  document.getElementById('breadcrumb').style.display = 'none';
 }}
 
 document.getElementById('btn-back').addEventListener('click', () => {{
-  document.getElementById('search-input').value = '';
-  document.getElementById('search-clear').style.display = 'none';
-  window.location.hash = '';
+  searchInput.value = '';
+  searchClear.style.display = 'none';
+  activeTags = new Set();
+  history.replaceState(null, '', location.pathname + location.search);
+  renderHome();
+  document.getElementById('breadcrumb').style.display = 'none';
 }});
 
-// ── Search input wiring ───────────────────────────────────────────────────────
+// ── Search input wiring (items 2, 13) ────────────────────────────────────────
 
 const searchInput = document.getElementById('search-input');
 const searchClear = document.getElementById('search-clear');
+let _searchTimer = null;
 
 searchInput.addEventListener('input', () => {{
   const query = searchInput.value;
   searchClear.style.display = query ? 'block' : 'none';
-  renderSearch(query);
+  clearTimeout(_searchTimer);
+  _searchTimer = setTimeout(() => {{
+    if (query) {{
+      const tagSuffix = activeTags.size
+        ? '?tags=' + Array.from(activeTags).map(encodeURIComponent).join(',')
+        : '';
+      // Use replaceState so typing doesn't pollute history
+      history.replaceState(null, '', '#/search/' + encodeURIComponent(query) + tagSuffix);
+    }} else {{
+      activeTags = new Set();
+      history.replaceState(null, '', location.pathname + location.search);
+    }}
+    renderSearch(query);
+  }}, 150);
 }});
 
 searchClear.addEventListener('click', () => {{
   searchInput.value = '';
   searchClear.style.display = 'none';
+  activeTags = new Set();
+  history.replaceState(null, '', location.pathname + location.search);
   renderHome();
   document.getElementById('breadcrumb').style.display = 'none';
   searchInput.focus();
 }});
 
+// Delegated: no-results recovery buttons (item 6)
+document.addEventListener('click', e => {{
+  if (e.target.id === 'btn-clear-search' || e.target.id === 'btn-browse-all') {{
+    searchInput.value = '';
+    searchClear.style.display = 'none';
+    activeTags = new Set();
+    history.replaceState(null, '', location.pathname + location.search);
+    renderHome();
+    document.getElementById('breadcrumb').style.display = 'none';
+    searchInput.focus();
+  }}
+}});
+
+// Delegated: tag chip toggles in grid views (items 3, 14)
+document.addEventListener('click', e => {{
+  const chip = e.target.closest('.tag-filter');
+  if (!chip) return;
+  const tag = chip.dataset.tag;
+  if (!tag) return;
+  if (activeTags.has(tag)) activeTags.delete(tag);
+  else activeTags.add(tag);
+  updateTagsInHash();
+  // Re-render the current view with updated filters
+  const hash = window.location.hash;
+  const cm = hash.match(/^#\\/category\\/([^?#]+)/);
+  if (cm) renderCategory(decodeURIComponent(cm[1]));
+  else renderSearch(searchInput.value);
+}});
+
+// Delegated: "Clear filters" button (item 3)
+document.addEventListener('click', e => {{
+  if (e.target.closest('#btn-clear-filters')) {{
+    activeTags = new Set();
+    updateTagsInHash();
+    const hash = window.location.hash;
+    const cm = hash.match(/^#\\/category\\/([^?#]+)/);
+    if (cm) renderCategory(decodeURIComponent(cm[1]));
+    else renderSearch(searchInput.value);
+  }}
+}});
+
 window.addEventListener('hashchange', () => {{
-  // When navigating via hash, clear any active search
-  if (searchInput.value) {{
+  const hash = window.location.hash;
+  // Item 13: avoid re-render loop when hash already matches current search input
+  const sm = hash.match(/^#\\/search\\/([^?#]+)/);
+  if (sm && decodeURIComponent(sm[1]) === searchInput.value) return;
+  if (!sm && searchInput.value) {{
     searchInput.value = '';
     searchClear.style.display = 'none';
   }}
   handleRoute();
 }});
+
 handleRoute();
 
-// ── Template detail modal ─────────────────────────────────────────────────
+// ── Template detail modal (items 7, 8, 11, 16) ───────────────────────────────
+
 const modalBackdrop = document.getElementById('modal-backdrop');
 const modalTitleEl  = document.getElementById('modal-title');
 const modalSubtitle = document.getElementById('modal-subtitle');
@@ -1394,8 +1831,8 @@ function renderMarkdown(md) {{
   if (!md) return '';
   if (typeof marked !== 'undefined' && marked.parse) {{
     try {{
-      return marked.parse(md, {{ mangle: false, headerIds: false, breaks: false }});
-    }} catch (e) {{ /* fall through to escaped fallback */ }}
+      return marked.parse(md, {{mangle: false, headerIds: false, breaks: false}});
+    }} catch (e) {{ /* fall through */ }}
   }}
   return '<pre>' + esc(md) + '</pre>';
 }}
@@ -1406,16 +1843,25 @@ function openModal(template) {{
 
   const subParts = [];
   if (template.category) subParts.push(catLabel(template.category));
-  if (template.version) subParts.push('v' + template.version);
-  if (template.author)  subParts.push('by ' + template.author);
-  modalSubtitle.textContent = subParts.join(' · ');
+  if (template.version)  subParts.push('v' + template.version);
+  if (template.author)   subParts.push('by ' + template.author);
+  modalSubtitle.textContent = subParts.join(' \u00b7 ');
 
-  // Action buttons — keep download/view available without leaving the modal
+  // Item 7: Download CSV (with item 8 caption) + View Prompt + Open on GitHub
   let actionsHtml = '';
   if (template.type === 'template' && template.csv_url) {{
-    actionsHtml += `<a class="btn-primary" href="${{esc(template.csv_url)}}" download>⬇️ Download CSV</a>`;
+    actionsHtml += `<div class="btn-wrapper">
+      <a class="btn-primary" href="${{esc(template.csv_url)}}" download>\u2b07\ufe0f Download CSV</a>
+      <div class="download-caption">Open in Todoist \u2192 Import from CSV</div>
+    </div>`;
   }} else if (template.type === 'prompt' && template.prompt_url) {{
-    actionsHtml += `<a class="btn-primary" href="${{esc(template.prompt_url)}}" target="_blank" rel="noopener">View Prompt</a>`;
+    actionsHtml += `<a class="btn-primary" href="${{esc(template.prompt_url)}}"
+        target="_blank" rel="noopener noreferrer">View Prompt</a>`;
+  }}
+  if (template.github_url) {{
+    actionsHtml += `<a class="btn-secondary" href="${{esc(template.github_url)}}"
+        target="_blank" rel="noopener noreferrer"
+        aria-label="Open ${{esc(template.name)}} on GitHub">Open on GitHub</a>`;
   }}
   modalActions.innerHTML = actionsHtml;
 
@@ -1427,31 +1873,60 @@ function openModal(template) {{
     modalBody.innerHTML = '<p>No README is available for this template yet.</p>';
   }}
 
-  // Make any links to repo-relative paths still resolve sensibly. README files
-  // often link to other templates with relative paths like
-  // `../other-template/` or `../../group/other-template/`. On the deployed
-  // gallery (a single-page site rooted at /) those resolve to URLs that 404,
-  // so intercept them: if the final path segment matches a known template or
-  // prompt slug, open that template's modal instead of navigating away.
-  modalBody.querySelectorAll('a[href]').forEach(a => {{
-    const href = a.getAttribute('href');
+  // Item 11: README asset rewrite.
+  // Links whose last path segment matches a known slug → open that modal.
+  // Paths already under csv-templates/ or prompt-templates/ are kept for <a>;
+  //   for <img> they get rewritten to raw.githubusercontent.com.
+  // All other relative paths → github.com/blob/main/ for <a>,
+  //                             raw.githubusercontent.com for <img>.
+  const REPO_BLOB = 'https://github.com/colin-gourlay/todoist-playbook/blob/main/';
+  const REPO_RAW  = 'https://raw.githubusercontent.com/colin-gourlay/todoist-playbook/main/';
+
+  modalBody.querySelectorAll('a[href], img[src]').forEach(el => {{
+    const isImg = el.tagName === 'IMG';
+    const attr  = isImg ? 'src' : 'href';
+    const href  = el.getAttribute(attr);
     if (!href) return;
-    if (/^https?:|^mailto:|^#/.test(href)) {{
-      a.setAttribute('target', '_blank');
-      a.setAttribute('rel', 'noopener');
+    // Already absolute / mailto / fragment
+    if (/^(https?:|mailto:|data:)/.test(href) || href.startsWith('//')) {{
+      if (!isImg) {{ el.setAttribute('target','_blank'); el.setAttribute('rel','noopener noreferrer'); }}
       return;
     }}
+    if (/^#/.test(href)) return;
+
     const cleaned = href.split('#')[0].split('?')[0].replace(/\\/+$/, '');
     if (!cleaned) return;
-    const segments = cleaned.split('/').filter(s => s && s !== '.' && s !== '..');
-    if (!segments.length) return;
-    const lastSeg = segments[segments.length - 1].replace(/\\.(md|csv)$/i, '');
-    const target = TEMPLATE_LOOKUP['template:' + lastSeg] || TEMPLATE_LOOKUP['prompt:' + lastSeg];
-    if (target) {{
-      a.addEventListener('click', e => {{
-        e.preventDefault();
-        openModal(target);
-      }});
+
+    // Check for slug match
+    const segs = cleaned.split('/').filter(s => s && s !== '.' && s !== '..');
+    if (segs.length) {{
+      const last = segs[segs.length-1].replace(/\\.(md|csv)$/i, '');
+      const target = TEMPLATE_LOOKUP['template:'+last] || TEMPLATE_LOOKUP['prompt:'+last];
+      if (target) {{
+        if (!isImg) {{
+          el.setAttribute('href', '#');
+          el.addEventListener('click', ev => {{
+            ev.preventDefault();
+            navigate('template', target.type, target.slug);
+          }});
+        }}
+        return;
+      }}
+    }}
+
+    // Paths already copied into docs/: keep <a> href, rewrite <img> to raw
+    if (/^(csv-templates|prompt-templates)\\//.test(cleaned)) {{
+      if (isImg) el.setAttribute('src', REPO_RAW + cleaned);
+      return;
+    }}
+
+    // All other relative paths
+    if (isImg) {{
+      el.setAttribute('src', REPO_RAW + cleaned);
+    }} else {{
+      el.setAttribute('href', REPO_BLOB + cleaned);
+      el.setAttribute('target', '_blank');
+      el.setAttribute('rel', 'noopener noreferrer');
     }}
   }});
 
@@ -1463,13 +1938,27 @@ function openModal(template) {{
   modalCloseBtn.focus();
 }}
 
-function closeModal() {{
+function _closeModalVisuals() {{
   if (!modalBackdrop.classList.contains('open')) return;
   modalBackdrop.classList.remove('open');
   modalBackdrop.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
   if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {{
     lastFocusedElement.focus();
+    lastFocusedElement = null;
+  }}
+}}
+
+// Item 16: close prefers history.back() when state shows we pushed this entry.
+function closeModal() {{
+  if (!modalBackdrop.classList.contains('open')) return;
+  _closeModalVisuals();
+  if (history.state && history.state.kind === 'modal') {{
+    history.back();
+  }} else {{
+    history.replaceState(null, '', location.pathname + location.search);
+    renderHome();
+    document.getElementById('breadcrumb').style.display = 'none';
   }}
 }}
 
@@ -1478,19 +1967,29 @@ modalBackdrop.addEventListener('click', e => {{
   if (e.target === modalBackdrop) closeModal();
 }});
 document.addEventListener('keydown', e => {{
-  if (e.key === 'Escape') closeModal();
+  if (e.key === 'Escape' && modalBackdrop.classList.contains('open')) closeModal();
 }});
 
-// Delegated click + keyboard handlers for template cards. Clicks on links or
-// buttons inside the card are left to bubble to their own handlers, so the
-// existing primary action (download / view prompt) keeps working without
-// opening the modal.
+// Item 16: popstate — when browser navigates away from a modal state, close
+// the modal visuals (history has already moved; don't call history.back() again).
+window.addEventListener('popstate', () => {{
+  if (modalBackdrop.classList.contains('open') &&
+      !(history.state && history.state.kind === 'modal')) {{
+    _closeModalVisuals();
+  }}
+  if (!modalBackdrop.classList.contains('open')) {{
+    handleRoute();
+  }}
+}});
+
+// Delegated click for template cards (including rail cards).
+// Clicks on tag-filter buttons or <a> tags are left to their own handlers.
 document.addEventListener('click', e => {{
+  if (e.target.classList.contains('tag-filter')) return;
   const card = e.target.closest('.tpl-card-clickable');
   if (!card) return;
-  if (e.target.closest('a, button')) return;
-  const template = TEMPLATE_LOOKUP[card.dataset.type + ':' + card.dataset.slug];
-  openModal(template);
+  if (e.target.closest('a, button:not(.tpl-card-clickable)')) return;
+  navigate('template', card.dataset.type, card.dataset.slug);
 }});
 
 document.addEventListener('keydown', e => {{
@@ -1498,8 +1997,7 @@ document.addEventListener('keydown', e => {{
   const card = e.target.closest && e.target.closest('.tpl-card-clickable');
   if (!card || e.target !== card) return;
   e.preventDefault();
-  const template = TEMPLATE_LOOKUP[card.dataset.type + ':' + card.dataset.slug];
-  openModal(template);
+  navigate('template', card.dataset.type, card.dataset.slug);
 }});
 </script>
 </body>
@@ -1550,7 +2048,10 @@ def main():
 
     templates = load_templates()
     spotlight = get_spotlight_template(templates)
-    html = generate_html(templates, spotlight)
+    build_date = datetime.datetime.now(tz=datetime.timezone.utc).strftime('%Y-%m-%d')
+    sha = os.environ.get('GITHUB_SHA', '')
+    short_sha = sha[:7] if sha else 'local'
+    html = generate_html(templates, spotlight, build_date=build_date, short_sha=short_sha)
 
     output_path = os.path.join(OUTPUT_DIR, "index.html")
     with open(output_path, "w", encoding="utf-8") as f:
