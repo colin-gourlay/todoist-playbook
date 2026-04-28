@@ -436,7 +436,7 @@ def emit_pwa_assets():
   <rect width="1200" height="630" fill="url(#g)"/>
   <text x="80" y="280" font-family="Helvetica, Arial, sans-serif"
         font-size="84" font-weight="800" fill="#fff" letter-spacing="-2">
-    📋 Todoist Playbook
+    🧩 Todoist Playbook
   </text>
   <text x="80" y="360" font-family="Helvetica, Arial, sans-serif"
         font-size="38" font-weight="500" fill="#fff" opacity="0.95">
@@ -604,7 +604,7 @@ def build_html(data_payload, sri_hashes):
       <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/></svg>
     </button>
   </div>
-  <h1>📋 Todoist Playbook</h1>
+    <h1>🧩 Todoist Playbook</h1>
   <p>Curated templates for getting things done</p>
   <div class="search-bar" role="search">
         <label for="search-input" class="visually-hidden">Search templates</label>
