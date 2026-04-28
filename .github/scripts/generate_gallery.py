@@ -627,7 +627,7 @@ def build_html(data_payload, sri_hashes):
   <div class="modal-dialog" role="document">
     <div class="modal-header">
       <div class="modal-title-block">
-        <div class="modal-title" id="modal-title"></div>
+        <h2 class="modal-title" id="modal-title"></h2>
         <div class="modal-subtitle" id="modal-subtitle"></div>
       </div>
       <div class="modal-actions" id="modal-actions"></div>
