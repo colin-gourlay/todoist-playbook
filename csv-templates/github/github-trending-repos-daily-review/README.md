@@ -17,7 +17,7 @@ Estimated duration: 10 minutes.
 ## When to Use
 
 - Daily, after your trending repositories project has been refreshed
-- As a quick discovery and triage ritual when you have 10 to 15 minutes
+- As a quick discovery and triage ritual when you have 10 minutes
 - Before your deeper weekly review session
 
 ---
