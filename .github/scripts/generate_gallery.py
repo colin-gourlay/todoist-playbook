@@ -600,7 +600,7 @@ def build_html(data_payload, sri_hashes):
 <header class="site-header" role="banner">
   <div class="header-controls">
     <button type="button" id="theme-toggle" class="theme-toggle"
-            aria-label="System theme" aria-pressed="false">
+            aria-label="System theme" title="System theme" aria-pressed="false">
       <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/></svg>
     </button>
   </div>

@@ -126,6 +126,7 @@
     applyTheme(mode);
     btn.innerHTML = themeIcon(mode);
     btn.setAttribute('aria-label', themeLabel(mode));
+    btn.setAttribute('title', themeLabel(mode));
     btn.setAttribute('aria-pressed', mode === 'dark' ? 'true' : 'false');
     btn.addEventListener('click', function () {
       var next = cycleTheme(readTheme());
@@ -133,6 +134,7 @@
       applyTheme(next);
       btn.innerHTML = themeIcon(next);
       btn.setAttribute('aria-label', themeLabel(next));
+      btn.setAttribute('title', themeLabel(next));
       btn.setAttribute('aria-pressed', next === 'dark' ? 'true' : 'false');
     });
     // Update theme-color when system preference changes (only meaningful in 'system')
