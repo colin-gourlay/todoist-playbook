@@ -1141,8 +1141,19 @@
   }
 
   // ── Init ─────────────────────────────────────────────────────────────────
+  function setupHeaderStat() {
+    var el = document.getElementById('header-stat');
+    if (!el || !TEMPLATES.length) return;
+    var tplCount = TEMPLATES.length;
+    var catCount = Object.keys(groupByCategory(TEMPLATES)).length;
+    var parts = [tplCount + ' template' + (tplCount !== 1 ? 's' : '')];
+    if (catCount) parts.push(catCount + ' categor' + (catCount !== 1 ? 'ies' : 'y'));
+    el.textContent = parts.join(' \u00b7 ');
+  }
+
   function init() {
     setupThemeToggle();
+    setupHeaderStat();
     modalCacheEls();
     setupSearch();
     setupDelegation();
