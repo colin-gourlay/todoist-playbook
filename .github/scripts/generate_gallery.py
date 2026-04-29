@@ -619,9 +619,9 @@ def build_html(data_payload, sri_hashes):
        aria-label="Search refinements" hidden>
     <div class="segmented" role="group" aria-label="Search mode">
       <span class="segmented-label">Search mode:</span>
-      <button type="button" class="seg-btn" data-mode="all" aria-pressed="true">All</button>
-      <button type="button" class="seg-btn" data-mode="text" aria-pressed="false">Text</button>
-      <button type="button" class="seg-btn" data-mode="tags" aria-pressed="false">Tags</button>
+      <button type="button" class="seg-btn" data-mode="all" aria-pressed="true" title="Search across all fields — matches templates by name, description, and tags">All</button>
+      <button type="button" class="seg-btn" data-mode="text" aria-pressed="false" title="Search by text only — matches template names and descriptions; tag filters are ignored">Text</button>
+      <button type="button" class="seg-btn" data-mode="tags" aria-pressed="false" title="Search by tags only — only tag filters are applied; text query is ignored">Tags</button>
     </div>
   </div>
 </header>
