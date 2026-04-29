@@ -426,7 +426,7 @@ def emit_pwa_assets():
 
     og = """\
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img"
-     aria-label="Todoist Playbook — Curated templates for getting things done">
+     aria-label="Todoist Playbook - Curated templates for getting things done">
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#d34244"/>
@@ -451,7 +451,7 @@ def emit_pwa_assets():
     write_text(os.path.join(OUTPUT_DIR, "og-image.svg"), og)
 
     manifest = {
-        "name": "Todoist Playbook — Template Gallery",
+        "name": "Todoist Playbook - Template Gallery",
         "short_name": "Playbook",
         "description": "Curated Todoist templates for getting things done.",
         "start_url": "./",
@@ -475,7 +475,7 @@ def emit_service_worker():
     """Emit a small cache-first service worker keyed by build SHA."""
     cache_key = (SHORT_SHA or BUILD_DATE or "dev")
     sw = (
-        '/* Todoist Playbook — service worker (cache-first app shell, '
+        '/* Todoist Playbook - service worker (cache-first app shell, '
         'stale-while-revalidate for templates) */\n'
         'const CACHE = "tp-shell-' + cache_key + '";\n'
         'const SHELL = ['
@@ -537,7 +537,7 @@ def build_html(data_payload, sri_hashes):
     dompurify_sri = sri_hashes.get("dompurify.min.js", "")
     site_url = "https://colin-gourlay.github.io/todoist-playbook/"
     description = (
-        "Curated Todoist templates for getting things done — accessible, "
+        "Curated Todoist templates for getting things done - accessible, "
         "searchable gallery with categories, prompts and bundles."
     )
 
@@ -578,20 +578,20 @@ def build_html(data_payload, sri_hashes):
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#d34244">
   <meta name="description" content="{description}">
-  <meta property="og:title" content="Todoist Playbook — Template Gallery">
+  <meta property="og:title" content="Todoist Playbook - Template Gallery">
   <meta property="og:description" content="{description}">
   <meta property="og:image" content="{site_url}og-image.svg">
   <meta property="og:type" content="website">
   <meta property="og:url" content="{site_url}">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Todoist Playbook — Template Gallery">
+  <meta name="twitter:title" content="Todoist Playbook - Template Gallery">
   <meta name="twitter:description" content="{description}">
   <meta name="twitter:image" content="{site_url}og-image.svg">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="apple-touch-icon" href="apple-touch-icon.svg">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="styles.css">
-  <title>Todoist Playbook — Template Gallery</title>
+  <title>Todoist Playbook - Template Gallery</title>
 </head>
 <body>
 
@@ -619,9 +619,9 @@ def build_html(data_payload, sri_hashes):
        aria-label="Search refinements" hidden>
     <div class="segmented" role="group" aria-label="Search mode">
       <span class="segmented-label">Search mode:</span>
-      <button type="button" class="seg-btn" data-mode="all" aria-pressed="true" title="Search across all fields — matches templates by name, description, and tags">All</button>
-      <button type="button" class="seg-btn" data-mode="text" aria-pressed="false" title="Search by text only — matches template names and descriptions; tag filters are ignored">Text</button>
-      <button type="button" class="seg-btn" data-mode="tags" aria-pressed="false" title="Search by tags only — only tag filters are applied; text query is ignored">Tags</button>
+      <button type="button" class="seg-btn" data-mode="all" aria-pressed="true" title="Search across all fields - matches templates by name, description, and tags">All</button>
+      <button type="button" class="seg-btn" data-mode="text" aria-pressed="false" title="Search by text only - matches template names and descriptions; tag filters are ignored">Text</button>
+      <button type="button" class="seg-btn" data-mode="tags" aria-pressed="false" title="Search by tags only - only tag filters are applied; text query is ignored">Tags</button>
     </div>
   </div>
 </header>

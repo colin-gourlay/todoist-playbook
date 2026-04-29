@@ -1,6 +1,6 @@
 name: Azure Migration Assessment
 slug: azure-migration-assessment
-description: Assess, design, and plan the migration of an on-premises application stack to Microsoft Azure — covering discovery, architecture decisions, security, DevOps, and cutover planning
+description: Assess, design, and plan the migration of an on-premises application stack to Microsoft Azure - covering discovery, architecture decisions, security, DevOps, and cutover planning
 category: engineering
 tags:
   - azure
