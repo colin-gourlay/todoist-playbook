@@ -784,27 +784,31 @@
     if (template.author)   subParts.push('by ' + template.author);
     modalSubtitle.textContent = subParts.join(' \u00b7 ');
 
-    var actionsHtml = '';
+    var buttonsHtml = '';
+    var captionHtml = '';
     if (template.type === 'template' && template.csv_url) {
-      actionsHtml += '<div class="modal-action-group">' +
-        '<a class="btn-primary" href="' + esc(template.csv_url) + '" download ' +
+      buttonsHtml += '<a class="btn-primary" href="' + esc(template.csv_url) + '" download ' +
         'aria-label="Download CSV for ' + esc(template.name) + '">' +
-        ICONS.download + '<span>Download CSV</span></a>' +
-        '<span class="download-caption">Open in Todoist → Import from CSV</span>' +
-        '</div>';
+        ICONS.download + '<span>Download CSV</span></a>';
+      captionHtml = '<span class="download-caption">Open in Todoist \u2192 Import from CSV</span>';
     } else if (template.type === 'prompt' && template.prompt_url) {
-      actionsHtml += '<a class="btn-primary" href="' + esc(template.prompt_url) +
+      buttonsHtml += '<a class="btn-primary" href="' + esc(template.prompt_url) +
         '" target="_blank" rel="noopener noreferrer" ' +
         'aria-label="View prompt for ' + esc(template.name) + '">' +
         '<span>View Prompt</span>' + ICONS.external + '</a>';
     }
     if (template.github_path) {
-      actionsHtml += '<a class="btn-secondary" href="' + REPO_URL + '/blob/main/' +
+      buttonsHtml += '<a class="btn-secondary" href="' + REPO_URL + '/blob/main/' +
         esc(template.github_path) + '" target="_blank" rel="noopener noreferrer" ' +
         'aria-label="Open ' + esc(template.name) + ' source on GitHub">' +
         ICONS.github + '<span>Open on GitHub</span></a>';
     }
-    modalActions.innerHTML = actionsHtml;
+    modalActions.innerHTML = buttonsHtml
+      ? '<div class="modal-action-group">' +
+          '<div class="modal-action-buttons">' + buttonsHtml + '</div>' +
+          captionHtml +
+        '</div>'
+      : '';
 
     if (template.readme && template.readme.trim()) {
       modalBody.classList.remove('empty');
