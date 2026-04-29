@@ -536,6 +536,7 @@ def build_html(data_payload, sri_hashes):
     marked_sri    = sri_hashes.get("marked.min.js", "")
     dompurify_sri = sri_hashes.get("dompurify.min.js", "")
     site_url = "https://colin-gourlay.github.io/todoist-playbook/"
+    repo_url = REPO_URL
     description = (
         "Curated Todoist templates for getting things done - accessible, "
         "searchable gallery with categories, prompts and bundles."
@@ -599,6 +600,10 @@ def build_html(data_payload, sri_hashes):
 
 <header class="site-header" role="banner">
   <div class="header-controls">
+    <a href="{repo_url}" class="header-github-link" target="_blank" rel="noopener noreferrer"
+       aria-label="View source on GitHub" title="View source on GitHub">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" stroke="none"><path d="M12 .5a12 12 0 0 0-3.79 23.4c.6.11.82-.26.82-.58v-2c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.74.08-.74 1.21.09 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.46-1.33-5.46-5.93 0-1.31.47-2.39 1.24-3.23-.13-.3-.54-1.52.11-3.17 0 0 1.01-.33 3.31 1.23a11.5 11.5 0 0 1 6.02 0c2.3-1.56 3.31-1.23 3.31-1.23.66 1.65.25 2.87.12 3.17.77.84 1.24 1.92 1.24 3.23 0 4.61-2.81 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.83.58A12 12 0 0 0 12 .5z"/></svg>
+    </a>
     <button type="button" id="theme-toggle" class="theme-toggle"
             aria-label="System theme" title="System theme" aria-pressed="false">
       <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/></svg>
@@ -606,6 +611,7 @@ def build_html(data_payload, sri_hashes):
   </div>
     <h1>🧩 Todoist Playbook</h1>
   <p>Curated templates for getting things done</p>
+  <p id="header-stat" class="header-stat" aria-live="polite"></p>
   <div class="search-bar" role="search">
         <label for="search-input" class="visually-hidden">Search templates</label>
     <input type="search" id="search-input" placeholder="Search templates…"
