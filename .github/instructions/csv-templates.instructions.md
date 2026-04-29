@@ -94,3 +94,7 @@ Legacy-format date columns (`DUE_DATE`, `DUE_DATE_LANG`) MUST be empty in legacy
 - Missing import guidance in `README.md`
 - Invalid `project_color` (must match `.github/scripts/project_colors.txt`)
 - Hardcoded calendar dates in `DATE` / `DEADLINE` (use natural-language relative dates instead)
+
+## Content style
+
+- Do not use the em dash character (`—`) in `description:` fields or any content that appears in the GitHub Pages gallery. Use a hyphen (`-`) instead.

@@ -24,3 +24,4 @@ Scripts under `.github/scripts/` run inside GitHub Actions. They use Python 3 an
 - Scripts are invoked from workflows; expect inputs via env vars or CLI args
 - Keep scripts idempotent where possible — they may be re-run by the same workflow
 - `copilot-setup-steps.yml` runs `py_compile` over scripts; new scripts MUST compile cleanly under the Python version pinned in that workflow
+- Do not use the em dash character (`—`) in any user-visible strings embedded in the generated HTML or other public-facing output. Use a hyphen (`-`) instead.

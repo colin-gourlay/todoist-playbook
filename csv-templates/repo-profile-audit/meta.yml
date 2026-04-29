@@ -1,6 +1,6 @@
 name: Repo Profile Audit
 slug: repo-profile-audit
-description: Baseline audit to align public references to a repository — canonical naming, link consistency, profile updates, and follow-up tracking
+description: Baseline audit to align public references to a repository - canonical naming, link consistency, profile updates, and follow-up tracking
 category: brand-and-social
 tags:
   - github

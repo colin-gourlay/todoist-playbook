@@ -51,3 +51,7 @@ inputs:
 - `prompt.md` contains no `{{placeholder}}` variable
 - `inputs:` and `{{placeholder}}` names disagree
 - `slug:` does not match the folder name
+
+## Content style
+
+- Do not use the em dash character (`—`) in `description:` fields or any content that appears in the GitHub Pages gallery. Use a hyphen (`-`) instead.

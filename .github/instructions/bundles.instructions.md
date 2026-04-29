@@ -34,6 +34,10 @@ optional_templates:
 - `optional_templates:` (when present) MUST reference existing CSV template slugs
 - New bundles start at `version: 0.0.0`
 
+## Content style
+
+- Do not use the em dash character (`—`) in `description:` fields. Use a hyphen (`-`) instead.
+
 ## Adding a new bundle
 
 1. Create `bundles/{slug}/` (kebab-case)
