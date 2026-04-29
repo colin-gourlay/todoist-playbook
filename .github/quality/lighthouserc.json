@@ -4,7 +4,7 @@
       "url": ["http://127.0.0.1:8080"],
       "numberOfRuns": 3,
       "settings": {
-        "preset": "no-pwa"
+        "preset": "desktop"
       }
     },
     "assert": {
