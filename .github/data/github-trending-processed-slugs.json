@@ -14,6 +14,13 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "aidc-ai/pixelle-video": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-29",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-29T06:18:57.585813+00:00",
+      "last_seen": "2026-04-29T06:18:57.585813+00:00"
+    },
     "alishahryar1/free-claude-code": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -70,6 +77,13 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "ebookfoundation/free-programming-books": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-29",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-29T06:18:57.585813+00:00",
+      "last_seen": "2026-04-29T06:18:57.585813+00:00"
+    },
     "fincept-corporation/finceptterminal": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -83,6 +97,13 @@
       "first_section": "Trending (This Week)",
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "fspecii/ace-step-ui": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-29",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-29T06:18:57.585813+00:00",
+      "last_seen": "2026-04-29T06:18:57.585813+00:00"
     },
     "gastownhall/beads": {
       "first_languages": [],
@@ -140,6 +161,20 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "hunxbyts/ghosttrack": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-29",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-29T06:18:57.585813+00:00",
+      "last_seen": "2026-04-29T06:18:57.585813+00:00"
+    },
+    "iamgio/quarkdown": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-29",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-29T06:18:57.585813+00:00",
+      "last_seen": "2026-04-29T06:18:57.585813+00:00"
+    },
     "lsdefine/genericagent": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -195,6 +230,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "public-apis/public-apis": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-29",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-29T06:18:57.585813+00:00",
+      "last_seen": "2026-04-29T06:18:57.585813+00:00"
     },
     "rtk-ai/rtk": {
       "first_languages": [],
@@ -267,6 +309,6 @@
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     }
   },
-  "updated_at": "2026-04-28T06:22:26.287594+00:00",
+  "updated_at": "2026-04-29T06:19:11.491249+00:00",
   "version": 1
 }
