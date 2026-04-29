@@ -249,30 +249,6 @@ input[type="search"]::-webkit-search-cancel-button { display: none; }
   border-radius: 4px;
 }
 .search-clear svg { width: 1rem; height: 1rem; stroke: currentColor; fill: none; stroke-width: 2.25; }
-.kbd-hint {
-  position: absolute;
-  right: 2.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 0.7rem;
-  color: rgba(255,255,255,0.85);
-}
-.kbd-hint kbd {
-  background: rgba(255,255,255,0.25);
-  border: 1px solid rgba(255,255,255,0.4);
-  border-radius: 4px;
-  padding: 0 0.35rem;
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-  font-weight: 700;
-  font-size: 0.75rem;
-  line-height: 1.4;
-}
-.search-bar input[type="search"]:focus ~ .kbd-hint,
-.search-bar input[type="search"]:not(:placeholder-shown) ~ .kbd-hint { display: none; }
 
 .search-summary {
   font-size: 0.95rem;

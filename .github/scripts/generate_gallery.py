@@ -610,7 +610,6 @@ def build_html(data_payload, sri_hashes):
         <label for="search-input" class="visually-hidden">Search templates</label>
     <input type="search" id="search-input" placeholder="Search templates…"
            aria-label="Search templates" autocomplete="off" spellcheck="false">
-    <span class="kbd-hint" aria-hidden="true"><kbd>/</kbd></span>
     <button class="search-clear" id="search-clear" type="button"
             aria-label="Clear search" hidden>
       <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.25"><path d="M18 6 6 18M6 6l12 12"/></svg>
