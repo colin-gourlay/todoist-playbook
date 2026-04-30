@@ -1,0 +1,15 @@
+name: Album of the Week Review
+slug: album-of-the-week-review
+description: Repeatable workflow for selecting, listening to, and reviewing an Album of the Week - from discovery through to broadcast and promotion
+category: creative
+tags:
+  - radio
+  - music
+  - review
+  - broadcast
+  - creative
+  - weekly
+version: 0.0.0
+author: Colin Gourlay
+recurrence_suggestion: weekly
+project_color: grape
