@@ -471,6 +471,58 @@ def emit_pwa_assets():
     )
 
 
+def download_font(fonts_dir):
+    """Download Inter Variable woff2 from font-manifest.json; skip gracefully on failure.
+
+    The font is SHA-256 verified against the pinned hash in the manifest.
+    If the download fails for any reason the gallery still builds correctly —
+    browsers fall back to the system font stack declared in styles.css.
+    """
+    manifest_path = os.path.join(os.path.dirname(__file__), "font-manifest.json")
+    try:
+        with open(manifest_path, encoding="utf-8") as f:
+            spec = json.load(f)
+    except Exception as exc:
+        print(f"⚠️  font-manifest.json unavailable ({exc}); skipping font download",
+              file=sys.stderr)
+        return
+
+    url      = spec.get("url", "")
+    expected = spec.get("sha256", "")
+    filename = spec.get("filename", "Inter-Variable.woff2")
+    dest     = os.path.join(fonts_dir, filename)
+
+    if not url:
+        print("⚠️  font-manifest.json has no URL; skipping font download", file=sys.stderr)
+        return
+
+    os.makedirs(fonts_dir, exist_ok=True)
+    try:
+        req = urllib.request.Request(
+            url,
+            headers={"User-Agent": "todoist-playbook-gallery-builder/1.0"},
+        )
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            data = resp.read()
+        actual = hashlib.sha256(data).hexdigest()
+        if expected and actual != expected:
+            print(
+                f"⚠️  Font checksum mismatch for {filename}: "
+                f"expected {expected}, got {actual} — skipping write",
+                file=sys.stderr,
+            )
+            return
+        with open(dest, "wb") as f:
+            f.write(data)
+        print(f"✅ Downloaded {filename} ({len(data):,} bytes)")
+    except Exception as exc:
+        print(
+            f"⚠️  Font download failed for {filename} ({exc}); "
+            "system font stack will be used as fallback",
+            file=sys.stderr,
+        )
+
+
 def emit_service_worker():
     """Emit a small cache-first service worker keyed by build SHA."""
     cache_key = (SHORT_SHA or BUILD_DATE or "dev")
@@ -481,7 +533,8 @@ def emit_service_worker():
         'const SHELL = ['
         '"./", "index.html", "styles.css", "app.js", "data.json", '
         '"manifest.webmanifest", "favicon.svg", '
-        '"vendor/marked.min.js", "vendor/dompurify.min.js"'
+        '"vendor/marked.min.js", "vendor/dompurify.min.js", '
+        '"fonts/Inter-Variable.woff2"'
         '];\n'
         'self.addEventListener("install", (e) => {\n'
         '  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL).catch(()=>{})));\n'
@@ -776,6 +829,9 @@ def main():
 
     # Vendor (downloads or stubs)
     sri = download_vendor(os.path.join(OUTPUT_DIR, "vendor"))
+
+    # Inter Variable font (optional; falls back to system stack if unavailable)
+    download_font(os.path.join(OUTPUT_DIR, "fonts"))
 
     templates = load_templates()
     spotlight = get_spotlight_template(templates)
