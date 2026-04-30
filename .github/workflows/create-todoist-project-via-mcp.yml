@@ -10,6 +10,7 @@ on:
         options:
           # BEGIN_CSV_TEMPLATES_MCP (auto-updated by the sync-todoist-projects workflow)
           - ''
+          - album-of-the-week-review
           - code-review
           - daily-review
           - ef-code-review

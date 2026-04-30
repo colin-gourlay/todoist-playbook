@@ -59,6 +59,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 
 | Template | Description | Tags |
 | ---------- | ------------ | ------ |
+| [Album of the Week Review](csv-templates/album-of-the-week-review/) | Repeatable weekly workflow for selecting, listening to, and reviewing an Album of the Week - from discovery through to broadcast and promotion | radio, music, review, broadcast, creative, weekly |
 | [Radio Show System](csv-templates/radio-show-system/) | Pre and post tasks associated with a given show | review, planning, productivity, weekly |
 | [Radio Show Core](csv-templates/radio-show-core/) | Core weekly workflow for preparing and delivering a radio show — creative prep, logistics, studio setup, and live broadcast | radio, broadcast, media, creative |
 | [Radio Show Guest Feature](csv-templates/radio-show-guest-feature/) | Workflow for preparing and running a guest or feature segment — interviews, artist spotlights, and festival coverage | radio, interview, broadcast |

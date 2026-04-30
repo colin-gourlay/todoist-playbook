@@ -20,6 +20,7 @@ on:
         options:
           # BEGIN_CSV_TEMPLATES_CREATE (auto-updated by the sync-todoist-projects workflow)
           - ''
+          - album-of-the-week-review
           - awesome-list-outreach-shortlist
           - awesome-list-submission
           - azure-migration-assessment
