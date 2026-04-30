@@ -1,5 +1,12 @@
 {
   "slugs": {
+    "1jehuang/jcode": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-30",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-30T06:20:33.511105+00:00",
+      "last_seen": "2026-04-30T06:20:33.511105+00:00"
+    },
     "abhigyanpatwari/gitnexus": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -133,6 +140,13 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "gorhill/ublock": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-30",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-30T06:20:33.511105+00:00",
+      "last_seen": "2026-04-30T06:20:33.511105+00:00"
+    },
     "gyulyvgc/sniffnet": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -153,6 +167,13 @@
       "first_section": "Trending (This Week)",
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "huggingface/ml-intern": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-30",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-30T06:20:33.511105+00:00",
+      "last_seen": "2026-04-30T06:20:33.511105+00:00"
     },
     "hugohe3/ppt-master": {
       "first_languages": [],
@@ -175,12 +196,26 @@
       "first_seen": "2026-04-29T06:18:57.585813+00:00",
       "last_seen": "2026-04-29T06:18:57.585813+00:00"
     },
+    "iv-org/invidious": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-30",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-30T06:20:33.511105+00:00",
+      "last_seen": "2026-04-30T06:20:33.511105+00:00"
+    },
     "lsdefine/genericagent": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
       "first_section": "Trending (This Week)",
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "lukilabs/craft-agents-oss": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-30",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-30T06:20:33.511105+00:00",
+      "last_seen": "2026-04-30T06:20:33.511105+00:00"
     },
     "luongnv89/claude-howto": {
       "first_languages": [],
@@ -203,6 +238,13 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "microsoft/powertoys": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-30",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-30T06:20:33.511105+00:00",
+      "last_seen": "2026-04-30T06:20:33.511105+00:00"
+    },
     "microsoft/vibevoice": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -223,6 +265,13 @@
       "first_section": "Trending (This Month)",
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "obra/superpowers": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-30",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-30T06:20:33.511105+00:00",
+      "last_seen": "2026-04-30T06:20:33.511105+00:00"
     },
     "penpot/penpot": {
       "first_languages": [],
@@ -259,6 +308,13 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "soxoj/maigret": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-30",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-30T06:20:33.511105+00:00",
+      "last_seen": "2026-04-30T06:20:33.511105+00:00"
+    },
     "tauricresearch/tradingagents": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -287,6 +343,20 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "trycua/cua": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-30",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-04-30T06:20:33.511105+00:00",
+      "last_seen": "2026-04-30T06:20:33.511105+00:00"
+    },
+    "warpdotdev/warp": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-30",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-30T06:20:33.511105+00:00",
+      "last_seen": "2026-04-30T06:20:33.511105+00:00"
+    },
     "yeachan-heo/oh-my-codex": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -301,6 +371,13 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "zhulinsen/daily_stock_analysis": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-04-30",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-04-30T06:20:33.511105+00:00",
+      "last_seen": "2026-04-30T06:20:33.511105+00:00"
+    },
     "zilliztech/claude-context": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -309,6 +386,6 @@
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     }
   },
-  "updated_at": "2026-04-29T06:19:11.491249+00:00",
+  "updated_at": "2026-04-30T06:20:49.932057+00:00",
   "version": 1
 }
