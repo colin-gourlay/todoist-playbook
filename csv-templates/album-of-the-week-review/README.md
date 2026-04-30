@@ -1,6 +1,6 @@
 # Album of the Week Review
 
-A repeatable weekly workflow for selecting, listening to, and reviewing an Album of the Week — from discovery and preparation through to broadcast and promotion.
+A repeatable weekly workflow for selecting, listening to, and reviewing an Album of the Week - from discovery and preparation through to broadcast and promotion.
 
 This template is designed to ensure every album review follows a consistent process, reducing the chance of missed steps and improving the quality and repeatability of each review.
 
