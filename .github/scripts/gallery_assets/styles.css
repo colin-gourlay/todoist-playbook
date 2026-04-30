@@ -12,11 +12,22 @@
  *   --muted (#8b949e) on --bg (#0f1117):           ~5.1:1  PASS
  *   --muted (#8b949e) on --card-bg (#1c2128):      ~4.6:1  PASS
  *
- * Typography: System font stack. Inter Variable would be preferred but
- * self-hosting requires network access at build time and the tooling pinned in
- * vendor-manifest. The wrap rules (text-wrap: balance / pretty) apply
+ * Typography: Inter Variable is self-hosted under docs/fonts/ and downloaded
+ * at build time by generate_gallery.py. The system font stack below serves as
+ * a progressive-enhancement fallback when the font file is unavailable (e.g.
+ * on first load before the service worker caches it, or if the build-time
+ * download failed). The wrap rules (text-wrap: balance / pretty) apply
  * regardless and are progressively enhanced.
  */
+
+/* Inter Variable — self-hosted, verified by SHA-256 in font-manifest.json */
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('fonts/Inter-Variable.woff2') format('woff2');
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -132,7 +143,7 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  font-family: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
                Helvetica, Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
@@ -140,6 +151,7 @@ body {
   font-size: 15px;
   min-height: 100vh;
   letter-spacing: -0.01em;
+  font-feature-settings: 'cv11' 1, 'ss01' 1;
 }
 
 main:focus { outline: none; }
