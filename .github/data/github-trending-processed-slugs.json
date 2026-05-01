@@ -42,6 +42,13 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "browserbase/skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-01",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-01T06:28:31.042913+00:00",
+      "last_seen": "2026-05-01T06:28:31.042913+00:00"
+    },
     "cjackhwang/ds2api": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -105,6 +112,13 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "forrestknight/open-source-cs": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-01",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-01T06:28:31.042913+00:00",
+      "last_seen": "2026-05-01T06:28:31.042913+00:00"
+    },
     "fspecii/ace-step-ui": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-29",
@@ -118,6 +132,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "ghostty-org/ghostty": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-01",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-01T06:28:31.042913+00:00",
+      "last_seen": "2026-05-01T06:28:31.042913+00:00"
     },
     "google-ai-edge/gallery": {
       "first_languages": [],
@@ -386,6 +407,6 @@
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     }
   },
-  "updated_at": "2026-04-30T06:20:49.932057+00:00",
+  "updated_at": "2026-05-01T06:28:42.133026+00:00",
   "version": 1
 }
