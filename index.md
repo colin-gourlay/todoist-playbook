@@ -59,7 +59,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 
 | Template | Description | Tags |
 | ---------- | ------------ | ------ |
-| [Album of the Week Review](csv-templates/album-of-the-week-review/) | Repeatable weekly workflow for selecting, listening to, and reviewing an Album of the Week - from discovery through to broadcast and promotion | radio, music, review, broadcast, creative, weekly |
+| [Album of the Week (Weekly Review)](csv-templates/radio/album-of-the-week-weekly-review/) | Weekly workflow for selecting, listening to, and reviewing an album - from discovery through to broadcast and promotion | album, broadcast, curation, music, promotion, review, weekly |
 | [Radio Show System](csv-templates/radio-show-system/) | Pre and post tasks associated with a given show | review, planning, productivity, weekly |
 | [Radio Show Core](csv-templates/radio-show-core/) | Core weekly workflow for preparing and delivering a radio show — creative prep, logistics, studio setup, and live broadcast | radio, broadcast, media, creative |
 | [Radio Show Guest Feature](csv-templates/radio-show-guest-feature/) | Workflow for preparing and running a guest or feature segment — interviews, artist spotlights, and festival coverage | radio, interview, broadcast |
@@ -129,7 +129,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 | Template | Description | Tags |
 | ---------- | ------------ | ------ |
 | [GitHub Repo Spin-Up](csv-templates/github/github-repo-spin-up/) | End-to-end checklist for spinning up a new GitHub repository — identity, ecosystem-watch setup, documentation, CI/CD, security, Copilot integration, and developer hygiene | github, setup, devops, open-source, ci-cd, copilot, security |
-| [GitHub Trending Repos (Daily Review)](csv-templates/github/github-trending-repos-daily-review/) | Daily triage checklist for evaluating trending GitHub repositories and deciding the next action quickly | github, trending, open-source, discoverability, triage, stars, daily |
+| [GitHub Trending Repos (Daily Review)](csv-templates/github/github-trending-repos-daily-review/) | Daily triage checklist for evaluating trending GitHub repositories and deciding the next action quickly | daily, discoverability, github, open-source, stars, trending, triage |
 | [GitHub Trending Repos Weekly Review](csv-templates/github-trending-repos-weekly-review/) | Weekly deep-review checklist to organize stars, reverse engineer high-signal repos, and convert insights into actions | github, trending, open-source, discoverability, stars, productivity, learning, weekly |
 | [GitHub Trending Tracker](csv-templates/github-trending-tracker/) | Deprecated legacy all-in-one review system for discovering, evaluating, and acting on trending GitHub repositories — retained temporarily for backward compatibility | github, trending, open-source, discoverability, stars, productivity, learning, deprecated |
 | [Repo Ecosystem Watch](csv-templates/repo-ecosystem-watch/) | Recurring 4-week review checklist for monitoring adjacent repositories, ecosystem signals, and reusable ideas for this repo | github, open-source, review, ecosystem, discoverability, productivity |
