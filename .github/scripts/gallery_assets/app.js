@@ -236,7 +236,7 @@
       : '';
     return '' +
       '<div class="spotlight-section">' +
-        '<div class="spotlight-heading">' + ICONS.star + ' Template Spotlight</div>' +
+        '<h2 class="section-heading spotlight-heading">' + ICONS.star + ' Template Spotlight</h2>' +
         '<button type="button" class="spotlight-card tpl-card-clickable" ' +
           'data-slug="' + esc(t.slug) + '" data-type="' + esc(t.type || 'template') + '" ' +
           'aria-label="Open details for ' + esc(t.name) + '">' +
@@ -322,8 +322,16 @@
   }
 
   function recentlyUpdated(n) {
-    return TEMPLATES.slice()
-      .filter(function (t) { return t.mtime; })
+    var withMtime = TEMPLATES.filter(function (t) { return t.mtime; });
+    if (!withMtime.length) return [];
+    // When a single date covers ≥50% of templates it indicates a bulk automated
+    // update (e.g. a CI workflow bumping many meta.yml files at once). Exclude
+    // those entries so the rail only surfaces genuine, distinct manual updates.
+    var counts = {};
+    withMtime.forEach(function (t) { counts[t.mtime] = (counts[t.mtime] || 0) + 1; });
+    var bulkThreshold = Math.ceil(withMtime.length / 2);
+    var meaningful = withMtime.filter(function (t) { return counts[t.mtime] < bulkThreshold; });
+    return meaningful
       .sort(function (a, b) { return (a.mtime < b.mtime) ? 1 : (a.mtime > b.mtime ? -1 : 0); })
       .slice(0, n);
   }
@@ -461,12 +469,12 @@
     var cats = Object.keys(groups).sort();
     var container = document.getElementById('container');
 
-    var recents = recentlyUpdated(6);
+    var recents = recentlyUpdated(4);
     var recentsHtml = '';
     if (recents.length) {
       recentsHtml =
         '<section class="recent-rail" aria-label="Recently updated templates">' +
-          '<h2 class="rail-heading">' + ICONS.clock + ' Recently updated</h2>' +
+          '<h2 class="section-heading rail-heading">' + ICONS.clock + ' Recently updated</h2>' +
           '<div class="recent-grid">' +
             recents.map(buildRailCard).join('') +
           '</div>' +
