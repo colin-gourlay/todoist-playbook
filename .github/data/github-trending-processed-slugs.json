@@ -105,6 +105,13 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "flowseal/zapret-discord-youtube": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-02",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-02T06:16:33.544503+00:00",
+      "last_seen": "2026-05-02T06:16:33.544503+00:00"
+    },
     "forrestchang/andrej-karpathy-skills": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -280,6 +287,13 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "multica-ai/multica": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-02",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-05-02T06:16:33.544503+00:00",
+      "last_seen": "2026-05-02T06:16:33.544503+00:00"
+    },
     "nousresearch/hermes-agent": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -328,6 +342,13 @@
       "first_section": "Trending (This Month)",
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "simstudioai/sim": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-02",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-02T06:16:33.544503+00:00",
+      "last_seen": "2026-05-02T06:16:33.544503+00:00"
     },
     "soxoj/maigret": {
       "first_languages": [],
@@ -407,6 +428,6 @@
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     }
   },
-  "updated_at": "2026-05-01T06:28:42.133026+00:00",
+  "updated_at": "2026-05-02T06:16:47.466781+00:00",
   "version": 1
 }
