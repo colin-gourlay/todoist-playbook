@@ -217,7 +217,7 @@ def load_templates():
                 "type":                  "template",
                 "readme":                read_readme(location.readme_path),
                 "github_path":           f"csv-templates/{location.relative_path}",
-                "mtime":                 file_mtime_iso(location.meta_path),
+                "mtime":                 max(filter(None, [file_mtime_iso(location.meta_path), file_mtime_iso(location.csv_path)]), default=""),
             })
 
     if os.path.isdir(PROMPT_TEMPLATES_DIR):
@@ -249,7 +249,7 @@ def load_templates():
                 "type":                  "prompt",
                 "readme":                read_readme(readme_path),
                 "github_path":           f"prompt-templates/{slug}",
-                "mtime":                 file_mtime_iso(meta_path),
+                "mtime":                 max(filter(None, [file_mtime_iso(meta_path), file_mtime_iso(os.path.join(template_dir, "prompt.md"))]), default=""),
             })
 
     return templates
