@@ -2,6 +2,7 @@ TYPE,CONTENT,DESCRIPTION,IS_COLLAPSED,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DATE,DA
 meta,view_style=board,,,,,,,,,,,,,
 section,🎧 Preparation,,,,,,,,,,,,,
 task,Select Album of the Week,,,1,1,,,,,,,,,
+task,Update Lidarr to prevent re-download of selected album,Open Lidarr and mark the selected album so it will not be automatically downloaded again.,,,2,1,,,,,,,,,
 task,"Gather background info (artist, release, context)",,,2,1,,,,,,,,,
 task,Research artist history and discography,,,3,2,,,,,,,,,
 task,"Note release year, label, and production credits",,,3,2,,,,,,,,,
