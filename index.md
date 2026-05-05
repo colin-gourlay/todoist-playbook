@@ -83,6 +83,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 | ---------- | ------------ | ------ |
 | [Onboarding Checklist](csv-templates/onboarding-checklist/) | Structured first-90-days checklist for starting a new job — admin, relationships, learning, and early wins | onboarding, career, new-job, planning |
 | [One-on-One](csv-templates/one-on-one/) | Recurring preparation and follow-up checklist for 1:1 meetings with a manager or direct report | meetings, one-on-one, career, management |
+| [Willo Video Review and Candidate Screening](csv-templates/willo-video-review/) | Structured workflow for reviewing Willo video submissions — preparation, consistent evaluation, shortlisting, and follow-up actions | recruitment, interview, screening, video-review, hiring |
 
 ---
 
