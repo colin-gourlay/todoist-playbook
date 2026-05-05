@@ -71,14 +71,24 @@ jobs:
           set +e
           npx --prefix .github/quality lhci autorun \
             --config=.github/quality/lighthouserc.json \
-            --upload.target=filesystem \
-            --upload.outputDir=.github/quality/lighthouse-results \
             | tee .github/quality/lighthouse-results/lhci.log
           LHCI_EXIT=${PIPESTATUS[0]}
+          LHCI_REPORT_URL=$(grep -Eo 'https?://[^[:space:]]+' .github/quality/lighthouse-results/lhci.log | grep 'report\.html' | head -n 1 || true)
           set -e
 
+          {
+            echo "### Lighthouse CI result"
+            echo ""
+            if [ -n "$LHCI_REPORT_URL" ]; then
+              echo "- Report: $LHCI_REPORT_URL"
+            else
+              echo "- Report: unavailable"
+            fi
+            echo "- Log artifact: lighthouse-log"
+          } >> "$GITHUB_STEP_SUMMARY"
+
           if [ "$LHCI_EXIT" -ne 0 ]; then
-            echo "::warning title=Lighthouse CI reported issues::Non-blocking: see lighthouse-report artifact and lhci.log."
+            echo "::warning title=Lighthouse CI reported issues::Non-blocking: see the step summary for the public report link and the lighthouse-log artifact for raw output."
           fi
 
           exit 0
@@ -113,12 +123,12 @@ jobs:
 
           exit 0
 
-      - name: Upload Lighthouse report
+      - name: Upload Lighthouse log
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: lighthouse-report
-          path: .github/quality/lighthouse-results/
+          name: lighthouse-log
+          path: .github/quality/lighthouse-results/lhci.log
           if-no-files-found: warn
 
       - name: Upload pa11y report

@@ -16,8 +16,7 @@
       }
     },
     "upload": {
-      "target": "filesystem",
-      "outputDir": ".github/quality/lighthouse-results"
+      "target": "temporary-public-storage"
     }
   }
 }
