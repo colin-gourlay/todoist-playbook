@@ -17,7 +17,7 @@
     },
     "upload": {
       "target": "filesystem",
-      "outputDir": ".lighthouseci"
+      "outputDir": ".github/quality/lighthouse-results"
     }
   }
 }
