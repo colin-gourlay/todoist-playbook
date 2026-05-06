@@ -88,7 +88,8 @@
     external:  '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>',
     sparkles:  '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>',
     star:      '<svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
-    clock:     '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>'
+    clock:     '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
+    circle:    '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>'
   };
 
   // ── Theme management ─────────────────────────────────────────────────────
@@ -201,6 +202,32 @@
     return html;
   }
 
+  function buildSpotlightPreview(rows, taskCount) {
+    var MAX = 5;
+    var shown = rows.slice(0, MAX);
+    var rest = rows.length - shown.length;
+    var countLabel = taskCount != null
+      ? taskCount + '\u202ftask' + (taskCount !== 1 ? 's' : '')
+      : '';
+    var html = '<div class="spotlight-preview-header">' +
+      '<span class="spotlight-preview-label">Task list</span>' +
+      (countLabel ? '<span class="spotlight-preview-count">' + esc(countLabel) + '</span>' : '') +
+      '</div>';
+    shown.forEach(function (r) {
+      var content = r.content.replace(/@[\w-]+/g, '').trim();
+      if (r.type === 'section') {
+        html += '<div class="preview-row section">' + esc(content) + '</div>';
+      } else {
+        html += '<div class="preview-row task">' +
+          '<span class="preview-task-icon" aria-hidden="true">' + ICONS.circle + '</span>' +
+          '<span class="preview-task-text">' + esc(content) + '</span>' +
+          '</div>';
+      }
+    });
+    if (rest > 0) html += '<div class="preview-more">+\u202f' + rest + ' more</div>';
+    return html;
+  }
+
   function buildStats(t) {
     var stats = [];
     if (t.task_count)
@@ -227,7 +254,7 @@
       t.version ? 'v' + esc(t.version) : ''
     ].filter(Boolean).join(' \u00b7 ');
     var previewHtml = (t.rows && t.rows.length)
-      ? '<div class="spotlight-preview">' + buildPreview(t.rows) + '</div>'
+      ? '<div class="spotlight-preview">' + buildSpotlightPreview(t.rows, t.task_count) + '</div>'
       : '';
     var actionBtn = t.csv_url
       ? '<a class="btn-primary" href="' + esc(t.csv_url) + '" download ' +
