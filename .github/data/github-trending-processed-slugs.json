@@ -42,12 +42,26 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "arindam200/awesome-ai-apps": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-06",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-06T06:22:06.181715+00:00",
+      "last_seen": "2026-05-06T06:22:06.181715+00:00"
+    },
     "browserbase/skills": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-01",
       "first_section": "Trending (Today)",
       "first_seen": "2026-05-01T06:28:31.042913+00:00",
       "last_seen": "2026-05-01T06:28:31.042913+00:00"
+    },
+    "bwya77/vscode-dark-islands": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-06",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-06T06:22:06.181715+00:00",
+      "last_seen": "2026-05-06T06:22:06.181715+00:00"
     },
     "cjackhwang/ds2api": {
       "first_languages": [],
@@ -83,6 +97,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-05-05T06:17:39.229450+00:00",
       "last_seen": "2026-05-05T06:17:39.229450+00:00"
+    },
+    "d4vinci/scrapling": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-06",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-06T06:22:06.181715+00:00",
+      "last_seen": "2026-05-06T06:22:06.181715+00:00"
     },
     "davila7/claude-code-templates": {
       "first_languages": [],
@@ -273,6 +294,13 @@
       "first_seen": "2026-05-03T06:20:02.282004+00:00",
       "last_seen": "2026-05-03T06:20:02.282004+00:00"
     },
+    "learningcircuit/local-deep-research": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-06",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-06T06:22:06.181715+00:00",
+      "last_seen": "2026-05-06T06:22:06.181715+00:00"
+    },
     "lsdefine/genericagent": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -363,6 +391,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "priorlabs/tabpfn": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-06",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-06T06:22:06.181715+00:00",
+      "last_seen": "2026-05-06T06:22:06.181715+00:00"
     },
     "public-apis/public-apis": {
       "first_languages": [],
@@ -504,6 +539,13 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "zed-industries/zed": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-06",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-05-06T06:22:06.181715+00:00",
+      "last_seen": "2026-05-06T06:22:06.181715+00:00"
+    },
     "zhulinsen/daily_stock_analysis": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-30",
@@ -519,6 +561,6 @@
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     }
   },
-  "updated_at": "2026-05-05T06:17:57.291581+00:00",
+  "updated_at": "2026-05-06T06:22:22.660965+00:00",
   "version": 1
 }
