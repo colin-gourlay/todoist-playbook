@@ -94,7 +94,6 @@ jobs:
           exit 0
 
       - name: Run pa11y-ci
-        continue-on-error: true
         run: |
           mkdir -p .github/quality/pa11y-results
           set -o pipefail
@@ -105,11 +104,11 @@ jobs:
           set -e
 
           if [ "$PA11Y_EXIT" -ne 0 ]; then
-            echo "::warning title=pa11y-ci reported accessibility issues::Non-blocking: see pa11y-report artifact and step summary."
+            echo "::error title=pa11y-ci reported accessibility issues::Failing workflow: see pa11y-report artifact and step summary."
             {
               echo "### pa11y-ci result"
               echo ""
-              echo "- Status: issues found (non-blocking)"
+              echo "- Status: issues found (blocking)"
               echo "- Artifact: pa11y-report"
             } >> "$GITHUB_STEP_SUMMARY"
           else
@@ -121,7 +120,7 @@ jobs:
             } >> "$GITHUB_STEP_SUMMARY"
           fi
 
-          exit 0
+          exit "$PA11Y_EXIT"
 
       - name: Upload Lighthouse log
         if: always()
