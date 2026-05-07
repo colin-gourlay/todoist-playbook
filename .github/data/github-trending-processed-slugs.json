@@ -42,6 +42,13 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "anthropics/financial-services": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-07",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-07T06:26:08.267174+00:00",
+      "last_seen": "2026-05-07T06:26:08.267174+00:00"
+    },
     "arindam200/awesome-ai-apps": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-06",
@@ -62,6 +69,20 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-05-06T06:22:06.181715+00:00",
       "last_seen": "2026-05-06T06:22:06.181715+00:00"
+    },
+    "bytedance/deer-flow": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-07",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-07T06:26:08.267174+00:00",
+      "last_seen": "2026-05-07T06:26:08.267174+00:00"
+    },
+    "cheahjs/free-llm-api-resources": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-07",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-07T06:26:08.267174+00:00",
+      "last_seen": "2026-05-07T06:26:08.267174+00:00"
     },
     "cjackhwang/ds2api": {
       "first_languages": [],
@@ -273,6 +294,13 @@
       "first_seen": "2026-04-29T06:18:57.585813+00:00",
       "last_seen": "2026-04-29T06:18:57.585813+00:00"
     },
+    "insforge/insforge": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-07",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-07T06:26:08.267174+00:00",
+      "last_seen": "2026-05-07T06:26:08.267174+00:00"
+    },
     "iv-org/invidious": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-30",
@@ -293,6 +321,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-05-03T06:20:02.282004+00:00",
       "last_seen": "2026-05-03T06:20:02.282004+00:00"
+    },
+    "ladybirdbrowser/ladybird": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-07",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-07T06:26:08.267174+00:00",
+      "last_seen": "2026-05-07T06:26:08.267174+00:00"
     },
     "learningcircuit/local-deep-research": {
       "first_languages": [],
@@ -561,6 +596,6 @@
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     }
   },
-  "updated_at": "2026-05-06T06:22:22.660965+00:00",
+  "updated_at": "2026-05-07T06:26:25.432173+00:00",
   "version": 1
 }
