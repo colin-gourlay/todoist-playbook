@@ -21,6 +21,7 @@
 
 ### Changed
 
+- Template: `album-of-the-week-weekly-review` - added a new preparation task to tag copied audio files with KID3 immediately before the Lidarr re-download prevention step
 - Template: `github-trending-repos-daily-review` — moved to `csv-templates/github/github-trending-repos-daily-review/`, display name changed to **GitHub Trending Repos (Daily Review)**, and tag list aligned to `github, trending, open-source, discoverability, triage, stars, daily`; slug is unchanged so workflow inputs and the trending-sync follow-on continue to work
 - Template: `github-repo-spin-up` — moved to `csv-templates/github/github-repo-spin-up/`; slug is unchanged so workflow inputs and template discovery continue to work
 - Workflow: `reusable-validate-templates.yml` — now discovers CSV templates one or two folder levels under `csv-templates/`, validates intermediate group folder names as kebab-case, and resolves `replacement_template` by slug regardless of nesting
