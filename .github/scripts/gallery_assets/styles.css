@@ -837,8 +837,8 @@ input[type="search"]::-webkit-search-cancel-button { display: none; }
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--red);
-  background: var(--red-light);
+  color: #ffffff;
+  background: var(--red);
   border-radius: 6px;
   padding: 0.3rem 0.7rem;
   margin-bottom: 0.75rem;
