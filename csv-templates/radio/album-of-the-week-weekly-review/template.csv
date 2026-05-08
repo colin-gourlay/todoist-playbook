@@ -7,6 +7,7 @@ task,Move copied album into artist-named folder,Place the copied album into a fo
 task,Move copied album into release-named folder,Place the copied album into a folder named after the release so it is clearly identifiable within the artist folder during tagging and review.,,,2,1,,,,,,,,,
 task,With the copy, delete ancillary files,Remove ancillary files from the copied album so only review-relevant audio assets remain in the working set before tagging and broadcast prep.,,,2,1,,,,,,,,,
 task,With the copy, use KID3 to tag files correctly,Open KID3 and apply accurate metadata tags across the copied album files before final review and broadcast prep.,,,2,1,,,,,,,,,
+task,Move copied album to MASTER storage drive,Move the prepared album copy from the staging area to the MASTER storage drive so the final version is stored in its long-term location and ready for downstream use.,,,2,1,,,,,,,,,
 task,Update Lidarr to prevent re-download of selected album,Open Lidarr and mark the selected album so it will not be automatically downloaded again.,,,2,1,,,,,,,,,
 task,"Gather background info (artist, release, context)",,,2,1,,,,,,,,,
 task,Research artist history and discography,,,3,2,,,,,,,,,
