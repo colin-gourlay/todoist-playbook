@@ -7,6 +7,13 @@
       "first_seen": "2026-04-30T06:20:33.511105+00:00",
       "last_seen": "2026-04-30T06:20:33.511105+00:00"
     },
+    "aaif-goose/goose": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-08",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-08T06:10:19.729120+00:00",
+      "last_seen": "2026-05-08T06:10:19.729120+00:00"
+    },
     "abhigyanpatwari/gitnexus": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -132,6 +139,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "decolua/9router": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-08",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-08T06:10:19.729120+00:00",
+      "last_seen": "2026-05-08T06:10:19.729120+00:00"
     },
     "deepseek-ai/deepseek-v3": {
       "first_languages": [],
@@ -420,6 +434,20 @@
       "first_seen": "2026-04-30T06:20:33.511105+00:00",
       "last_seen": "2026-04-30T06:20:33.511105+00:00"
     },
+    "openai/symphony": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-08",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-05-08T06:10:19.729120+00:00",
+      "last_seen": "2026-05-08T06:10:19.729120+00:00"
+    },
+    "openbmb/voxcpm": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-08",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-05-08T06:10:19.729120+00:00",
+      "last_seen": "2026-05-08T06:10:19.729120+00:00"
+    },
     "penpot/penpot": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -546,6 +574,20 @@
       "first_seen": "2026-04-30T06:20:33.511105+00:00",
       "last_seen": "2026-04-30T06:20:33.511105+00:00"
     },
+    "vectifyai/pageindex": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-08",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-08T06:10:19.729120+00:00",
+      "last_seen": "2026-05-08T06:10:19.729120+00:00"
+    },
+    "vercel-labs/open-agents": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-08",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-08T06:10:19.729120+00:00",
+      "last_seen": "2026-05-08T06:10:19.729120+00:00"
+    },
     "virattt/dexter": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-05",
@@ -566,6 +608,13 @@
       "first_section": "Trending (This Month)",
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "z-lab/dflash": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-08",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-08T06:10:19.729120+00:00",
+      "last_seen": "2026-05-08T06:10:19.729120+00:00"
     },
     "z4nzu/hackingtool": {
       "first_languages": [],
@@ -596,6 +645,6 @@
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     }
   },
-  "updated_at": "2026-05-07T06:26:25.432173+00:00",
+  "updated_at": "2026-05-08T06:10:36.753005+00:00",
   "version": 1
 }
