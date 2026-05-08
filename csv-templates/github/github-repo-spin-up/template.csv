@@ -1,7 +1,7 @@
 TYPE,CONTENT,DESCRIPTION,IS_COLLAPSED,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DATE,DATE_LANG,TIMEZONE,DURATION,DURATION_UNIT,DEADLINE,DEADLINE_LANG
 section,1️⃣ Repository Identity & Discoverability,,,,,,,,,,,,,
-task,Verify owner avatar is correct and up to date,,,2,1,,,,,,,,,
-task,Confirm repository is named correctly for discoverability,,,1,1,,,,,,,,,
+task,Update owner avatar to a current and recognisable image,"Check the owner or org profile image is current, clearly branded, and readable at small sizes so people can quickly recognise the repository source in search and activity feeds.",,2,1,,,,,,,,,
+task,Choose and apply a clear kebab-case repository name,"Use a short, specific name that states what the repo is and who it serves. Example: use radio-show-weekly-review instead of weekly-review to make scope obvious. Rationale: descriptive names improve GitHub search relevance, reduce ambiguity, and help contributors understand purpose at a glance.",,1,1,,,,,,,,,
 task,Write a strong repository description (improves searchability and first impressions),,,1,1,,,,,,,,,
 task,Add appropriate topics to improve discoverability,,,2,1,,,,,,,,,
 task,Set repository scope correctly (public or private),,,1,1,,,,,,,,,
