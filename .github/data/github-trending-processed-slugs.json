@@ -63,6 +63,13 @@
       "first_seen": "2026-05-06T06:22:06.181715+00:00",
       "last_seen": "2026-05-06T06:22:06.181715+00:00"
     },
+    "awslabs/aidlc-workflows": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-09",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-09T06:17:15.144183+00:00",
+      "last_seen": "2026-05-09T06:17:15.144183+00:00"
+    },
     "browserbase/skills": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-01",
@@ -98,6 +105,13 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "cloakhq/cloakbrowser": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-09",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-09T06:17:15.144183+00:00",
+      "last_seen": "2026-05-09T06:17:15.144183+00:00"
+    },
     "cocoindex-io/cocoindex": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-05",
@@ -132,6 +146,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-05-06T06:22:06.181715+00:00",
       "last_seen": "2026-05-06T06:22:06.181715+00:00"
+    },
+    "datawhalechina/hello-agents": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-09",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-09T06:17:15.144183+00:00",
+      "last_seen": "2026-05-09T06:17:15.144183+00:00"
     },
     "davila7/claude-code-templates": {
       "first_languages": [],
@@ -188,6 +209,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-05-02T06:16:33.544503+00:00",
       "last_seen": "2026-05-02T06:16:33.544503+00:00"
+    },
+    "flutter/skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-09",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-09T06:17:15.144183+00:00",
+      "last_seen": "2026-05-09T06:17:15.144183+00:00"
     },
     "forrestchang/andrej-karpathy-skills": {
       "first_languages": [],
@@ -258,6 +286,13 @@
       "first_section": "Trending (This Week)",
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "hkuds/ai-trader": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-09",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-09T06:17:15.144183+00:00",
+      "last_seen": "2026-05-09T06:17:15.144183+00:00"
     },
     "hkuds/deeptutor": {
       "first_languages": [],
@@ -349,6 +384,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-05-06T06:22:06.181715+00:00",
       "last_seen": "2026-05-06T06:22:06.181715+00:00"
+    },
+    "lobehub/lobehub": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-09",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-09T06:17:15.144183+00:00",
+      "last_seen": "2026-05-09T06:17:15.144183+00:00"
     },
     "lsdefine/genericagent": {
       "first_languages": [],
@@ -645,6 +687,6 @@
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     }
   },
-  "updated_at": "2026-05-08T06:10:36.753005+00:00",
+  "updated_at": "2026-05-09T06:17:26.535003+00:00",
   "version": 1
 }
