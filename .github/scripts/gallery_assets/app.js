@@ -243,6 +243,29 @@
     return stats.join(sep);
   }
 
+  function buildFactGrid(t) {
+    var facts = [];
+    if (t.task_count) {
+      facts.push(['Tasks', t.task_count + '\u202ftask' + (t.task_count !== 1 ? 's' : '')]);
+    }
+    if (t.section_count) {
+      facts.push(['Sections', t.section_count + '\u202fsection' + (t.section_count !== 1 ? 's' : '')]);
+    }
+    if (t.estimated_duration) {
+      facts.push(['Duration', formatDuration(t.estimated_duration)]);
+    }
+    if (t.recurrence_suggestion) {
+      facts.push(['Repeat', t.recurrence_suggestion]);
+    }
+    if (!facts.length) return '';
+    return '<div class="tpl-fact-grid">' + facts.map(function (fact) {
+      return '<div class="tpl-fact">' +
+        '<span class="tpl-fact-label">' + esc(fact[0]) + '</span>' +
+        '<strong class="tpl-fact-value">' + esc(fact[1]) + '</strong>' +
+      '</div>';
+    }).join('') + '</div>';
+  }
+
   function buildSpotlight(t) {
     if (!t) return '';
     var tags = (t.tags || []).map(function (tag) {
@@ -264,9 +287,9 @@
     return '' +
       '<div class="spotlight-section">' +
         '<h2 class="section-heading spotlight-heading">' + ICONS.star + ' Template Spotlight</h2>' +
-        '<button type="button" class="spotlight-card tpl-card-clickable" ' +
-          'data-slug="' + esc(t.slug) + '" data-type="' + esc(t.type || 'template') + '" ' +
-          'aria-label="Open details for ' + esc(t.name) + '">' +
+        '<article class="spotlight-card tpl-card-clickable" tabindex="0" role="button" ' +
+           'data-slug="' + esc(t.slug) + '" data-type="' + esc(t.type || 'template') + '" ' +
+           'aria-label="Open details for ' + esc(t.name) + '">' +
           '<div class="spotlight-body">' +
             '<span class="spotlight-badge">Featured Template</span>' +
             '<h2 class="spotlight-name">' + esc(t.name) + '</h2>' +
@@ -276,9 +299,9 @@
             '<div class="spotlight-footer">' + actionBtn +
               '<span class="spotlight-meta">' + metaLine + '</span>' +
             '</div>' +
-          '</div>' +
-          previewHtml +
-        '</button>' +
+           '</div>' +
+           previewHtml +
+        '</article>' +
       '</div>';
   }
 
@@ -289,20 +312,25 @@
         'aria-pressed="' + (active ? 'true' : 'false') + '" ' +
         'aria-label="Toggle filter ' + esc(tag) + '">' + esc(tag) + '</button>';
     }).join('');
-    var stats = buildStats(t);
+    var facts = buildFactGrid(t);
     var metaLine = [
       t.author  ? 'by ' + esc(t.author)  : '',
       t.version ? 'v' + esc(t.version) : ''
     ].filter(Boolean).join(' \u00b7 ');
     var previewHtml = '';
+    var previewLabel = t.type === 'prompt' ? 'Inputs' : 'Task preview';
+    var previewCount = '';
     if (t.type === 'template' && t.rows && t.rows.length) {
       previewHtml = '<div class="tpl-preview">' + buildPreview(t.rows) + '</div>';
+      if (t.task_count) {
+        previewCount = t.task_count + '\u202ftask' + (t.task_count !== 1 ? 's' : '');
+      }
     } else if (t.type === 'prompt' && t.inputs && t.inputs.length) {
       var chips = t.inputs.map(function (i) {
         return '<span class="input-chip">' + esc(i) + '</span>';
       }).join('');
-      previewHtml = '<div class="tpl-inputs">' +
-        '<div class="tpl-inputs-label">Inputs</div>' + chips + '</div>';
+      previewHtml = '<div class="tpl-inputs">' + chips + '</div>';
+      previewCount = t.inputs.length + '\u202finput' + (t.inputs.length !== 1 ? 's' : '');
     }
     var actionBlock = '';
     if (t.type === 'template' && t.csv_url) {
@@ -318,22 +346,49 @@
         '<span>View Prompt</span></a>';
     }
     var badgeLabel = t.type === 'prompt' ? 'AI Prompt' : 'Template';
-    return '<button type="button" class="tpl-card tpl-card-clickable" ' +
+    var tagsSection = tags
+      ? '<div class="tpl-card-section">' +
+          '<div class="tpl-section-label">Tags</div>' +
+          '<div class="tpl-tags">' + tags + '</div>' +
+        '</div>'
+      : '';
+    var factsSection = facts
+      ? '<div class="tpl-card-section">' +
+          '<div class="tpl-section-label">Overview</div>' +
+          facts +
+        '</div>'
+      : '';
+    var previewSection = previewHtml
+      ? '<div class="tpl-card-aside">' +
+          '<div class="tpl-card-section tpl-card-section-preview">' +
+            '<div class="tpl-preview-head">' +
+              '<span class="tpl-section-label">' + previewLabel + '</span>' +
+              (previewCount ? '<span class="tpl-preview-count">' + esc(previewCount) + '</span>' : '') +
+            '</div>' +
+            previewHtml +
+          '</div>' +
+        '</div>'
+      : '';
+    return '<article class="tpl-card tpl-card-clickable" tabindex="0" role="button" ' +
       'data-slug="' + esc(t.slug) + '" data-type="' + esc(t.type) + '" ' +
       'aria-label="Open details for ' + esc(t.name) + '">' +
-      '<div class="tpl-card-header">' +
-        '<span class="tpl-type-badge">' + badgeLabel + '</span>' +
-        '<h3 class="tpl-title">' + esc(t.name) + '</h3>' +
-        (t.description ? '<p class="tpl-desc">' + esc(t.description) + '</p>' : '') +
+      '<div class="tpl-card-main">' +
+        '<div class="tpl-card-copy">' +
+          '<div class="tpl-card-header">' +
+            '<span class="tpl-type-badge">' + badgeLabel + '</span>' +
+            '<h3 class="tpl-title">' + esc(t.name) + '</h3>' +
+            (t.description ? '<p class="tpl-desc">' + esc(t.description) + '</p>' : '') +
+          '</div>' +
+          factsSection +
+          tagsSection +
+        '</div>' +
+        previewSection +
       '</div>' +
-      (tags  ? '<div class="tpl-tags">' + tags + '</div>' : '') +
-      (stats ? '<div class="tpl-stats">' + stats + '</div>' : '') +
-      previewHtml +
       '<div class="tpl-card-footer">' +
         '<span class="tpl-meta">' + metaLine + '</span>' +
         actionBlock +
       '</div>' +
-    '</button>';
+    '</article>';
   }
 
   function buildRailCard(t) {
@@ -1037,6 +1092,16 @@
 
   // ── Delegated handlers ───────────────────────────────────────────────────
   function setupDelegation() {
+    function openCard(card) {
+      if (!card) return;
+      var template = TEMPLATE_LOOKUP[card.dataset.type + ':' + card.dataset.slug];
+      if (!template) return;
+      var deepHash = '#/template/' + encodeURIComponent(card.dataset.type) +
+        '/' + encodeURIComponent(card.dataset.slug);
+      history.pushState(null, '', deepHash);
+      openModal(template);
+    }
+
     document.addEventListener('click', function (e) {
       // Skip clicks on real links/buttons within a clickable card
       var inner = e.target.closest && e.target.closest('a, button');
@@ -1099,13 +1164,7 @@
       }
       // Card open
       if (card && (!inner || inner === card)) {
-        var template = TEMPLATE_LOOKUP[card.dataset.type + ':' + card.dataset.slug];
-        if (template) {
-          var deepHash = '#/template/' + encodeURIComponent(card.dataset.type) +
-            '/' + encodeURIComponent(card.dataset.slug);
-          history.pushState(null, '', deepHash);
-          openModal(template);
-        }
+        openCard(card);
       }
     });
 
@@ -1119,6 +1178,15 @@
     var btnBack = document.getElementById('btn-back');
     if (btnBack) btnBack.addEventListener('click', function () {
       window.location.hash = '';
+    });
+
+    document.addEventListener('keydown', function (e) {
+      var card = e.target.closest && e.target.closest('.tpl-card-clickable');
+      if (!card) return;
+      if (e.target !== card) return;
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault();
+      openCard(card);
     });
   }
 
