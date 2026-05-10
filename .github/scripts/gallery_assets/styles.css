@@ -934,11 +934,12 @@ input[type="search"]::-webkit-search-cancel-button { display: none; }
   text-wrap: pretty;
 }
 .spotlight-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
-.spotlight-tags .tag { background: rgba(255,255,255,0.5); }
-@supports (color: color-mix(in oklch, white, black)) {
-  .spotlight-tags .tag {
-    background: color-mix(in oklch, var(--card-bg), transparent 30%);
-  }
+.spotlight-tags .tag {
+  background: var(--tag-bg);
+  border-color: var(--border);
+  border-radius: 9999px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 .spotlight-stats {
   display: flex;
