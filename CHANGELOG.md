@@ -22,14 +22,14 @@
 ### Changed
 
 - Template: `album-of-the-week-weekly-review` - added a new preparation task to tag copied audio files with KID3 immediately before the Lidarr re-download prevention step
-- Template: `github-trending-repos-daily-review` — moved to `csv-templates/github/github-trending-repos-daily-review/`, display name changed to **GitHub Trending Repos (Daily Review)**, and tag list aligned to `github, trending, open-source, discoverability, triage, stars, daily`; slug is unchanged so workflow inputs and the trending-sync follow-on continue to work
+- Template: `github-trending-repo-review` — moved to `csv-templates/github/github-trending-repo-review/`, display name changed to **GitHub Trending Repo Review**, and tag list aligned to `github, trending, open-source, discoverability, triage, stars, daily`; workflow inputs and the trending-sync follow-on have been updated to the renamed slug
 - Template: `github-repo-spin-up` — moved to `csv-templates/github/github-repo-spin-up/`; slug is unchanged so workflow inputs and template discovery continue to work
 - Workflow: `reusable-validate-templates.yml` — now discovers CSV templates one or two folder levels under `csv-templates/`, validates intermediate group folder names as kebab-case, and resolves `replacement_template` by slug regardless of nesting
 
 - Scripts: `create_todoist_project.py`, `create_via_mcp.py` — both project creation scripts now map `DUE_DATE` / `DUE_DATE_LANG` CSV columns (and legacy `DATE` / `DATE_LANG` aliases) to Todoist task due fields, so due dates defined in template CSVs are applied on import
-- Template: `github-trending-repos-daily-review` — primary task renamed from "Evaluate Trending Repos today" to "Evaluate Trending Repos" for cleaner recurrence wording
+- Template: `github-trending-repo-review` — primary task renamed from "Evaluate Trending Repos today" to "Evaluate Trending Repos" for cleaner recurrence wording
 - Script: `fetch_github_trending.py` — processed repository slugs are now persisted to `.github/data/github-trending-processed-slugs.json`, ensuring each repository is imported only once across all runs even if the original Todoist task is later edited or deleted; already-active and already-completed `read-later` tasks are also checked to prevent duplicates within a run; repositories that appear in multiple trending periods within the same run are also de-duplicated
-- Workflow: `create-todoist-project.yml` — now automatically triggers after the `Sync GitHub Trending to Todoist` workflow completes successfully, creating the `github-trending-repos-daily-review` review project as a follow-on step
+- Workflow: `create-todoist-project.yml` — now automatically triggers after the `Sync GitHub Trending to Todoist` workflow completes successfully, creating the `github-trending-repo-review` review project as a follow-on step
 - Template: `github-trending-tracker` — marked as deprecated in `meta.yml` with a planned sunset date and replacement guidance
 - Script: `sync_project_options.py` — now excludes CSV templates marked `deprecated: true` from workflow template dropdown auto-generation
 - Workflow: `reusable-validate-templates.yml` — now enforces deprecation sunsets by failing validation when a `deprecated: true` template reaches `sunset_date`

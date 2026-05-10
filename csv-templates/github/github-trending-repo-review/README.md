@@ -1,4 +1,4 @@
-# GitHub Trending Repos (Daily Review)
+# GitHub Trending Repo Review
 
 A lightweight daily triage template for evaluating trending GitHub repositories and deciding what to do next.
 
@@ -24,7 +24,12 @@ Estimated duration: 10 minutes.
 
 ## Structure Overview
 
-1. Evaluate Trending Repos
+1. Today's Candidates
+2. Quick Triage
+3. Deep Review
+4. Decide Next Action
+5. Follow-Ups
+6. Archive and Notes
 
 ---
 
@@ -43,9 +48,9 @@ Estimated duration: 10 minutes.
 1. Download `template.csv`
 2. Create a new project in Todoist
 3. Import from CSV
-4. Rename the project to: `GitHub Trending Repos (Daily Review) - [Date]`
+4. Rename the project to: `GitHub Trending Repo Review - [Date]`
 5. Set this project to recur daily
 
 ### Automated workflow path
 
-You can run `Create Todoist Project from Template` and select `github-trending-repos-daily-review`.
+You can run `Create Todoist Project from Template` and select `github-trending-repo-review`.
