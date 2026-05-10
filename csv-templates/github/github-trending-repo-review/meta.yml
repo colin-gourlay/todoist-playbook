@@ -3,15 +3,15 @@ slug: github-trending-repo-review
 description: Daily triage project for scanning trending GitHub repositories, filtering by quality signals, and assigning a clear next action to each candidate
 category: github
 tags:
-  - daily
   - discoverability
   - github
+  - next-action
   - open-source
-  - stars
+  - quality-signals
   - trending
   - triage
 estimated_duration: 10m
 recurrence_suggestion: daily
-project_color: red
+project_color: grape
 version: 0.1.18
 author: Colin Gourlay
