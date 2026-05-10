@@ -205,6 +205,16 @@ Benefits:
 - <why this improves visibility>
 ```
 
+## CSV template import rules
+
+When working with Todoist CSV templates:
+
+- Labels must be embedded as `@label` syntax directly in the **CONTENT field** — there is no LABELS column in the Todoist CSV importer (basic or extended format)
+- Labels must already exist in the Todoist account before importing — the importer does not create them on import
+- Duration is captured via the `DURATION` and `DURATION_UNIT` columns in the extended CSV format — do not create a `@duration-Xm` label for this purpose
+- The extended CSV format adds: `DURATION`, `DURATION_UNIT`, `DEADLINE`, `DEADLINE_LANG` columns after the standard columns
+- `@label` syntax in CONTENT works in both basic and extended format
+
 ## Guardrails
 
 Do not suggest complexity unless it solves a real problem.
