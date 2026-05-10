@@ -232,7 +232,7 @@
   function buildStats(t) {
     var stats = [];
     if (t.task_count)
-      stats.push('<span>' + ICONS.tasks + t.task_count + '\u202ftask' + (t.task_count !== 1 ? 's' : '') + '</span>');
+      stats.push('<span>' + ICONS.tasks + '\u202f' + t.task_count + '\u202ftask' + (t.task_count !== 1 ? 's' : '') + '</span>');
     if (t.section_count)
       stats.push('<span>\u25b8 ' + t.section_count + '\u202fsection' + (t.section_count !== 1 ? 's' : '') + '</span>');
     if (t.estimated_duration)
