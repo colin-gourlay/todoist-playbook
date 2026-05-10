@@ -287,7 +287,7 @@
     return '' +
       '<div class="spotlight-section">' +
         '<h2 class="section-heading spotlight-heading">' + ICONS.star + ' Template Spotlight</h2>' +
-        '<article class="spotlight-card tpl-card-clickable" tabindex="0" role="button" ' +
+        '<div class="spotlight-card tpl-card-clickable" tabindex="0" role="button" ' +
            'data-slug="' + esc(t.slug) + '" data-type="' + esc(t.type || 'template') + '" ' +
            'aria-label="Open details for ' + esc(t.name) + '">' +
           '<div class="spotlight-body">' +
@@ -301,7 +301,7 @@
             '</div>' +
            '</div>' +
            previewHtml +
-        '</article>' +
+         '</div>' +
       '</div>';
   }
 
@@ -369,7 +369,7 @@
           '</div>' +
         '</div>'
       : '';
-    return '<article class="tpl-card tpl-card-clickable" tabindex="0" role="button" ' +
+    return '<div class="tpl-card tpl-card-clickable" tabindex="0" role="button" ' +
       'data-slug="' + esc(t.slug) + '" data-type="' + esc(t.type) + '" ' +
       'aria-label="Open details for ' + esc(t.name) + '">' +
       '<div class="tpl-card-main">' +
@@ -388,7 +388,7 @@
         '<span class="tpl-meta">' + metaLine + '</span>' +
         actionBlock +
       '</div>' +
-    '</article>';
+    '</div>';
   }
 
   function buildRailCard(t) {
