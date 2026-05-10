@@ -596,7 +596,7 @@
     html += '</div>';
     container.innerHTML = html;
     document.getElementById('breadcrumb').style.display = 'none';
-    setHeadingTitle('Todoist Playbook — Template Gallery');
+    setHeadingTitle('Todoist Playbook - Template Gallery');
   }
 
   function renderCategory(cat) {
