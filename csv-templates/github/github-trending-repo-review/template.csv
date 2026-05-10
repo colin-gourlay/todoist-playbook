@@ -1,0 +1,13 @@
+TYPE,CONTENT,DESCRIPTION,IS_COLLAPSED,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DATE,DATE_LANG,TIMEZONE,DURATION,DURATION_UNIT,DEADLINE,DEADLINE_LANG
+meta,view_style=list,,,,,,,,,,,,,
+section,Today's Candidates,,,,1,,,,,,,,,
+task,Evaluate Trending Repos @people-self @place-anywhere @tools-github @when-sod-personal-pre-training,"Review today's GitHub trending repositories to find high-value projects. For each repo, assess README clarity and onboarding quality, check maintenance health (commits, issues, responsiveness, roadmap), then choose one action: Star, Watch, Reference, or Ignore.",,3,1,,,today at 05:30,en,Europe/London,10,minute,,
+section,Quick Triage,,,,1,,,,,,,,,
+task,Ensure the README clearly states the purpose and value @people-self @place-anywhere @tools-github @when-sod-personal-pre-training,Verify the README clearly states what the project does and why it is useful.,,3,1,,,,,Europe/London,2,minute,,
+task,Ensure the README has a quick start guide and at least one usage example @people-self @place-anywhere @tools-github @when-sod-personal-pre-training,Verify the README includes setup steps and at least one practical usage example.,,3,1,,,,,Europe/London,2,minute,,
+section,Deep Review,,,,1,,,,,,,,,
+task,"Ensure project health signals are strong across commits, issues, maintainer responsiveness, and roadmap @people-self @place-anywhere @tools-github @when-sod-personal-pre-training","Verify maintenance health across commit activity, issue handling, maintainer responsiveness, and roadmap signals.",,3,1,,,,,Europe/London,3,minute,,
+section,Decide Next Action,,,,1,,,,,,,,,
+task,Assign one action to each repo: Star or Watch or Reference or Ignore @people-self @place-anywhere @tools-github @when-sod-personal-pre-training,"Ensure every reviewed repo has a clear outcome assigned: Star to bookmark for later use, Watch to follow updates, Reference to note for a specific purpose, or Ignore to dismiss.",,3,1,,,,,Europe/London,1,minute,,
+section,Follow-Ups,,,,1,,,,,,,,,
+section,Archive and Notes,,,,1,,,,,,,,,

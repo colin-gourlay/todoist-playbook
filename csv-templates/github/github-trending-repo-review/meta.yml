@@ -1,5 +1,5 @@
-name: GitHub Trending Repos (Daily Review)
-slug: github-trending-repos-daily-review
+name: GitHub Trending Repo Review
+slug: github-trending-repo-review
 description: Daily checklist for evaluating trending GitHub repos and deciding next actions
 category: github
 tags:
