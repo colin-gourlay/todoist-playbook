@@ -633,9 +633,25 @@ def read_asset(filename):
         return f.read()
 
 
-# ---------------------------------------------------------------------------
-# HTML shell
-# ---------------------------------------------------------------------------
+def build_category_accents_css(category_slugs):
+    """Generate a CSS file with per-category accent colours using data-cat selectors.
+
+    The accent colour is derived from a stable hash of the category slug — the
+    same algorithm used in the previous JS catAccent() helper — so colours are
+    consistent across rebuilds without requiring inline styles.
+    """
+    lines = ["/* Auto-generated per-category accent colours — do not edit by hand */"]
+    for slug in sorted(category_slugs):
+        h = 0
+        for ch in slug:
+            h = ((h * 31) + ord(ch)) & 0xFFFFFFFF
+        hue = h % 360
+        colour = f"hsl({hue}, 70%, 92%)"
+        lines.append(f'[data-cat="{slug}"] {{ --cat-accent: {colour}; }}')
+    return "\n".join(lines) + "\n"
+
+
+
 
 def build_html(data_payload, sri_hashes):
     data_json = safe_json_for_html(data_payload)
@@ -658,7 +674,6 @@ def build_html(data_payload, sri_hashes):
         "manifest-src 'self'; "
         "base-uri 'none'; "
         "form-action 'none'; "
-        "frame-ancestors 'none'; "
         "upgrade-insecure-requests"
     )
     permissions_policy = (
@@ -698,6 +713,7 @@ def build_html(data_payload, sri_hashes):
   <link rel="apple-touch-icon" href="apple-touch-icon.svg">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="category-accents.css">
   <title>Todoist Playbook - Template Gallery</title>
 </head>
 <body>
@@ -822,12 +838,12 @@ def assert_hardening(html, output_dir, payload):
         "data island length mismatch"
 
     # Files exist
-    for f in ("styles.css", "app.js", "manifest.webmanifest", "sw.js",
+    for f in ("styles.css", "category-accents.css", "app.js", "manifest.webmanifest", "sw.js",
               "favicon.svg", "og-image.svg",
               "vendor/marked.min.js", "vendor/dompurify.min.js"):
         assert os.path.exists(os.path.join(output_dir, f)), f"missing {f}"
 
-    for f in ("index.html", "styles.css", "app.js", "data.json",
+    for f in ("index.html", "styles.css", "category-accents.css", "app.js", "data.json",
               "vendor/marked.min.js", "vendor/dompurify.min.js"):
         assert os.path.exists(os.path.join(output_dir, f"{f}.gz")), f"missing {f}.gz"
         if shutil.which("brotli") is not None:
@@ -839,6 +855,17 @@ def assert_hardening(html, output_dir, payload):
     assert inline_style is None, "no inline <style> blocks allowed"
     bad = re.search(r'<script(?![^>]*\bsrc=)(?![^>]*type="application/json")[^>]*>', html)
     assert bad is None, "no executable inline <script> blocks allowed"
+
+    # Confirm no inline style attributes remain (these violate CSP style-src 'self')
+    inline_style_attr = re.search(r'\bstyle="', html)
+    assert inline_style_attr is None, "no inline style attributes allowed"
+
+    # Confirm frame-ancestors is absent from the meta CSP (it is only valid as
+    # an HTTP response header; its presence in a meta tag causes a browser warning)
+    meta_csp_match = re.search(r'http-equiv="Content-Security-Policy"[^>]*content="([^"]*)"', html)
+    if meta_csp_match:
+        assert 'frame-ancestors' not in meta_csp_match.group(1), \
+            "frame-ancestors must not appear in the meta CSP tag"
 
     print("✅ Hardening assertions passed")
 
@@ -894,6 +921,16 @@ def main():
 
     templates = load_templates()
     spotlight = get_spotlight_template(templates)
+
+    # Collect all category slugs (from templates + predefined meta) for accent CSS
+    category_slugs = set(CATEGORY_META.keys())
+    for t in templates:
+        if t.get("category"):
+            category_slugs.add(t["category"])
+    write_text(
+        os.path.join(OUTPUT_DIR, "category-accents.css"),
+        build_category_accents_css(category_slugs),
+    )
 
     payload = {
         "templates":    templates,
