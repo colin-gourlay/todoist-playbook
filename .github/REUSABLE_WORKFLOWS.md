@@ -99,7 +99,7 @@ jobs:
 
 ### 4. `reusable-gallery-quality.yml` — Gallery quality gate (Lighthouse CI + pa11y-ci)
 
-Generates the GitHub Pages gallery, starts a local static server, runs Lighthouse CI performance / accessibility / best-practices / SEO audits, and runs pa11y-ci accessibility checks. Uploads Lighthouse and pa11y reports as workflow artifacts.
+Generates the GitHub Pages gallery, emits precompressed `.br` / `.gz` text assets, starts a local static server with Brotli and gzip enabled, runs Lighthouse CI performance / accessibility / best-practices / SEO audits, and runs pa11y-ci accessibility checks. Uploads Lighthouse and pa11y reports as workflow artifacts.
 
 **Inputs**
 

@@ -42,7 +42,7 @@ jobs:
 
       - name: Start static server
         run: |
-          npx --prefix .github/quality http-server ${{ inputs.gallery_dir }} -p 8080 --silent &
+          npx --prefix .github/quality http-server ${{ inputs.gallery_dir }} -p 8080 --silent --brotli --gzip &
           SERVER_PID=$!
           echo "SERVER_PID=$SERVER_PID" >> $GITHUB_ENV
 
