@@ -24,6 +24,7 @@ DOMPurify@3 (vendored under docs/vendor/).
 import base64
 import csv
 import datetime
+import gzip
 import hashlib
 import json
 import os
@@ -407,6 +408,58 @@ def write_text(path, text):
         f.write(text)
 
 
+def emit_precompressed_assets(output_dir):
+    """Emit .gz and .br variants for text assets."""
+    text_extensions = {
+        ".css", ".csv", ".html", ".js", ".json", ".md",
+        ".svg", ".txt", ".webmanifest",
+    }
+    brotli_available = shutil.which("brotli") is not None
+    brotli_failures = 0
+    compressed = 0
+
+    for root, _, files in os.walk(output_dir):
+        for filename in files:
+            if filename.endswith((".gz", ".br")):
+                continue
+
+            ext = os.path.splitext(filename)[1].lower()
+            if ext not in text_extensions:
+                continue
+
+            path = os.path.join(root, filename)
+
+            with open(path, "rb") as src:
+                raw = src.read()
+            with open(path + ".gz", "wb") as gz_file:
+                with gzip.GzipFile(
+                    fileobj=gz_file, mode="wb", compresslevel=9, mtime=0
+                ) as out:
+                    out.write(raw)
+
+            if brotli_available:
+                try:
+                    subprocess.run(
+                        ["brotli", "-f", "-q", "11", "-o", path + ".br", path],
+                        check=True,
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL,
+                    )
+                except subprocess.CalledProcessError:
+                    brotli_failures += 1
+
+            compressed += 1
+
+    if brotli_available and brotli_failures:
+        print(f"⚠️  Brotli compression failed for {brotli_failures} files", file=sys.stderr)
+    if not brotli_available:
+        print("⚠️  brotli CLI not found; skipping .br generation", file=sys.stderr)
+    if compressed:
+        print(f"✅ Precompressed {compressed} text assets")
+    else:
+        print("⚠️  No text assets found for precompression", file=sys.stderr)
+
+
 def emit_pwa_assets():
     """Emit favicon, apple-touch-icon (SVG used for both), OG image and manifest."""
     favicon = """\
@@ -774,6 +827,12 @@ def assert_hardening(html, output_dir, payload):
               "vendor/marked.min.js", "vendor/dompurify.min.js"):
         assert os.path.exists(os.path.join(output_dir, f)), f"missing {f}"
 
+    for f in ("index.html", "styles.css", "app.js", "data.json",
+              "vendor/marked.min.js", "vendor/dompurify.min.js"):
+        assert os.path.exists(os.path.join(output_dir, f"{f}.gz")), f"missing {f}.gz"
+        if shutil.which("brotli") is not None:
+            assert os.path.exists(os.path.join(output_dir, f"{f}.br")), f"missing {f}.br"
+
     # Confirm no <style> or inline <script> with executable contents (the JSON
     # island uses type="application/json" which is non-executable).
     inline_style = re.search(r'<style\b', html)
@@ -858,6 +917,8 @@ def main():
     output_path = os.path.join(OUTPUT_DIR, "index.html")
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html)
+
+    emit_precompressed_assets(OUTPUT_DIR)
 
     print(f"✅ Gallery generated: {output_path} ({len(templates)} templates)")
 
