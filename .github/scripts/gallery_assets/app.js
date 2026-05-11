@@ -16,8 +16,9 @@
       window.top.location.replace(window.self.location.href);
     } catch (e) {
       // Cross-origin frame: attacker's frame blocks the navigation.
-      // Hide page content so it cannot be used as a clickjacking overlay.
+      // Remove all page content so it cannot be used as a clickjacking overlay.
       document.documentElement.style.display = 'none';
+      document.body.innerHTML = '';
     }
     return;
   }
