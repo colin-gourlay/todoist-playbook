@@ -7,6 +7,21 @@
 (function () {
   'use strict';
 
+  // ── Frame-busting: prevent clickjacking ──────────────────────────────────
+  // The CSP frame-ancestors directive is ignored in <meta> tags (CSP Level 2
+  // spec); it only works as an HTTP response header. Since GitHub Pages cannot
+  // serve custom headers, this JS guard is the operative protection.
+  if (window.top !== window.self) {
+    try {
+      window.top.location.replace(window.self.location.href);
+    } catch (e) {
+      // Cross-origin frame: attacker's frame blocks the navigation.
+      // Hide page content so it cannot be used as a clickjacking overlay.
+      document.documentElement.style.display = 'none';
+    }
+    return;
+  }
+
   // ── Data island load ──────────────────────────────────────────────────────
   var dataNode = document.getElementById('tp-data');
   var DATA;

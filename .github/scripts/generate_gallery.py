@@ -840,6 +840,14 @@ def assert_hardening(html, output_dir, payload):
     bad = re.search(r'<script(?![^>]*\bsrc=)(?![^>]*type="application/json")[^>]*>', html)
     assert bad is None, "no executable inline <script> blocks allowed"
 
+    # app.js must contain the frame-busting guard (frame-ancestors in a <meta>
+    # CSP is ignored by browsers; the JS guard is the operative protection)
+    appjs_path = os.path.join(output_dir, "app.js")
+    with open(appjs_path, encoding="utf-8") as f:
+        appjs_content = f.read()
+    assert "window.top !== window.self" in appjs_content, \
+        "app.js is missing the frame-busting guard (window.top !== window.self)"
+
     print("✅ Hardening assertions passed")
 
 

@@ -8,6 +8,7 @@ Exits non-zero with a descriptive message on any failure.
 """
 
 import json
+import os
 import re
 import sys
 
@@ -86,7 +87,23 @@ def main():
         fail(f"Inline event handler attribute found: {m.group(0)!r}")
     print("✅ No inline event handler attributes")
 
+    # 6. app.js contains frame-busting guard
+    check_appjs_framebust(OUTPUT_PATH)
+
     print(f"\n✅ All security assertions passed for {OUTPUT_PATH}")
+
+
+def check_appjs_framebust(output_path):
+    """Assert that docs/app.js contains the frame-busting guard."""
+    appjs_path = os.path.join(os.path.dirname(os.path.abspath(output_path)), "app.js")
+    try:
+        with open(appjs_path, encoding="utf-8") as f:
+            appjs = f.read()
+    except FileNotFoundError:
+        fail(f"{appjs_path} not found")
+    if "window.top !== window.self" not in appjs:
+        fail("app.js is missing the frame-busting guard (window.top !== window.self)")
+    print("✅ app.js frame-busting guard present")
 
 
 if __name__ == "__main__":
