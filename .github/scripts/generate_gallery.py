@@ -445,7 +445,7 @@ def emit_precompressed_assets(output_dir):
                         stdout=subprocess.DEVNULL,
                         stderr=subprocess.DEVNULL,
                     )
-                except Exception:
+                except subprocess.CalledProcessError:
                     brotli_failures += 1
 
             compressed += 1
@@ -454,7 +454,10 @@ def emit_precompressed_assets(output_dir):
         print(f"⚠️  Brotli compression failed for {brotli_failures} files", file=sys.stderr)
     if not brotli_available:
         print("⚠️  brotli CLI not found; skipping .br generation", file=sys.stderr)
-    print(f"✅ Precompressed {compressed} text assets")
+    if compressed:
+        print(f"✅ Precompressed {compressed} text assets")
+    else:
+        print("⚠️  No text assets found for precompression", file=sys.stderr)
 
 
 def emit_pwa_assets():
