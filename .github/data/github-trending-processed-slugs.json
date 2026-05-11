@@ -28,6 +28,13 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "affaan-m/everything-claude-code": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-11",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-11T06:46:23.019384+00:00",
+      "last_seen": "2026-05-11T06:46:23.019384+00:00"
+    },
     "aidc-ai/pixelle-video": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-29",
@@ -385,6 +392,13 @@
       "first_seen": "2026-05-05T06:17:39.229450+00:00",
       "last_seen": "2026-05-05T06:17:39.229450+00:00"
     },
+    "jundot/omlx": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-11",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-11T06:46:23.019384+00:00",
+      "last_seen": "2026-05-11T06:46:23.019384+00:00"
+    },
     "jwasham/coding-interview-university": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-03",
@@ -714,6 +728,13 @@
       "first_seen": "2026-04-30T06:20:33.511105+00:00",
       "last_seen": "2026-04-30T06:20:33.511105+00:00"
     },
+    "withastro/flue": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-11",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-05-11T06:46:23.019384+00:00",
+      "last_seen": "2026-05-11T06:46:23.019384+00:00"
+    },
     "yeachan-heo/oh-my-codex": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -757,6 +778,6 @@
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     }
   },
-  "updated_at": "2026-05-10T06:25:41.332659+00:00",
+  "updated_at": "2026-05-11T06:46:37.174602+00:00",
   "version": 1
 }
