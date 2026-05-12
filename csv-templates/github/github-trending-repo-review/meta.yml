@@ -10,7 +10,7 @@ tags:
   - quality-signals
   - trending
   - triage
-estimated_duration: 25m
+estimated_duration: 10m
 recurrence_suggestion: daily
 project_color: grape
 version: 0.1.19
