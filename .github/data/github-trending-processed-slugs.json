@@ -70,6 +70,13 @@
       "first_seen": "2026-05-06T06:22:06.181715+00:00",
       "last_seen": "2026-05-06T06:22:06.181715+00:00"
     },
+    "automatic1111/stable-diffusion-webui": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-12",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-12T06:28:20.441485+00:00",
+      "last_seen": "2026-05-12T06:28:20.441485+00:00"
+    },
     "awslabs/aidlc-workflows": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-09",
@@ -490,6 +497,13 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "millionco/react-doctor": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-12",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-12T06:28:20.441485+00:00",
+      "last_seen": "2026-05-12T06:28:20.441485+00:00"
+    },
     "mksglu/context-mode": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -587,6 +601,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-05-05T06:17:39.229450+00:00",
       "last_seen": "2026-05-05T06:17:39.229450+00:00"
+    },
+    "rasbt/llms-from-scratch": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-12",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-12T06:28:20.441485+00:00",
+      "last_seen": "2026-05-12T06:28:20.441485+00:00"
     },
     "refactoringhq/tolaria": {
       "first_languages": [],
@@ -686,6 +707,13 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "tinyhumansai/openhuman": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-12",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-12T06:28:20.441485+00:00",
+      "last_seen": "2026-05-12T06:28:20.441485+00:00"
+    },
     "tracer-cloud/opensre": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -742,6 +770,13 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "yikart/aitoearn": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-12",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-12T06:28:20.441485+00:00",
+      "last_seen": "2026-05-12T06:28:20.441485+00:00"
+    },
     "z-lab/dflash": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-08",
@@ -778,6 +813,6 @@
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     }
   },
-  "updated_at": "2026-05-11T06:46:37.174602+00:00",
+  "updated_at": "2026-05-12T06:28:40.176830+00:00",
   "version": 1
 }
