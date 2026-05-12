@@ -51,6 +51,14 @@
     return slug.replace(/-/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
   }
 
+  /* Stable hash → HSL accent for category icon backgrounds. */
+  function catAccent(slug) {
+    var h = 0;
+    for (var i = 0; i < slug.length; i++) h = (h * 31 + slug.charCodeAt(i)) >>> 0;
+    var hue = h % 360;
+    return 'hsl(' + hue + ', 70%, 92%)';
+  }
+
   function groupByCategory(templates) {
     var map = {};
     templates.forEach(function (t) {
@@ -576,8 +584,8 @@
       html +=
         '<a class="cat-card" href="#/category/' + encodeURIComponent(cat) + '" ' +
           'aria-label="Browse ' + esc(label) + ' templates">' +
-          '<span class="cat-icon-wrap" aria-hidden="true" data-cat="' +
-            esc(cat) + '">' + icon + '</span>' +
+          '<span class="cat-icon-wrap" aria-hidden="true" style="--cat-accent:' +
+            esc(catAccent(cat)) + '">' + icon + '</span>' +
           '<h2 class="cat-title">' + esc(label) + '</h2>' +
           '<div class="cat-count">' + count + '\u202ftemplate' +
             (count !== 1 ? 's' : '') + '</div>' +
@@ -587,7 +595,7 @@
     });
     html += '</div>';
     container.innerHTML = html;
-    document.getElementById('breadcrumb').classList.remove('visible');
+    document.getElementById('breadcrumb').style.display = 'none';
     setHeadingTitle('Todoist Playbook - Template Gallery');
   }
 
@@ -606,8 +614,8 @@
 
     var html = '' +
       '<div class="cat-detail-header">' +
-        '<span class="cat-detail-icon-wrap" aria-hidden="true" data-cat="' +
-          esc(cat) + '">' + icon + '</span>' +
+        '<span class="cat-detail-icon-wrap" aria-hidden="true" style="--cat-accent:' +
+          esc(catAccent(cat)) + '">' + icon + '</span>' +
         '<div>' +
           '<h2 class="cat-detail-title">' + esc(label) + '</h2>' +
           '<div class="cat-detail-count">' + visibleItems.length + ' of ' + items.length +
@@ -620,7 +628,7 @@
 
     container.innerHTML = html;
     document.getElementById('crumb-label').textContent = icon + ' ' + label;
-    document.getElementById('breadcrumb').classList.add('visible');
+    document.getElementById('breadcrumb').style.display = 'block';
     setHeadingTitle(label + ' — Todoist Playbook');
   }
 
@@ -698,9 +706,11 @@
     container.innerHTML =
       '<p class="search-summary" role="status" aria-live="polite" aria-atomic="true">' +
       summary + '</p>' + body;
-    document.getElementById('breadcrumb').classList.remove('visible');
+    document.getElementById('breadcrumb').style.display = 'none';
     setHeadingTitle((trimmed ? 'Search: ' + trimmed : 'Browse by tag') + ' — Todoist Playbook');
   }
+
+  function renderBrowse() {
     renderSearch('');
   }
 
@@ -907,7 +917,7 @@
 
     modalBackdrop.classList.add('open');
     modalBackdrop.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('modal-open');
+    document.body.style.overflow = 'hidden';
     setBackgroundInert(true);
     modalBody.scrollTop = 0;
     modalCloseBtn.focus();
@@ -918,7 +928,7 @@
     if (!modalBackdrop.classList.contains('open')) return;
     modalBackdrop.classList.remove('open');
     modalBackdrop.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('modal-open');
+    document.body.style.overflow = '';
     setBackgroundInert(false);
     var prev = focusStack.pop();
     if (prev && typeof prev.focus === 'function') prev.focus();
