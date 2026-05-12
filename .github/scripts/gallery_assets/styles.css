@@ -956,6 +956,7 @@ input[type="search"]::-webkit-search-cancel-button { display: none; }
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
+  line-height: 1;
 }
 .spotlight-stats > span:not(.sep) svg {
   width: 0.9rem;
@@ -964,6 +965,7 @@ input[type="search"]::-webkit-search-cancel-button { display: none; }
   fill: none;
   stroke-width: 2;
   flex-shrink: 0;
+  display: block;
 }
 .spotlight-footer { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
 .spotlight-meta { font-size: 0.78rem; color: var(--muted); font-weight: 500; }
