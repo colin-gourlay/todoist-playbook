@@ -56,12 +56,26 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "anonfaded/fadcam": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-13",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-13T06:36:11.718989+00:00",
+      "last_seen": "2026-05-13T06:36:11.718989+00:00"
+    },
     "anthropics/financial-services": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-07",
       "first_section": "Trending (Today)",
       "first_seen": "2026-05-07T06:26:08.267174+00:00",
       "last_seen": "2026-05-07T06:26:08.267174+00:00"
+    },
+    "apernet/hysteria": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-13",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-13T06:36:11.718989+00:00",
+      "last_seen": "2026-05-13T06:36:11.718989+00:00"
     },
     "arindam200/awesome-ai-apps": {
       "first_languages": [],
@@ -377,6 +391,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-29T06:18:57.585813+00:00",
       "last_seen": "2026-04-29T06:18:57.585813+00:00"
+    },
+    "imbad0202/academic-research-skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-13",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-05-13T06:36:11.718989+00:00",
+      "last_seen": "2026-05-13T06:36:11.718989+00:00"
     },
     "insforge/insforge": {
       "first_languages": [],
@@ -813,6 +834,6 @@
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     }
   },
-  "updated_at": "2026-05-12T06:28:40.176830+00:00",
+  "updated_at": "2026-05-13T06:36:25.202821+00:00",
   "version": 1
 }
