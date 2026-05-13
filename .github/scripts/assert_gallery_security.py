@@ -12,6 +12,7 @@ import re
 import sys
 
 OUTPUT_PATH = sys.argv[1] if len(sys.argv) > 1 else "docs/index.html"
+EXPECTED_CANONICAL = "https://colin-gourlay.github.io/todoist-playbook/"
 
 
 def fail(msg):
@@ -49,16 +50,20 @@ def main():
     print("✅ CSP meta present and correct")
 
     # 1b. Canonical link present and absolute
-    canonical_match = re.search(
-        r'<link\s+rel="canonical"\s+href="([^"]+)"\s*/?>',
+    canonical_tag_match = re.search(
+        r'<link[^>]*\brel="canonical"[^>]*>',
         html,
     )
-    if not canonical_match:
-        fail("No <link rel='canonical'> found")
-    canonical = canonical_match.group(1)
+    if not canonical_tag_match:
+        fail('No <link rel="canonical"> found')
+    canonical_tag = canonical_tag_match.group(0)
+    canonical_href_match = re.search(r'\bhref="([^"]+)"', canonical_tag)
+    if not canonical_href_match:
+        fail('Canonical link missing href attribute')
+    canonical = canonical_href_match.group(1)
     if not canonical.startswith("https://"):
         fail(f"Canonical URL must be absolute HTTPS: {canonical!r}")
-    if canonical != "https://colin-gourlay.github.io/todoist-playbook/":
+    if canonical != EXPECTED_CANONICAL:
         fail(f"Canonical URL must use production site URL: {canonical!r}")
     print("✅ Canonical link present and valid")
 
