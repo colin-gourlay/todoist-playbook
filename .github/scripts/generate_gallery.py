@@ -694,6 +694,7 @@ def build_html(data_payload, sri_hashes):
   <meta name="twitter:title" content="Todoist Playbook - Template Gallery">
   <meta name="twitter:description" content="{description}">
   <meta name="twitter:image" content="{site_url}og-image.svg">
+  <link rel="canonical" href="{site_url}">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="apple-touch-icon" href="apple-touch-icon.svg">
   <link rel="manifest" href="manifest.webmanifest">
@@ -813,6 +814,8 @@ def assert_hardening(html, output_dir, payload):
     assert "'unsafe-inline'" not in html, "CSP must not allow 'unsafe-inline'"
     assert "'unsafe-eval'" not in html, "CSP must not allow 'unsafe-eval'"
     assert 'name="referrer"' in html, "missing referrer meta"
+    assert '<link rel="canonical" href="https://colin-gourlay.github.io/todoist-playbook/">' in html, \
+        "missing or invalid canonical link"
     assert '<a class="skip-link"' in html, "missing skip link"
     assert '<main id="main"' in html, "missing main landmark"
 

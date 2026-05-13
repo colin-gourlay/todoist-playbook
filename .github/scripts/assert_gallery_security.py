@@ -48,6 +48,20 @@ def main():
         fail(f"script-src contains 'unsafe-inline': {csp!r}")
     print("✅ CSP meta present and correct")
 
+    # 1b. Canonical link present and absolute
+    canonical_match = re.search(
+        r'<link\s+rel="canonical"\s+href="([^"]+)"\s*/?>',
+        html,
+    )
+    if not canonical_match:
+        fail("No <link rel='canonical'> found")
+    canonical = canonical_match.group(1)
+    if not canonical.startswith("https://"):
+        fail(f"Canonical URL must be absolute HTTPS: {canonical!r}")
+    if canonical != "https://colin-gourlay.github.io/todoist-playbook/":
+        fail(f"Canonical URL must use production site URL: {canonical!r}")
+    print("✅ Canonical link present and valid")
+
     # 2. Every vendor <script src> has integrity + crossorigin
     for m in re.finditer(r'<script\s+([^>]+)>', html):
         attrs = m.group(1)
