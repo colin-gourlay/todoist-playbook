@@ -1,6 +1,5 @@
 TYPE,CONTENT,DESCRIPTION,IS_COLLAPSED,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DATE,DATE_LANG,TIMEZONE,DURATION,DURATION_UNIT,DEADLINE,DEADLINE_LANG
 meta,view_style=list,,,,,,,,,,,,,
-task,About this project,"Review today's GitHub trending repositories to find high-value projects. For each repo, assess README clarity and onboarding quality, check maintenance health (commits, issues, responsiveness, roadmap), then choose one action: Star, Watch, Reference, or Ignore.",1,4,1,,,,,Europe/London,,,,
 section,Today's Candidates,,,,1,,,,,,,,,
 task,List today's candidate repos @people-self @place-anywhere @tools-github @when-sod-personal-pre-training,"Open GitHub Trending and list the repos you plan to review today. Aim for 3 to 5 candidates.",,3,1,,,today at 05:30,en,Europe/London,10,minute,,
 section,Quick Triage,,,,1,,,,,,,,,
