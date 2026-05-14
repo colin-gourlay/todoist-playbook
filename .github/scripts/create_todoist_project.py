@@ -240,7 +240,15 @@ def main():
             if not content:
                 continue
 
-            if row_type == "section":
+            if row_type == "note":
+                comment_content = content
+                description = row.get("DESCRIPTION", "").strip()
+                if description:
+                    comment_content = f"**{content}**\n\n{description}"
+                api_post("comments", token, {"project_id": project_id, "content": comment_content})
+                print(f"  💬 {content[:80]}")
+
+            elif row_type == "section":
                 section = api_post(
                     "sections",
                     token,
