@@ -84,6 +84,13 @@
       "first_seen": "2026-05-06T06:22:06.181715+00:00",
       "last_seen": "2026-05-06T06:22:06.181715+00:00"
     },
+    "arthurbrussee/brush": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-14",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-14T06:34:24.359128+00:00",
+      "last_seen": "2026-05-14T06:34:24.359128+00:00"
+    },
     "automatic1111/stable-diffusion-webui": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-12",
@@ -188,6 +195,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-05-06T06:22:06.181715+00:00",
       "last_seen": "2026-05-06T06:22:06.181715+00:00"
+    },
+    "danielmiessler/personal_ai_infrastructure": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-14",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-14T06:34:24.359128+00:00",
+      "last_seen": "2026-05-14T06:34:24.359128+00:00"
     },
     "datawhalechina/easy-vibe": {
       "first_languages": [],
@@ -301,6 +315,13 @@
       "first_seen": "2026-05-01T06:28:31.042913+00:00",
       "last_seen": "2026-05-01T06:28:31.042913+00:00"
     },
+    "github/spec-kit": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-14",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-14T06:34:24.359128+00:00",
+      "last_seen": "2026-05-14T06:34:24.359128+00:00"
+    },
     "google-ai-edge/gallery": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -399,6 +420,20 @@
       "first_seen": "2026-05-13T06:36:11.718989+00:00",
       "last_seen": "2026-05-13T06:36:11.718989+00:00"
     },
+    "imthenachoman/how-to-secure-a-linux-server": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-14",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-14T06:34:24.359128+00:00",
+      "last_seen": "2026-05-14T06:34:24.359128+00:00"
+    },
+    "influxdata/telegraf": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-14",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-14T06:34:24.359128+00:00",
+      "last_seen": "2026-05-14T06:34:24.359128+00:00"
+    },
     "insforge/insforge": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-07",
@@ -433,6 +468,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-05-03T06:20:02.282004+00:00",
       "last_seen": "2026-05-03T06:20:02.282004+00:00"
+    },
+    "k-dense-ai/scientific-agent-skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-14",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-14T06:34:24.359128+00:00",
+      "last_seen": "2026-05-14T06:34:24.359128+00:00"
     },
     "ladybirdbrowser/ladybird": {
       "first_languages": [],
@@ -538,6 +580,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-05-05T06:17:39.229450+00:00",
       "last_seen": "2026-05-05T06:17:39.229450+00:00"
+    },
+    "multica-ai/andrej-karpathy-skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-14",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-05-14T06:34:24.359128+00:00",
+      "last_seen": "2026-05-14T06:34:24.359128+00:00"
     },
     "multica-ai/multica": {
       "first_languages": [],
@@ -707,6 +756,13 @@
       "first_seen": "2026-04-30T06:20:33.511105+00:00",
       "last_seen": "2026-04-30T06:20:33.511105+00:00"
     },
+    "supertone-inc/supertonic": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-14",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-14T06:34:24.359128+00:00",
+      "last_seen": "2026-05-14T06:34:24.359128+00:00"
+    },
     "tauricresearch/tradingagents": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -734,6 +790,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-05-12T06:28:20.441485+00:00",
       "last_seen": "2026-05-12T06:28:20.441485+00:00"
+    },
+    "ton-blockchain/acton": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-14",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-14T06:34:24.359128+00:00",
+      "last_seen": "2026-05-14T06:34:24.359128+00:00"
     },
     "tracer-cloud/opensre": {
       "first_languages": [],
@@ -834,6 +897,6 @@
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     }
   },
-  "updated_at": "2026-05-13T06:36:25.202821+00:00",
+  "updated_at": "2026-05-14T06:34:43.664323+00:00",
   "version": 1
 }
