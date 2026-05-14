@@ -237,7 +237,7 @@
     if (t.section_count)
       stats.push('<span>' + ICONS.sections + '\u202f' + t.section_count + '\u202fsection' + (t.section_count !== 1 ? 's' : '') + '</span>');
     if (t.estimated_duration)
-      stats.push('<span>\u23f1\ufe0f ' + esc(formatDuration(t.estimated_duration)) + '</span>');
+      stats.push('<span>' + ICONS.clock + '\u202f' + esc(formatDuration(t.estimated_duration)) + '</span>');
     if (t.recurrence_suggestion)
       stats.push('<span>\u{1F501} ' + esc(t.recurrence_suggestion) + '</span>');
     if (!stats.length) return '';
