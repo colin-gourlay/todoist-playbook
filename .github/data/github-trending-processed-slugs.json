@@ -301,12 +301,26 @@
       "first_seen": "2026-04-29T06:18:57.585813+00:00",
       "last_seen": "2026-04-29T06:18:57.585813+00:00"
     },
+    "garrytan/gstack": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-15",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-15T06:41:05.500325+00:00",
+      "last_seen": "2026-05-15T06:41:05.500325+00:00"
+    },
     "gastownhall/beads": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
       "first_section": "Trending (Today)",
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "genymobile/scrcpy": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-15",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-15T06:41:05.500325+00:00",
+      "last_seen": "2026-05-15T06:41:05.500325+00:00"
     },
     "ghostty-org/ghostty": {
       "first_languages": [],
@@ -602,6 +616,13 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "nvidia-ai-blueprints/video-search-and-summarization": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-15",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-15T06:41:05.500325+00:00",
+      "last_seen": "2026-05-15T06:41:05.500325+00:00"
+    },
     "obra/superpowers": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-30",
@@ -686,6 +707,13 @@
       "first_seen": "2026-05-05T06:17:39.229450+00:00",
       "last_seen": "2026-05-05T06:17:39.229450+00:00"
     },
+    "roboflow/supervision": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-15",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-15T06:41:05.500325+00:00",
+      "last_seen": "2026-05-15T06:41:05.500325+00:00"
+    },
     "rohitg00/agentmemory": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-10",
@@ -713,6 +741,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-05-03T06:20:02.282004+00:00",
       "last_seen": "2026-05-03T06:20:02.282004+00:00"
+    },
+    "ruvnet/ruview": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-15",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-15T06:41:05.500325+00:00",
+      "last_seen": "2026-05-15T06:41:05.500325+00:00"
     },
     "sharex/sharex": {
       "first_languages": [],
@@ -897,6 +932,6 @@
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     }
   },
-  "updated_at": "2026-05-14T06:34:43.664323+00:00",
+  "updated_at": "2026-05-15T06:41:24.465214+00:00",
   "version": 1
 }
