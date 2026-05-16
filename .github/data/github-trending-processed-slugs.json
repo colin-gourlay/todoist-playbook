@@ -70,6 +70,13 @@
       "first_seen": "2026-05-07T06:26:08.267174+00:00",
       "last_seen": "2026-05-07T06:26:08.267174+00:00"
     },
+    "anthropics/skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-16",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-16T06:18:55.256489+00:00",
+      "last_seen": "2026-05-16T06:18:55.256489+00:00"
+    },
     "apernet/hysteria": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-13",
@@ -469,6 +476,13 @@
       "first_seen": "2026-05-05T06:17:39.229450+00:00",
       "last_seen": "2026-05-05T06:17:39.229450+00:00"
     },
+    "joeseesun/qiaomu-anything-to-notebooklm": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-16",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-16T06:18:55.256489+00:00",
+      "last_seen": "2026-05-16T06:18:55.256489+00:00"
+    },
     "jundot/omlx": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-11",
@@ -650,6 +664,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-05-10T06:25:26.292885+00:00",
       "last_seen": "2026-05-10T06:25:26.292885+00:00"
+    },
+    "oven-sh/bun": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-16",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-16T06:18:55.256489+00:00",
+      "last_seen": "2026-05-16T06:18:55.256489+00:00"
     },
     "penpot/penpot": {
       "first_languages": [],
@@ -932,6 +953,6 @@
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     }
   },
-  "updated_at": "2026-05-15T06:41:24.465214+00:00",
+  "updated_at": "2026-05-16T06:19:04.292598+00:00",
   "version": 1
 }
