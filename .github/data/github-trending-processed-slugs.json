@@ -175,6 +175,13 @@
       "first_seen": "2026-05-05T06:17:39.229450+00:00",
       "last_seen": "2026-05-05T06:17:39.229450+00:00"
     },
+    "colbymchenry/codegraph": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-17",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-17T06:33:42.790289+00:00",
+      "last_seen": "2026-05-17T06:33:42.790289+00:00"
+    },
     "coleam00/archon": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -377,6 +384,13 @@
       "first_section": "Trending (This Week)",
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "heygen-com/hyperframes": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-17",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-05-17T06:33:42.790289+00:00",
+      "last_seen": "2026-05-17T06:33:42.790289+00:00"
     },
     "hkuds/ai-trader": {
       "first_languages": [],
@@ -953,6 +967,6 @@
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     }
   },
-  "updated_at": "2026-05-16T06:19:04.292598+00:00",
+  "updated_at": "2026-05-17T06:33:52.954996+00:00",
   "version": 1
 }
