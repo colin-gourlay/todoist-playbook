@@ -364,6 +364,13 @@
       "first_seen": "2026-05-15T06:41:05.500325+00:00",
       "last_seen": "2026-05-15T06:41:05.500325+00:00"
     },
+    "ggml-org/llama.cpp": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-19",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-19T06:48:05.190319+00:00",
+      "last_seen": "2026-05-19T06:48:05.190319+00:00"
+    },
     "ghostty-org/ghostty": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-01",
@@ -468,6 +475,13 @@
       "first_section": "Trending (This Month)",
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "humanlayer/12-factor-agents": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-19",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-19T06:48:05.190319+00:00",
+      "last_seen": "2026-05-19T06:48:05.190319+00:00"
     },
     "hunxbyts/ghosttrack": {
       "first_languages": [],
@@ -727,6 +741,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-05-15T06:41:05.500325+00:00",
       "last_seen": "2026-05-15T06:41:05.500325+00:00"
+    },
+    "nvlabs/sana": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-19",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-19T06:48:05.190319+00:00",
+      "last_seen": "2026-05-19T06:48:05.190319+00:00"
     },
     "obra/superpowers": {
       "first_languages": [],
@@ -1065,6 +1086,6 @@
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     }
   },
-  "updated_at": "2026-05-18T06:49:25.641301+00:00",
+  "updated_at": "2026-05-19T06:48:15.677223+00:00",
   "version": 1
 }
