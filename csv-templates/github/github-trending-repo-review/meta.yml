@@ -1,6 +1,6 @@
 name: GitHub Trending Repo Review
 slug: github-trending-repo-review
-description: Daily triage project for scanning trending GitHub repositories, filtering by quality signals, and assigning a clear next action to each candidate
+description: Daily triage template for reviewing trending GitHub repos, scoring quality signals, and assigning next actions
 category: github
 tags:
   - discoverability
