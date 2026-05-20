@@ -1,6 +1,7 @@
 TYPE,CONTENT,DESCRIPTION,IS_COLLAPSED,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DATE,DATE_LANG,TIMEZONE,DURATION,DURATION_UNIT,DEADLINE,DEADLINE_LANG
 section,1️⃣ Repository Identity & Discoverability,,,,,,,,,,,,,
 task,Create the Git repository and push an initial commit to GitHub,"Create the repository if it does not exist. If starting locally, run git init, add the remote origin, and push an initial README commit so issues, automation, and collaboration can be configured against a real default branch.",,1,1,,,,,,,,,
+task,Create and add a .gitignore,"Add a .gitignore tailored to the tech stack before committing application code so build outputs, secrets, and machine-specific files are not tracked.",,1,1,,,,,,,,,
 task,Update owner avatar to a current and recognisable image,"Check the owner or org profile image is current, clearly branded, and readable at small sizes so people can quickly recognise the repository source in search and activity feeds.",,2,1,,,,,,,,,
 task,"Choose and apply a clear, kebab-case repository name","Use a short, specific name that states what the repository is and who it serves. Descriptive names improve search relevance, reduce ambiguity, and make project intent obvious to contributors.",,1,1,,,,,,,,,
 task,Write a strong repository description,"Write a one-line description that clearly explains what the repository does and who it is for. A strong description improves searchability and creates a better first impression in listings and profile views.",,1,1,,,,,,,,,
