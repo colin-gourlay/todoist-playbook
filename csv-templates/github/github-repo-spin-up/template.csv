@@ -74,7 +74,7 @@ task,"Identify any MCP servers that can be leveraged for the project e.g. ToDois
 
 section,9️⃣ Developer Workflow & Hygiene,,,,,,,,,,,,,
 task,Define and document branching convention,,,1,1,,,,,,,,,
-task,Define and document commit message guidelines,,,2,1,,,,,,,,,
+task,Define and document commit message guidelines and create/add .gitmessage.txt,,,2,1,,,,,,,,,
 task,Add pull request template aligned to commit and review guidelines,,,2,1,,,,,,,,,
 task,Enable sensible repository settings (default branch, merge strategies),,,2,1,,,,,,,,,
 task,Add workflow template(s),,,2,1,,,,,,,,,
