@@ -14,7 +14,7 @@ task,Star the repository and assign to the appropriate organisational list,,,4,1
 task,Identify automation opportunities using GitHub Script and GitHub Actions,"Identify repetitive repository tasks that can be automated, such as issue triage, release tagging, scheduled checks, and documentation sync. Capture at least one candidate workflow with trigger, owner, and expected outcome.",,2,1,,,,,,,,,
 
 section,2️⃣ Documentation,,,,,,,,,,,,,
-task,Write a clear README covering problem statement,,,1,1,,,,,,,,,
+task,Write a clear problem statement in README.md (Markdown),,,1,1,,,,,,,,,
 task,Add architecture overview to README,,,2,1,,,,,,,,,
 task,Add screenshots to README,,,3,1,,,,,,,,,
 task,Add setup instructions to README,,,1,1,,,,,,,,,
