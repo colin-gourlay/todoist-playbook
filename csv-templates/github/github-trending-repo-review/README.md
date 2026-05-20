@@ -37,7 +37,7 @@ Estimated duration: 10 minutes.
 
 - Use this template for daily triage and classification.
 - Use [GitHub Trending Repos Weekly Review](../../github-trending-repos-weekly-review/) for deeper weekly analysis and consolidation.
-- The existing [GitHub Trending Tracker](../../github-trending-tracker/) template remains available as the legacy all-in-one option for backward compatibility.
+- The existing [GitHub Trending Tracker](../../github-trending-tracker/) template is deprecated and retained temporarily as the legacy all-in-one option for backward compatibility.
 
 ---
 
@@ -49,7 +49,7 @@ Estimated duration: 10 minutes.
 2. Create a new project in Todoist
 3. Import from CSV
 4. Rename the project to: `GitHub Trending Repo Review - [Date]`
-5. Set this project to recur daily
+5. Add a recurring daily reminder or task to run this checklist.
 
 ### Automated workflow path
 
