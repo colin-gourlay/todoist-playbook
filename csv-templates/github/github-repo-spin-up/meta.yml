@@ -1,10 +1,10 @@
 name: GitHub Repo Spin-Up
 slug: github-repo-spin-up
-description: End-to-end checklist for spinning up a new GitHub repository - covering identity, ecosystem watch setup, documentation, CI/CD, security, Copilot integration, and developer hygiene
+description: Project bootstrap template for launching a new GitHub repository with identity, docs, CI/CD, security, Copilot setup, and developer hygiene checks
 category: github
 tags:
   - github
-  - setup
+  - repository-hygiene
   - devops
   - open-source
   - ci-cd
