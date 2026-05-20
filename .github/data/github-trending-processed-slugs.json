@@ -63,6 +63,13 @@
       "first_seen": "2026-05-13T06:36:11.718989+00:00",
       "last_seen": "2026-05-13T06:36:11.718989+00:00"
     },
+    "anthropics/claude-plugins-official": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-20",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-20T06:47:55.187711+00:00",
+      "last_seen": "2026-05-20T06:47:55.187711+00:00"
+    },
     "anthropics/financial-services": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-07",
@@ -266,6 +273,13 @@
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     },
+    "diolinux/photogimp": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-20",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-20T06:47:55.187711+00:00",
+      "last_seen": "2026-05-20T06:47:55.187711+00:00"
+    },
     "docusealco/docuseal": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-05",
@@ -335,6 +349,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-05-01T06:28:31.042913+00:00",
       "last_seen": "2026-05-01T06:28:31.042913+00:00"
+    },
+    "frappe/erpnext": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-20",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-20T06:47:55.187711+00:00",
+      "last_seen": "2026-05-20T06:47:55.187711+00:00"
     },
     "fspecii/ace-step-ui": {
       "first_languages": [],
@@ -454,6 +475,13 @@
       "first_section": "Trending (This Week)",
       "first_seen": "2026-04-28T06:21:48.971908+00:00",
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
+    },
+    "hkuds/vimax": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-20",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-20T06:47:55.187711+00:00",
+      "last_seen": "2026-05-20T06:47:55.187711+00:00"
     },
     "hmbown/deepseek-tui": {
       "first_languages": [],
@@ -784,6 +812,13 @@
       "first_seen": "2026-05-16T06:18:55.256489+00:00",
       "last_seen": "2026-05-16T06:18:55.256489+00:00"
     },
+    "pascalorg/editor": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-20",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-20T06:47:55.187711+00:00",
+      "last_seen": "2026-05-20T06:47:55.187711+00:00"
+    },
     "penpot/penpot": {
       "first_languages": [],
       "first_project": "github-trending-2026-04-28",
@@ -1086,6 +1121,6 @@
       "last_seen": "2026-04-28T06:21:48.971908+00:00"
     }
   },
-  "updated_at": "2026-05-19T06:48:15.677223+00:00",
+  "updated_at": "2026-05-20T06:48:11.003457+00:00",
   "version": 1
 }
