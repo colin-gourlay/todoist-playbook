@@ -1,6 +1,258 @@
 {
   "slugs": {
+    "addyosmani/agent-skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "aidc-ai/pixelle-video": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "alishahryar1/free-claude-code": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "anil-matcha/open-generative-ai": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "anthropics/claude-plugins-official": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "anthropics/financial-services": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "anthropics/skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "can1357/oh-my-pi": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "cloakhq/cloakbrowser": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "colbymchenry/codegraph": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "datawhalechina/easy-vibe": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "decolua/9router": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "facebook/pyrefly": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "ggml-org/llama.cpp": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "hkuds/cli-anything": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "hkuds/vimax": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "imbad0202/academic-research-skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "mattpocock/skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "millionco/react-doctor": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "msitarzewski/agency-agents": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "multica-ai/andrej-karpathy-skills": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "obra/superpowers": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "opentoonz/opentoonz": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "oven-sh/bun": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "rmyndharis/openwa": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "rohitg00/agentmemory": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "rohitg00/ai-engineering-from-scratch": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "ruvnet/ruflo": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "ruvnet/ruview": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "soxoj/maigret": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "tauricresearch/tradingagents": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "tinyhumansai/openhuman": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "truelockmc/streambert": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "yikart/aitoearn": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "z4nzu/hackingtool": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "zakirullin/files.md": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-21",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-21T06:48:47.231301+00:00",
+      "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    }
   },
-  "updated_at": "2026-05-20T06:48:11.003457+00:00",
+  "updated_at": "2026-05-21T06:49:23.392286+00:00",
   "version": 1
 }
