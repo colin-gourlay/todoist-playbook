@@ -45,7 +45,7 @@ The project is structured exactly as defined in the template: named sections wit
 
 ## GitHub Actions — Template Validation (CI)
 
-Every push to `main` and every pull request triggers the **Validate templates** workflow. A passing run looks like:
+Under GitHub Flow, every pull request to `main` and every merge commit pushed to `main` triggers the **Validate templates** workflow. A passing run looks like:
 
 ```
 🔎 Checking awesome-list-submission

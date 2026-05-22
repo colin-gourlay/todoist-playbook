@@ -337,7 +337,7 @@ csv-templates/weekly-review/
 - All API calls are made over HTTPS to `https://api.todoist.com/api/v1`.
 - The automation scripts use only Python standard library — no third-party pip packages means no supply-chain risk from Python dependencies.
 - Dependabot monitors GitHub Actions dependencies, and Dependabot PRs are auto-reviewed and auto-merged (minor/patch/security) via GitHub Actions.
-- Branch protection rules require pull request reviews before merging to `main`.
+- The repository follows GitHub Flow: contributors work on short-lived branches, open pull requests to `main`, and branch protection rules require review before merge.
 
 ---
 

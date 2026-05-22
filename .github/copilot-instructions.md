@@ -25,7 +25,7 @@ When this file conflicts with the implementation, follow the implementation and 
 
 ## Always-on directives
 
-- Follow [CONTRIBUTING](../CONTRIBUTING) for branching and Conventional Commits. Branch prefixes: `feat/`, `fix/`, `docs/`, `ci/`, `chore/`, `copilot/`. PR titles use the same Conventional Commits format and become the squash-merge commit message.
+- Follow [CONTRIBUTING](../CONTRIBUTING) for GitHub Flow branching and Conventional Commits. Branch prefixes: `feat/`, `fix/`, `docs/`, `ci/`, `chore/`, `copilot/`. PR titles use the same Conventional Commits format and become the squash-merge commit message.
 - Folder names for templates, prompt templates, and bundles MUST be kebab-case and the folder name MUST equal the `slug:` in the asset's metadata file.
 - New CSV templates and prompt templates start at `version: 0.0.0` (unreviewed). The `0.1.0` version means reviewed and stable. Reviewed assets receive automatic patch bumps via `bump-template-version.yml` when changed in a merged PR. Do not hand-bump versions.
 - When adding a discoverable asset, ALWAYS update `index.md`. Update workflow `inputs` option lists ONLY for the workflows that should expose the asset (see scoped workflow instructions).
@@ -55,4 +55,4 @@ On-demand workflows live under `.github/skills/`; specialist personas live under
 
 - Primary development OS is Windows. Workflow `run:` blocks are bash; to validate locally, run them in Git Bash or WSL.
 - The GitHub CLI (`gh`) is the standard tool for opening PRs from the command line.
-- The repo default branch is `main`. Work normally happens on short-lived branches merged via PR.
+- The repo default branch is `main`. Work follows GitHub Flow: create a short-lived branch, open a PR to `main`, squash-merge, then delete the branch.
