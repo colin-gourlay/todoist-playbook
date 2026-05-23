@@ -63,6 +63,20 @@
       "first_seen": "2026-05-22T06:48:05.476683+00:00",
       "last_seen": "2026-05-22T06:48:05.476683+00:00"
     },
+    "byjoey/cfnew": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-23",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-23T06:24:52.834927+00:00",
+      "last_seen": "2026-05-23T06:24:52.834927+00:00"
+    },
+    "bytedance/ui-tars-desktop": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-23",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-05-23T06:24:52.834927+00:00",
+      "last_seen": "2026-05-23T06:24:52.834927+00:00"
+    },
     "can1357/oh-my-pi": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-21",
@@ -119,6 +133,13 @@
       "first_seen": "2026-05-21T06:48:47.231301+00:00",
       "last_seen": "2026-05-21T06:48:47.231301+00:00"
     },
+    "fincept-corporation/finceptterminal": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-23",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-23T06:24:52.834927+00:00",
+      "last_seen": "2026-05-23T06:24:52.834927+00:00"
+    },
     "ggml-org/llama.cpp": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-21",
@@ -160,6 +181,13 @@
       "first_section": "Trending (Today)",
       "first_seen": "2026-05-21T06:48:47.231301+00:00",
       "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "karpathy/nn-zero-to-hero": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-23",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-23T06:24:52.834927+00:00",
+      "last_seen": "2026-05-23T06:24:52.834927+00:00"
     },
     "lum1104/understand-anything": {
       "first_languages": [],
@@ -210,6 +238,13 @@
       "first_seen": "2026-05-21T06:48:47.231301+00:00",
       "last_seen": "2026-05-21T06:48:47.231301+00:00"
     },
+    "odoo/odoo": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-23",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-23T06:24:52.834927+00:00",
+      "last_seen": "2026-05-23T06:24:52.834927+00:00"
+    },
     "opentoonz/opentoonz": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-21",
@@ -223,6 +258,13 @@
       "first_section": "Trending (This Week)",
       "first_seen": "2026-05-21T06:48:47.231301+00:00",
       "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "refactoringhq/tolaria": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-23",
+      "first_section": "Trending (This Month)",
+      "first_seen": "2026-05-23T06:24:52.834927+00:00",
+      "last_seen": "2026-05-23T06:24:52.834927+00:00"
     },
     "rmyndharis/openwa": {
       "first_languages": [],
@@ -265,6 +307,13 @@
       "first_section": "Trending (This Month)",
       "first_seen": "2026-05-21T06:48:47.231301+00:00",
       "last_seen": "2026-05-21T06:48:47.231301+00:00"
+    },
+    "stremio/stremio-web": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-23",
+      "first_section": "Trending (This Week)",
+      "first_seen": "2026-05-23T06:24:52.834927+00:00",
+      "last_seen": "2026-05-23T06:24:52.834927+00:00"
     },
     "supertone-inc/supertonic": {
       "first_languages": [],
@@ -315,6 +364,13 @@
       "first_seen": "2026-05-21T06:48:47.231301+00:00",
       "last_seen": "2026-05-21T06:48:47.231301+00:00"
     },
+    "yt-dlp/yt-dlp": {
+      "first_languages": [],
+      "first_project": "github-trending-2026-05-23",
+      "first_section": "Trending (Today)",
+      "first_seen": "2026-05-23T06:24:52.834927+00:00",
+      "last_seen": "2026-05-23T06:24:52.834927+00:00"
+    },
     "z4nzu/hackingtool": {
       "first_languages": [],
       "first_project": "github-trending-2026-05-21",
@@ -330,6 +386,6 @@
       "last_seen": "2026-05-21T06:48:47.231301+00:00"
     }
   },
-  "updated_at": "2026-05-22T06:48:29.418633+00:00",
+  "updated_at": "2026-05-23T06:25:07.939796+00:00",
   "version": 1
 }
