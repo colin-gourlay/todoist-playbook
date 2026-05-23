@@ -47,7 +47,7 @@ The Playbook is built in four layers:
 | **Execution** | `.github/scripts/` — Python entry points called by the workflows |
 | **Discovery & publishing** | `index.md`, `wiki/` — catalogue and documentation; `docs/` is generated during gallery deployment to GitHub Pages |
 
-**Flow:** author a template → push to `main` → CI validates structure → workflows create Todoist projects on demand or on schedule → gallery auto-deploys to GitHub Pages.
+**Flow:** author a template on a short-lived branch → open a pull request to `main` → CI validates structure on the PR and on merge → workflows create Todoist projects on demand or on schedule → gallery auto-deploys to GitHub Pages.
 
 For the full architecture diagram and component detail, see [wiki/Architecture.md](wiki/Architecture.md).
 

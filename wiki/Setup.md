@@ -168,7 +168,7 @@ See [CONTRIBUTING](../CONTRIBUTING) for the full guide. In brief:
 4. Add `README.md` with usage guidance and import instructions
 5. Add the slug to the `options` list in `.github/workflows/create-todoist-project.yml`
 6. Update `index.md` to add the template to the catalogue
-7. Push to `main` — CI validates the template automatically
+7. Push your branch and open a pull request to `main` — CI validates the template on the PR and again after merge
 
 ---
 

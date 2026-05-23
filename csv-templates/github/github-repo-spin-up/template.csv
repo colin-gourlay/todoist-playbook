@@ -75,7 +75,7 @@ task,Review community-curated agents at awesome-copilot (github.com) for applica
 task,"Identify any MCP servers that can be leveraged for the project e.g. ToDoist for playbook; spotify, lidarr etc",,,2,1,,,,,,,,,
 
 section,9️⃣ Developer Workflow & Hygiene,,,,,,,,,,,,,
-task,"Define and document branching convention","The documentation should live at ./docs/[branching-strategy-name]-guidelines.md",,1,1,,,,,,,,,
+task,Define and document GitHub Flow branching convention; document it at ./docs/github-flow-guidelines.md,,,1,1,,,,,,,,,
 task,Define and document commit message guidelines and create/add .gitmessage.txt,,,2,1,,,,,,,,,
 task,Add pull request template aligned to commit and review guidelines,,,2,1,,,,,,,,,
 task,Enable sensible repository settings (default branch, merge strategies),,,2,1,,,,,,,,,

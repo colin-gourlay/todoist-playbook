@@ -4,7 +4,15 @@
 
 ## Branching Convention
 
-All work should happen on a short-lived feature branch, merged into `main` via a pull request.
+This repository uses **GitHub Flow**:
+
+1. Create a short-lived branch from `main`
+2. Commit work to that branch
+3. Open a pull request to `main`
+4. Merge with **Squash and merge** once checks pass and review is complete
+5. Delete the branch after merge
+
+All contributor work should happen on a short-lived branch and land in `main` via pull request.
 
 **Branch naming format:** `<type>/<short-description>`
 
@@ -23,6 +31,7 @@ Examples: `feat/sprint-review-template`, `fix/csv-type-validation`, `docs/update
 - Branch off `main` and keep branches short-lived (merge or close within days, not weeks)
 - One logical change per branch — avoid bundling unrelated changes
 - Delete branches after the PR is merged
+- Do not push contributor changes directly to `main`
 
 ---
 
