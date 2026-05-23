@@ -42,6 +42,7 @@ OUTPUT_DIR           = os.environ.get("OUTPUT_DIR", "docs")
 GITHUB_SHA           = os.environ.get("GITHUB_SHA", "")
 GITHUB_REPOSITORY    = os.environ.get("GITHUB_REPOSITORY", "colin-gourlay/todoist-playbook")
 REPO_URL             = "https://github.com/" + GITHUB_REPOSITORY
+SITE_URL             = "https://colin-gourlay.github.io/todoist-playbook/"
 ASSERT_OUTPUT        = os.environ.get("ASSERT_OUTPUT", "0") == "1"
 ALLOW_VENDOR_TOFU    = os.environ.get("TP_ALLOW_VENDOR_TOFU", "0") == "1"
 SHORT_SHA            = (GITHUB_SHA or "")[:7]
@@ -641,7 +642,7 @@ def build_html(data_payload, sri_hashes):
     data_json = safe_json_for_html(data_payload)
     marked_sri    = sri_hashes.get("marked.min.js", "")
     dompurify_sri = sri_hashes.get("dompurify.min.js", "")
-    site_url = "https://colin-gourlay.github.io/todoist-playbook/"
+    site_url = SITE_URL
     repo_url = REPO_URL
     description = (
         "Curated Todoist templates for getting things done - accessible, "

@@ -8,11 +8,15 @@ Exits non-zero with a descriptive message on any failure.
 """
 
 import json
+import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from generate_gallery import SITE_URL
+
 OUTPUT_PATH = sys.argv[1] if len(sys.argv) > 1 else "docs/index.html"
-EXPECTED_CANONICAL = "https://colin-gourlay.github.io/todoist-playbook/"
+EXPECTED_CANONICAL = SITE_URL
 
 
 def fail(msg):
