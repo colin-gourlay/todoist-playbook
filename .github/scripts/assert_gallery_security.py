@@ -8,10 +8,15 @@ Exits non-zero with a descriptive message on any failure.
 """
 
 import json
+import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from generate_gallery import SITE_URL
+
 OUTPUT_PATH = sys.argv[1] if len(sys.argv) > 1 else "docs/index.html"
+EXPECTED_CANONICAL = SITE_URL
 
 
 def fail(msg):
@@ -47,6 +52,24 @@ def main():
     if script_src_match and "'unsafe-inline'" in script_src_match.group(1):
         fail(f"script-src contains 'unsafe-inline': {csp!r}")
     print("✅ CSP meta present and correct")
+
+    # 1b. Canonical link present and absolute
+    canonical_tag_match = re.search(
+        r'<link[^>]*\brel="canonical"[^>]*>',
+        html,
+    )
+    if not canonical_tag_match:
+        fail('No <link rel="canonical"> found')
+    canonical_tag = canonical_tag_match.group(0)
+    canonical_href_match = re.search(r'\bhref="([^"]+)"', canonical_tag)
+    if not canonical_href_match:
+        fail('Canonical link missing href attribute')
+    canonical = canonical_href_match.group(1)
+    if not canonical.startswith("https://"):
+        fail(f"Canonical URL must be absolute HTTPS: {canonical!r}")
+    if canonical != EXPECTED_CANONICAL:
+        fail(f"Canonical URL must use production site URL: {canonical!r}")
+    print("✅ Canonical link present and valid")
 
     # 2. Every vendor <script src> has integrity + crossorigin
     for m in re.finditer(r'<script\s+([^>]+)>', html):
