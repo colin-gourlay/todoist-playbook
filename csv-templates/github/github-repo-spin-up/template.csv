@@ -1,4 +1,5 @@
 TYPE,CONTENT,DESCRIPTION,IS_COLLAPSED,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DATE,DATE_LANG,TIMEZONE,DURATION,DURATION_UNIT,DEADLINE,DEADLINE_LANG
+meta,view_style=list,,,,,,,,,,,,,
 section,1️⃣ Repository Identity & Discoverability,,,,,,,,,,,,,
 task,Create the Git repository and push an initial commit to GitHub,"Create the repository if it does not exist. If starting locally, run git init, add the remote origin, and push an initial README commit so issues, automation, and collaboration can be configured against a real default branch.",,1,1,,,,,,,,,
 task,Create and add a .gitignore,"Add a .gitignore tailored to the tech stack before committing application code so build outputs, secrets, and machine-specific files are not tracked.",,1,1,,,,,,,,,

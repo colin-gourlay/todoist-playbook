@@ -28,6 +28,7 @@ When this file conflicts with the implementation, follow the implementation and 
 - Follow [CONTRIBUTING](../CONTRIBUTING) for GitHub Flow branching and Conventional Commits. Branch prefixes: `feat/`, `fix/`, `docs/`, `ci/`, `chore/`, `copilot/`. PR titles use the same Conventional Commits format and become the squash-merge commit message.
 - Folder names for templates, prompt templates, and bundles MUST be kebab-case and the folder name MUST equal the `slug:` in the asset's metadata file.
 - New CSV templates and prompt templates start at `version: 0.0.0` (unreviewed). The `0.1.0` version means reviewed and stable. Reviewed assets receive automatic patch bumps via `bump-template-version.yml` when changed in a merged PR. Do not hand-bump versions.
+- Treat `csv-templates/github/github-trending-repo-review/template.csv` as the structural exemplar for extended-format CSV templates. When editing other CSV templates, compare against this exemplar and preserve the canonical structure (column order and `meta,view_style=list` row) unless a repo-specific instruction explicitly requires a different format.
 - When adding a discoverable asset, ALWAYS update `index.md`. Update workflow `inputs` option lists ONLY for the workflows that should expose the asset (see scoped workflow instructions).
 - Update `README.md` only when user-facing discovery copy changes; routine asset additions go into `index.md` only.
 - Preserve existing wording and structure unless the repo has clearly moved to a new convention.
