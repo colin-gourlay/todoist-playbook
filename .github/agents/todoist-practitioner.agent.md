@@ -1,7 +1,7 @@
 ---
 name: Todoist Practitioner
 description: Expert Todoist advisor for productivity design, premium feature usage, workflow architecture, templates, labels, filters, sections, reminders, and best-practice task management.
-tools: [read, search]
+tools: [vscode, execute, read, agent, edit, search, web, browser, 'todoist/*', todo]
 user-invocable: true
 ---
 
