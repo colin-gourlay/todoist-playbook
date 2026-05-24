@@ -56,8 +56,8 @@
   --tag-bg: #edf2f7;
   --tag-bg-active: #fed7d7;
   --tag-text: #2d3748;
-  --section-color: #6d28d9;
-  --section-bg: #f5f3ff;
+  --section-color: #1a202c;
+  --section-bg: #eef1f6;
   --radius: 8px;
   --radius-lg: 12px;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
@@ -83,7 +83,8 @@
     --tag-text: #c9d1d9;
     --red-light: #2d1b1c;
     --red-lighter: #1e1314;
-    --section-bg: #1e1b2e;
+    --section-color: #e6edf3;
+    --section-bg: #21262d;
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
     --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
     --shadow-hover: 0 20px 25px rgba(0,0,0,0.5);
@@ -104,7 +105,8 @@
   --tag-text: #c9d1d9;
   --red-light: #2d1b1c;
   --red-lighter: #1e1314;
-  --section-bg: #1e1b2e;
+  --section-color: #e6edf3;
+  --section-bg: #21262d;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
   --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
   --shadow-hover: 0 20px 25px rgba(0,0,0,0.5);
