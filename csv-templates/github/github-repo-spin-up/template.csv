@@ -66,7 +66,6 @@ task,Add branch ruleset to prevent merge when an action fails (gated check-ins),
 task,Review and configure additional branch protection rules as required,,,2,1,,,,,,,,,
 
 section,7️⃣ .github/ Community Files,,,,,,,,,,,,,
-task,Add pull request template,,,2,1,,,,,,,,,
 task,"Add community health files (CODE_OF_CONDUCT.md, CONTRIBUTING.md)",,,3,1,,,,,,,,,
 
 section,8️⃣ Copilot & AI Integration,,,,,,,,,,,,,
@@ -116,3 +115,9 @@ task,Add CodeQL from GitHub marketplace to repo,,,2,1,,,,,,,,,
 section,🔟 Centralised Workflows,,,,,,,,,,,,,
 task,Identify any workflows that could or should be shared and move to the central actions repo,,,2,1,,,,,,,,,
 task,Review the central github-actions repo for any existing shared workflows to leverage,,,2,1,,,,,,,,,
+
+section,11️⃣ Post-Spin-Up Maintenance,,,,,,,,,,,,,
+task,Run monthly branch ruleset and protection audit,"Review branch rulesets, required checks, merge settings, and branch protection behavior to confirm governance still matches team standards and repository risk profile.",,2,1,,,every first monday,en,,30,minute,,
+task,Review automation backlog and workflow reliability monthly,"Audit failed runs, flaky checks, and manual repeated tasks. Capture one actionable automation improvement and schedule it into the next delivery cycle.",,2,1,,,every first monday,en,,45,minute,,
+task,Review community health files quarterly,"Re-check CODE_OF_CONDUCT.md, CONTRIBUTING.md, SECURITY.md, issue forms, and PR templates for stale links, outdated policy text, and missing guidance.",,3,1,,,every 3 months,en,,30,minute,,
+task,Run quarterly repository hygiene review,"Review stale branches, archived issues, label drift, and outdated docs to keep the repository easy to navigate and low-friction for contributors.",,3,1,,,every 3 months,en,,45,minute,,

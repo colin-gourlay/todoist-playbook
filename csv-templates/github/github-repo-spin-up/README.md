@@ -44,6 +44,7 @@ Estimated duration: 2–3 hours (spread across initial setup days).
 8. Copilot & AI Integration
 9. Developer Workflow & Hygiene
 10. Centralised Workflows
+11. Post-Spin-Up Maintenance
 
 ---
 
