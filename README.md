@@ -47,7 +47,7 @@ The Playbook is built in four layers:
 | **Execution** | `.github/scripts/` — Python entry points called by the workflows |
 | **Discovery & publishing** | `index.md`, `wiki/` — catalogue and documentation; `docs/` is generated during gallery deployment to GitHub Pages |
 
-**Flow:** author a template on a short-lived branch → open a pull request to `main` → CI validates structure on the PR and on merge → workflows create Todoist projects on demand or on schedule → gallery auto-deploys to GitHub Pages.
+**Flow:** author a template on a short-lived branch (`feature|fix|docs|chore/<work-item-id>-<short-description>`) → open a pull request to `main` → CI validates structure on the PR and on merge → workflows create Todoist projects on demand or on schedule → gallery auto-deploys to GitHub Pages.
 
 For the full architecture diagram and component detail, see [wiki/Architecture.md](wiki/Architecture.md).
 
@@ -320,7 +320,7 @@ On each run, the workflow:
 2. Compares those changes against the relevant documentation files (`index.md`,
    `CHANGELOG.md`, `README.md`, and individual template `README.md` files).
 3. Generates any necessary documentation updates using GitHub Copilot.
-4. Opens a pull request (branch: `doc-sync/automated-updates`) with the changes —
+4. Opens a pull request (branch: `docs/9000-automated-documentation-sync`) with the changes —
    or exits silently if everything is already up to date.
 
 The workflow is idempotent: if an open documentation-sync PR already exists on that branch,

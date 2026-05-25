@@ -106,7 +106,7 @@ additions.
 
 If you made documentation changes, create a pull request using these parameters:
 
-- **Branch**: `doc-sync/automated-updates`
+- **Branch**: `docs/9000-automated-documentation-sync`
 - **Title**: `docs: automated documentation sync`
 - **Body**:
 

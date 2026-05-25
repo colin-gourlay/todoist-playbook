@@ -26,5 +26,6 @@
 
 <!-- For all PRs: -->
 
+- [ ] Branch name matches `^(feature|fix|docs|chore)/[0-9]+-[a-z0-9-]+$`
 - [ ] PR title follows Conventional Commits format (e.g. `feat: add sprint-review template`)
 - [ ] CI validation passes (`validate-templates` workflow)
