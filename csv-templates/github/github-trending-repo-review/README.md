@@ -30,8 +30,9 @@ The goal is to make the daily review appear at the start of the day immediately 
 Adjust this timing to fit your own routine:
 
 1. After import, edit the first task date and time to your local preferred start-of-day slot.
-2. If needed, change the task timezone to your local timezone in Todoist.
-3. If you prefer to keep this checklist unscheduled, remove the due date entirely.
+2. If you import after 05:30 Europe/London time (or from a timezone where that time has already passed), change the first task to tomorrow or another preferred time so it does not start out overdue.
+3. If needed, change the task timezone to your local timezone in Todoist.
+4. If you prefer to keep this checklist unscheduled, remove the due date entirely.
 
 If you are sharing this template, update the DATE, DATE_LANG, and TIMEZONE fields in template.csv before import so the default schedule matches your audience.
 
