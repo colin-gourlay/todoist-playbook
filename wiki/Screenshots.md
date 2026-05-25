@@ -45,7 +45,7 @@ The project is structured exactly as defined in the template: named sections wit
 
 ## GitHub Actions — Template Validation (CI)
 
-Under GitHub Flow, every pull request to `main` and every merge commit pushed to `main` triggers the **Validate templates** workflow. A passing run looks like:
+Under GitHub Flow, every pull request to `main` and every merge commit pushed to `main` triggers the **Validate templates** workflow. Pull requests also run **Validate branch name**, which enforces `^(feature|fix|docs|chore)/[0-9]+-[a-z0-9-]+$`. A passing run looks like:
 
 ```
 🔎 Checking awesome-list-submission
@@ -158,7 +158,7 @@ Committed version bump for weekly-review
 The **Documentation Sync** workflow runs daily from the compiled `.github/workflows/doc-sync.lock.yml` workflow generated from `.github/workflows/doc-sync.md`. When it detects that `index.md` or a template README is out of date with recent changes, it opens a pull request automatically:
 
 ```
-Branch:  doc-sync/automated-updates
+Branch:  docs/9000-automated-documentation-sync
 Title:   docs: automated documentation sync
 Changes:
   - index.md      (updated catalogue entry)

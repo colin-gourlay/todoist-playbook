@@ -1,0 +1,37 @@
+name: Validate branch name
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+permissions: {}
+
+jobs:
+  validate-branch-name:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@ab7a9404c0f3da075243ca237b5fac12c98deaa5 # v2.19.3
+        with:
+          egress-policy: audit
+
+      - name: Validate source branch name
+        shell: bash
+        run: |
+          BRANCH_NAME="${{ github.head_ref }}"
+          PATTERN='^(feature|fix|docs|chore)/[0-9]+-[a-z0-9-]+$'
+
+          if [[ -z "$BRANCH_NAME" ]]; then
+            echo "Unable to resolve source branch name from github.head_ref"
+            exit 1
+          fi
+
+          if [[ ! "$BRANCH_NAME" =~ $PATTERN ]]; then
+            echo "Invalid branch name: $BRANCH_NAME"
+            echo "Expected format: feature/1234-short-description"
+            echo "Allowed prefixes: feature, fix, docs, chore"
+            exit 1
+          fi
+
+          echo "Branch name is valid: $BRANCH_NAME"

@@ -14,18 +14,18 @@ This repository uses **GitHub Flow**:
 
 All contributor work should happen on a short-lived branch and land in `main` via pull request.
 
-**Branch naming format:** `<type>/<short-description>`
+**Branch naming format:** `<type>/<work-item-id>-<short-description>`
 
 | Prefix | Use for |
 |---|---|
-| `feat/` | New template, prompt template, bundle, or feature |
+| `feature/` | New template, prompt template, bundle, or feature |
 | `fix/` | Bug fix or correction to existing content |
 | `docs/` | Documentation-only change |
-| `ci/` | GitHub Actions workflow or script change |
-| `chore/` | Maintenance, renaming, or housekeeping |
-| `copilot/` | AI-generated branches created by GitHub Copilot |
+| `chore/` | Maintenance, GitHub Actions workflow/script changes, renaming, or housekeeping |
 
-Examples: `feat/sprint-review-template`, `fix/csv-type-validation`, `docs/update-readme`
+Examples: `feature/1234-sprint-review-template`, `fix/4567-csv-type-validation`, `docs/8901-update-readme`
+
+Branch names must match: `^(feature|fix|docs|chore)/[0-9]+-[a-z0-9-]+$`
 
 **Rules:**
 - Branch off `main` and keep branches short-lived (merge or close within days, not weeks)

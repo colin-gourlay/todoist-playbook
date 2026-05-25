@@ -18,6 +18,7 @@ An end-to-end checklist for spinning up a new GitHub repository — or applying 
 - Enforce security and maintenance best practices via Dependabot and branch rulesets
 - Configure the `.github/` directory with community health files and Copilot integration
 - Set up developer workflow standards including a documented GitHub Flow branching convention and PR templates
+- Standardise branch names as `feature|fix|docs|chore/<work-item-id>-<short-description>` and enforce with CI/rulesets
 - Leverage and contribute to centralised shared workflows
 
 Estimated duration: 2–3 hours (spread across initial setup days).
