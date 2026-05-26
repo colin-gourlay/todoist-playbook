@@ -72,6 +72,7 @@ section,8️⃣ Copilot & AI Integration,,,,,,,,,,,,,
 task,"Create .github/copilot-instructions.md and specify that all documentation must be written in British English",,,1,1,,,,,,,,,
 task,Add appropriate Copilot prompt.md files for the project,,,2,1,,,,,,,,,
 task,Add relevant agent skills and custom agent personas,,,2,1,,,,,,,,,
+task,Enforce mandatory SEO Accessibility Agent guardrails across review and change workflows,"Require an SEO Accessibility Agent pass for repository reviews and all create/update/delete changes. Include source and generated output checks (for example .github/scripts/**, .github/workflows/**, wiki/**, README.md, index.md, docs/**) and verify alt text quality, semantic heading structure, meaningful link text, and no missing-alt violations in Lighthouse/axe before publish.",,1,1,,,,,,,,,
 task,Review community-curated agents at awesome-copilot (github.com) for applicable agents,,,3,1,,,,,,,,,
 task,"Identify any MCP servers that can be leveraged for the project e.g. ToDoist for playbook; spotify, lidarr etc",,,2,1,,,,,,,,,
 
