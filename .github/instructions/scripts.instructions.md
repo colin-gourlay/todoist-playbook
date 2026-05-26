@@ -25,3 +25,5 @@ Scripts under `.github/scripts/` run inside GitHub Actions. They use Python 3 an
 - Keep scripts idempotent where possible — they may be re-run by the same workflow
 - `copilot-setup-steps.yml` runs `py_compile` over scripts; new scripts MUST compile cleanly under the Python version pinned in that workflow
 - Do not use the em dash character (`—`) in any user-visible strings embedded in the generated HTML or other public-facing output. Use a hyphen (`-`) instead.
+- Any change to generation scripts that can affect published output (especially `generate_gallery.py` and `generate_release_assets.py`) must include a mandatory `SEO Accessibility Agent` pass over both source changes and generated-output implications.
+- For GitHub Pages-impacting script changes, validate generated output quality via the gallery quality workflow/tooling path (`reusable-gallery-quality.yml`, Lighthouse CI, pa11y-ci) and document any unresolved issues as explicit blockers.

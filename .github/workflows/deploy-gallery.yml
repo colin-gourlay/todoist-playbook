@@ -17,7 +17,14 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  quality:
+    permissions:
+      contents: read
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push') }}
+    uses: ./.github/workflows/reusable-gallery-quality.yml
+
   deploy:
+    needs: quality
     permissions:
       contents: read
       pages: write

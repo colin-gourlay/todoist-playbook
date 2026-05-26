@@ -41,3 +41,5 @@ description: Inventory and behaviour of GitHub Actions workflows in this repo.
 
 - Keep workflow `inputs.template` / `inputs.prompt_template` option lists aligned with the assets that should be selectable in each workflow
 - Update `.github/REUSABLE_WORKFLOWS.md` when adding or changing reusable workflows / composite actions
+- For workflows that generate, transform, or publish user-facing content (including GitHub Pages and docs-sync paths), run a mandatory `SEO Accessibility Agent` review for create/update/delete changes.
+- Ensure generated-output quality checks are wired where applicable (for Pages gallery: `reusable-gallery-quality.yml` with Lighthouse and pa11y) before publishing changes.
