@@ -49,6 +49,7 @@ permissions:
 |---|---|---|
 | `build_script` | Path to the gallery-generation script | `.github/scripts/generate_gallery.py` |
 | `artifact_path` | Directory to upload as the Pages artifact | `docs` |
+| `prebuilt_artifact_name` | Name of a prebuilt gallery artifact to download instead of running the build script | _(empty — regenerates)_ |
 
 **Example**
 
@@ -106,6 +107,8 @@ Generates the GitHub Pages gallery, emits precompressed `.br` / `.gz` text asset
 | Input | Description | Default |
 |---|---|---|
 | `gallery_dir` | Directory containing the generated gallery | `docs` |
+| `upload_artifact` | Upload the generated gallery as a workflow artifact for use by downstream jobs | `false` |
+| `artifact_name` | Name for the uploaded gallery artifact (only used when `upload_artifact` is `true`) | `gallery-docs` |
 
 **Example**
 

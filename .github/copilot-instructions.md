@@ -33,6 +33,9 @@ When this file conflicts with the implementation, follow the implementation and 
 - Update `README.md` only when user-facing discovery copy changes; routine asset additions go into `index.md` only.
 - Preserve existing wording and structure unless the repo has clearly moved to a new convention.
 - When proposing changes that touch multiple asset types or workflows, keep them in one logical PR (one branch per logical change).
+- For every repository review request and every code/content change request (create, update, or delete), ALWAYS run the `SEO Accessibility Agent` as a mandatory guardrail pass before finalising recommendations or edits.
+- This mandatory pass explicitly includes automation and publishing paths: `.github/scripts/**`, `.github/workflows/**`, `wiki/**`, `README.md`, `index.md`, and generated gallery outputs under `docs/**` whenever changes can affect GitHub Pages output.
+- If the `SEO Accessibility Agent` flags violations, resolve them in the same change where possible; if not possible, report explicit blockers and required follow-up actions in the response.
 
 ## Scoped instructions (load automatically by path)
 
@@ -50,7 +53,7 @@ When this file conflicts with the implementation, follow the implementation and 
 On-demand workflows live under `.github/skills/`; specialist personas live under `.github/agents/`. Prefer them over re-deriving procedures:
 
 - Skills: `add-todoist-asset`, `validate-templates-locally`, `review-unreviewed-asset`, `open-pr`
-- Agents: `template-reviewer` (read-only), `csv-doctor`, `prompt-template-author`, `asset-cataloguer` (read-only)
+- Agents: `template-reviewer` (read-only), `csv-doctor`, `prompt-template-author`, `asset-cataloguer` (read-only), `seo-accessibility`
 
 ## Local environment notes
 
