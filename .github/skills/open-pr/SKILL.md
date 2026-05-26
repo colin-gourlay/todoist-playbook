@@ -16,7 +16,7 @@ Codifies the branch → commit → push → `gh pr create` flow used in this rep
 
 - Working tree contains the intended change and nothing else
 - `gh` CLI is authenticated (see `/memories/repo/git-workflow-notes.md`)
-- The change is on `main` or an existing short-lived branch
+- The change is on `main` or an existing short-lived branch that matches the branch naming policy
 
 ## Procedure
 
@@ -31,19 +31,25 @@ If unrelated changes are present, split them into separate branches (one logical
 
 ### 2. Create a branch
 
-Use a Conventional Commits prefix from `CONTRIBUTING`:
+Use a GitHub Flow branch type from `CONTRIBUTING` and include the work item ID:
 
 | Prefix | Use for |
 |---|---|
-| `feat/` | New asset or feature |
+| `feature/` | New asset or feature |
 | `fix/` | Bug fix |
 | `docs/` | Docs-only |
-| `ci/` | Workflows / scripts |
-| `chore/` | Maintenance, version graduations |
-| `copilot/` | AI-generated branches |
+| `chore/` | Maintenance, workflows, scripts, and housekeeping |
 
 ```pwsh
-git checkout -b <prefix>/<short-kebab-description>
+git checkout -b <type>/<work-item-id>-<short-kebab-description>
+```
+
+Examples: `feature/1234-branch-ruleset-guardrails`, `docs/5678-update-contributing`
+
+Branch names must match:
+
+```text
+^(feature|fix|docs|chore)/[0-9]+-[a-z0-9-]+$
 ```
 
 ### 3. Commit

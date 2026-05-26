@@ -89,7 +89,9 @@
     sparkles:  '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>',
     star:      '<svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
     tasks:     '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 6h10"/><path d="M11 12h10"/><path d="M11 18h10"/><path d="m3 6 2 2 4-4"/><path d="m3 12 2 2 4-4"/><path d="m3 18 2 2 4-4"/></svg>',
+    sections:  '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="5" rx="1"/><rect x="3" y="11" width="18" height="3" rx="1"/><rect x="3" y="16" width="18" height="4" rx="1"/></svg>',
     clock:     '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>',
+    repeat:    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>',
     circle:    '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>'
   };
 
@@ -234,11 +236,11 @@
     if (t.task_count)
       stats.push('<span>' + ICONS.tasks + '\u202f' + t.task_count + '\u202ftask' + (t.task_count !== 1 ? 's' : '') + '</span>');
     if (t.section_count)
-      stats.push('<span>\u25b8 ' + t.section_count + '\u202fsection' + (t.section_count !== 1 ? 's' : '') + '</span>');
+      stats.push('<span>' + ICONS.sections + '\u202f' + t.section_count + '\u202fsection' + (t.section_count !== 1 ? 's' : '') + '</span>');
     if (t.estimated_duration)
-      stats.push('<span>\u23f1\ufe0f ' + esc(formatDuration(t.estimated_duration)) + '</span>');
+      stats.push('<span>' + ICONS.clock + '\u202f' + esc(formatDuration(t.estimated_duration)) + '</span>');
     if (t.recurrence_suggestion)
-      stats.push('<span>\u{1F501} ' + esc(t.recurrence_suggestion) + '</span>');
+      stats.push('<span>' + ICONS.repeat + '\u202f' + esc(t.recurrence_suggestion) + '</span>');
     if (!stats.length) return '';
     var sep = '<span class="sep" aria-hidden="true">·</span>';
     return stats.join(sep);

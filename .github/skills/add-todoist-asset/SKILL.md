@@ -54,4 +54,4 @@ Run the validation steps from the [validate-templates-locally](../validate-templ
 
 ### 6. Open a PR
 
-Use the [open-pr](../open-pr/SKILL.md) skill or follow `CONTRIBUTING`. Branch prefix: `feat/` for new assets.
+Use the [open-pr](../open-pr/SKILL.md) skill or follow `CONTRIBUTING`. For new assets, use `feature/<work-item-id>-<short-description>`.

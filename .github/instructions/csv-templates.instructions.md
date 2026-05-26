@@ -40,6 +40,8 @@ Categories are free-form kebab-case strings. Re-use an existing value when one f
 
 ## `template.csv` rules
 
+Use `csv-templates/github/github-trending-repo-review/template.csv` as the structural exemplar when editing other extended-format CSV templates. Match its canonical structure (column order and leading `meta,view_style=list` row) unless a repo-specific requirement explicitly calls for a different format.
+
 The first line MUST start with `TYPE,` and use one of the two supported headers below. The **extended** header is the canonical format for new templates; the **legacy** header is still accepted for back-compat.
 
 **Extended (recommended for new templates):**

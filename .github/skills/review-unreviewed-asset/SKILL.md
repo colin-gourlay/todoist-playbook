@@ -51,7 +51,7 @@ Note: this is the ONE legitimate hand-bump. After 0.1.0, `bump-template-version.
 
 ### 5. Open a PR
 
-Use a `chore/` branch (e.g. `chore/review-{slug}`) and a Conventional Commits message such as:
+Use a `chore/` branch with a work item ID (e.g. `chore/1234-review-{slug}`) and a Conventional Commits message such as:
 
 ```
 chore: graduate {slug} to version 0.1.0

@@ -4,25 +4,34 @@
 
 ## Branching Convention
 
-All work should happen on a short-lived feature branch, merged into `main` via a pull request.
+This repository uses **GitHub Flow**:
 
-**Branch naming format:** `<type>/<short-description>`
+1. Create a short-lived branch from `main`
+2. Commit work to that branch
+3. Open a pull request to `main`
+4. Merge with **Squash and merge** once checks pass and review is complete
+5. Delete the branch after merge
+
+All contributor work should happen on a short-lived branch and land in `main` via pull request.
+
+**Branch naming format:** `<type>/<work-item-id>-<short-description>`
 
 | Prefix | Use for |
 |---|---|
-| `feat/` | New template, prompt template, bundle, or feature |
+| `feature/` | New template, prompt template, bundle, or feature |
 | `fix/` | Bug fix or correction to existing content |
 | `docs/` | Documentation-only change |
-| `ci/` | GitHub Actions workflow or script change |
-| `chore/` | Maintenance, renaming, or housekeeping |
-| `copilot/` | AI-generated branches created by GitHub Copilot |
+| `chore/` | Maintenance, GitHub Actions workflow/script changes, renaming, or housekeeping |
 
-Examples: `feat/sprint-review-template`, `fix/csv-type-validation`, `docs/update-readme`
+Examples: `feature/1234-sprint-review-template`, `fix/4567-csv-type-validation`, `docs/8901-update-readme`
+
+Branch names must match: `^(feature|fix|docs|chore)/[0-9]+-[a-z0-9-]+$`
 
 **Rules:**
 - Branch off `main` and keep branches short-lived (merge or close within days, not weeks)
 - One logical change per branch — avoid bundling unrelated changes
 - Delete branches after the PR is merged
+- Do not push contributor changes directly to `main`
 
 ---
 

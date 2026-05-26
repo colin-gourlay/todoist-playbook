@@ -17,7 +17,8 @@ An end-to-end checklist for spinning up a new GitHub repository — or applying 
 - Introduce Dependabot in active repositories where it is missing
 - Enforce security and maintenance best practices via Dependabot and branch rulesets
 - Configure the `.github/` directory with community health files and Copilot integration
-- Set up developer workflow standards including branching conventions and PR templates
+- Set up developer workflow standards including a documented GitHub Flow branching convention and PR templates
+- Standardise branch names as `feature|fix|docs|chore/<work-item-id>-<short-description>` and enforce with CI/rulesets
 - Leverage and contribute to centralised shared workflows
 
 Estimated duration: 2–3 hours (spread across initial setup days).
@@ -44,6 +45,7 @@ Estimated duration: 2–3 hours (spread across initial setup days).
 8. Copilot & AI Integration
 9. Developer Workflow & Hygiene
 10. Centralised Workflows
+11. Post-Spin-Up Maintenance
 
 ---
 

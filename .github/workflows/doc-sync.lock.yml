@@ -50,7 +50,7 @@ jobs:
       secret_verification_result: ${{ steps.validate-secret.outputs.verification_result }}
     steps:
       - name: Setup Scripts
-        uses: github/gh-aw-actions/setup@v0.71.4
+        uses: github/gh-aw-actions/setup@v0.75.4
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
       - name: Generate agentic run info
@@ -160,7 +160,7 @@ jobs:
           {{/if}}
           - **checkouts**: The following repositories have been checked out and are available in the workspace:
             - `$GITHUB_WORKSPACE` → `__GH_AW_GITHUB_REPOSITORY__` (cwd) [full history, all branches available as remote-tracking refs]
-            - **Note**: If a branch you need is not in the list above and is not listed as an additional fetched ref, it has NOT been checked out. For private repositories you cannot fetch it without proper authentication. If the branch is required and not available, exit with an error and ask the user to add it to the `fetch:` option of the `checkout:` configuration (e.g., `fetch: ["refs/pulls/open/*"]` for all open PR refs, or `fetch: ["main", "feature/my-branch"]` for specific branches).
+            - **Note**: If a branch you need is not in the list above and is not listed as an additional fetched ref, it has NOT been checked out. For private repositories you cannot fetch it without proper authentication. If the branch is required and not available, exit with an error and ask the user to add it to the `fetch:` option of the `checkout:` configuration (e.g., `fetch: ["refs/pulls/open/*"]` for all open PR refs, or `fetch: ["main", "feature/1234-my-branch"]` for specific branches).
           </github-context>
           
           GH_AW_PROMPT_EOF
@@ -260,7 +260,7 @@ jobs:
       output_types: ${{ steps.collect_output.outputs.output_types }}
     steps:
       - name: Setup Scripts
-        uses: github/gh-aw-actions/setup@v0.71.4
+        uses: github/gh-aw-actions/setup@v0.75.4
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
       - name: Set runtime paths
@@ -855,7 +855,7 @@ jobs:
       total_count: ${{ steps.missing_tool.outputs.total_count }}
     steps:
       - name: Setup Scripts
-        uses: github/gh-aw-actions/setup@v0.71.4
+        uses: github/gh-aw-actions/setup@v0.75.4
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
       - name: Download agent output artifact
@@ -983,7 +983,7 @@ jobs:
       process_safe_outputs_temporary_id_map: ${{ steps.process_safe_outputs.outputs.temporary_id_map }}
     steps:
       - name: Setup Scripts
-        uses: github/gh-aw-actions/setup@v0.71.4
+        uses: github/gh-aw-actions/setup@v0.75.4
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
       - name: Download agent output artifact
