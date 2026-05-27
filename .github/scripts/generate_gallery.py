@@ -42,11 +42,22 @@ OUTPUT_DIR           = os.environ.get("OUTPUT_DIR", "docs")
 GITHUB_SHA           = os.environ.get("GITHUB_SHA", "")
 GITHUB_REPOSITORY    = os.environ.get("GITHUB_REPOSITORY", "colin-gourlay/todoist-playbook")
 REPO_URL             = "https://github.com/" + GITHUB_REPOSITORY
-SITE_URL             = "https://colin-gourlay.github.io/todoist-playbook/"
 ASSERT_OUTPUT        = os.environ.get("ASSERT_OUTPUT", "0") == "1"
 ALLOW_VENDOR_TOFU    = os.environ.get("TP_ALLOW_VENDOR_TOFU", "0") == "1"
 SHORT_SHA            = (GITHUB_SHA or "")[:7]
 BUILD_DATE           = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
+
+
+def default_site_url(repository):
+    owner, _, repo = repository.partition("/")
+    if owner and repo:
+        if repo.lower() == f"{owner.lower()}.github.io":
+            return f"https://{repo}/"
+        return f"https://{owner}.github.io/{repo}/"
+    return "https://colin-gourlay.github.io/todoist-playbook/"
+
+
+SITE_URL             = os.environ.get("SITE_URL", default_site_url(GITHUB_REPOSITORY)).rstrip("/") + "/"
 
 ASSETS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "gallery_assets")
 
@@ -413,7 +424,7 @@ def emit_precompressed_assets(output_dir):
     """Emit .gz and .br variants for text assets."""
     text_extensions = {
         ".css", ".csv", ".html", ".js", ".json", ".md",
-        ".svg", ".txt", ".webmanifest",
+        ".svg", ".txt", ".webmanifest", ".xml",
     }
     brotli_available = shutil.which("brotli") is not None
     brotli_failures = 0
@@ -628,6 +639,28 @@ def emit_service_worker():
     write_text(os.path.join(OUTPUT_DIR, "sw.js"), sw)
 
 
+def emit_crawler_assets():
+    sitemap_url = SITE_URL + "sitemap.xml"
+    robots = (
+        "User-agent: *\n"
+        "Allow: /\n"
+        "\n"
+        f"Sitemap: {sitemap_url}\n"
+    )
+    write_text(os.path.join(OUTPUT_DIR, "robots.txt"), robots)
+
+    sitemap = (
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+        "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"
+        "  <url>\n"
+        f"    <loc>{SITE_URL}</loc>\n"
+        f"    <lastmod>{BUILD_DATE}</lastmod>\n"
+        "  </url>\n"
+        "</urlset>\n"
+    )
+    write_text(os.path.join(OUTPUT_DIR, "sitemap.xml"), sitemap)
+
+
 def read_asset(filename):
     """Read a bundled asset (CSS or JS) from the gallery_assets folder."""
     with open(os.path.join(ASSETS_DIR, filename), encoding="utf-8") as f:
@@ -826,7 +859,7 @@ def assert_hardening(html, output_dir, payload):
 
     # Files exist
     for f in ("styles.css", "app.js", "manifest.webmanifest", "sw.js",
-              "favicon.svg", "og-image.svg",
+              "favicon.svg", "og-image.svg", "robots.txt", "sitemap.xml",
               "vendor/marked.min.js", "vendor/dompurify.min.js"):
         assert os.path.exists(os.path.join(output_dir, f)), f"missing {f}"
 
@@ -888,6 +921,7 @@ def main():
     write_text(os.path.join(OUTPUT_DIR, "app.js"),     read_asset("app.js"))
     emit_pwa_assets()
     emit_service_worker()
+    emit_crawler_assets()
 
     # Vendor (downloads or stubs)
     sri = download_vendor(os.path.join(OUTPUT_DIR, "vendor"))

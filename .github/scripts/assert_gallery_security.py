@@ -11,12 +11,14 @@ import json
 import os
 import re
 import sys
+import xml.etree.ElementTree as ET
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from generate_gallery import SITE_URL
 
 OUTPUT_PATH = sys.argv[1] if len(sys.argv) > 1 else "docs/index.html"
 EXPECTED_CANONICAL = SITE_URL
+EXPECTED_SITEMAP = SITE_URL + "sitemap.xml"
 
 
 def fail(msg):
@@ -108,6 +110,52 @@ def main():
         m = re.search(r'\s(on[a-z]+)\s*=', html, re.IGNORECASE)
         fail(f"Inline event handler attribute found: {m.group(0)!r}")
     print("✅ No inline event handler attributes")
+
+    # 6. robots.txt exists with valid baseline directives and absolute sitemap URL
+    output_dir = os.path.dirname(os.path.abspath(OUTPUT_PATH))
+    robots_path = os.path.join(output_dir, "robots.txt")
+    try:
+        with open(robots_path, encoding="utf-8") as f:
+            robots = f.read()
+    except FileNotFoundError:
+        fail(f"{robots_path} not found - robots.txt must be generated")
+
+    if "User-agent: *" not in robots:
+        fail("robots.txt missing 'User-agent: *'")
+    if "Allow: /" not in robots:
+        fail("robots.txt missing 'Allow: /'")
+
+    sitemap_match = re.search(r'^Sitemap:\s*(\S+)\s*$', robots, re.MULTILINE)
+    if not sitemap_match:
+        fail("robots.txt missing Sitemap directive")
+    sitemap_url = sitemap_match.group(1)
+    if not sitemap_url.startswith("https://"):
+        fail(f"robots.txt Sitemap must be absolute HTTPS URL: {sitemap_url!r}")
+    if sitemap_url != EXPECTED_SITEMAP:
+        fail(f"robots.txt Sitemap must match production URL: {sitemap_url!r}")
+    print("✅ robots.txt directives and sitemap URL are valid")
+
+    # 7. sitemap.xml exists, parses, and includes canonical root URL
+    sitemap_path = os.path.join(output_dir, "sitemap.xml")
+    try:
+        with open(sitemap_path, encoding="utf-8") as f:
+            sitemap_xml = f.read()
+    except FileNotFoundError:
+        fail(f"{sitemap_path} not found - sitemap.xml must be generated")
+
+    try:
+        root = ET.fromstring(sitemap_xml)
+    except ET.ParseError as exc:
+        fail(f"sitemap.xml is not valid XML: {exc}")
+
+    ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+    loc_values = [
+        (loc.text or "").strip()
+        for loc in root.findall("sm:url/sm:loc", ns)
+    ]
+    if EXPECTED_CANONICAL not in loc_values:
+        fail("sitemap.xml must include canonical site URL in <loc>")
+    print("✅ sitemap.xml exists and includes canonical URL")
 
     print(f"\n✅ All security assertions passed for {OUTPUT_PATH}")
 

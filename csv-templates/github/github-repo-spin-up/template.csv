@@ -27,6 +27,7 @@ task,Add screenshots to wiki,,,3,1,,,,,,,,,
 task,Add setup guide to wiki,,,1,1,,,,,,,,,
 task,Add roadmap to wiki,,,2,1,,,,,,,,,
 task,Configure GitHub Pages for documentation or a personal site (if applicable),,,3,1,,,,,,,,,
+task,Add and deploy a valid robots.txt for the GitHub Pages site,"Ensure /robots.txt is publicly accessible after deploy and includes valid directives with an absolute Sitemap URL (for example https://username.github.io/repository/sitemap.xml or your custom domain sitemap URL). Run Lighthouse SEO to confirm no invalid robots.txt warnings remain.",,2,1,,,,,,,,,
 
 section,3️⃣ Visual Identity,,,,,,,,,,,,,
 task,Create and add GitHub Social Preview image,,,2,1,,,,,,,,,
