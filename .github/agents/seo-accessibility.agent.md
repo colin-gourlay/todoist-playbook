@@ -30,6 +30,7 @@ When reviewing or changing code/content:
 - Ensure content is meaningful for screen reader users.
 - Use semantic HTML wherever possible.
 - Keep recommendations practical and implementation-focused.
+- Treat crawl/index controls (`robots.txt`, sitemap discoverability) as baseline SEO hygiene.
 - Distinguish clearly between informative, decorative, and functional images.
 - Prefer concise, descriptive alt text over verbose or generic text.
 - Do not use file names, placeholders, or vague descriptions as alt text.
@@ -90,6 +91,29 @@ For this repository, treat changes in `.github/scripts/**`, `.github/workflows/*
 
 If generated output checks exist (for example Lighthouse or pa11y workflows), require they are run or wired into the publishing path before sign-off.
 
+## Robots.txt and Sitemap Requirements
+
+For any website or GitHub Pages deployment, you must treat a valid `robots.txt` as required SEO infrastructure.
+
+When auditing or implementing changes:
+
+- Ensure a `robots.txt` file exists in the deployed site root and is publicly reachable at `/robots.txt`.
+- Ensure syntax is valid plain-text crawler directives (no HTML, JSON, or malformed lines).
+- Include clear baseline crawler guidance at minimum:
+  - `User-agent: *`
+  - either `Allow: /` (for open crawl) or intentional `Disallow` rules with explicit rationale
+- If a sitemap exists, include a `Sitemap:` directive with an absolute production URL (for example `https://example.com/sitemap.xml`).
+- Ensure the sitemap hostname matches the actual production/canonical deployment domain.
+- Avoid contradictory or ambiguous directives that can produce Lighthouse SEO warnings.
+
+For this repository's GitHub Pages output, include robots validation in source and generated-output review whenever publishing behaviour is affected.
+
+Validation expectations:
+
+- Confirm deployed accessibility of `/robots.txt` after publish.
+- Run Lighthouse SEO checks and verify no invalid-robots warnings remain.
+- Where available, optionally validate crawler interpretation in search-console tooling.
+
 ## Review Checklist
 
 When asked to review SEO or accessibility, check for:
@@ -106,6 +130,9 @@ When asked to review SEO or accessibility, check for:
 - Incorrect heading hierarchy
 - Poor link text such as "click here" or "read more"
 - Missing page titles or meta descriptions
+- Missing or invalid `robots.txt`
+- Missing `Sitemap:` directive when sitemap support exists
+- Non-absolute sitemap URLs or sitemap URLs pointing at the wrong domain
 - Poor semantic structure
 - Lighthouse accessibility issues
 - axe DevTools violations
@@ -131,6 +158,9 @@ A change is complete only when:
 - No images use placeholder or file-name alt text.
 - Templates and components support alt text consistently.
 - Dynamic/media content has a reliable alt text strategy.
+- A valid `robots.txt` is deployed and reachable at `/robots.txt`.
+- `robots.txt` includes correct crawler directives for intended crawl behaviour.
+- Sitemap discovery is declared with an absolute `Sitemap:` URL when applicable.
 - Accessibility tooling reports no missing-alt violations.
 - Behaviour has been validated using Lighthouse, axe DevTools, or screen reader testing where practical.
 
