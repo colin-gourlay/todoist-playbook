@@ -23,6 +23,8 @@ Confirm the slug, asset type, and current `version:` in the metadata file. If `v
 
 Delegate the full review to the [template-reviewer](../../agents/template-reviewer.agent.md) custom agent (read-only, returns a single review summary). For a manual review, walk the relevant scoped instructions:
 
+Run the [SEO Accessibility Agent](../../agents/seo-accessibility.agent.md) as a mandatory secondary pass for all review outcomes, including create/update/delete recommendations.
+
 - CSV template → [csv-templates.instructions.md](../../instructions/csv-templates.instructions.md)
 - Prompt template → [prompt-templates.instructions.md](../../instructions/prompt-templates.instructions.md)
 - Bundle → [bundles.instructions.md](../../instructions/bundles.instructions.md)

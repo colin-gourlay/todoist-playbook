@@ -7,6 +7,14 @@ on:
         description: Directory containing the generated gallery.
         type: string
         default: docs
+      upload_artifact:
+        description: Upload the generated gallery as a workflow artifact for use by downstream jobs.
+        type: boolean
+        default: false
+      artifact_name:
+        description: Name for the uploaded gallery artifact (only used when upload_artifact is true).
+        type: string
+        default: gallery-docs
 
 permissions:
   contents: read
@@ -138,6 +146,13 @@ jobs:
           name: pa11y-report
           path: .github/quality/pa11y-results/
           if-no-files-found: warn
+
+      - name: Upload gallery artifact
+        if: ${{ inputs.upload_artifact }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ${{ inputs.artifact_name }}
+          path: ${{ inputs.gallery_dir }}
 
       - name: Stop static server
         if: always()

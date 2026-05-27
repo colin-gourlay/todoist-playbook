@@ -17,10 +17,22 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  quality:
+    permissions:
+      contents: read
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push') }}
+    uses: ./.github/workflows/reusable-gallery-quality.yml
+    with:
+      upload_artifact: true
+      artifact_name: gallery-docs
+
   deploy:
+    needs: quality
     permissions:
       contents: read
       pages: write
       id-token: write
     if: ${{ github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push') }}
     uses: ./.github/workflows/reusable-deploy-pages-gallery.yml
+    with:
+      prebuilt_artifact_name: gallery-docs

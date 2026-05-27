@@ -11,6 +11,10 @@ on:
         description: Directory to upload as the Pages artifact.
         type: string
         default: docs
+      prebuilt_artifact_name:
+        description: Name of a prebuilt gallery artifact to download instead of running the build script.
+        type: string
+        default: ''
 
 permissions: {}
 
@@ -32,7 +36,15 @@ jobs:
 
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
+      - name: Download prebuilt gallery
+        if: ${{ inputs.prebuilt_artifact_name != '' }}
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: ${{ inputs.prebuilt_artifact_name }}
+          path: ${{ inputs.artifact_path }}
+
       - name: Generate gallery
+        if: ${{ inputs.prebuilt_artifact_name == '' }}
         env:
           TP_ALLOW_VENDOR_TOFU: "1"
         run: python3 ${{ inputs.build_script }}
