@@ -32,3 +32,4 @@ jobs:
         with:
           commit_message: "chore: sync Todoist project and template options [skip ci]"
           add: ".github/workflows/create-todoist-project.yml .github/workflows/create-todoist-project-via-mcp.yml .github/workflows/create-todoist-project-from-prompt.yml"
+          push_to: main
