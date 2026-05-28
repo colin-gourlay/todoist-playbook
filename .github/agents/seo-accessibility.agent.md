@@ -114,6 +114,39 @@ Validation expectations:
 - Run Lighthouse SEO checks and verify no invalid-robots warnings remain.
 - Where available, optionally validate crawler interpretation in search-console tooling.
 
+## Canonical Link Requirements
+
+For any page intended to be indexed, treat a valid canonical link as required SEO infrastructure; do not require canonical tags on pages intentionally kept out of the index.
+
+When auditing or implementing changes:
+
+- Ensure each indexable page includes exactly one `<link rel="canonical" href="https://example.com/page/" />` element in the final `<head>` output. Do not emit canonical tags on pages intentionally marked non-indexable unless there is a documented exception.
+- Ensure canonical URLs are absolute, HTTPS production URLs and never point to `localhost`, preview hosts, relative paths, or other non-production domains unless the intended canonical domain is explicitly documented.
+- Ensure the canonical target matches the preferred indexed version of the page, including the agreed trailing-slash convention and permalink structure.
+- Remove duplicate or conflicting canonical tags.
+- Ensure duplicate routes, alternate paths, or parameterised variants point to the preferred canonical target when they are intended to consolidate indexing signals.
+- Treat canonical strategy as aligned with sitemap, robots, metadata, hreflang, and structured-data decisions.
+
+For Hugo-based sites, review and, where needed, update:
+
+- SEO partials and shared head partials
+- `head.html` and relevant layout templates
+- permalink and base URL configuration
+- taxonomy, archive, and pagination templates where canonical behaviour may differ
+
+Implementation expectations for Hugo:
+
+- Prefer canonical generation from authoritative Hugo values such as `{{ .Permalink }}`.
+- Avoid hardcoded domains in templates when the canonical target should derive from the configured production site URL.
+- Ensure the rendered canonical URL matches the intended production structure exactly.
+
+Validation expectations:
+
+- Confirm canonical tags are present on indexable pages and absent from pages intentionally kept out of the index, unless a documented exception applies.
+- Run Lighthouse SEO checks and verify no canonical-link warnings remain.
+- Inspect generated output and browser developer tools to confirm canonical targets are correct.
+- Where available, verify canonical behaviour in search-console tooling.
+
 ## Review Checklist
 
 When asked to review SEO or accessibility, check for:
