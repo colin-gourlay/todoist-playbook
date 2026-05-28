@@ -21,6 +21,7 @@
 
 ### Changed
 
+- Template: `github-repo-spin-up` - refined early repository identity tasks for clarity, including clearer `.gitignore` guidance and a more explicit owner or organisation profile-image task
 - Templates (GitHub category): standardised `project_color` to `grape` for `github-repo-spin-up` and `repo-ecosystem-watch`, and refined `github-trending-repo-review` metadata (`description` tightened; tag `quality-signals` replaced with `stars`); `index.md` catalogue row was updated to match current metadata
 - Template: `album-of-the-week-weekly-review` - added a new preparation task to tag copied audio files with KID3 immediately before the Lidarr re-download prevention step
 - Template: `github-trending-repo-review` — moved to `csv-templates/github/github-trending-repo-review/`, display name changed to **GitHub Trending Repo Review**, and tag list aligned to `github, trending, open-source, discoverability, triage, stars, daily`; workflow inputs and the trending-sync follow-on have been updated to the renamed slug
