@@ -279,6 +279,7 @@ Runs daily (and on demand) through the compiled workflow `doc-sync.lock.yml`, wh
 Runs after `Validate templates` succeeds on pushes to `main`, or on manual dispatch:
 
 - `generate_gallery.py` builds a static HTML site from all templates and prompt templates
+- Gallery metadata includes canonical + `hreflang` alternates for the current single-language strategy (`en` and `x-default` both pointing at the production root URL); this is validated by `assert_gallery_security.py` and can be expanded when locale-specific variants are introduced
 - Deployed to GitHub Pages via `actions/deploy-pages`
 
 ### Sync Todoist Project List

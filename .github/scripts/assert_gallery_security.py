@@ -19,6 +19,10 @@ from generate_gallery import SITE_URL
 OUTPUT_PATH = sys.argv[1] if len(sys.argv) > 1 else "docs/index.html"
 EXPECTED_CANONICAL = SITE_URL
 EXPECTED_SITEMAP = SITE_URL + "sitemap.xml"
+EXPECTED_HREFLANGS = {
+    "en": SITE_URL,
+    "x-default": SITE_URL,
+}
 
 
 def fail(msg):
@@ -72,6 +76,25 @@ def main():
     if canonical != EXPECTED_CANONICAL:
         fail(f"Canonical URL must use production site URL: {canonical!r}")
     print("✅ Canonical link present and valid")
+
+    # 1c. hreflang alternate links present and valid for current single-language strategy
+    hreflang_links = {}
+    for tag in re.findall(r'<link[^>]*\brel="alternate"[^>]*>', html):
+        hreflang_match = re.search(r'\bhreflang="([^"]+)"', tag)
+        href_match = re.search(r'\bhref="([^"]+)"', tag)
+        if not hreflang_match or not href_match:
+            fail(f"Alternate link must include both hreflang and href: {tag!r}")
+        hreflang_links[hreflang_match.group(1)] = href_match.group(1)
+
+    for code, expected_href in EXPECTED_HREFLANGS.items():
+        if code not in hreflang_links:
+            fail(f"Missing hreflang alternate for {code!r}")
+        href = hreflang_links[code]
+        if not href.startswith("https://"):
+            fail(f"hreflang URL must be absolute HTTPS for {code!r}: {href!r}")
+        if href != expected_href:
+            fail(f"hreflang URL for {code!r} must match production URL: {href!r}")
+    print("✅ hreflang alternate links present and valid")
 
     # 2. Every vendor <script src> has integrity + crossorigin
     for m in re.finditer(r'<script\s+([^>]+)>', html):

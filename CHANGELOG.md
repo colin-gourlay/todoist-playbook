@@ -21,6 +21,7 @@
 
 ### Changed
 
+- Gallery: generate `hreflang` alternates for the production root (`en` + `x-default`) and validate them in `assert_gallery_security.py` to keep single-language metadata intentional and ready for future locale expansion
 - Agent: `SEO Accessibility Agent` - expanded hreflang guidance and a quick audit procedure for multilingual SEO reviews
 - Agent: `SEO Accessibility Agent` - expanded guidance to review canonical links, Hugo canonical generation, and indexable-versus-non-indexable page handling during SEO and accessibility audits
 - Template: `github-repo-spin-up` - refined early repository identity tasks for clarity, including clearer `.gitignore` guidance and a more explicit owner or organisation profile-image task
