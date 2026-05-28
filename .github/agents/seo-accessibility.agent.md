@@ -148,6 +148,60 @@ Validation expectations:
 - Inspect generated output and browser developer tools to confirm canonical targets are correct.
 - Where available, verify canonical behaviour in search-console tooling.
 
+## Hreflang Requirements
+
+For websites with multilingual or regional variants, treat valid `hreflang` metadata as required international SEO infrastructure. For intentionally single-language sites, require an explicit documented decision in repository policy or PR notes describing why `hreflang` is not currently required and when this should be revisited.
+
+When auditing or implementing changes:
+
+- Determine whether locale variants exist now or are planned in the near term.
+- If locale variants exist, ensure each relevant page includes `<link rel="alternate" hreflang="..." href="..." />` entries for each supported language/region variant.
+- Ensure `hreflang` values use valid language and optional region codes (for example `en`, `en-GB`, `en-US`) and remain consistent across templates.
+- Ensure alternate URLs are absolute canonical production URLs, resolve successfully, and point to the correct locale variant.
+- Ensure mappings are fully reciprocal across the locale set: each locale variant references every other available variant and includes a self-referencing `hreflang` entry.
+- Ensure `hreflang` strategy aligns with canonical URLs, sitemap entries, indexation controls, and metadata generation.
+- Avoid emitting `hreflang` tags that reference missing pages, redirects to unrelated content, or non-production hosts.
+- If a locale-equivalent page does not exist, do not map `hreflang` to unrelated fallback content; document the gap and exclude that locale from the page-level `hreflang` cluster until an equivalent exists.
+
+For Hugo-based sites, review and, where needed, update:
+
+- SEO partials and shared head partials.
+- `head.html` and locale-aware layout templates.
+- multilingual/base URL configuration that controls locale routing and generated absolute URLs.
+- canonical and alternate URL generation logic to avoid conflicts.
+
+Validation expectations:
+
+- Confirm generated pages contain valid `hreflang` markup where locale variants exist.
+- Run Lighthouse SEO checks and verify no `hreflang` warnings remain where implementation is expected.
+- Inspect rendered page source and browser developer tools to verify `hreflang` values and targets.
+- Where available, validate locale targeting and alternate-page interpretation in search-console tooling.
+
+### Quick Audit Procedure (Hreflang)
+
+Use this sequence when reviewing international SEO behaviour:
+
+1. Confirm locale strategy
+  - Determine whether the site is single-language, multilingual, or regionalised.
+  - If single-language, verify the intentional no-`hreflang` decision is documented with a future trigger to revisit.
+2. Collect representative URLs
+  - Select equivalent pages across each locale variant (for example home, content, taxonomy/list, and detail pages).
+3. Inspect rendered head output
+  - Verify each variant includes expected `<link rel="alternate" hreflang="..." href="..." />` entries.
+  - Verify values use valid language/region patterns and are consistent.
+4. Validate alternate targets
+  - Open each alternate URL and confirm it resolves, is indexable where intended, and matches the referenced locale.
+  - Confirm alternate targets are canonical production URLs (not localhost, previews, or wrong domains).
+5. Check reciprocity and consistency
+  - Confirm each locale variant page references all available locale variants, including itself, and that mappings are reciprocal.
+  - Confirm `hreflang` entries do not conflict with canonical, sitemap, or robots decisions.
+6. Run tooling checks
+  - Run Lighthouse SEO and ensure `hreflang` warnings are cleared where implementation is expected.
+  - Use search-console tooling where available to verify international targeting interpretation.
+7. Record outcome
+  - Document pass/fail findings, gaps, and required fixes.
+  - For intentional single-language implementations, record rationale and future multilingual rollout notes.
+
 ## Review Checklist
 
 When asked to review SEO or accessibility, check for:
@@ -169,6 +223,12 @@ When asked to review SEO or accessibility, check for:
 - Invalid, relative, or non-absolute canonical URLs
 - Canonical URLs pointing to localhost, preview, or other non-production domains
 - Canonical targets that conflict with the intended trailing-slash or permalink strategy
+- Missing `hreflang` tags where multilingual/regional variants exist
+- Invalid `hreflang` language/region values
+- Inconsistent locale mappings across related pages
+- Alternate `hreflang` URLs that are broken, non-canonical, or non-production
+- Missing reciprocal locale mappings between variants
+- Unclear or undocumented single-language decision where `hreflang` is omitted
 - Missing or invalid `robots.txt`
 - Missing `Sitemap:` directive when sitemap support exists
 - Non-absolute sitemap URLs or sitemap URLs pointing at the wrong domain
@@ -194,6 +254,8 @@ When updating SEO/layout templates:
 - Generate canonical URLs from the authoritative production permalink rather than hand-built string concatenation where possible.
 - Remove duplicate or conflicting canonical logic from overlapping partials or layouts.
 - Keep canonical behaviour consistent with sitemap generation, robots rules, metadata, hreflang, and structured-data output.
+- Implement locale-aware alternate link generation for multilingual/regional variants and ensure reciprocal `hreflang` mappings between variant pages.
+- If the site is currently single-language, document the intentional no-`hreflang` strategy and the trigger for future implementation.
 
 ## Acceptance Criteria
 
@@ -209,11 +271,14 @@ A change is complete only when:
 - No localhost, preview, or other unintended non-production URLs appear in canonical tags.
 - Duplicate or conflicting canonical tags have been removed.
 - Templates and layouts generate canonical links consistently.
+- For multilingual/regional pages, valid `hreflang` metadata is present and uses consistent, valid language/region codes.
+- `hreflang` alternate URLs resolve correctly, align with canonical URLs, and remain reciprocal between variants.
+- If the site is intentionally single-language, the no-`hreflang` decision and future multilingual strategy are documented.
 - A valid `robots.txt` is deployed and reachable at `/robots.txt`.
 - `robots.txt` includes correct crawler directives for intended crawl behaviour.
 - Sitemap discovery is declared with an absolute `Sitemap:` URL when applicable.
 - Accessibility tooling reports no missing-alt violations.
-- Lighthouse SEO checks report no canonical-link warnings where practical.
+- Lighthouse SEO checks report no canonical-link or `hreflang` warnings where practical.
 - Behaviour has been validated using Lighthouse, axe DevTools, or screen reader testing where practical.
 
 ## Response Style
