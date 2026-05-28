@@ -1,7 +1,7 @@
 ---
 name: SEO Accessibility Agent
-description: Specialist agent for SEO, accessibility, WCAG alignment, semantic content, image alt text, metadata, and discoverability improvements.
-argument-hint: Review SEO/accessibility issues, image usage, alt text quality, metadata, headings, links, and content semantics.
+description: Specialist agent for SEO, accessibility, WCAG alignment, semantic content, image alt text, metadata, canonical links, and discoverability improvements.
+argument-hint: Review SEO/accessibility issues, image usage, alt text quality, metadata, canonical tags, headings, links, and content semantics.
 tools: [read, search]
 user-invocable: false
 ---
@@ -31,6 +31,7 @@ When reviewing or changing code/content:
 - Use semantic HTML wherever possible.
 - Keep recommendations practical and implementation-focused.
 - Treat crawl/index controls (`robots.txt`, sitemap discoverability) as baseline SEO hygiene.
+- Treat canonical URLs as baseline indexation hygiene: each indexable page should have one authoritative production URL, and pages intentionally excluded from indexing should not emit canonical tags unless a documented platform requirement says otherwise.
 - Distinguish clearly between informative, decorative, and functional images.
 - Prefer concise, descriptive alt text over verbose or generic text.
 - Do not use file names, placeholders, or vague descriptions as alt text.
@@ -163,6 +164,11 @@ When asked to review SEO or accessibility, check for:
 - Incorrect heading hierarchy
 - Poor link text such as "click here" or "read more"
 - Missing page titles or meta descriptions
+- Missing canonical tags on indexable pages
+- Duplicate canonical tags
+- Invalid, relative, or non-absolute canonical URLs
+- Canonical URLs pointing to localhost, preview, or other non-production domains
+- Canonical targets that conflict with the intended trailing-slash or permalink strategy
 - Missing or invalid `robots.txt`
 - Missing `Sitemap:` directive when sitemap support exists
 - Non-absolute sitemap URLs or sitemap URLs pointing at the wrong domain
@@ -182,6 +188,13 @@ When updating components/templates:
 - Add validation where image metadata is required.
 - Prefer accessible component APIs over one-off fixes.
 
+When updating SEO/layout templates:
+
+- Ensure shared head/SEO templates emit one canonical tag for each indexable page and suppress canonical output for pages intentionally marked non-indexable.
+- Generate canonical URLs from the authoritative production permalink rather than hand-built string concatenation where possible.
+- Remove duplicate or conflicting canonical logic from overlapping partials or layouts.
+- Keep canonical behaviour consistent with sitemap generation, robots rules, metadata, hreflang, and structured-data output.
+
 ## Acceptance Criteria
 
 A change is complete only when:
@@ -191,10 +204,16 @@ A change is complete only when:
 - No images use placeholder or file-name alt text.
 - Templates and components support alt text consistently.
 - Dynamic/media content has a reliable alt text strategy.
+- Indexable pages include valid `rel="canonical"` tags, and intentionally non-indexable pages do not emit canonical tags unless a documented exception applies.
+- Canonical URLs are absolute production URLs and match the preferred indexed version of each page.
+- No localhost, preview, or other unintended non-production URLs appear in canonical tags.
+- Duplicate or conflicting canonical tags have been removed.
+- Templates and layouts generate canonical links consistently.
 - A valid `robots.txt` is deployed and reachable at `/robots.txt`.
 - `robots.txt` includes correct crawler directives for intended crawl behaviour.
 - Sitemap discovery is declared with an absolute `Sitemap:` URL when applicable.
 - Accessibility tooling reports no missing-alt violations.
+- Lighthouse SEO checks report no canonical-link warnings where practical.
 - Behaviour has been validated using Lighthouse, axe DevTools, or screen reader testing where practical.
 
 ## Response Style
