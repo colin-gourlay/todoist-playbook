@@ -29,7 +29,7 @@ jobs:
       - name: Bump template version
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
         run: python3 .github/scripts/bump_template_versions.py
 
       - name: Commit and push version bump
