@@ -59,6 +59,11 @@
     return 'hsl(' + hue + ', 70%, 92%)';
   }
 
+  function templateSourceUrl(t) {
+    var path = t && t.github_path ? String(t.github_path).replace(/^\/+/, '') : '';
+    return path ? (REPO_URL + '/tree/main/' + path) : REPO_URL;
+  }
+
   function groupByCategory(templates) {
     var map = {};
     templates.forEach(function (t) {
@@ -295,7 +300,7 @@
            'aria-label="Open details for ' + esc(t.name) + '">' +
           '<div class="spotlight-body">' +
             '<span class="spotlight-badge">Featured Template</span>' +
-            '<h2 class="spotlight-name">' + esc(t.name) + '</h2>' +
+            '<h2 class="spotlight-name"><a href="' + esc(templateSourceUrl(t)) + '" target="_blank" rel="noopener noreferrer" data-stop>' + esc(t.name) + '</a></h2>' +
             (t.description ? '<p class="spotlight-desc">' + esc(t.description) + '</p>' : '') +
             (tags ? '<div class="spotlight-tags">' + tags + '</div>' : '') +
             (stats ? '<div class="spotlight-stats">' + stats + '</div>' : '') +
@@ -379,7 +384,7 @@
         '<div class="tpl-card-copy">' +
           '<div class="tpl-card-header">' +
             '<span class="tpl-type-badge">' + badgeLabel + '</span>' +
-            '<h3 class="tpl-title">' + esc(t.name) + '</h3>' +
+            '<h3 class="tpl-title"><a href="' + esc(templateSourceUrl(t)) + '" target="_blank" rel="noopener noreferrer" data-stop>' + esc(t.name) + '</a></h3>' +
             (t.description ? '<p class="tpl-desc">' + esc(t.description) + '</p>' : '') +
           '</div>' +
           factsSection +
@@ -396,14 +401,14 @@
 
   function buildRailCard(t) {
     var badgeLabel = t.type === 'prompt' ? 'AI Prompt' : 'Template';
-    return '<button type="button" class="rail-card" ' +
+    return '<a class="rail-card" href="' + esc(templateSourceUrl(t)) + '" target="_blank" rel="noopener noreferrer" data-stop ' +
       'data-slug="' + esc(t.slug) + '" data-type="' + esc(t.type) + '" ' +
       'aria-label="Open details for ' + esc(t.name) + '">' +
       '<span class="rail-card-badge">' + badgeLabel + '</span>' +
       '<div class="rail-card-name">' + esc(t.name) + '</div>' +
       (t.description ? '<div class="rail-card-desc">' + esc(t.description) + '</div>' : '') +
       '<div class="rail-card-meta">' + (t.mtime ? esc(t.mtime) : '') + '</div>' +
-    '</button>';
+    '</a>';
   }
 
   function recentlyUpdated(n) {
@@ -1167,6 +1172,7 @@
       }
       // Card open
       if (card && (!inner || inner === card)) {
+        e.preventDefault();
         openCard(card);
       }
     });
