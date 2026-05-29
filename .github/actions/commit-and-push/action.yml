@@ -25,6 +25,12 @@ inputs:
     description: Git committer email.
     required: false
     default: 'github-actions[bot]@users.noreply.github.com'
+  force:
+    description: >
+      Whether to force-push (--force) when pushing. Use for auto-managed branches
+      that are always regenerated from a clean base (e.g. chore/9000-bump-template-version).
+    required: false
+    default: 'false'
 
 runs:
   using: composite
@@ -46,14 +52,19 @@ runs:
       env:
         COMMIT_MESSAGE: ${{ inputs.commit_message }}
         PUSH_TO: ${{ inputs.push_to }}
+        FORCE_PUSH: ${{ inputs.force }}
       run: |
         if git diff --cached --quiet; then
           echo "ℹ️  No changes to commit."
           exit 0
         fi
         git commit -m "$COMMIT_MESSAGE"
+        FORCE_FLAG=""
+        if [ "$FORCE_PUSH" = "true" ]; then
+          FORCE_FLAG="--force"
+        fi
         if [ -n "$PUSH_TO" ]; then
-          git push origin "HEAD:$PUSH_TO"
+          git push $FORCE_FLAG origin "HEAD:$PUSH_TO"
         else
-          git push
+          git push $FORCE_FLAG
         fi
