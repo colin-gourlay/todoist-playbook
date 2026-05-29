@@ -29,3 +29,4 @@
 - [ ] Branch name matches `^(feature|fix|docs|chore)/[0-9]+-[a-z0-9-]+$`
 - [ ] PR title follows Conventional Commits format (e.g. `feat: add sprint-review template`)
 - [ ] CI validation passes (`validate-templates` workflow)
+- [ ] If this PR adds or changes links in docs/site/generated output: text links use descriptive, destination-specific wording; avoid vague labels (`Click here`, `Read more`, `More`, `Here`, `Learn more`); icon-only links expose a meaningful accessible name (visible text, `aria-label`, or `aria-labelledby`); where Lighthouse SEO and accessibility checks are run for this change, they report no new link-text-related regressions introduced by this PR

@@ -89,11 +89,15 @@ body:
         - For **csv-template**: required sections and tasks.
         - For **prompt-template**: required behaviour and content of the generated output.
         - For **bundle**: the user-facing outcome the bundle delivers when imported.
+        - For assets that include links/docs/site output: text links use clear, destination-specific wording; avoid vague labels like "Click here", "Read more", "More", "Here", "Learn more"; icon-only links must expose a meaningful accessible name (visible text, `aria-label`, or `aria-labelledby`).
       placeholder: |
         Process email inbox to zero
         Review all active projects
         Set priorities for the week
         Schedule time blocks for deep work
+        Links use descriptive text (not "Read more" or "Click here")
+        Icon-only links include meaningful aria-label values
+        Lighthouse and accessibility checks (when run) show no new link-text-related warnings introduced by the change
     validations:
       required: true
 
