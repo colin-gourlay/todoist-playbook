@@ -31,6 +31,7 @@ When reviewing or changing code/content:
 - Use semantic HTML wherever possible.
 - Keep recommendations practical and implementation-focused.
 - Treat crawl/index controls (`robots.txt`, sitemap discoverability) as baseline SEO hygiene.
+- Treat crawlable anchor-link navigation as baseline crawl/index hygiene.
 - Treat canonical URLs as baseline indexation hygiene: each indexable page should have one authoritative production URL, and pages intentionally excluded from indexing should not emit canonical tags unless a documented platform requirement says otherwise.
 - Distinguish clearly between informative, decorative, and functional images.
 - Prefer concise, descriptive alt text over verbose or generic text.
@@ -114,6 +115,38 @@ Validation expectations:
 - Confirm deployed accessibility of `/robots.txt` after publish.
 - Run Lighthouse SEO checks and verify no invalid-robots warnings remain.
 - Where available, optionally validate crawler interpretation in search-console tooling.
+
+## Crawlable Link Requirements
+
+For any page intended to be indexed, treat crawlable anchor links as required SEO and accessibility infrastructure.
+
+When auditing or implementing changes:
+
+- Ensure navigational and discoverability links use real anchor elements with meaningful `href` destinations.
+- Ensure `href` values are valid, resolvable URLs or paths that represent the true destination.
+- Do not use placeholder `href` values for real navigation, including `#`, `javascript:`, or empty `href`.
+- Do not rely on JavaScript-only navigation patterns for primary crawl paths when a standard anchor can be used.
+- Ensure links intended for indexing are present in server-rendered or generated HTML output.
+- Ensure link text communicates destination or action clearly for both users and assistive technologies.
+- Ensure internal links align with canonical URL strategy, sitemap coverage, and intended indexable routes.
+
+Reference guidance:
+
+- https://support.google.com/webmasters/answer/9112205
+
+### Quick Audit Procedure (Crawlable Links)
+
+Use this sequence when reviewing crawlability and link discoverability:
+
+1. Collect representative pages.
+2. Inspect rendered HTML navigation and in-content links.
+3. Verify anchor usage and `href` validity.
+4. Flag placeholder or non-crawlable patterns.
+5. Confirm key links exist without JavaScript execution dependency.
+6. Validate link text quality and accessibility context.
+7. Cross-check links against canonical, robots, and sitemap intent.
+8. Run Lighthouse SEO and accessibility checks.
+9. Record pass/fail findings and required fixes.
 
 ## Canonical Link Requirements
 
@@ -217,6 +250,11 @@ When asked to review SEO or accessibility, check for:
 - Markdown images missing useful alt text
 - Incorrect heading hierarchy
 - Poor link text such as "click here" or "read more"
+- Missing `href` on anchor elements used for navigation
+- Placeholder `href` values such as `#`, `javascript:`, or empty strings on navigational links
+- JavaScript-only click handlers used in place of real anchor links for crawl-critical navigation
+- Link text that is vague or non-descriptive for destination or action
+- Key internal routes not discoverable through crawlable anchor paths in rendered output
 - Missing page titles or meta descriptions
 - Missing canonical tags on indexable pages
 - Duplicate canonical tags
@@ -247,6 +285,12 @@ When updating components/templates:
 - Avoid silently falling back to file names.
 - Add validation where image metadata is required.
 - Prefer accessible component APIs over one-off fixes.
+- Use semantic anchor elements for navigation and internal discovery paths.
+- Provide meaningful `href` targets that match canonical route intent.
+- Replace placeholder links with valid destinations before release, or render non-link UI controls when no destination exists.
+- Avoid attaching navigation solely to `div` or `span` click handlers when a link is appropriate.
+- Ensure generated/static output includes crawlable links to important indexable pages.
+- Keep link labeling descriptive and accessible, especially for repeated navigation items.
 
 When updating SEO/layout templates:
 
@@ -278,7 +322,12 @@ A change is complete only when:
 - `robots.txt` includes correct crawler directives for intended crawl behaviour.
 - Sitemap discovery is declared with an absolute `Sitemap:` URL when applicable.
 - Accessibility tooling reports no missing-alt violations.
+- Crawl-critical navigation is implemented with valid anchor tags and meaningful `href` values.
+- No placeholder `href` values (`#`, `javascript:`, empty) remain on links intended for navigation or indexing.
+- Primary internal discovery paths are crawlable without requiring JavaScript-only interaction.
+- Link text is descriptive enough for screen reader users and search engine interpretation.
 - Lighthouse SEO checks report no canonical-link or `hreflang` warnings where practical.
+- Lighthouse SEO and accessibility checks show no link-crawlability or invalid-link-pattern regressions.
 - Behaviour has been validated using Lighthouse, axe DevTools, or screen reader testing where practical.
 
 ## Response Style
