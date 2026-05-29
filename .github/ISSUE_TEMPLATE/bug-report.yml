@@ -17,6 +17,8 @@ body:
       options:
         - label: I have searched existing issues and confirmed this is not a duplicate.
           required: true
+        - label: If this bug is link-related, I checked for vague link labels (for example "Click here", "Read more", "More", "Here", "Learn more") and whether icon-only links expose a meaningful accessible name (visible text, `aria-label`, or `aria-labelledby`).
+          required: false
 
   - type: dropdown
     id: area

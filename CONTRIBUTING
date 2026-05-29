@@ -192,6 +192,17 @@ Repository-maintenance documentation also needs to stay aligned with the automat
 - `.github/workflows/doc-sync.lock.yml` is the compiled GitHub Actions workflow that actually runs on schedule
 - Update `README.md`, `index.md`, and affected wiki pages when workflow names, triggers, schedules, or repo structure change
 
+### Accessibility and Link Text Checklist
+
+For changes that add or update links in docs, wiki pages, templates, generated site output, or workflow-produced content:
+
+- Use descriptive, destination-specific visible text for text links.
+- Avoid vague link labels (for example "Click here", "Read more", "More", "Here", "Learn more") unless adjacent context makes the destination explicit for screen readers.
+- Ensure icon-only links have a meaningful accessible name via `aria-label`, `aria-labelledby`, or visually hidden text inside the link; the name must describe destination or action.
+- Ensure external, social, and navigation links clearly state where the link goes or what it does.
+- Ensure link and button semantics match behavior (anchors for navigation, buttons for in-page actions).
+- Run available Lighthouse SEO and accessibility checks for affected pages or generated output, and resolve new link-text or link-name warnings before merge.
+
 ---
 
 ## Project Board
