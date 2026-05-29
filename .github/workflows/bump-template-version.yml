@@ -44,13 +44,17 @@ jobs:
       - name: Create or update version bump pull request
         uses: actions/github-script@v9
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.AUTOMATION_GH_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
             const owner = context.repo.owner;
             const repo = context.repo.repo;
             const head = `${owner}:chore/9000-bump-template-version`;
             const base = 'main';
             const title = 'chore: bump template version(s)';
+            const isActionsPrRestriction = (error) => {
+              const message = String(error?.response?.data?.message || error?.message || '');
+              return error?.status === 403 && /not permitted to create or approve pull requests/i.test(message);
+            };
             const body = [
               '## Automated version bump',
               '',
@@ -70,14 +74,22 @@ jobs:
             });
 
             if (existing.data.length > 0) {
-              await github.rest.pulls.update({
-                owner,
-                repo,
-                pull_number: existing.data[0].number,
-                title,
-                body
-              });
-              core.info(`Updated existing PR #${existing.data[0].number}`);
+              try {
+                await github.rest.pulls.update({
+                  owner,
+                  repo,
+                  pull_number: existing.data[0].number,
+                  title,
+                  body
+                });
+                core.info(`Updated existing PR #${existing.data[0].number}`);
+              } catch (error) {
+                if (isActionsPrRestriction(error)) {
+                  core.warning('Skipping PR update because GitHub Actions is not allowed to create/approve pull requests for this repository. Enable "Allow GitHub Actions to create and approve pull requests" or provide secrets.AUTOMATION_GH_TOKEN.');
+                } else {
+                  throw error;
+                }
+              }
             } else {
               try {
                 const created = await github.rest.pulls.create({ owner, repo, head, base, title, body });
@@ -85,6 +97,8 @@ jobs:
               } catch (error) {
                 if (error.status === 422) {
                   core.info('No pull request created (likely no changes to merge).');
+                } else if (isActionsPrRestriction(error)) {
+                  core.warning('Skipping PR creation because GitHub Actions is not allowed to create/approve pull requests for this repository. Enable "Allow GitHub Actions to create and approve pull requests" or provide secrets.AUTOMATION_GH_TOKEN.');
                 } else {
                   throw error;
                 }
