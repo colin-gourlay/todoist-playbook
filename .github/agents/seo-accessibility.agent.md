@@ -127,12 +127,17 @@ When auditing or implementing changes:
 - Do not use placeholder `href` values for real navigation, including `#`, `javascript:`, or empty `href`.
 - Do not rely on JavaScript-only navigation patterns for primary crawl paths when a standard anchor can be used.
 - Ensure links intended for indexing are present in server-rendered or generated HTML output.
+- Enforce clear, descriptive link text that communicates destination or action; avoid vague labels such as "Click here", "Read more", "More", "Here", or "Learn more".
 - Ensure link text communicates destination or action clearly for both users and assistive technologies.
+- Ensure icon-only links expose a meaningful accessible name via visible text, `aria-label`, or `aria-labelledby`; accessible names must describe destination or action.
+- Audit external links, social/profile links, primary navigation links, and buttons styled as links to ensure they are crawlable, semantically correct, and clearly labelled.
+- For controls visually styled as links, ensure semantics match behaviour: use anchors for navigation and buttons for in-page actions.
 - Ensure internal links align with canonical URL strategy, sitemap coverage, and intended indexable routes.
 
 Reference guidance:
 
 - https://support.google.com/webmasters/answer/9112205
+- https://developer.chrome.com/docs/lighthouse/seo/link-text/
 
 ### Quick Audit Procedure (Crawlable Links)
 
@@ -147,6 +152,9 @@ Use this sequence when reviewing crawlability and link discoverability:
 7. Cross-check links against canonical, robots, and sitemap intent.
 8. Run Lighthouse SEO and accessibility checks.
 9. Record pass/fail findings and required fixes.
+10. Audit external, social, and primary navigation links plus any buttons styled as links for semantic correctness and crawlability.
+11. Verify icon-only links expose meaningful accessible names and are announced correctly by screen readers.
+12. Run keyboard-only navigation checks to confirm focus order, focus visibility, and operability of all link-like controls.
 
 ## Canonical Link Requirements
 
@@ -250,10 +258,14 @@ When asked to review SEO or accessibility, check for:
 - Markdown images missing useful alt text
 - Incorrect heading hierarchy
 - Poor link text such as "click here" or "read more"
+- Vague link labels such as "more", "here", "learn more", or similarly non-descriptive text
 - Missing `href` on anchor elements used for navigation
 - Placeholder `href` values such as `#`, `javascript:`, or empty strings on navigational links
 - JavaScript-only click handlers used in place of real anchor links for crawl-critical navigation
 - Link text that is vague or non-descriptive for destination or action
+- Icon-only links missing meaningful accessible names via visible text, `aria-label`, or `aria-labelledby`
+- External links, social links, and navigation links with unclear purpose, weak accessible names, or inconsistent semantics
+- Buttons styled as links (or links styled as buttons) using incorrect element semantics for their behaviour
 - Key internal routes not discoverable through crawlable anchor paths in rendered output
 - Missing page titles or meta descriptions
 - Missing canonical tags on indexable pages
@@ -291,6 +303,10 @@ When updating components/templates:
 - Avoid attaching navigation solely to `div` or `span` click handlers when a link is appropriate.
 - Ensure generated/static output includes crawlable links to important indexable pages.
 - Keep link labeling descriptive and accessible, especially for repeated navigation items.
+- Use destination-specific link wording in UI copy and templates; reject vague labels that require surrounding context to be understood.
+- For icon-only links, require an explicit accessible name input and fail validation when it is missing.
+- Add component-level checks for external/social/nav links and link-styled buttons to enforce correct semantics and naming.
+- Include keyboard interaction checks in QA guidance for all links and link-like controls.
 
 When updating SEO/layout templates:
 
@@ -326,9 +342,13 @@ A change is complete only when:
 - No placeholder `href` values (`#`, `javascript:`, empty) remain on links intended for navigation or indexing.
 - Primary internal discovery paths are crawlable without requiring JavaScript-only interaction.
 - Link text is descriptive enough for screen reader users and search engine interpretation.
+- No vague link labels remain (for example "Click here", "Read more", "More", "Here", "Learn more") where a descriptive label is required.
+- Icon-only links expose meaningful accessible names via visible text, `aria-label`, or `aria-labelledby`.
+- External links, social links, primary nav links, and buttons styled as links have correct semantics, valid destinations, and descriptive names.
 - Lighthouse SEO checks report no canonical-link or `hreflang` warnings where practical.
 - Lighthouse SEO and accessibility checks show no link-crawlability or invalid-link-pattern regressions.
-- Behaviour has been validated using Lighthouse, axe DevTools, or screen reader testing where practical.
+- Behaviour has been validated using Lighthouse, axe DevTools, screen reader testing, and keyboard-only navigation checks where practical.
+- Screen-reader testing confirms link purpose is understandable out of context, including repeated and icon-only links.
 
 ## Response Style
 
