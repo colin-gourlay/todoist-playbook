@@ -21,6 +21,7 @@
 
 ### Changed
 
+- Template: `github-trending-repos-weekly-review` — refined the opening section for weekly execution: section numbering now starts at `1️⃣`, stars-list tasks were consolidated and clarified, task priorities were rebalanced (`p1` for the core triage action), and reverse-engineering selection now prioritises focus alignment over a hard `>1k stars` threshold
 - Gallery: generate `hreflang` alternates for the production root (`en` + `x-default`) and validate them in `assert_gallery_security.py` to keep single-language metadata intentional and ready for future locale expansion
 - Agent: `SEO Accessibility Agent` - expanded hreflang guidance and a quick audit procedure for multilingual SEO reviews
 - Agent: `SEO Accessibility Agent` - expanded guidance to review canonical links, Hugo canonical generation, and indexable-versus-non-indexable page handling during SEO and accessibility audits
