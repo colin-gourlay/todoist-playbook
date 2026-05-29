@@ -2,7 +2,7 @@ TYPE,CONTENT,DESCRIPTION,IS_COLLAPSED,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DATE,DA
 meta,view_style=list,,,,,,,,,,,,,
 section,1️⃣ Select Candidates from Todoist Feed,,,,1,,,,,,,,,
 task,Shortlist 3-5 repos from today's imported GitHub Trending feed for review @people-self @place-anywhere @tools-github @when-sod-personal-pre-training,"Open the Todoist project populated by the daily GitHub Trending sync and shortlist 3 to 5 repos to review today.",,3,1,,,today at 05:30,en,Europe/London,10,minute,,
-section,2️⃣ Quick Triage,,,,1,,,,,,,,,
+section,2️⃣ Quick Triage: Fit and Quality Checks,,,,1,,,,,,,,,
 task,Ensure the README clearly states the purpose and value @people-self @place-anywhere @tools-github @when-sod-personal-pre-training,Verify the README clearly states what the project does and why it is useful.,,3,1,,,,,Europe/London,2,minute,,
 task,Ensure the README has a quick start guide and at least one usage example @people-self @place-anywhere @tools-github @when-sod-personal-pre-training,Verify the README includes setup steps and at least one practical usage example.,,3,1,,,,,Europe/London,5,minute,,
 task,Check star count and trending momentum @people-self @place-anywhere @tools-github @when-sod-personal-pre-training,"Verify the repo has meaningful traction. Low star counts are acceptable if the trending velocity is strong.",,3,1,,,,,Europe/London,1,minute,,
