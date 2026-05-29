@@ -45,6 +45,10 @@
 - Workflow: `sync-github-trending-to-todoist.yml` — added optional multi-language filtering (`languages` input); project names are now lowercase kebab-case by default; task descriptions now include language, stars, forks, and star-velocity metrics; language-aware project naming appended when filters are active
 - Workflow: `validate-templates.yml` — validation now also triggers on changes to `release.yml`, `reusable-release-assets.yml`, and `generate_release_assets.py`; release workflow is gated on passing validation and now includes prompt template assets in the release ZIP
 
+### Fixed
+
+- Gallery: template title links now keep the intended text color after being visited, instead of falling back to the browser default visited-link purple
+
 ---
 
 ### Added (Historical)
