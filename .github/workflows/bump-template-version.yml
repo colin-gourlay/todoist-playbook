@@ -39,6 +39,7 @@ jobs:
           commit_message: "chore: bump template version(s)"
           add: "csv-templates prompt-templates"
           push_to: "chore/9000-bump-template-version"
+          force: "true"
 
       - name: Create or update version bump pull request
         uses: actions/github-script@v9
