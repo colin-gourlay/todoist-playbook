@@ -3,12 +3,12 @@
 
 Usage (environment variables):
   BASE_SHA  – Git SHA of the PR base commit.
-  HEAD_SHA  – Git SHA of the PR head commit.
+  HEAD_SHA  – Git SHA of the PR comparison commit.
 
 Idempotency guarantee
 ---------------------
 For every changed template the script compares the version present in meta.yml
-at BASE_SHA against the version currently on disk.  If they already differ the
+at BASE_SHA against the version currently on disk. If they already differ the
 template was bumped by a previous run of this workflow; the template is skipped.
 This means re-running the workflow on an unchanged PR never produces extra bumps.
 
@@ -30,19 +30,54 @@ from template_discovery import iter_template_locations
 TEMPLATE_DIRS = ["csv-templates", "prompt-templates"]
 
 
-def run_git(*args):
-    """Run a git command and return stdout as a string, or raise on failure."""
+def run_git(*args, check=True):
+    """Run a git command and return stdout as a string."""
     result = subprocess.run(
         ["git", *args],
         capture_output=True,
         text=True,
-        check=True,
+        check=check,
     )
     return result.stdout
 
 
+def commit_exists(commit_sha):
+    """Return True if commit_sha exists locally."""
+    result = subprocess.run(
+        ["git", "cat-file", "-e", f"{commit_sha}^{{commit}}"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    return result.returncode == 0
+
+
+def ensure_commit_available(commit_sha):
+    """Ensure commit_sha exists locally, fetching it if needed."""
+    if commit_exists(commit_sha):
+        return
+
+    fetch_result = subprocess.run(
+        ["git", "fetch", "--no-tags", "origin", commit_sha],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    if fetch_result.returncode != 0 and not commit_exists(commit_sha):
+        print(
+            f"❌ Required commit is not available locally: {commit_sha}",
+            file=sys.stderr,
+        )
+        if fetch_result.stderr:
+            print(fetch_result.stderr.strip(), file=sys.stderr)
+        sys.exit(1)
+
+
 def get_changed_files(base_sha, head_sha):
     """Return the list of files changed between base_sha and head_sha."""
+    ensure_commit_available(base_sha)
+    ensure_commit_available(head_sha)
     output = run_git("diff", "--name-only", base_sha, head_sha)
     return [line.strip() for line in output.splitlines() if line.strip()]
 
@@ -50,6 +85,7 @@ def get_changed_files(base_sha, head_sha):
 def get_base_file(base_sha, repo_path):
     """Return the contents of a file at base_sha, or None if it did not exist."""
     try:
+        ensure_commit_available(base_sha)
         return run_git("show", f"{base_sha}:{repo_path}")
     except subprocess.CalledProcessError:
         return None
@@ -73,7 +109,7 @@ def bump_patch(version):
 
 
 def write_version(meta_path, old_version, new_version):
-    """Replace the version line in meta_path in-place.  Returns True on success."""
+    """Replace the version line in meta_path in-place. Returns True on success."""
     with open(meta_path, encoding="utf-8") as fh:
         content = fh.read()
 
@@ -110,8 +146,6 @@ def collect_changed_templates(changed_files):
     csv_index = _build_csv_path_index()
     templates = {}
     for filepath in changed_files:
-        # CSV templates: match against the full discovered prefix so nested
-        # category folders resolve to the correct slug.
         matched = False
         for prefix, slug in csv_index.items():
             if filepath.startswith(prefix):
@@ -128,7 +162,6 @@ def collect_changed_templates(changed_files):
         if matched:
             continue
 
-        # Prompt templates remain flat: csv-templates is handled above.
         prompt_prefix = "prompt-templates/"
         if filepath.startswith(prompt_prefix):
             rest = filepath[len(prompt_prefix):]
@@ -159,7 +192,10 @@ def main():
     try:
         changed_files = get_changed_files(base_sha, head_sha)
     except subprocess.CalledProcessError as exc:
-        print(f"❌ git diff failed: {exc}", file=sys.stderr)
+        print(
+            f"❌ git diff failed for BASE_SHA={base_sha} HEAD_SHA={head_sha}: {exc}",
+            file=sys.stderr,
+        )
         sys.exit(1)
 
     if not changed_files:
@@ -174,7 +210,9 @@ def main():
 
     bumped = []
 
-    csv_path_by_slug = {slug: prefix for prefix, slug in _build_csv_path_index().items()}
+    csv_path_by_slug = {
+        slug: prefix for prefix, slug in _build_csv_path_index().items()
+    }
 
     for (tdir, slug), has_non_meta in templates.items():
         label = f"{tdir}/{slug}"
@@ -212,7 +250,6 @@ def main():
             print(f"⏭️  {label}: version 0.0.0 (unreviewed) — skipping")
             continue
 
-        # Idempotency: compare current version to base version
         base_text = get_base_file(base_sha, meta_path)
         base_version = parse_version(base_text)
 
