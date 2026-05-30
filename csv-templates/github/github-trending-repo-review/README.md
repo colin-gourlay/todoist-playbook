@@ -5,6 +5,9 @@ A lightweight daily triage template for evaluating trending GitHub repositories 
 
 ## Objective
 
+- Review newly surfaced repositories quickly
+- Apply a consistent quality filter before starring or tracking
+- Classify each candidate with a clear next action
 
 Estimated duration: 10 minutes.
 
