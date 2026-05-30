@@ -1,26 +1,17 @@
-# GitHub Trending Repo Review
+# GitHub Trending Repositories Daily Review
 
 A lightweight daily triage template for evaluating trending GitHub repositories and deciding what to do next.
 
----
 
 ## Objective
 
-- Review newly surfaced repositories quickly
-- Apply a consistent quality filter before starring or tracking
-- Classify each candidate with a clear next action
 
 Estimated duration: 10 minutes.
 
----
 
 ## When to Use
 
-- Daily, after your trending repositories project has been refreshed
-- As a quick discovery and triage ritual when you have 10 minutes
-- Before your deeper weekly review session
 
----
 
 ## Schedule and Timezone Notes
 
@@ -36,7 +27,6 @@ Adjust this timing to fit your own routine:
 
 If you are sharing this template, update the DATE, DATE_LANG, and TIMEZONE fields in template.csv before import so the default schedule matches your audience.
 
----
 
 ## Structure Overview
 
@@ -47,28 +37,18 @@ If you are sharing this template, update the DATE, DATE_LANG, and TIMEZONE field
 5. Follow-Ups
 6. Archive and Notes
 
----
 
 ## How This Fits with Other Templates
 
-- Use this template for daily triage and classification.
-- Use [GitHub Trending Repos Weekly Review](../../github-trending-repos-weekly-review/) for deeper weekly analysis and consolidation.
-- The existing [GitHub Trending Tracker](../../github-trending-tracker/) template is deprecated and retained temporarily as the legacy all-in-one option for backward compatibility.
 
----
 
 ## Prerequisites
 
 Create these labels in your Todoist account before import:
 
-- @people-self
-- @place-anywhere
-- @tools-github
-- @when-sod-personal-pre-training
 
 The CSV importer reads labels from task content and does not create missing labels automatically.
 
----
 
 ## Import Instructions
 
@@ -76,9 +56,8 @@ The CSV importer reads labels from task content and does not create missing labe
 
 1. Download `template.csv`
 2. Create a new project in Todoist
-3. Import from CSV
-4. Rename the project to: `GitHub Trending Repo Review - [Date]`
-5. Add a recurring daily reminder or task to run this checklist.
+3. Rename the project to: `GitHub Trending Repositories Daily Review - [Date]`
+4. Add a recurring daily reminder or task to run this checklist.
 
 ### Automated workflow path
 
