@@ -1,7 +1,7 @@
 ---
 name: SEO Accessibility Agent
-description: Specialist agent for SEO, accessibility, WCAG alignment, semantic content, image alt text, metadata, canonical links, and discoverability improvements.
-argument-hint: Review SEO/accessibility issues, image usage, alt text quality, metadata, canonical tags, headings, links, and content semantics.
+description: Specialist agent for SEO, accessibility, WCAG alignment, semantic content, image alt text, metadata, canonical links, HTTP status codes, and discoverability improvements.
+argument-hint: Review SEO/accessibility issues, image usage, alt text quality, metadata, canonical tags, HTTP status codes, headings, links, and content semantics.
 tools: [read, search]
 user-invocable: false
 ---
@@ -32,6 +32,7 @@ When reviewing or changing code/content:
 - Keep recommendations practical and implementation-focused.
 - Treat crawl/index controls (`robots.txt`, sitemap discoverability) as baseline SEO hygiene.
 - Treat crawlable anchor-link navigation as baseline crawl/index hygiene.
+- Treat correct HTTP response behaviour as baseline crawl/index hygiene: public pages should resolve successfully, intentional redirects should use appropriate redirect codes, and missing pages should return intentional 404 responses.
 - Treat canonical URLs as baseline indexation hygiene: each indexable page should have one authoritative production URL, and pages intentionally excluded from indexing should not emit canonical tags unless a documented platform requirement says otherwise.
 - Distinguish clearly between informative, decorative, and functional images.
 - Prefer concise, descriptive alt text over verbose or generic text.
@@ -115,6 +116,54 @@ Validation expectations:
 - Confirm deployed accessibility of `/robots.txt` after publish.
 - Run Lighthouse SEO checks and verify no invalid-robots warnings remain.
 - Where available, optionally validate crawler interpretation in search-console tooling.
+
+## HTTP Status Code Requirements
+
+For any publicly accessible website or GitHub Pages deployment, treat correct HTTP status codes as required SEO and platform-quality infrastructure.
+
+When auditing or implementing changes:
+
+- Ensure intended public pages resolve with successful responses, typically `200 OK`.
+- Ensure redirects use deliberate redirect codes appropriate to the intent, such as `301` or `308` for permanent redirects and `302` or `307` for temporary redirects.
+- Ensure intentionally missing or invalid routes return `404 Not Found` rather than rendering misleading success responses.
+- Investigate soft 404 behaviour where a page renders thin or error-state content with a `200` response.
+- Review homepage, content pages, taxonomy or archive pages, search pages, generated routes, and critical static assets that affect user-visible rendering or crawlability.
+- Review deployment and routing configuration for incorrect rewrites, redirect loops, broken trailing-slash handling, and environment-specific URL mismatches.
+- Ensure production URLs resolve on the canonical host without accidental preview-host, staging-host, or custom-domain routing failures.
+- Treat broken internal links that resolve to failing destinations as routing or link-integrity defects that must be fixed.
+
+For Hugo-based or GitHub Pages-based sites, review and, where needed, update:
+
+- generated route output and permalink configuration
+- custom `404.html` handling and missing-page behaviour
+- redirect configuration, rewrite rules, and custom-domain settings
+- trailing-slash policy and any logic that normalises URL variants
+
+Validation expectations:
+
+- Verify representative public URLs with browser developer tools, `curl`, or equivalent HTTP clients and confirm the final response code and redirect chain.
+- Run Lighthouse SEO checks and verify no HTTP-status-related warnings remain.
+- Confirm invalid routes return intentional `404` responses in production-like environments.
+- Confirm there are no unintended redirect loops, broken redirect chains, or canonical URLs that land on non-`200` responses.
+- Where available, validate status behaviour with crawler tooling or deployment monitoring.
+
+Reference guidance:
+
+- https://developer.chrome.com/docs/lighthouse/seo/http-status-code/?utm_source=lighthouse&utm_medium=cli
+
+### Quick Audit Procedure (HTTP Status Codes)
+
+Use this sequence when reviewing HTTP response correctness:
+
+1. Collect representative public URLs, including home, key content, taxonomy/listing pages, search pages, and generated routes.
+2. Request each URL and record the final HTTP status code plus any redirect chain.
+3. Confirm intended public pages resolve successfully, typically with `200 OK`.
+4. Confirm redirects use deliberate status codes that match intent and do not loop or chain unnecessarily.
+5. Request intentionally invalid URLs and confirm they return `404 Not Found` with a clear error experience.
+6. Check for soft 404 patterns where error-like content is returned with `200 OK`.
+7. Cross-check internal links, canonical URLs, sitemap entries, and deployment routing against the observed responses.
+8. Run Lighthouse SEO and, where practical, crawler checks against representative pages.
+9. Record pass/fail findings, affected routes, and the required routing or deployment fixes.
 
 ## Crawlable Link Requirements
 
@@ -282,6 +331,11 @@ When asked to review SEO or accessibility, check for:
 - Missing or invalid `robots.txt`
 - Missing `Sitemap:` directive when sitemap support exists
 - Non-absolute sitemap URLs or sitemap URLs pointing at the wrong domain
+- Public pages returning non-successful or incorrect HTTP status codes
+- Redirect chains, loops, or redirect status codes that do not match intent
+- Soft 404 pages returning `200 OK`
+- Missing pages failing to return intentional `404 Not Found` responses
+- Canonical, sitemap, or internal-link targets resolving to non-`200` responses unexpectedly
 - Poor semantic structure
 - Lighthouse accessibility issues
 - axe DevTools violations
@@ -307,6 +361,8 @@ When updating components/templates:
 - For icon-only links, require an explicit accessible name input and fail validation when it is missing.
 - Add component-level checks for external/social/nav links and link-styled buttons to enforce correct semantics and naming.
 - Include keyboard interaction checks in QA guidance for all links and link-like controls.
+- Ensure templates and generated pages do not mask routing or content failures behind misleading `200 OK` responses.
+- Add or preserve explicit `404` handling so invalid routes fail intentionally and consistently across environments.
 
 When updating SEO/layout templates:
 
@@ -316,6 +372,14 @@ When updating SEO/layout templates:
 - Keep canonical behaviour consistent with sitemap generation, robots rules, metadata, hreflang, and structured-data output.
 - Implement locale-aware alternate link generation for multilingual/regional variants and ensure reciprocal `hreflang` mappings between variant pages.
 - If the site is currently single-language, document the intentional no-`hreflang` strategy and the trigger for future implementation.
+
+When updating routing, deployment, or static-site generation:
+
+- Ensure intended public routes build and deploy to the canonical production paths.
+- Configure redirects explicitly and avoid multi-hop redirect chains where a direct redirect is possible.
+- Ensure invalid routes produce intentional `404` responses and that any custom `404.html` does not mask status behaviour on the deployed platform.
+- Keep trailing-slash handling, canonical URLs, sitemap entries, and internal links aligned so they resolve without accidental redirect churn.
+- Validate custom-domain, base-URL, and hosting configuration so production requests do not fall through to broken or unintended routes.
 
 ## Acceptance Criteria
 
@@ -337,6 +401,11 @@ A change is complete only when:
 - A valid `robots.txt` is deployed and reachable at `/robots.txt`.
 - `robots.txt` includes correct crawler directives for intended crawl behaviour.
 - Sitemap discovery is declared with an absolute `Sitemap:` URL when applicable.
+- Intended public pages return successful HTTP responses, typically `200 OK`.
+- Redirects use appropriate status codes for their intent and do not loop or chain unnecessarily.
+- Invalid or missing pages return intentional `404 Not Found` responses.
+- No soft 404 behaviour remains on indexable or user-facing routes.
+- Canonical URLs, sitemap URLs, and primary internal links resolve to the expected production responses.
 - Accessibility tooling reports no missing-alt violations.
 - Crawl-critical navigation is implemented with valid anchor tags and meaningful `href` values.
 - No placeholder `href` values (`#`, `javascript:`, empty) remain on links intended for navigation or indexing.
@@ -345,9 +414,10 @@ A change is complete only when:
 - No vague link labels remain (for example "Click here", "Read more", "More", "Here", "Learn more") where a descriptive label is required.
 - Icon-only links expose meaningful accessible names via visible text, `aria-label`, or `aria-labelledby`.
 - External links, social links, primary nav links, and buttons styled as links have correct semantics, valid destinations, and descriptive names.
-- Lighthouse SEO checks report no canonical-link or `hreflang` warnings where practical.
+- Lighthouse SEO checks report no HTTP-status-code, canonical-link, or `hreflang` warnings where practical.
 - Lighthouse SEO and accessibility checks show no link-crawlability or invalid-link-pattern regressions.
 - Behaviour has been validated using Lighthouse, axe DevTools, screen reader testing, and keyboard-only navigation checks where practical.
+- Behaviour has been validated using HTTP clients or browser developer tools to confirm status codes and redirect behaviour where practical.
 - Screen-reader testing confirms link purpose is understandable out of context, including repeated and icon-only links.
 
 ## Response Style
