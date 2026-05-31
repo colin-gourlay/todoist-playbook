@@ -23,11 +23,32 @@ EXPECTED_HREFLANGS = {
     "en": SITE_URL,
     "x-default": SITE_URL,
 }
+GENERIC_DESCRIPTION_VALUES = {
+    "",
+    "description",
+    "todoist playbook",
+    "todoist playbook template gallery",
+    "todoist templates",
+}
 
 
 def fail(msg):
     print(f"❌ SECURITY ASSERTION FAILED: {msg}", file=sys.stderr)
     sys.exit(1)
+
+
+def get_meta_content(html, attr_name, attr_value):
+    pattern = re.compile(
+        rf'<meta[^>]*\b{re.escape(attr_name)}="{re.escape(attr_value)}"[^>]*>',
+        re.IGNORECASE,
+    )
+    tag_match = pattern.search(html)
+    if not tag_match:
+        return None
+    content_match = re.search(r'\bcontent="([^"]*)"', tag_match.group(0), re.IGNORECASE)
+    if not content_match:
+        return None
+    return content_match.group(1).strip()
 
 
 def main():
@@ -95,6 +116,30 @@ def main():
         if href != expected_href:
             fail(f"hreflang URL for {code!r} must match production URL: {href!r}")
     print("✅ hreflang alternate links present and valid")
+
+    # 1d. Meta descriptions present, meaningful, and aligned across cards
+    description = get_meta_content(html, "name", "description")
+    if description is None:
+        fail('No <meta name="description"> found')
+    if description.lower() in GENERIC_DESCRIPTION_VALUES:
+        fail(f"Meta description is too generic: {description!r}")
+    if len(description) < 50:
+        fail(f"Meta description is too short (<50 chars): {description!r}")
+    if len(description) > 170:
+        fail(f"Meta description is too long (>170 chars): {description!r}")
+
+    og_description = get_meta_content(html, "property", "og:description")
+    if og_description is None:
+        fail('No <meta property="og:description"> found')
+    if og_description != description:
+        fail("OpenGraph description must match meta description")
+
+    twitter_description = get_meta_content(html, "name", "twitter:description")
+    if twitter_description is None:
+        fail('No <meta name="twitter:description"> found')
+    if twitter_description != description:
+        fail("Twitter description must match meta description")
+    print("✅ Meta descriptions present and well-formed")
 
     # 2. Every vendor <script src> has integrity + crossorigin
     for m in re.finditer(r'<script\s+([^>]+)>', html):
