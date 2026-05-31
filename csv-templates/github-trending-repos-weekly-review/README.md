@@ -35,7 +35,7 @@ Estimated duration: 35 minutes.
 
 ## How This Fits with Other Templates
 
-- Use [GitHub Trending Repo Review](../github/github-trending-repo-review/) for quick daily triage.
+- Use [GitHub Trending Repositories Daily Review](../github/github-trending-repo-review/) for quick daily triage.
 - Use this template for weekly deep review and consolidation.
 - The existing [GitHub Trending Tracker](../github-trending-tracker/) template remains available as the legacy all-in-one option for backward compatibility.
 
