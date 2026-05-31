@@ -46,6 +46,9 @@ If you are sharing this template, update the DATE, DATE_LANG, and TIMEZONE field
 
 ## How This Fits with Other Templates
 
+- Use this template for daily triage and classification.
+- Use [GitHub Trending Repos Weekly Review](../../github-trending-repos-weekly-review/) for deeper weekly analysis and consolidation.
+- The existing [GitHub Trending Tracker](../../github-trending-tracker/) template is deprecated and retained temporarily as the legacy all-in-one option for backward compatibility.
 
 
 ## Prerequisites
