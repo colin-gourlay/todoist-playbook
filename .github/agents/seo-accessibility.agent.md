@@ -238,6 +238,59 @@ Validation expectations:
 - Inspect generated output and browser developer tools to confirm canonical targets are correct.
 - Where available, verify canonical behaviour in search-console tooling.
 
+## Meta Description Requirements
+
+For pages intended to be indexed and shown in search results, treat meaningful and well-formed meta descriptions as required SEO and user-context infrastructure.
+
+When auditing or implementing changes:
+
+- Ensure appropriate pages emit a `<meta name="description" content="..." />` element in the final `<head>` output.
+- Ensure descriptions are meaningful, concise, and readable for humans first.
+- Ensure descriptions accurately summarise page intent and primary content.
+- Avoid duplicate descriptions across unrelated pages; use page-specific wording where appropriate.
+- Avoid generic placeholder copy that provides little search-result context.
+- Avoid keyword stuffing, repetition, and low-signal boilerplate text.
+- Ensure meta-description strategy aligns with page titles, canonical URLs, and indexation intent.
+- For pages intentionally excluded from indexing, apply a documented strategy for whether a description is still emitted.
+
+For Hugo-based sites, review and, where needed, update:
+
+- SEO partials and shared head partials.
+- `head.html` and relevant layout templates.
+- front matter conventions for `description`, `summary`, and related fields.
+- fallback logic used when page-specific description fields are missing.
+- list, taxonomy, and search templates where contextual summaries differ from detail pages.
+
+Implementation expectations for Hugo:
+
+- Prefer page-specific description sources in priority order (for example front matter `description`, then `summary`, then a safe fallback).
+- Ensure homepage, show pages, episode/detail pages, about/contact pages, search pages, and taxonomy/list pages have intentional description behaviour.
+- Keep fallback descriptions contextual and avoid one-size-fits-all copy across unrelated templates.
+
+Validation expectations:
+
+- Run Lighthouse SEO checks and verify no meta-description warnings remain where practical.
+- Inspect rendered output in browser developer tools to confirm description presence and quality.
+- Spot-check search-result preview quality using available preview tooling where practical.
+- Confirm there are no obvious missing, duplicated, or generic descriptions on representative pages.
+
+Reference guidance:
+
+- https://developer.chrome.com/docs/lighthouse/seo/meta-description/?utm_source=lighthouse&utm_medium=cli
+
+### Quick Audit Procedure (Meta Descriptions)
+
+Use this sequence when reviewing meta-description quality:
+
+1. Collect representative URLs including home, show/listing, episode/detail, about/contact, search, and taxonomy/category pages.
+2. Inspect rendered `<head>` output and record whether a meta description exists.
+3. Flag missing, duplicated, overly generic, or poor-quality descriptions.
+4. Review description length and readability to ensure concise, useful search snippets.
+5. Verify page descriptions align with actual on-page content intent.
+6. Confirm Hugo template and fallback logic produce consistent results across page types.
+7. Run Lighthouse SEO and verify meta-description warnings are cleared where practical.
+8. Record pass/fail findings and required template/content fixes.
+
 ## Hreflang Requirements
 
 For websites with multilingual or regional variants, treat valid `hreflang` metadata as required international SEO infrastructure. For intentionally single-language sites, require an explicit documented decision in repository policy or PR notes describing why `hreflang` is not currently required and when this should be revisited.
@@ -317,6 +370,7 @@ When asked to review SEO or accessibility, check for:
 - Buttons styled as links (or links styled as buttons) using incorrect element semantics for their behaviour
 - Key internal routes not discoverable through crawlable anchor paths in rendered output
 - Missing page titles or meta descriptions
+- Duplicate, generic, or poor-quality meta descriptions that reduce result-snippet usefulness
 - Missing canonical tags on indexable pages
 - Duplicate canonical tags
 - Invalid, relative, or non-absolute canonical URLs
@@ -372,6 +426,10 @@ When updating SEO/layout templates:
 - Keep canonical behaviour consistent with sitemap generation, robots rules, metadata, hreflang, and structured-data output.
 - Implement locale-aware alternate link generation for multilingual/regional variants and ensure reciprocal `hreflang` mappings between variant pages.
 - If the site is currently single-language, document the intentional no-`hreflang` strategy and the trigger for future implementation.
+- Ensure shared head/SEO templates emit meaningful meta descriptions for all appropriate page types.
+- Use a documented source priority for description generation (for example front matter `description`, then `summary`, then contextual fallback).
+- Ensure fallback descriptions are page-type-aware and avoid duplicate generic copy across unrelated pages.
+- Keep meta-description generation aligned with titles, canonical targets, sitemap/indexation intent, and page semantics.
 
 When updating routing, deployment, or static-site generation:
 
@@ -398,6 +456,11 @@ A change is complete only when:
 - For multilingual/regional pages, valid `hreflang` metadata is present and uses consistent, valid language/region codes.
 - `hreflang` alternate URLs resolve correctly, align with canonical URLs, and remain reciprocal between variants.
 - If the site is intentionally single-language, the no-`hreflang` decision and future multilingual strategy are documented.
+- Appropriate pages include meaningful and well-formed meta descriptions.
+- Meta descriptions accurately summarise page content and user intent.
+- Duplicate or generic meta descriptions are removed where practical.
+- Templates and layouts generate meta descriptions consistently across page types.
+- Fallback meta-description behaviour is defined and documented for missing page-level content.
 - A valid `robots.txt` is deployed and reachable at `/robots.txt`.
 - `robots.txt` includes correct crawler directives for intended crawl behaviour.
 - Sitemap discovery is declared with an absolute `Sitemap:` URL when applicable.
@@ -415,6 +478,7 @@ A change is complete only when:
 - Icon-only links expose meaningful accessible names via visible text, `aria-label`, or `aria-labelledby`.
 - External links, social links, primary nav links, and buttons styled as links have correct semantics, valid destinations, and descriptive names.
 - Lighthouse SEO checks report no HTTP-status-code, canonical-link, or `hreflang` warnings where practical.
+- Lighthouse SEO checks report no meta-description warnings where practical.
 - Lighthouse SEO and accessibility checks show no link-crawlability or invalid-link-pattern regressions.
 - Behaviour has been validated using Lighthouse, axe DevTools, screen reader testing, and keyboard-only navigation checks where practical.
 - Behaviour has been validated using HTTP clients or browser developer tools to confirm status codes and redirect behaviour where practical.
