@@ -55,6 +55,10 @@ If you are sharing this template, update the DATE, DATE_LANG, and TIMEZONE field
 
 Create these labels in your Todoist account before import:
 
+- @people-self
+- @place-anywhere
+- @tools-github
+- @when-sod-personal-pre-training
 
 The CSV importer reads labels from task content and does not create missing labels automatically.
 
@@ -65,8 +69,9 @@ The CSV importer reads labels from task content and does not create missing labe
 
 1. Download `template.csv`
 2. Create a new project in Todoist
-3. Rename the project to: `GitHub Trending Repositories Daily Review - [Date]`
-4. Add a recurring daily reminder or task to run this checklist.
+3. Import from CSV
+4. Rename the project to: `GitHub Trending Repositories Daily Review - [Date]`
+5. Add a recurring daily reminder or task to run this checklist.
 
 ### Automated workflow path
 
