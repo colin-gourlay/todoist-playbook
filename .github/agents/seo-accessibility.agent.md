@@ -291,6 +291,78 @@ Use this sequence when reviewing meta-description quality:
 7. Run Lighthouse SEO and verify meta-description warnings are cleared where practical.
 8. Record pass/fail findings and required template/content fixes.
 
+## Document Title Requirements
+
+For every HTML page, treat a meaningful `<title>` element as required accessibility and usability infrastructure, with additional SEO considerations for indexable pages.
+
+When auditing or implementing changes:
+
+- Ensure every page emits exactly one `<title>` element in the final `<head>` output.
+- Ensure titles are meaningful and accurately describe the content or purpose of the specific page.
+- Ensure titles are unique across unrelated pages; avoid identical titles on pages with different content.
+- Avoid generic, placeholder, or context-free titles such as `Home`, `Index`, `Page`, `Untitled`, or a bare site name repeated on every page.
+- Ensure title strategy is consistent: establish and apply a naming convention across all page types (for example `Page Name | Site Name` or `Section: Page Name | Site Name`).
+- Place the most meaningful and specific content first in the title string, before branding, to optimise both screen reader announcement and search-result display.
+- Ensure titles support discoverability: include relevant, user-intent-aligned wording without keyword stuffing.
+- Aim for concise, readable titles (often around 50-60 characters for search-result readability), while prioritising clarity and specificity over strict length limits.
+- Align title strategy with meta descriptions, canonical URLs, and indexation intent.
+- Pages intentionally excluded from indexing must still emit a meaningful `<title>` for accessibility and usability; document only strategy differences in wording, not title presence.
+
+Good title examples:
+
+- `Sundown Sessions | Upcoming Shows`
+- `Frantic Chant Episode 12 | Sundown Sessions`
+- `About | Sundown Sessions`
+- `Search Results | Sundown Sessions`
+
+Poor title examples:
+
+- `Home`
+- `Index`
+- `Website`
+- `Untitled`
+- Bare site name repeated verbatim on every page
+
+For Hugo-based sites, review and, where needed, update:
+
+- SEO partials and shared head partials.
+- `head.html` and relevant layout templates.
+- front matter conventions for `title` and related fields.
+- fallback logic used when page-specific titles are missing.
+- list, taxonomy, homepage, and search templates where dynamic title generation may differ from detail pages.
+
+Implementation expectations for Hugo:
+
+- Prefer page-specific title sources in documented priority order (for example front matter `title`, then section title, then safe fallback).
+- Ensure homepage, show pages, episode/detail pages, about/contact pages, search pages, and taxonomy/list pages have intentional, distinct title behaviour.
+- Avoid a single hardcoded fallback title that produces identical output across unrelated templates.
+- Generate titles dynamically from authoritative Hugo values (for example `.Title`, `.Section`, `.Site.Title`) rather than hardcoded strings where possible.
+
+Validation expectations:
+
+- Run Lighthouse SEO checks and verify no document-title warnings remain where practical.
+- Inspect rendered output in browser developer tools and browser tab labels to confirm title presence and quality.
+- Spot-check representative page types (home, content, listing, taxonomy, search, error) to confirm titles are unique, meaningful, and consistent with the defined naming convention.
+- Confirm there are no missing, duplicated, or generic titles on representative pages.
+
+Reference guidance:
+
+- https://developer.chrome.com/docs/lighthouse/seo/document-title/
+
+### Quick Audit Procedure (Document Titles)
+
+Use this sequence when reviewing document title quality:
+
+1. Collect representative URLs including home, show/listing, episode/detail, about/contact, search, and taxonomy/category pages.
+2. Inspect rendered `<head>` output (and browser tab labels) and record the `<title>` value for each.
+3. Flag missing, duplicated, overly generic, or poor-quality titles.
+4. Review title length and readability to ensure concise, useful labels.
+5. Verify each page title accurately reflects the on-page content and page intent.
+6. Confirm that the naming convention is applied consistently across page types.
+7. Confirm Hugo template and fallback logic produce consistent and unique titles across page types.
+8. Run Lighthouse SEO and verify document-title warnings are cleared where practical.
+9. Record pass/fail findings and required template/content fixes.
+
 ## Hreflang Requirements
 
 For websites with multilingual or regional variants, treat valid `hreflang` metadata as required international SEO infrastructure. For intentionally single-language sites, require an explicit documented decision in repository policy or PR notes describing why `hreflang` is not currently required and when this should be revisited.
@@ -369,6 +441,14 @@ When asked to review SEO or accessibility, check for:
 - External links, social links, and navigation links with unclear purpose, weak accessible names, or inconsistent semantics
 - Buttons styled as links (or links styled as buttons) using incorrect element semantics for their behaviour
 - Key internal routes not discoverable through crawlable anchor paths in rendered output
+- Missing `<title>` elements on any page
+- Generic, placeholder, or non-descriptive titles such as `Home`, `Index`, `Page`, `Untitled`, or a bare site name repeated verbatim on every page
+- Duplicate titles across pages with different content
+- Titles that do not accurately reflect the specific page content or intent
+- Inconsistent title naming conventions across page types
+- Titles where the most specific content does not appear early in the string
+- Titles significantly exceeding 60 characters where shorter alternatives exist without loss of meaning
+- Hugo templates producing identical title output across unrelated page types due to missing fallback logic
 - Missing page titles or meta descriptions
 - Duplicate, generic, or poor-quality meta descriptions that reduce result-snippet usefulness
 - Missing canonical tags on indexable pages
@@ -426,6 +506,11 @@ When updating SEO/layout templates:
 - Keep canonical behaviour consistent with sitemap generation, robots rules, metadata, hreflang, and structured-data output.
 - Implement locale-aware alternate link generation for multilingual/regional variants and ensure reciprocal `hreflang` mappings between variant pages.
 - If the site is currently single-language, document the intentional no-`hreflang` strategy and the trigger for future implementation.
+- Ensure shared head/SEO templates emit a meaningful, page-specific `<title>` element for every page type.
+- Apply a consistent title naming convention across all templates (for example `Page Name | Site Name` or `Section: Page Name | Site Name`), placing the most specific content first.
+- Use a documented source priority for title generation (for example front matter `title`, then section or taxonomy name, then safe fallback) and ensure fallback titles are not generic to the point of being duplicated across unrelated pages.
+- Ensure homepage, show pages, episode/detail pages, about/contact pages, search pages, and taxonomy/list pages each produce distinct and contextually appropriate titles.
+- Keep title generation aligned with meta descriptions, canonical targets, and indexation intent.
 - Ensure shared head/SEO templates emit meaningful meta descriptions for all appropriate page types.
 - Use a documented source priority for description generation (for example front matter `description`, then `summary`, then contextual fallback).
 - Ensure fallback descriptions are page-type-aware and avoid duplicate generic copy across unrelated pages.
@@ -456,6 +541,14 @@ A change is complete only when:
 - For multilingual/regional pages, valid `hreflang` metadata is present and uses consistent, valid language/region codes.
 - `hreflang` alternate URLs resolve correctly, align with canonical URLs, and remain reciprocal between variants.
 - If the site is intentionally single-language, the no-`hreflang` decision and future multilingual strategy are documented.
+- Every page includes a `<title>` element with a meaningful, page-specific value.
+- Document titles accurately describe the content or purpose of each page.
+- Titles are unique across pages with different content; no generic, placeholder, or duplicated titles remain.
+- A consistent title naming convention is applied across all page types with the most specific content placed first.
+- Hugo templates generate titles dynamically and consistently across all page type templates.
+- Fallback title logic does not produce identical generic titles across unrelated pages.
+- Lighthouse SEO checks report no document-title warnings where practical.
+- Browser tab and search-result preview spot-checks confirm titles are meaningful and correctly rendered.
 - Appropriate pages include meaningful and well-formed meta descriptions.
 - Meta descriptions accurately summarise page content and user intent.
 - Duplicate or generic meta descriptions are removed where practical.
