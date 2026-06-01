@@ -30,6 +30,15 @@ GENERIC_DESCRIPTION_VALUES = {
     "todoist playbook template gallery",
     "todoist templates",
 }
+GENERIC_TITLE_VALUES = {
+    "",
+    "home",
+    "index",
+    "page",
+    "website",
+    "untitled",
+    "todoist playbook",
+}
 
 
 def fail(msg):
@@ -140,6 +149,31 @@ def main():
     if twitter_description != description:
         fail("Twitter description must match meta description")
     print("✅ Meta descriptions present and well-formed")
+
+    # 1e. Document/meta titles present, meaningful, and consistent
+    title_match = re.search(r"<title>([^<]+)</title>", html, re.IGNORECASE)
+    if not title_match:
+        fail("No <title> found")
+    title = title_match.group(1).strip()
+    if title.lower() in GENERIC_TITLE_VALUES:
+        fail(f"Document title is too generic: {title!r}")
+    if "|" not in title:
+        fail("Document title must include section and site branding separated by '|'")
+    if "todoist playbook" not in title.lower():
+        fail("Document title must include site name 'Todoist Playbook'")
+
+    og_title = get_meta_content(html, "property", "og:title")
+    if og_title is None:
+        fail('No <meta property="og:title"> found')
+    if og_title != title:
+        fail("OpenGraph title must match document title")
+
+    twitter_title = get_meta_content(html, "name", "twitter:title")
+    if twitter_title is None:
+        fail('No <meta name="twitter:title"> found')
+    if twitter_title != title:
+        fail("Twitter title must match document title")
+    print("✅ Document and social titles are present and consistent")
 
     # 2. Every vendor <script src> has integrity + crossorigin
     for m in re.finditer(r'<script\s+([^>]+)>', html):

@@ -21,6 +21,7 @@
 
 ### Changed
 
+- Gallery: document title strategy now uses descriptive, route-specific patterns with consistent branding (`Template Gallery | Todoist Playbook`, `<Category> templates | Todoist Playbook`, `Search results for "<query>" | Todoist Playbook`), and `assert_gallery_security.py` now validates non-generic `<title>` plus matching `og:title`/`twitter:title`
 - Template: `github-trending-repos-weekly-review` — refined the opening section for weekly execution: section numbering now starts at `1️⃣`, stars-list tasks were consolidated and clarified, task priorities were rebalanced (`p1` for the core triage action), and reverse-engineering selection now prioritises focus alignment over a hard `>1k stars` threshold
 - Gallery: generate `hreflang` alternates for the production root (`en` + `x-default`) and validate them in `assert_gallery_security.py` to keep single-language metadata intentional and ready for future locale expansion
 - Agent: `SEO Accessibility Agent` - expanded hreflang guidance and a quick audit procedure for multilingual SEO reviews
