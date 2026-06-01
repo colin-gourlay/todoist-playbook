@@ -21,6 +21,8 @@
   var SPOTLIGHT      = DATA.spotlight || null;
   var BUILD          = DATA.build || {};
   var REPO_URL       = DATA.repoUrl || 'https://github.com/colin-gourlay/todoist-playbook';
+  var SITE_NAME      = 'Todoist Playbook';
+  var TITLE_SECTION  = 'Template Gallery';
 
   var TEMPLATE_LOOKUP = {};
   TEMPLATES.forEach(function (t) { TEMPLATE_LOOKUP[t.type + ':' + t.slug] = t; });
@@ -603,7 +605,7 @@
     html += '</div>';
     container.innerHTML = html;
     document.getElementById('breadcrumb').style.display = 'none';
-    setHeadingTitle('Todoist Playbook - Template Gallery');
+    setHeadingTitle(TITLE_SECTION + ' | ' + SITE_NAME);
   }
 
   function renderCategory(cat) {
@@ -636,7 +638,7 @@
     container.innerHTML = html;
     document.getElementById('crumb-label').textContent = icon + ' ' + label;
     document.getElementById('breadcrumb').style.display = 'block';
-    setHeadingTitle(label + ' — Todoist Playbook');
+    setHeadingTitle(label + ' templates | ' + SITE_NAME);
   }
 
   function renderSearch(query) {
@@ -714,7 +716,11 @@
       '<p class="search-summary" role="status" aria-live="polite" aria-atomic="true">' +
       summary + '</p>' + body;
     document.getElementById('breadcrumb').style.display = 'none';
-    setHeadingTitle((trimmed ? 'Search: ' + trimmed : 'Browse by tag') + ' — Todoist Playbook');
+    setHeadingTitle(
+      trimmed
+        ? 'Search results for "' + trimmed + '" | ' + SITE_NAME
+        : 'Templates by tag | ' + SITE_NAME
+    );
   }
 
   function renderBrowse() {

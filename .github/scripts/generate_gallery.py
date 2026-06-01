@@ -681,6 +681,7 @@ def build_html(data_payload, sri_hashes):
         "Curated Todoist templates for getting things done - accessible, "
         "searchable gallery with categories, prompts and bundles."
     )
+    page_title = "Template Gallery | Todoist Playbook"
 
     csp = (
         "default-src 'none'; "
@@ -719,13 +720,13 @@ def build_html(data_payload, sri_hashes):
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#d34244">
   <meta name="description" content="{description}">
-  <meta property="og:title" content="Todoist Playbook - Template Gallery">
+  <meta property="og:title" content="{page_title}">
   <meta property="og:description" content="{description}">
   <meta property="og:image" content="{site_url}og-image.svg">
   <meta property="og:type" content="website">
   <meta property="og:url" content="{site_url}">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Todoist Playbook - Template Gallery">
+  <meta name="twitter:title" content="{page_title}">
   <meta name="twitter:description" content="{description}">
   <meta name="twitter:image" content="{site_url}og-image.svg">
   <link rel="canonical" href="{site_url}">
@@ -735,7 +736,7 @@ def build_html(data_payload, sri_hashes):
   <link rel="apple-touch-icon" href="apple-touch-icon.svg">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="styles.css">
-  <title>Todoist Playbook - Template Gallery</title>
+  <title>{page_title}</title>
 </head>
 <body>
 
