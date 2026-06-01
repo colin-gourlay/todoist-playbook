@@ -120,7 +120,7 @@ Copyable example:
 ```yaml
 deprecated: true
 deprecation_message: Legacy template retained for compatibility; use newer split templates.
-replacement_template: github-trending-repo-review
+replacement_template: github-trending-repositories-daily-review
 sunset_date: 2026-10-01
 ```
 
