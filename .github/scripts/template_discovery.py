@@ -29,7 +29,7 @@ class TemplateLocation:
     """Resolved location of a CSV template on disk."""
 
     slug: str
-    template_dir: str  # e.g. "csv-templates/github/github-trending-repo-review"
+    template_dir: str  # e.g. "csv-templates/github/github-trending-repositories-daily-review"
     group: Optional[str]  # e.g. "github" when nested, otherwise None
     relative_path: str  # template_dir relative to CSV_TEMPLATES_DIR
 
