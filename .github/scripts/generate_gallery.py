@@ -846,6 +846,20 @@ def build_html(data_payload, sri_hashes):
 
 def assert_hardening(html, output_dir, payload):
     """Assert the rendered HTML satisfies the security/CSP contract."""
+    def meta_directives(name):
+        match = re.search(
+            rf'<meta[^>]*\bname="{re.escape(name)}"[^>]*\bcontent="([^"]*)"[^>]*>',
+            html,
+            re.IGNORECASE,
+        )
+        if not match:
+            return set()
+        return {
+            token.strip().lower()
+            for token in match.group(1).split(",")
+            if token.strip()
+        }
+
     assert 'http-equiv="Content-Security-Policy"' in html, \
         "missing Content-Security-Policy meta"
     assert "'unsafe-inline'" not in html, "CSP must not allow 'unsafe-inline'"
@@ -854,6 +868,10 @@ def assert_hardening(html, output_dir, payload):
     assert 'rel="canonical"' in html, "missing canonical link"
     assert 'rel="alternate" hreflang="en"' in html, "missing en hreflang link"
     assert 'rel="alternate" hreflang="x-default"' in html, "missing x-default hreflang link"
+    for meta_name in ("robots", "googlebot", "bingbot"):
+        directives = meta_directives(meta_name)
+        assert "noindex" not in directives and "none" not in directives, \
+            f"blocking {meta_name} directives are not allowed on the public gallery"
     assert '<a class="skip-link"' in html, "missing skip link"
     assert '<main id="main"' in html, "missing main landmark"
 

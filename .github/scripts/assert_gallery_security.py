@@ -39,6 +39,8 @@ GENERIC_TITLE_VALUES = {
     "untitled",
     "todoist playbook",
 }
+ROBOT_META_NAMES = ("robots", "googlebot", "bingbot")
+BLOCKING_ROBOTS_DIRECTIVES = {"noindex", "none"}
 
 
 def fail(msg):
@@ -58,6 +60,22 @@ def get_meta_content(html, attr_name, attr_value):
     if not content_match:
         return None
     return content_match.group(1).strip()
+
+
+def get_meta_tag(html, attr_name, attr_value):
+    pattern = re.compile(
+        rf'<meta[^>]*\b{re.escape(attr_name)}="{re.escape(attr_value)}"[^>]*>',
+        re.IGNORECASE,
+    )
+    return pattern.search(html)
+
+
+def parse_robots_directives(content):
+    return {
+        token.strip().lower()
+        for token in content.split(",")
+        if token.strip()
+    }
 
 
 def main():
@@ -174,6 +192,23 @@ def main():
     if twitter_title != title:
         fail("Twitter title must match document title")
     print("✅ Document and social titles are present and consistent")
+
+    # 1f. Public gallery root must not ship blocking robots meta directives
+    for meta_name in ROBOT_META_NAMES:
+        tag_match = get_meta_tag(html, "name", meta_name)
+        if not tag_match:
+            continue
+        content_match = re.search(r'\bcontent="([^"]*)"', tag_match.group(0), re.IGNORECASE)
+        if not content_match:
+            fail(f'Meta directive {meta_name!r} is missing a content attribute')
+        directives = parse_robots_directives(content_match.group(1))
+        blocked = sorted(directives & BLOCKING_ROBOTS_DIRECTIVES)
+        if blocked:
+            fail(
+                f"Meta directive {meta_name!r} contains blocking indexing directives: "
+                f"{', '.join(blocked)}"
+            )
+    print("✅ No blocking robots meta directives found on the public page")
 
     # 2. Every vendor <script src> has integrity + crossorigin
     for m in re.finditer(r'<script\s+([^>]+)>', html):

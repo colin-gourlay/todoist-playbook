@@ -279,7 +279,9 @@ Runs daily (and on demand) through the compiled workflow `doc-sync.lock.yml`, wh
 Runs after `Validate templates` succeeds on pushes to `main`, or on manual dispatch:
 
 - `generate_gallery.py` builds a static HTML site from all templates and prompt templates
+- The production gallery root is intentionally crawlable and indexable: generated output ships canonical metadata, `robots.txt`, and `sitemap.xml`, and must not emit blocking `robots` / `googlebot` / `bingbot` `noindex`-style meta directives
 - Gallery metadata includes canonical + `hreflang` alternates for the current single-language strategy (`en` and `x-default` both pointing at the production root URL); this is validated by `assert_gallery_security.py` and can be expanded when locale-specific variants are introduced
+- Deployment is static GitHub Pages, so there is no repository-managed `X-Robots-Tag` header override in the publishing path; crawler behaviour is controlled by generated files and metadata checked in CI
 - Deployed to GitHub Pages via `actions/deploy-pages`
 
 ### Sync Todoist Project List
