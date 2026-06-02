@@ -302,7 +302,7 @@
            'aria-label="Open details for ' + esc(t.name) + '">' +
           '<div class="spotlight-body">' +
             '<span class="spotlight-badge">Featured Template</span>' +
-            '<h2 class="spotlight-name"><a href="' + esc(templateSourceUrl(t)) + '" target="_blank" rel="noopener noreferrer" data-stop>' + esc(t.name) + '</a></h2>' +
+            '<h2 class="spotlight-name">' + esc(t.name) + '</h2>' +
             (t.description ? '<p class="spotlight-desc">' + esc(t.description) + '</p>' : '') +
             (tags ? '<div class="spotlight-tags">' + tags + '</div>' : '') +
             (stats ? '<div class="spotlight-stats">' + stats + '</div>' : '') +

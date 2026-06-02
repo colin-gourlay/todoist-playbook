@@ -1,6 +1,6 @@
 name: GitHub Trending Repositories Daily Review
 slug: github-trending-repositories-daily-review
-description: Daily triage template to review trending GitHub repos, score signals, and assign next actions
+description: Daily triage template for trending GitHub repos to score key signals and assign clear next actions
 category: github
 tags:
   - discoverability
