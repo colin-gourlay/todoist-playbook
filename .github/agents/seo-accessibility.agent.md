@@ -31,6 +31,7 @@ When reviewing or changing code/content:
 - Use semantic HTML wherever possible.
 - Keep recommendations practical and implementation-focused.
 - Treat crawl/index controls (`robots.txt`, sitemap discoverability) as baseline SEO hygiene.
+- Treat indexation directives as baseline SEO hygiene: pages intended for public discovery must not emit unintended blocking directives in HTML meta tags or HTTP headers.
 - Treat crawlable anchor-link navigation as baseline crawl/index hygiene.
 - Treat correct HTTP response behaviour as baseline crawl/index hygiene: public pages should resolve successfully, intentional redirects should use appropriate redirect codes, and missing pages should return intentional 404 responses.
 - Treat canonical URLs as baseline indexation hygiene: each indexable page should have one authoritative production URL, and pages intentionally excluded from indexing should not emit canonical tags unless a documented platform requirement says otherwise.
@@ -116,6 +117,52 @@ Validation expectations:
 - Confirm deployed accessibility of `/robots.txt` after publish.
 - Run Lighthouse SEO checks and verify no invalid-robots warnings remain.
 - Where available, optionally validate crawler interpretation in search-console tooling.
+
+## Indexing Directive Requirements (Meta and Headers)
+
+For pages intended to be publicly discoverable, treat crawl/index directive correctness as required SEO infrastructure.
+
+When auditing or implementing changes:
+
+- Ensure indexable pages do not emit unintended `noindex`, `none`, or equivalent blocking directives.
+- Audit HTML `<meta name="robots" ...>` directives and ensure they match documented indexation intent.
+- Audit crawler-specific meta directives (for example `<meta name="googlebot" ...>` and `<meta name="bingbot" ...>`) for unintended blocking values.
+- Audit HTTP response headers for `X-Robots-Tag` directives, including route-specific and asset-specific header rules.
+- Ensure production pages intended for discovery do not emit `X-Robots-Tag: noindex` unless intentionally documented.
+- Ensure production pages intended for discovery do not emit unintended blocking or visibility-reducing directives (for example `noindex`, `none`, `nofollow`, `nosnippet`, `max-snippet=0`, `unavailable_after`) in either meta directives or `X-Robots-Tag` headers.
+- Ensure intentionally excluded pages explicitly define exclusion behaviour consistently (for example intentional `noindex` via meta or header rules).
+- Ensure indexation decisions are consistent across templates, middleware/server config, CDN/edge config, and generated output.
+- If robots directives conflict across global robots meta, crawler-specific meta, and `X-Robots-Tag` headers, treat the effective behaviour as the most restrictive directive and fail review unless a route-scoped exception is intentionally documented.
+- Ensure environment-specific protections (preview, staging, branch builds) do not leak blocking directives into production.
+- Ensure indexation policy is documented and aligned with robots.txt, sitemap, canonical, and metadata strategy.
+
+Validation expectations:
+
+- Inspect rendered `<head>` output in browser developer tools for robots-related meta tags on representative pages.
+- Inspect HTTP response headers for representative routes and key assets to confirm no unintended `X-Robots-Tag` directives.
+- Run Lighthouse SEO checks and verify crawler/indexing directive warnings are resolved where practical.
+- Validate indexation behaviour in search-console tooling (Google Search Console, Bing Webmaster Tools) where available.
+- Validate robots meta and `X-Robots-Tag` behaviour on a host matrix (canonical production domain, preview domain, staging domain, and custom domain if used) and confirm production hosts do not inherit non-production blocking directives.
+- Record intentional exclusions and rationale in repository docs, issue acceptance criteria, or PR notes.
+
+### Quick Audit Procedure (Indexing Directives)
+
+Use this sequence when reviewing crawl/index directive safety:
+
+1. Define route intent
+  - List representative production routes and classify each as indexable or intentionally excluded.
+2. Inspect HTML robots directives
+  - Check `<meta name="robots">` and crawler-specific directives for unintended blocking values on indexable routes.
+3. Inspect HTTP header directives
+  - Check `X-Robots-Tag` headers across representative routes, including templates, static assets, and edge responses.
+4. Cross-check consistency
+  - Verify robots directives align with canonical tags, sitemap inclusion, and robots.txt policy.
+5. Verify environment separation
+  - Confirm staging/preview safeguards do not leak into production hosts or production build output.
+6. Run external validation
+  - Run Lighthouse SEO and use Google Search Console or Bing Webmaster Tools where available.
+7. Record outcome
+  - Document pass/fail findings, intentional exclusions, and required remediation actions.
 
 ## HTTP Status Code Requirements
 
@@ -462,6 +509,14 @@ When asked to review SEO or accessibility, check for:
 - Alternate `hreflang` URLs that are broken, non-canonical, or non-production
 - Missing reciprocal locale mappings between variants
 - Unclear or undocumented single-language decision where `hreflang` is omitted
+- Unintended `<meta name="robots" ...>` blocking directives on pages intended for public discovery
+- Unintended crawler-specific blocking directives (for example `googlebot` or `bingbot` with `noindex`)
+- Unintended `X-Robots-Tag: noindex` headers on routes intended to be indexed
+- Unintended visibility-reducing directives on indexable routes (for example `nofollow`, `none`, `nosnippet`, `max-snippet=0`, `unavailable_after`)
+- Inconsistent indexation directives between HTML meta tags, crawler-specific tags, and HTTP headers
+- Conflicting robots directives where effective behaviour is more restrictive than intended
+- Preview/staging-specific noindex rules leaking into production routes
+- Undocumented rationale for pages intentionally excluded from indexing
 - Missing or invalid `robots.txt`
 - Missing `Sitemap:` directive when sitemap support exists
 - Non-absolute sitemap URLs or sitemap URLs pointing at the wrong domain
@@ -501,6 +556,8 @@ When updating components/templates:
 When updating SEO/layout templates:
 
 - Ensure shared head/SEO templates emit one canonical tag for each indexable page and suppress canonical output for pages intentionally marked non-indexable.
+- Ensure shared head/SEO templates emit robots directives intentionally: indexable pages must not inherit `noindex` defaults and intentionally excluded pages must apply explicit, documented exclusion directives.
+- Ensure crawler-specific meta tags (for example `googlebot`, `bingbot`) do not contradict global robots directives or intended indexation policy.
 - Generate canonical URLs from the authoritative production permalink rather than hand-built string concatenation where possible.
 - Remove duplicate or conflicting canonical logic from overlapping partials or layouts.
 - Keep canonical behaviour consistent with sitemap generation, robots rules, metadata, hreflang, and structured-data output.
@@ -523,6 +580,8 @@ When updating routing, deployment, or static-site generation:
 - Ensure invalid routes produce intentional `404` responses and that any custom `404.html` does not mask status behaviour on the deployed platform.
 - Keep trailing-slash handling, canonical URLs, sitemap entries, and internal links aligned so they resolve without accidental redirect churn.
 - Validate custom-domain, base-URL, and hosting configuration so production requests do not fall through to broken or unintended routes.
+- Audit server, CDN, and edge header configuration to ensure `X-Robots-Tag` values match route intent.
+- Isolate environment-specific noindex behaviour to non-production hosts and validate that production deploys remove blocking header/meta directives for indexable routes.
 
 ## Acceptance Criteria
 
@@ -557,6 +616,14 @@ A change is complete only when:
 - A valid `robots.txt` is deployed and reachable at `/robots.txt`.
 - `robots.txt` includes correct crawler directives for intended crawl behaviour.
 - Sitemap discovery is declared with an absolute `Sitemap:` URL when applicable.
+- Production pages intended for discovery are crawlable and indexable.
+- No unintended `noindex` directives exist in `<meta name="robots">` or crawler-specific meta directives on indexable pages.
+- No unintended `X-Robots-Tag: noindex` headers exist on indexable pages.
+- No unintended blocking or visibility-reducing directives (`noindex`, `none`, `nofollow`, `nosnippet`, `max-snippet=0`, `unavailable_after`, or crawler-specific equivalents) exist on indexable pages.
+- Pages intentionally excluded from indexing use explicit, documented exclusion behaviour.
+- Indexation directives are consistent and deliberate across templates, headers, and deployment configuration.
+- Environment-specific indexing controls do not leak into production.
+- No unresolved conflicts exist between robots meta, crawler-specific directives, and `X-Robots-Tag` headers on representative indexable routes; any intentional exception is documented with route scope and owner.
 - Intended public pages return successful HTTP responses, typically `200 OK`.
 - Redirects use appropriate status codes for their intent and do not loop or chain unnecessarily.
 - Invalid or missing pages return intentional `404 Not Found` responses.
@@ -572,9 +639,11 @@ A change is complete only when:
 - External links, social links, primary nav links, and buttons styled as links have correct semantics, valid destinations, and descriptive names.
 - Lighthouse SEO checks report no HTTP-status-code, canonical-link, or `hreflang` warnings where practical.
 - Lighthouse SEO checks report no meta-description warnings where practical.
+- Lighthouse SEO checks report no crawler/indexing-directive regressions where practical.
 - Lighthouse SEO and accessibility checks show no link-crawlability or invalid-link-pattern regressions.
 - Behaviour has been validated using Lighthouse, axe DevTools, screen reader testing, and keyboard-only navigation checks where practical.
 - Behaviour has been validated using HTTP clients or browser developer tools to confirm status codes and redirect behaviour where practical.
+- Behaviour has been validated with search-engine tooling (Google Search Console and Bing Webmaster Tools) where available and appropriate.
 - Screen-reader testing confirms link purpose is understandable out of context, including repeated and icon-only links.
 
 ## Response Style
