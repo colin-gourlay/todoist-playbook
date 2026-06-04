@@ -1,7 +1,7 @@
 TYPE,CONTENT,DESCRIPTION,IS_COLLAPSED,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DATE,DATE_LANG,TIMEZONE,DURATION,DURATION_UNIT,DEADLINE,DEADLINE_LANG
 meta,view_style=list,,,,,,,,,,,,,
 section,1️⃣ Select candidates from Todoist trending feed,,,,1,,,,,,,,,
-task,Shortlist 3 to 5 repos from today's imported GitHub Trending feed for review @people-self @place-anywhere @tools-github @when-sod-personal-pre-training,"Open the Todoist project populated by the daily GitHub Trending sync, then pick 3 to 5 repos for today's review batch.",,3,1,,,today at 05:30,en,Europe/London,10,minute,,
+task,SShortlist 3 to 5 repos from today's imported GitHub Trending feed for review @people-self @place-anywhere @tools-github @when-sod-personal-pre-training,"Open the Todoist project populated by the daily GitHub Trending sync, then pick 3 to 5 repos for today's review batch.",,3,1,,,today at 05:30,en,Europe/London,10,minute,,
 section,2️⃣ Quick triage - fit and quality checks,,,,1,,,,,,,,,
 task,"Check the README opening clearly states purpose, audience, and value @people-self @place-anywhere @tools-github @when-sod-personal-pre-training","Pass if the opening lines explain what the project does, who it is for, and the main value or problem it addresses.",,3,1,,,,,,2,minute,,
 task,Check the README includes quick start install and run steps plus one runnable example @people-self @place-anywhere @tools-github @when-sod-personal-pre-training,"Pass if the README includes prerequisites, an install step, a run step, and one concrete usage example with expected output or outcome.",,3,1,,,,,,5,minute,,
