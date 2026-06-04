@@ -220,8 +220,8 @@
       ? taskCount + '\u202ftask' + (taskCount !== 1 ? 's' : '')
       : '';
     var html = '<div class="spotlight-preview-header">' +
-      '<span class="spotlight-preview-label">Task list</span>' +
-      (countLabel ? '<span class="spotlight-preview-count">' + esc(countLabel) + '</span>' : '') +
+      '<span class="tpl-section-label">Task list</span>' +
+      (countLabel ? '<span class="tpl-preview-count">' + esc(countLabel) + '</span>' : '') +
       '</div>';
     shown.forEach(function (r) {
       var content = r.content.replace(/@[\w-]+/g, '').trim();
