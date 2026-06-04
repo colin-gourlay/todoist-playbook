@@ -21,7 +21,7 @@
 
 ### Changed
 
-- Workflow: `bump-template-version.yml` — now commits template/prompt `meta.yml` patch bumps directly to `main` and no longer opens a separate follow-up version-bump PR, so validation/deploy/release runs consume the updated metadata in the same automation path
+- Workflow: `bump-template-version.yml` — now pushes template/prompt `meta.yml` patch bumps to `chore/9000-bump-template-version` and opens or reuses a PR to `main`, avoiding protected-branch push failures while keeping required checks in flow
 - Template: `github-trending-repositories-daily-review` — renamed section `5️⃣ Follow-Ups` to `5️⃣ Follow-Up Actions` for clearer action wording and improved consistency with adjacent section headers
 - Gallery: document title strategy now uses descriptive, route-specific patterns with consistent branding (`Template Gallery | Todoist Playbook`, `<Category> templates | Todoist Playbook`, `Search results for "<query>" | Todoist Playbook`), and `assert_gallery_security.py` now validates non-generic `<title>` plus matching `og:title`/`twitter:title`
 - Template: `github-trending-repos-weekly-review` — refined the opening section for weekly execution: section numbering now starts at `1️⃣`, stars-list tasks were consolidated and clarified, task priorities were rebalanced (`p1` for the core triage action), and reverse-engineering selection now prioritises focus alignment over a hard `>1k stars` threshold

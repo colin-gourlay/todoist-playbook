@@ -142,7 +142,7 @@ task,Review last week's completed tasks,2,1,,,,,
 
 ## Bump Template Versions
 
-When a pull request that modifies a reviewed template (version ≥ `0.1.0`) is merged into `main`, the **Bump template versions** workflow automatically increments the patch version and commits directly to `main`:
+When a pull request that modifies a reviewed template (version ≥ `0.1.0`) is merged into `main`, the **Bump template versions** workflow automatically increments the patch version and pushes it to an automation branch before opening (or updating) a pull request back to `main`:
 
 ```
 Detected changes in: csv-templates/weekly-review
