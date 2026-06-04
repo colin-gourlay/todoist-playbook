@@ -137,7 +137,9 @@ Use the **Create Todoist Project via MCP** workflow to route project creation th
 
 > **Note:** This workflow supports a subset of templates. Leaving the template field blank defaults to `weekly-review`.
 
-**Available templates:** `code-review`, `daily-review`, `ef-code-review`, `exam-certification-workflow`, `house-admin`, `iteration-0`, `onboarding-checklist`, `one-on-one`, `radio-show-system`, `saas-spin-up`, `saas-wind-down`, `socials-health-and-optimization-checklist`, `weekly-review`
+> The dropdown includes only MCP-supported templates and excludes deprecated templates.
+
+**Available templates:** `album-of-the-week-weekly-review`, `code-review`, `daily-review`, `ef-code-review`, `exam-certification-workflow`, `house-admin`, `iteration-0`, `onboarding-checklist`, `one-on-one`, `radio-show-system`, `saas-spin-up`, `saas-wind-down`, `socials-health-and-optimization-checklist`, `weekly-review`, `willo-video-review`
 
 1. Go to **Actions → Create Todoist Project via MCP**
 2. Click **Run workflow**

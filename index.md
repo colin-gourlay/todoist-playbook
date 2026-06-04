@@ -161,7 +161,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 
 | Workflow | Description | Trigger |
 | ---------- | ------------- | --------- |
-| [Create Todoist Project via MCP](.github/workflows/create-todoist-project-via-mcp.yml) | Create a Todoist project from any CSV template by routing all API calls through the [Todoist MCP server](https://ai.todoist.net/mcp) | workflow_dispatch |
+| [Create Todoist Project via MCP](.github/workflows/create-todoist-project-via-mcp.yml) | Create a Todoist project from supported CSV templates by routing all API calls through the [Todoist MCP server](https://ai.todoist.net/mcp) | workflow_dispatch |
 
 ---
 
@@ -171,7 +171,7 @@ New here? Try one of these two paths to get a Todoist project running in under a
 | ---------- | ------------- | --------- |
 | [Create Todoist Project from Template](.github/workflows/create-todoist-project.yml) | Create a Todoist project directly from a CSV template; scheduled runs create `weekly-close` on Fridays and `weekly-plan` on Sundays, and successful trending sync runs create `github-trending-repositories-daily-review` automatically | `workflow_dispatch` + schedule + `workflow_run` |
 | [Create Todoist Project from Prompt Template](.github/workflows/create-todoist-project-from-prompt.yml) | Generate enriched task content from a prompt template with GitHub Copilot, then create the resulting Todoist project automatically | `workflow_dispatch` |
-| [Create Todoist Project via MCP](.github/workflows/create-todoist-project-via-mcp.yml) | Create a Todoist project from any CSV template by routing all API calls through the [Todoist MCP server](https://ai.todoist.net/mcp) | `workflow_dispatch` |
+| [Create Todoist Project via MCP](.github/workflows/create-todoist-project-via-mcp.yml) | Create a Todoist project from supported CSV templates by routing all API calls through the [Todoist MCP server](https://ai.todoist.net/mcp) | `workflow_dispatch` |
 
 ---
 
