@@ -13,8 +13,7 @@ task,"Set GitHub repository watch level intentionally (Not watching, Releases on
 task,Run the Repo Ecosystem Watch review and record Watch or Star decisions for related repos,"Review adjacent repositories in the same ecosystem and assign one action per repository. Use Watch for active projects you need to monitor and Star for useful references you may revisit. Record each repository and action in your notes so decisions are visible and repeatable.",,3,1,,,,,,,,,
 task,Star this repository and categorise it in the correct organisational GitHub list,"Add it to one best-fit list with a clear, descriptive GitHub List name that states purpose and audience so collaborators can scan and locate it quickly.",,4,1,,,,,,,,,
 task,Plan one GitHub automation workflow for repetitive repo work,"Find one repetitive repository task and define one automation workflow using GitHub Actions or GitHub Script. Include trigger, owner, expected outcome, and one success metric.",,2,1,,,,,,,,,
-
-section,2️⃣ Documentation,,,,,,,,,,,,,
+section,2️⃣ Documentation & Knowledge Base,,,,,,,,,,,,,
 task,Write a clear problem statement in README.md (Markdown),,,1,1,,,,,,,,,
 task,Add architecture overview to README,,,2,1,,,,,,,,,
 task,Add screenshots to README,,,3,1,,,,,,,,,
