@@ -15,4 +15,4 @@ task,"Choose one next action for each repo: Star, Watch, Reference, or Ignore @p
 section,5️⃣ Follow-Up Actions,,,,1,,,,,,,,,
 task,"Add starred, watched, or referenced repos to your GitHub Trending Tracker project @people-self @place-anywhere @tools-github @when-sod-personal-pre-training","If you Star, Watch, or Reference a repo today, add it to your GitHub Trending Tracker project and include a short note on why it is worth following or how you plan to use it.",,3,1,,,,,,2,minute,,
 section,6️⃣ Capture Notes and Archive,,,,1,,,,,,,,,
-task,Note any patterns or themes across today's candidates @people-self @place-anywhere @tools-github @when-sod-personal-pre-training,"Record any emerging themes, recurring topics, or technology trends observed across today's batch.",,3,1,,,,,,2,minute,,
+task,Summarise 2 to 3 recurring themes across today's candidate repos @people-self @place-anywhere @tools-github @when-sod-personal-pre-training,"Capture 2 to 3 clear patterns from today's shortlist (for example repeated problem spaces, stack choices, or UX trends) and add one short implication for what to track or prioritise next.",,3,1,,,,,,2,minute,,
