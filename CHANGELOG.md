@@ -52,6 +52,7 @@
 
 - Gallery: template title links now keep the intended text color after being visited, instead of falling back to the browser default visited-link purple
 - Gallery: removed the hyperlink from the **Template Spotlight** title so clicking the featured template name now opens the same details dialog as clicking elsewhere on the spotlight card
+- Gallery: task preview overflow text now says “more entries” (instead of just “more”) to clarify that the count includes both section headers and tasks
 
 ---
 
