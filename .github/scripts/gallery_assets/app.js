@@ -208,7 +208,7 @@
       var content = r.content.replace(/@[\w-]+/g, '').trim();
       html += '<div class="preview-row ' + cls + '">' + esc(content) + '</div>';
     });
-    if (rest > 0) html += '<div class="preview-more">+\u202f' + rest + ' more</div>';
+    if (rest > 0) html += '<div class="preview-more">+\u202f' + rest + ' more entries</div>';
     return html;
   }
 
@@ -234,7 +234,7 @@
           '</div>';
       }
     });
-    if (rest > 0) html += '<div class="preview-more">+\u202f' + rest + ' more</div>';
+    if (rest > 0) html += '<div class="preview-more">+\u202f' + rest + ' more entries</div>';
     return html;
   }
 
