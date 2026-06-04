@@ -369,8 +369,9 @@ The **Bump template versions** workflow runs when a pull request targeting `main
 - It detects which template directories have changed (based on non-`meta.yml` file changes).
 - For each changed template it reads the current `version` in `meta.yml`.
 - If the version is `0.0.0` it is left untouched (preserving the "unreviewed" signal).
-- Otherwise it increments the **patch** component and commits the change directly to `main`.
+- Otherwise it increments the **patch** component and commits the change directly to `main` (no separate version-bump PR).
 - The workflow is idempotent: re-running it on a PR that has already been bumped will not produce an additional bump.
+- The resulting `main` push re-runs **Validate templates**, then triggers **Deploy Template Gallery to GitHub Pages** and **Publish Release** from the updated metadata.
 
 ---
 
