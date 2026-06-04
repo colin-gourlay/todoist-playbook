@@ -263,7 +263,8 @@ Runs when a pull request targeting `main` is merged:
 - Detects which template directories have changed (excluding `meta.yml` changes)
 - For each changed template, reads the current `version` in `meta.yml`
 - Skips templates at `0.0.0` (unreviewed signal preserved)
-- Increments the patch component (`x.y.z → x.y.(z+1)`) and commits directly to `main`
+- Increments the patch component (`x.y.z → x.y.(z+1)`) and commits directly to `main` (no follow-up version-bump PR)
+- That `main` push is validated and then drives release/gallery publishing from the updated metadata
 
 ### Documentation Sync
 
