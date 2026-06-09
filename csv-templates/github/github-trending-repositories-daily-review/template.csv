@@ -1,5 +1,6 @@
 TYPE,CONTENT,DESCRIPTION,IS_COLLAPSED,PRIORITY,INDENT,AUTHOR,RESPONSIBLE,DATE,DATE_LANG,TIMEZONE,DURATION,DURATION_UNIT,DEADLINE,DEADLINE_LANG
 meta,view_style=list,,,,,,,,,,,,,
+task,* *Daily Todoist workflow to shortlist GitHub Trending repositories then triage quality decide next actions and capture reusable notes for your tracker project*,,,,,,,,,,,,,
 section,1️⃣ Select candidates from Todoist trending feed,,,,1,,,,,,,,,
 task,Shortlist 3 to 5 repos from today's imported GitHub Trending feed for review @people-self @place-anywhere @tools-github @when-sod-personal-pre-training,"Open the Todoist project populated by the daily GitHub Trending sync, then pick 3 to 5 repos for today's review batch.",,3,1,,,today at 05:30,en,Europe/London,10,minute,,
 section,2️⃣ Quick triage - fit and quality checks,,,,1,,,,,,,,,
