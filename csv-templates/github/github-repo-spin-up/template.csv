@@ -45,7 +45,7 @@ task,Configure Releases and Tags strategy,,,2,1,,,,,,,,,
 task,Evaluate GitHub Spark for lightweight app prototyping (Copilot Pro+ subscribers),,,4,1,,,,,,,,,
 
 section,5️⃣ CI/CD & Automation,,,,,,,,,,,,,
-task,Consider on-prem vs hosted agents,"Decide whether CI/CD workflows will run on GitHub-hosted runners or self-hosted (on-prem) agents. Evaluate cost, compliance, network access, and maintenance overhead before committing to a runner strategy so infrastructure decisions are explicit and documented early.",,2,1,,,,,,,,,
+task,Consider on-prem vs hosted runners,"Decide whether CI/CD workflows will run on GitHub-hosted runners or self-hosted runners (on-prem). Evaluate cost, compliance, network access, and maintenance overhead before committing to a runner strategy so infrastructure decisions are explicit and documented early.",,2,1,,,,,,,,,
 task,Set up CI via GitHub Actions,,,1,1,,,,,,,,,
 task,Add CI workflow at .github/workflows/ci.yml,"Create and commit .github/workflows/ci.yml so pull requests run build and test automation. Ensure the workflow exposes a stable build-test check name that can be enforced by the main branch ruleset.",,1,1,,,,,,,,,
 task,Add linting workflow,,,2,1,,,,,,,,,
