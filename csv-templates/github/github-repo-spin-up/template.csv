@@ -79,8 +79,8 @@ task,Review community-curated agents at awesome-copilot (github.com) for applica
 task,"Identify any MCP servers that can be leveraged for the project e.g. ToDoist for playbook; spotify, lidarr etc",,,2,1,,,,,,,,,
 
 section,9️⃣ Developer Workflow & Hygiene,,,,,,,,,,,,,
-task,Create a devcontainer,"Add a .devcontainer/devcontainer.json that defines the development environment (base image, extensions, port forwarding, and post-create commands) so all contributors get a consistent, reproducible setup in Codespaces or locally via Dev Containers.",,2,1,,,,,,,,,
-task,Create a codespace,"Open or configure a GitHub Codespace for this repository to verify the devcontainer definition works end-to-end and that the development environment launches cleanly without manual setup steps.",,2,1,,,,,,,,,
+task,Create a Dev Container,"Add a .devcontainer/devcontainer.json that defines the development environment (base image, extensions, port forwarding, and post-create commands) so all contributors get a consistent, reproducible setup in Codespaces or locally via Dev Containers.",,2,1,,,,,,,,,
+task,Create a Codespace,"Open or configure a GitHub Codespace for this repository to verify the Dev Container definition works end-to-end and that the development environment launches cleanly without manual setup steps.",,2,1,,,,,,,,,
 task,Define and document GitHub Flow branching convention; document it at ./docs/github-flow-guidelines.md,,,1,1,,,,,,,,,
 task,"Define and document branch naming rules: feature|fix|docs|chore/<work-item-id>-<description>","Document the required short-lived branch naming policy and include valid examples such as feature/1234-short-description and docs/5678-update-readme so contributors use a consistent, searchable format.",,1,1,,,,,,,,,
 task,Add workflow to validate source branch names on pull_request,"Create .github/workflows/validate-branch-name.yml and fail pull requests when github.head_ref does not match the approved naming regex for feature, fix, docs, or chore branches.",,1,1,,,,,,,,,
