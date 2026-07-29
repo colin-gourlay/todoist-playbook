@@ -39,7 +39,7 @@ task,Uninstall from Linux @people-self @place-anywhere @tools-todoist,,,4,1,,,,,
 task,Remove browser plugin @people-self @place-anywhere @tools-todoist,,,4,1,,,,,,,,,
 task,Remove Gmail plugin @people-self @place-anywhere @tools-todoist,,,4,1,,,,,,,,,
 task,Uninstall from Raspberry Pi @people-self @place-anywhere @tools-todoist,,,4,1,,,,,,,,,
-task,Uninstall the Todoist app from Windows and remove any leftover local settings or cached data @people-self @place-anywhere @tools-windows-devices @when-anytime,"Check the Windows install folder, app data, and cached files for anything still left behind after uninstalling",,4,1,,,,,,25,minute,,
+task,Uninstall the app from Windows and remove any leftover local settings or cached data @people-self @place-anywhere @tools-windows-devices @when-anytime @duration-25,"Check the Windows install folder, app data, and cached files for anything still left behind after uninstalling",,4,1,,,,,,25,minute,,
 task,Clear any cached data or local configuration files @people-self @place-anywhere @tools-todoist,,,2,1,,,,,,,,,
 
 section,7️⃣ Community & Social Cleanup,,,1,,,,,,,,,,
