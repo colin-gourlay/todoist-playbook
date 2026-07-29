@@ -59,6 +59,10 @@ on:
         description: Project name (leave blank to use the CSV template's default name)
         required: false
         type: string
+      project_description:
+        description: Project description (leave blank to use the template's meta description)
+        required: false
+        type: string
       color:
         description: Project colour (leave blank to use the CSV template or system default)
         required: false
@@ -131,6 +135,7 @@ jobs:
           TODOIST_API_TOKEN: ${{ secrets.TODOIST_API_TOKEN }}
           TEMPLATE: ${{ (github.event_name == 'workflow_run' && 'github-trending-repositories-daily-review') || inputs.template || (github.event_name == 'schedule' && (github.event.schedule == '0 15 * * 5' && 'weekly-close' || 'weekly-plan')) || 'weekly-close' }}
           PROJECT_NAME: ${{ inputs.project_name }}
+          PROJECT_DESCRIPTION: ${{ inputs.project_description }}
           PROJECT_COLOR: ${{ inputs.color }}
           IS_FAVORITE: ${{ inputs.is_favorite }}
           PARENT_PROJECT: ${{ inputs.parent_project }}
