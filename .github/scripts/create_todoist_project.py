@@ -140,6 +140,13 @@ def read_meta_bool(template_dir, key):
     return value.lower() in {"true", "yes", "1", "on"}
 
 
+def resolve_project_description(template_dir, override):
+    """Return a project description from an explicit override or the template meta.yml."""
+    if override and override.strip():
+        return override.strip()
+    return read_meta_value(template_dir, "description")
+
+
 def main():
     token = os.environ.get("TODOIST_API_TOKEN", "").strip()
     if not token:
@@ -181,6 +188,11 @@ def main():
         )
         sys.exit(1)
 
+    project_description = resolve_project_description(
+        template_dir,
+        os.environ.get("PROJECT_DESCRIPTION", "").strip(),
+    )
+
     is_favorite = os.environ.get("IS_FAVORITE", "").strip().lower() == "yes"
 
     parent_project_name = os.environ.get("PARENT_PROJECT", "").strip()
@@ -210,6 +222,8 @@ def main():
         print(f"🗂️  Parent   : {parent_project_name} (id={parent_project_id})")
     if project_color:
         print(f"🎨 Color    : {project_color}")
+    if project_description:
+        print(f"📝 Description: {project_description}")
     if is_favorite:
         print(f"⭐ Favourite: yes")
     print()
@@ -220,6 +234,8 @@ def main():
         project_data["parent_id"] = parent_project_id
     if project_color:
         project_data["color"] = project_color
+    if project_description:
+        project_data["description"] = project_description
     if is_favorite:
         project_data["is_favorite"] = True
 

@@ -14,6 +14,7 @@ Required environment variables:
 Optional environment variables:
   PROJECT_NAME       — Override the project name from meta.yml
   PROJECT_COLOR      — Todoist colour name (e.g. red, blue)
+  PROJECT_DESCRIPTION — Optional project description override
   IS_FAVORITE        — Mark the project as a favourite (yes / no)
 """
 
@@ -256,6 +257,13 @@ def read_meta_value(template_dir: str, key: str) -> Optional[str]:
     return None
 
 
+def resolve_project_description(template_dir: str, override: str) -> Optional[str]:
+    """Return a project description from an explicit override or the template meta.yml."""
+    if override and override.strip():
+        return override.strip()
+    return read_meta_value(template_dir, "description")
+
+
 def main() -> None:
     token = os.environ.get("TODOIST_API_TOKEN", "").strip()
     if not token:
@@ -300,12 +308,19 @@ def main() -> None:
         )
         sys.exit(1)
 
+    project_description = resolve_project_description(
+        template_dir,
+        os.environ.get("PROJECT_DESCRIPTION", "").strip(),
+    )
+
     is_favorite = os.environ.get("IS_FAVORITE", "").strip().lower() == "yes"
 
     print(f"📋 Template : {template_slug}")
     print(f"📁 Project  : {project_name}")
     if project_color:
         print(f"🎨 Color    : {project_color}")
+    if project_description:
+        print(f"📝 Description: {project_description}")
     if is_favorite:
         print("⭐ Favourite: yes")
     print()
@@ -345,6 +360,8 @@ def main() -> None:
     project_args: dict = {"name": project_name}
     if project_color:
         project_args["color"] = project_color
+    if project_description:
+        project_args["description"] = project_description
     if is_favorite:
         project_args["is_favorite"] = True
 

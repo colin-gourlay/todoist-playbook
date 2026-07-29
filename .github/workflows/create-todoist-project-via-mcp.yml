@@ -30,6 +30,10 @@ on:
         description: Project name (leave blank to use the template's default name)
         required: false
         type: string
+      project_description:
+        description: Project description (leave blank to use the template's meta description)
+        required: false
+        type: string
       color:
         description: Project colour (leave blank to use the template or system default)
         required: false
@@ -89,6 +93,7 @@ jobs:
           TODOIST_API_TOKEN: ${{ secrets.TODOIST_API_TOKEN }}
           TEMPLATE: ${{ inputs.template || 'weekly-review' }}
           PROJECT_NAME: ${{ inputs.project_name }}
+          PROJECT_DESCRIPTION: ${{ inputs.project_description }}
           PROJECT_COLOR: ${{ inputs.color }}
           IS_FAVORITE: ${{ inputs.is_favorite }}
         run: python3 .github/scripts/create_via_mcp.py
