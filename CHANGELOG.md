@@ -29,6 +29,7 @@
 - Agent: `SEO Accessibility Agent` - expanded hreflang guidance and a quick audit procedure for multilingual SEO reviews
 - Agent: `SEO Accessibility Agent` - expanded guidance to review canonical links, Hugo canonical generation, and indexable-versus-non-indexable page handling during SEO and accessibility audits
 - Template: `github-repo-spin-up` - refined early repository identity tasks for clarity, including clearer `.gitignore` guidance and a more explicit owner or organisation profile-image task
+- Template: `github-repo-spin-up` — refined the owner or organisation profile-image task with clearer wording, embedded context labels, a 10 minute duration estimate, and a medium priority level
 - Template: `github-repo-spin-up` — clarified the repository visibility task to explicitly choose Public or Private based on collaboration and security needs, then document the decision in setup notes
 - Templates (GitHub category): standardised `project_color` to `grape` for `github-repo-spin-up` and `repo-ecosystem-watch`, and refined `github-trending-repositories-daily-review` metadata (`description` tightened; tag `quality-signals` replaced with `stars`); `index.md` catalogue row was updated to match current metadata
 - Template: `album-of-the-week-weekly-review` - added a new preparation task to tag copied audio files with KID3 immediately before the Lidarr re-download prevention step
