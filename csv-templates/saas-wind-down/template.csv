@@ -35,11 +35,11 @@ task,Cancel the renewal reminder in your calendar @people-self @place-anywhere @
 
 section,6️⃣ Uninstall from Devices,,,1,,,,,,,,,,
 task,Uninstall from Android @people-self @place-anywhere @tools-todoist,,,4,1,,,,,,,,,
-task,Uninstall from Linux @people-self @place-anywhere @tools-todoist,,,4,1,,,,,,,,,
-task,Remove browser extension from all Chrome profiles and other browsers @people-self @place-anywhere @tools-edge @tools-chrome @tools-firefox @tools-brave @when-anytime @duration-25,"Check each Chrome profile and any other browser profiles to make sure the extension is removed everywhere.",,4,1,,,,,,25,minute,,
+task,Uninstall the app from Linux and remove any leftover local settings or cached data @people-self @place-anywhere @tools-linux-devices @when-anytime @duration-25,"Check the Linux install directories, home config folders, and cached files for anything still left behind after uninstalling",,3,1,,,,,,25,minute,,
+task,Remove browser extension from all Chrome profiles and other browsers @people-self @place-anywhere @tools-edge @tools-chrome @tools-firefox @tools-brave @when-anytime @duration-25,"Check each Chrome profile and any other browser profiles to make sure the extension is removed everywhere.",,3,1,,,,,,25,minute,,
 task,Remove Gmail plugin @people-self @place-anywhere @tools-todoist,,,4,1,,,,,,,,,
 task,Uninstall from Raspberry Pi @people-self @place-anywhere @tools-todoist,,,4,1,,,,,,,,,
-task,Uninstall the app from Windows and remove any leftover local settings or cached data @people-self @place-anywhere @tools-windows-devices @when-anytime @duration-25,"Check the Windows install folder, app data, and cached files for anything still left behind after uninstalling",,4,1,,,,,,25,minute,,
+task,Uninstall the app from Windows and remove any leftover local settings or cached data @people-self @place-anywhere @tools-windows-devices @when-anytime @duration-25,"Check the Windows install folder, app data, and cached files for anything still left behind after uninstalling",,3,1,,,,,,25,minute,,
 task,Clear any cached data or local configuration files @people-self @place-anywhere @tools-todoist,,,2,1,,,,,,,,,
 
 section,7️⃣ Community & Social Cleanup,,,1,,,,,,,,,,
