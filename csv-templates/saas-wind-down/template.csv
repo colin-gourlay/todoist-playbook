@@ -34,7 +34,7 @@ task,Remove subscription cost from personal finance tracker @people-self @place-
 task,Cancel the renewal reminder in your calendar @people-self @place-anywhere @tools-todoist,,,1,1,,,,,,,,,
 
 section,6️⃣ Uninstall from Devices,,,1,,,,,,,,,,
-task,Uninstall from Android @people-self @place-anywhere @tools-todoist,,,4,1,,,,,,,,,
+task,Uninstall the app from Android and remove any leftover local settings or cached data @people-self @place-anywhere @tools-android-devices @when-anytime @duration-25,"Check app settings, local storage, and cached files to confirm everything related to the service is removed",,3,1,,,,,,25,minute,,
 task,Uninstall the app from Linux and remove any leftover local settings or cached data @people-self @place-anywhere @tools-linux-devices @when-anytime @duration-25,"Check the Linux install directories, home config folders, and cached files for anything still left behind after uninstalling",,3,1,,,,,,25,minute,,
 task,Remove browser extension from all Chrome profiles and other browsers @people-self @place-anywhere @tools-edge @tools-chrome @tools-firefox @tools-brave @when-anytime @duration-25,"Check each Chrome profile and any other browser profiles to make sure the extension is removed everywhere.",,3,1,,,,,,25,minute,,
 task,Remove Gmail plugin @people-self @place-anywhere @tools-todoist,,,4,1,,,,,,,,,
