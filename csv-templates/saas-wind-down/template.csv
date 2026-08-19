@@ -17,7 +17,7 @@ task,Migrate any essential data to replacement tool or storage @people-self @pla
 
 section,3️⃣ Revoke Integrations & API Access,,,1,,,,,,,,,,
 task,Revoke all API keys and access tokens @people-self @place-anywhere @tools-saas @when-anytime @duration-25,"Navigate to Account Settings → API or Integrations section. List all active keys and document which services or integrations use each key before revoking.",,1,1,,,,,,25,minute,,
-task,"Disconnect all third-party integrations (Zapier, Make, etc.) @people-self @place-anywhere @tools-todoist",,,1,1,,,,,,,,,
+task,"Disconnect all third-party integrations and automation connections (Zapier, Make, OAuth apps, webhooks) @people-self @place-anywhere @tools-saas @when-anytime @duration-60",,,1,1,,,,,,60,minute,,
 task,Remove OAuth authorisations from all connected apps @people-self @place-anywhere @tools-todoist,,,1,1,,,,,,,,,
 task,Disable all active webhooks @people-self @place-anywhere @tools-todoist,,,1,1,,,,,,,,,
 task,Remove tool from any automation workflows @people-self @place-anywhere @tools-todoist,,,1,1,,,,,,,,,
@@ -33,13 +33,6 @@ task,Check for and claim any pro-rated refund if applicable @people-self @place-
 task,Remove subscription cost from personal finance tracker @people-self @place-anywhere @tools-todoist,,,1,1,,,,,,,,,
 task,Cancel the renewal reminder in your calendar @people-self @place-anywhere @tools-todoist,,,1,1,,,,,,,,,
 
-section,6️⃣ Uninstall from Devices,,,1,,,,,,,,,,
-task,Uninstall the app from Android and remove any leftover local settings or cached data @people-self @place-anywhere @tools-android-devices @when-anytime @duration-25,"Check app settings, local storage, and cached files to confirm everything related to the service is removed",,3,1,,,,,,25,minute,,
-task,Uninstall the app from Linux and remove any leftover local settings or cached data @people-self @place-anywhere @tools-linux-devices @when-anytime @duration-25,"Check the Linux install directories, home config folders, and cached files for anything still left behind after uninstalling",,3,1,,,,,,25,minute,,
-task,Remove browser extension from all Chrome profiles and other browsers @people-self @place-anywhere @tools-edge @tools-chrome @tools-firefox @tools-brave @when-anytime @duration-25,"Check each Chrome profile and any other browser profiles to make sure the extension is removed everywhere.",,3,1,,,,,,25,minute,,
-task,Remove the Gmail plugin from all Google accounts and confirm it is no longer enabled @people-self @place-anywhere @tools-gmail @when-anytime @duration-25,"Check Gmail and Google Workspace integrations to ensure the plugin is fully removed from every account and no access remains enabled.",,3,1,,,,,,25,minute,,
-task,Uninstall the app from Raspberry Pi and remove any leftover local settings or cached data @people-self @place-anywhere @tools-raspberry-pi @when-anytime @duration-25,"Check package-manager entries, system services, home config folders, and cached files for anything still left behind after uninstalling",,3,1,,,,,,25,minute,,
-task,Uninstall the app from Windows and remove any leftover local settings or cached data @people-self @place-anywhere @tools-windows-devices @when-anytime @duration-25,"Check the Windows install folder, app data, and cached files for anything still left behind after uninstalling",,3,1,,,,,,25,minute,,
 
 section,7️⃣ Community & Social Cleanup,,,1,,,,,,,,,,
 task,Clean up LinkedIn for this service @people-self @place-anywhere @tools-todoist,,,4,1,,,,,,,,,
@@ -77,3 +70,12 @@ task,Verify account is no longer accessible after deletion period @people-self @
 task,After account closure is fully confirmed remove 2FA setup from authenticator app @people-self @place-anywhere @tools-todoist,,,2,1,,,,,,,,,
 task,After account closure is fully confirmed delete stored recovery codes @people-self @place-anywhere @tools-todoist,,,2,1,,,,,,,,,
 task,After account closure is fully confirmed remove account credentials from password manager @people-self @place-anywhere @tools-todoist,,,2,1,,,,,,,,,
+
+
+section,6️⃣ Uninstall from Devices,,,1,,,,,,,,,,
+task,Uninstall the app from Android and remove any leftover local settings or cached data @people-self @place-anywhere @tools-android-devices @when-anytime @duration-25,"Check app settings, local storage, and cached files to confirm everything related to the service is removed",,3,1,,,,,,25,minute,,
+task,Uninstall the app from Linux and remove any leftover local settings or cached data @people-self @place-anywhere @tools-linux-devices @when-anytime @duration-25,"Check the Linux install directories, home config folders, and cached files for anything still left behind after uninstalling",,3,1,,,,,,25,minute,,
+task,Remove browser extension from all Chrome profiles and other browsers @people-self @place-anywhere @tools-edge @tools-chrome @tools-firefox @tools-brave @when-anytime @duration-25,"Check each Chrome profile and any other browser profiles to make sure the extension is removed everywhere.",,3,1,,,,,,25,minute,,
+task,Remove the Gmail plugin from all Google accounts and confirm it is no longer enabled @people-self @place-anywhere @tools-gmail @when-anytime @duration-25,"Check Gmail and Google Workspace integrations to ensure the plugin is fully removed from every account and no access remains enabled.",,3,1,,,,,,25,minute,,
+task,Uninstall the app from Raspberry Pi and remove any leftover local settings or cached data @people-self @place-anywhere @tools-raspberry-pi @when-anytime @duration-25,"Check package-manager entries, system services, home config folders, and cached files for anything still left behind after uninstalling",,3,1,,,,,,25,minute,,
+task,Uninstall the app from Windows and remove any leftover local settings or cached data @people-self @place-anywhere @tools-windows-devices @when-anytime @duration-25,"Check the Windows install folder, app data, and cached files for anything still left behind after uninstalling",,3,1,,,,,,25,minute,,
