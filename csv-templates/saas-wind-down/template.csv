@@ -20,7 +20,7 @@ task,Revoke all API keys and access tokens @people-self @place-anywhere @tools-s
 task,"Disconnect all third-party integrations and automation connections (Zapier, Make, OAuth apps, webhooks) @people-self @place-anywhere @tools-saas @when-anytime @duration-60",,,1,1,,,,,,60,minute,,
 task,Revoke any remaining OAuth grants from connected apps @people-self @place-anywhere @tools-saas @when-anytime @duration-15,Review connected apps in account settings and revoke any remaining OAuth access you no longer need before closing the account.,,1,1,,,,,,15,minute,,
 task,Disable all active webhooks and external event subscriptions @people-self @place-anywhere @tools-saas @when-anytime @duration-10,"Review the app's webhook list and any external event subscriptions, then disable any remaining listeners before closing the account.",,1,1,,,,,,10,minute,,
-task,Remove tool from any automation workflows @people-self @place-anywhere @tools-todoist,,,1,1,,,,,,,,,
+task,Remove the tool from internal automation workflows and scheduled jobs @people-self @place-anywhere @tools-saas @when-anytime @duration-20,"Review your internal automations, scheduled jobs, recurring triggers, and any task-based workflows that still reference this tool, then remove the dependency before closing the account.",,1,1,,,,,,20,minute,,
 
 section,4️⃣ Security Cleanup,,,1,,,,,,,,,,
 task,Revoke all active sessions across devices @people-self @place-anywhere @tools-todoist,,,1,1,,,,,,,,,
