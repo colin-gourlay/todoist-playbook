@@ -15,6 +15,7 @@ task,Verify backup integrity and confirm files open correctly @people-self @plac
 task,"Store backups in a secure, long-term location @people-self @place-anywhere @tools-todoist",,,1,1,,,,,,,,,
 task,Migrate any essential data to replacement tool or storage @people-self @place-anywhere @tools-todoist,,,1,1,,,,,,,,,
 
+
 section,3️⃣ Revoke Integrations & API Access,,,1,,,,,,,,,,
 task,Revoke all API keys and access tokens @people-self @place-anywhere @tools-saas @when-anytime @duration-25,"Navigate to Account Settings → API or Integrations section. List all active keys and document which services or integrations use each key before revoking.",,1,1,,,,,,25,minute,,
 task,"Disconnect all third-party integrations and automation connections (Zapier, Make, OAuth apps, webhooks) @people-self @place-anywhere @tools-saas @when-anytime @duration-60",,,1,1,,,,,,60,minute,,
@@ -79,9 +80,6 @@ task,Verify account is no longer accessible after deletion period @people-self @
 task,After account closure is fully confirmed remove 2FA setup from authenticator app @people-self @place-anywhere @tools-todoist,,,2,1,,,,,,,,,
 task,After account closure is fully confirmed delete stored recovery codes @people-self @place-anywhere @tools-todoist,,,2,1,,,,,,,,,
 task,After account closure is fully confirmed remove account credentials from password manager @people-self @place-anywhere @tools-todoist,,,2,1,,,,,,,,,
-
-
-
 
 
 
