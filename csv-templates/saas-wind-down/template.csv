@@ -9,8 +9,8 @@ task,Identify any replacement tool or workflow @people-self @place-anywhere @too
 
 section,2️⃣ Data Export & Backup,,,1,,,,,,,,,,
 task,"Download all available account exports (CSV, JSON, PDF, etc.) @people-self @place-anywhere @tools-saas @when-anytime @duration-25","Use the platform's export tools to capture every available account record and confirm each file opens correctly and is complete.",,1,1,,,,,,25,minute,,
-task,"Download all attachments, files, or media stored in the tool @people-self @place-anywhere @tools-todoist",,,1,1,,,,,,,,,
-task,Export API usage logs and audit trails if relevant @people-self @place-anywhere @tools-todoist,,,2,1,,,,,,,,,
+task,"Download all attachments, files, or media stored in the tool @people-self @place-anywhere @tools-saas @when-anytime @duration-10",,,1,1,,,,,,,,,
+task,Export API usage logs and audit trails if available @people-self @place-anywhere @tools-saas @when-anytime @duration-10,"Export any available API usage logs and audit trails to preserve an activity record before closing the account.",,2,1,,,,,,10,minute,,
 task,Verify backup integrity and confirm files open correctly @people-self @place-anywhere @tools-todoist,,,1,1,,,,,,,,,
 task,"Store backups in a secure, long-term location @people-self @place-anywhere @tools-todoist",,,1,1,,,,,,,,,
 task,Migrate any essential data to replacement tool or storage @people-self @place-anywhere @tools-todoist,,,1,1,,,,,,,,,
