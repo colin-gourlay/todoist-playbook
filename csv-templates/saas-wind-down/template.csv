@@ -11,7 +11,7 @@ section,2️⃣ Data Export & Backup,,,1,,,,,,,,,,
 task,"Download all available account exports (CSV, JSON, PDF, etc.) @people-self @place-anywhere @tools-saas @when-anytime @duration-25","Use the platform's export tools to capture every available account record and confirm each file opens correctly and is complete.",,1,1,,,,,,25,minute,,
 task,"Download all attachments, files, or media stored in the tool @people-self @place-anywhere @tools-saas @when-anytime @duration-10",,,1,1,,,,,,,,,
 task,Export API usage logs and audit trails if available @people-self @place-anywhere @tools-saas @when-anytime @duration-10,"Export any available API usage logs and audit trails to preserve an activity record before closing the account.",,2,1,,,,,,10,minute,,
-task,Verify backup integrity and confirm files open correctly @people-self @place-anywhere @tools-todoist,,,1,1,,,,,,,,,
+task,Verify all exports are complete and readable: open each file, confirm expected data is present, and record any missing or corrupted backups before storing them securely @people-self @place-anywhere @tools-saas @when-anytime @duration-15,"Open each export, check it matches the expected records, and record any missing or corrupted files before you move the backup into long-term storage.",,1,1,,,,,,15,minute,,
 task,"Store backups in a secure, long-term location @people-self @place-anywhere @tools-todoist",,,1,1,,,,,,,,,
 task,Migrate any essential data to replacement tool or storage @people-self @place-anywhere @tools-todoist,,,1,1,,,,,,,,,
 
