@@ -7,22 +7,6 @@ task,Set a wind-down target completion date @people-self @place-anywhere @tools-
 task,"Check contractual obligations (notice period, minimum term) @people-self @place-anywhere @tools-todoist",,,1,1,,,,,,,,,
 task,Identify any replacement tool or workflow @people-self @place-anywhere @tools-todoist,,,2,1,,,,,,,,,
 
-section,2️⃣ Data Export & Backup,,,1,,,,,,,,,,
-task,"Download all available account exports (CSV, JSON, PDF, etc.) @people-self @place-anywhere @tools-saas @when-anytime @duration-25","Use the platform's export tools to capture every available account record and confirm each file opens correctly and is complete.",,1,1,,,,,,25,minute,,
-task,"Download all attachments, files, or media stored in the tool @people-self @place-anywhere @tools-saas @when-anytime @duration-10",,,1,1,,,,,,,,,
-task,Export API usage logs and audit trails if available @people-self @place-anywhere @tools-saas @when-anytime @duration-10,"Export any available API usage logs and audit trails to preserve an activity record before closing the account.",,2,1,,,,,,10,minute,,
-task,"Verify all exports are complete and readable: open each file, confirm expected data is present, and record any missing or corrupted backups before storing them securely @people-self @place-anywhere @tools-saas @when-anytime @duration-15","Open each export, check it matches the expected records, and record any missing or corrupted files before you move the backup into long-term storage.",,1,1,,,,,,15,minute,,
-task,"Move verified exports to a secure long-term backup archive, document the storage location, and confirm access is available @people-self @place-anywhere @tools-sass @when-anytime @duration-15","Store all verified exports in a secure long-term archive, record the exact backup location and access instructions, and confirm the archive is retrievable when needed.",,1,1,,,,,,15,minute,,
-task,Migrate any essential data to replacement tool or storage @people-self @place-anywhere @tools-todoist,,,1,1,,,,,,,,,
-
-
-section,3️⃣ Revoke Integrations & API Access,,,1,,,,,,,,,,
-task,Revoke all API keys and access tokens @people-self @place-anywhere @tools-saas @when-anytime @duration-25,"Navigate to Account Settings → API or Integrations section. List all active keys and document which services or integrations use each key before revoking.",,1,1,,,,,,25,minute,,
-task,"Disconnect all third-party integrations and automation connections (Zapier, Make, OAuth apps, webhooks) @people-self @place-anywhere @tools-saas @when-anytime @duration-60",,,1,1,,,,,,60,minute,,
-task,Revoke any remaining OAuth grants from connected apps @people-self @place-anywhere @tools-saas @when-anytime @duration-15,Review connected apps in account settings and revoke any remaining OAuth access you no longer need before closing the account.,,1,1,,,,,,15,minute,,
-task,Disable all active webhooks and external event subscriptions @people-self @place-anywhere @tools-saas @when-anytime @duration-10,"Review the app's webhook list and any external event subscriptions, then disable any remaining listeners before closing the account.",,1,1,,,,,,10,minute,,
-task,Remove the tool from internal automation workflows and scheduled jobs @people-self @place-anywhere @tools-saas @when-anytime @duration-20,"Review your internal automations, scheduled jobs, recurring triggers, and any task-based workflows that still reference this tool, then remove the dependency before closing the account.",,1,1,,,,,,20,minute,,
-
 section,4️⃣ Security Cleanup,,,1,,,,,,,,,,
 task,Revoke all active sessions across devices @people-self @place-anywhere @tools-todoist,,,1,1,,,,,,,,,
 
@@ -33,16 +17,6 @@ task,Remove payment method from the account @people-self @place-anywhere @tools-
 task,Check for and claim any pro-rated refund if applicable @people-self @place-anywhere @tools-todoist,,,2,1,,,,,,,,,
 task,Remove subscription cost from personal finance tracker @people-self @place-anywhere @tools-todoist,,,1,1,,,,,,,,,
 task,Cancel the renewal reminder in your calendar @people-self @place-anywhere @tools-todoist,,,1,1,,,,,,,,,
-
-
-
-section,6️⃣ Uninstall from Devices,,,1,,,,,,,,,,
-task,Uninstall the app from Android and remove any leftover local settings or cached data @people-self @place-anywhere @tools-android-devices @when-anytime @duration-25,"Check app settings, local storage, and cached files to confirm everything related to the service is removed",,3,1,,,,,,25,minute,,
-task,Uninstall the app from Linux and remove any leftover local settings or cached data @people-self @place-anywhere @tools-linux-devices @when-anytime @duration-25,"Check the Linux install directories, home config folders, and cached files for anything still left behind after uninstalling",,3,1,,,,,,25,minute,,
-task,Remove browser extension from all Chrome profiles and other browsers @people-self @place-anywhere @tools-edge @tools-chrome @tools-firefox @tools-brave @when-anytime @duration-25,"Check each Chrome profile and any other browser profiles to make sure the extension is removed everywhere.",,3,1,,,,,,25,minute,,
-task,Remove the Gmail plugin from all Google accounts and confirm it is no longer enabled @people-self @place-anywhere @tools-gmail @when-anytime @duration-25,"Check Gmail and Google Workspace integrations to ensure the plugin is fully removed from every account and no access remains enabled.",,3,1,,,,,,25,minute,,
-task,Uninstall the app from Raspberry Pi and remove any leftover local settings or cached data @people-self @place-anywhere @tools-raspberry-pi @when-anytime @duration-25,"Check package-manager entries, system services, home config folders, and cached files for anything still left behind after uninstalling",,3,1,,,,,,25,minute,,
-task,Uninstall the app from Windows and remove any leftover local settings or cached data @people-self @place-anywhere @tools-windows-devices @when-anytime @duration-25,"Check the Windows install folder, app data, and cached files for anything still left behind after uninstalling",,3,1,,,,,,25,minute,,
 
 section,7️⃣ Community & Social Cleanup,,,1,,,,,,,,,,
 task,Clean up LinkedIn for this service @people-self @place-anywhere @tools-todoist,,,4,1,,,,,,,,,
@@ -81,6 +55,25 @@ task,After account closure is fully confirmed remove 2FA setup from authenticato
 task,After account closure is fully confirmed delete stored recovery codes @people-self @place-anywhere @tools-todoist,,,2,1,,,,,,,,,
 task,After account closure is fully confirmed remove account credentials from password manager @people-self @place-anywhere @tools-todoist,,,2,1,,,,,,,,,
 
+section,2️⃣ Data Export & Backup,,,1,,,,,,,,,,
+task,"Download all available account exports (CSV, JSON, PDF, etc.) @people-self @place-anywhere @tools-saas @when-anytime @duration-25","Use the platform's export tools to capture every available account record and confirm each file opens correctly and is complete.",,1,1,,,,,,25,minute,,
+task,"Download all attachments, files, or media stored in the tool @people-self @place-anywhere @tools-saas @when-anytime @duration-10",,,1,1,,,,,,,,,
+task,Export API usage logs and audit trails if available @people-self @place-anywhere @tools-saas @when-anytime @duration-10,"Export any available API usage logs and audit trails to preserve an activity record before closing the account.",,2,1,,,,,,10,minute,,
+task,"Verify all exports are complete and readable: open each file, confirm expected data is present, and record any missing or corrupted backups before storing them securely @people-self @place-anywhere @tools-saas @when-anytime @duration-15","Open each export, check it matches the expected records, and record any missing or corrupted files before you move the backup into long-term storage.",,1,1,,,,,,15,minute,,
+task,"Move verified exports to a secure long-term backup archive, document the storage location, and confirm access is available @people-self @place-anywhere @tools-sass @when-anytime @duration-15","Store all verified exports in a secure long-term archive, record the exact backup location and access instructions, and confirm the archive is retrievable when needed.",,1,1,,,,,,15,minute,,
+task,"Move any essential data to the replacement tool or secure archive @people-self @place-anywhere @tools-saas @when-anytime @duration-15","Identify the records, files, and references that are still needed, move them to the replacement system or a secure archive, and confirm they are complete and accessible before closing the account.",,1,1,,,,,,15,minute,,
 
+section,3️⃣ Revoke Integrations & API Access,,,1,,,,,,,,,,
+task,Revoke all API keys and access tokens @people-self @place-anywhere @tools-saas @when-anytime @duration-25,"Navigate to Account Settings → API or Integrations section. List all active keys and document which services or integrations use each key before revoking.",,1,1,,,,,,25,minute,,
+task,"Disconnect all third-party integrations and automation connections (Zapier, Make, OAuth apps, webhooks) @people-self @place-anywhere @tools-saas @when-anytime @duration-60",,,1,1,,,,,,60,minute,,
+task,Revoke any remaining OAuth grants from connected apps @people-self @place-anywhere @tools-saas @when-anytime @duration-15,Review connected apps in account settings and revoke any remaining OAuth access you no longer need before closing the account.,,1,1,,,,,,15,minute,,
+task,Disable all active webhooks and external event subscriptions @people-self @place-anywhere @tools-saas @when-anytime @duration-10,"Review the app's webhook list and any external event subscriptions, then disable any remaining listeners before closing the account.",,1,1,,,,,,10,minute,,
+task,Remove the tool from internal automation workflows and scheduled jobs @people-self @place-anywhere @tools-saas @when-anytime @duration-20,"Review your internal automations, scheduled jobs, recurring triggers, and any task-based workflows that still reference this tool, then remove the dependency before closing the account.",,1,1,,,,,,20,minute,,
 
-
+section,6️⃣ Uninstall from Devices,,,1,,,,,,,,,,
+task,Uninstall the app from Android and remove any leftover local settings or cached data @people-self @place-anywhere @tools-android-devices @when-anytime @duration-25,"Check app settings, local storage, and cached files to confirm everything related to the service is removed",,3,1,,,,,,25,minute,,
+task,Uninstall the app from Linux and remove any leftover local settings or cached data @people-self @place-anywhere @tools-linux-devices @when-anytime @duration-25,"Check the Linux install directories, home config folders, and cached files for anything still left behind after uninstalling",,3,1,,,,,,25,minute,,
+task,Remove browser extension from all Chrome profiles and other browsers @people-self @place-anywhere @tools-edge @tools-chrome @tools-firefox @tools-brave @when-anytime @duration-25,"Check each Chrome profile and any other browser profiles to make sure the extension is removed everywhere.",,3,1,,,,,,25,minute,,
+task,Remove the Gmail plugin from all Google accounts and confirm it is no longer enabled @people-self @place-anywhere @tools-gmail @when-anytime @duration-25,"Check Gmail and Google Workspace integrations to ensure the plugin is fully removed from every account and no access remains enabled.",,3,1,,,,,,25,minute,,
+task,Uninstall the app from Raspberry Pi and remove any leftover local settings or cached data @people-self @place-anywhere @tools-raspberry-pi @when-anytime @duration-25,"Check package-manager entries, system services, home config folders, and cached files for anything still left behind after uninstalling",,3,1,,,,,,25,minute,,
+task,Uninstall the app from Windows and remove any leftover local settings or cached data @people-self @place-anywhere @tools-windows-devices @when-anytime @duration-25,"Check the Windows install folder, app data, and cached files for anything still left behind after uninstalling",,3,1,,,,,,25,minute,,
