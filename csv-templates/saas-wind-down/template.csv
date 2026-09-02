@@ -7,8 +7,6 @@ task,Set a wind-down target completion date @people-self @place-anywhere @tools-
 task,"Check contractual obligations (notice period, minimum term) @people-self @place-anywhere @tools-todoist",,,1,1,,,,,,,,,
 task,Identify any replacement tool or workflow @people-self @place-anywhere @tools-todoist,,,2,1,,,,,,,,,
 
-section,4️⃣ Security Cleanup,,,1,,,,,,,,,,
-task,Revoke all active sessions across devices @people-self @place-anywhere @tools-todoist,,,1,1,,,,,,,,,
 
 section,5️⃣ Cancel Billing & Subscription,,,1,,,,,,,,,,
 task,Cancel the subscription before next renewal date @people-self @place-anywhere @tools-todoist,,,1,1,,,,,,,,,
@@ -55,6 +53,10 @@ task,After account closure is fully confirmed remove 2FA setup from authenticato
 task,After account closure is fully confirmed delete stored recovery codes @people-self @place-anywhere @tools-todoist,,,2,1,,,,,,,,,
 task,After account closure is fully confirmed remove account credentials from password manager @people-self @place-anywhere @tools-todoist,,,2,1,,,,,,,,,
 
+
+
+
+
 section,2️⃣ Data Export & Backup,,,1,,,,,,,,,,
 task,"Download all available account exports (CSV, JSON, PDF, etc.) @people-self @place-anywhere @tools-saas @when-anytime @duration-25","Use the platform's export tools to capture every available account record and confirm each file opens correctly and is complete.",,1,1,,,,,,25,minute,,
 task,"Download all attachments, files, or media stored in the tool @people-self @place-anywhere @tools-saas @when-anytime @duration-10",,,1,1,,,,,,,,,
@@ -69,6 +71,9 @@ task,"Disconnect all third-party integrations and automation connections (Zapier
 task,Revoke any remaining OAuth grants from connected apps @people-self @place-anywhere @tools-saas @when-anytime @duration-15,Review connected apps in account settings and revoke any remaining OAuth access you no longer need before closing the account.,,1,1,,,,,,15,minute,,
 task,Disable all active webhooks and external event subscriptions @people-self @place-anywhere @tools-saas @when-anytime @duration-10,"Review the app's webhook list and any external event subscriptions, then disable any remaining listeners before closing the account.",,1,1,,,,,,10,minute,,
 task,Remove the tool from internal automation workflows and scheduled jobs @people-self @place-anywhere @tools-saas @when-anytime @duration-20,"Review your internal automations, scheduled jobs, recurring triggers, and any task-based workflows that still reference this tool, then remove the dependency before closing the account.",,1,1,,,,,,20,minute,,
+
+section,4️⃣ Security Cleanup,,,1,,,,,,,,,,
+task,Revoke all active sessions across devices @people-self @place-anywhere @tools-saas @when-anytime @duration-10,"Navigate to Account Settings → Security or Sessions section. List all active sessions by device and location, identify any unfamiliar or unnecessary sessions, then revoke them.",,1,1,,,,,,10,minute,,
 
 section,6️⃣ Uninstall from Devices,,,1,,,,,,,,,,
 task,Uninstall the app from Android and remove any leftover local settings or cached data @people-self @place-anywhere @tools-android-devices @when-anytime @duration-25,"Check app settings, local storage, and cached files to confirm everything related to the service is removed",,3,1,,,,,,25,minute,,
