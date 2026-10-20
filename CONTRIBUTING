@@ -69,6 +69,37 @@ chore: rename certification-exam to exam-certification-workflow
 - No period at the end of the summary line
 - Avoid generic messages like "Update file" or "Fix stuff"
 
+### Commit Email Privacy
+
+To avoid exposing work or personal email addresses in public commit metadata:
+
+- Prefer a GitHub noreply identity for local commits:
+  - `<id>+<github-username>@users.noreply.github.com` (recommended)
+  - `<github-username>@users.noreply.github.com`
+- In GitHub settings, enable:
+  - **Keep my email addresses private**
+  - **Block command line pushes that expose my email**
+- Verify local/global identity before committing:
+
+```bash
+git config user.name
+git config user.email
+git config --global user.name
+git config --global user.email
+```
+
+- Set a safe local identity for this repository if needed:
+
+```bash
+git config user.email "<github-noreply-email>"
+```
+
+- Optional: set a safe global default if you use it across repositories:
+
+```bash
+git config --global user.email "<github-noreply-email>"
+```
+
 ### Pull Request Titles
 
 PR titles are used as the squash-merge commit message on `main`. They must follow the same Conventional Commits format as individual commit messages.

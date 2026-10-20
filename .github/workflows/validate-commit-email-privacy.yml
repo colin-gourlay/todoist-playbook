@@ -1,0 +1,63 @@
+name: Validate commit email privacy
+
+on:
+  push:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions: {}
+
+jobs:
+  validate-commit-emails:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
+        with:
+          egress-policy: audit
+
+      - name: Checkout code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Validate commit email domains
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ALLOWED_REGEX='(@users\.noreply\.github\.com$|^noreply@github\.com$)'
+
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            RANGE="${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}"
+          else
+            BEFORE="${{ github.event.before }}"
+            AFTER="${{ github.sha }}"
+            if [[ "$BEFORE" == "0000000000000000000000000000000000000000" ]]; then
+              RANGE="$AFTER"
+            else
+              RANGE="$BEFORE..$AFTER"
+            fi
+          fi
+
+          echo "Checking commit emails in range: $RANGE"
+          mapfile -t EMAILS < <(git log "$RANGE" --format='%ae%n%ce' | sort -u | sed '/^$/d')
+
+          BAD_EMAILS=()
+          for email in "${EMAILS[@]}"; do
+            if [[ ! "$email" =~ $ALLOWED_REGEX ]]; then
+              BAD_EMAILS+=("$email")
+            fi
+          done
+
+          if [[ "${#BAD_EMAILS[@]}" -gt 0 ]]; then
+            printf 'Disallowed commit email(s) detected:\n'
+            printf ' - %s\n' "${BAD_EMAILS[@]}"
+            echo
+            echo "Use a GitHub noreply email address and enable GitHub email privacy settings."
+            exit 1
+          fi
+
+          echo "All commit emails in this range use allowed noreply identities."
