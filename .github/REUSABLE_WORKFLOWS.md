@@ -140,7 +140,7 @@ Configures git identity, stages files, checks for changes, commits, and pushes �
 | `add` | ❌ | Space-separated paths/globs to stage | `.` |
 | `push_to` | ❌ | Branch ref to push to (e.g. `github.head_ref`) | _(current branch)_ |
 | `user_name` | ❌ | Git committer name | `github-actions[bot]` |
-| `user_email` | ❌ | Git committer email | `github-actions[bot]@users.noreply.github.com` |
+| `user_email` | ❌ | Git committer email | `41898282+github-actions[bot]@users.noreply.github.com` |
 
 **Example — push to current branch**
 
